@@ -1,6 +1,6 @@
 # website
 
-The Astro site behind [jimmykurian.me](https://www.jimmykurian.me). Paths here are relative to `website/`; the repo's architecture and principles are in the [root README](../README.md).
+The Astro site behind [jimmykurian.me](https://www.jimmykurian.me). Paths here are relative to `website/`. The repo's architecture, principles and checks are in the [root README](../README.md), and the rules for coding agents in [AGENTS.md](AGENTS.md).
 
 ## Run it
 
@@ -11,10 +11,14 @@ pnpm dev               # http://localhost:4321
 pnpm build             # static output in dist/ (fetches the Goodreads feeds)
 pnpm preview           # serve dist/ locally
 pnpm resume            # print /resume/ to dist/resume.pdf (after a build)
-pnpm test              # unit tests (Vitest)
+pnpm check             # type-check .astro and .ts files (astro check)
+pnpm lint              # ESLint and Prettier; pnpm format fixes what it can
+pnpm test              # unit tests (Vitest); test:coverage adds the coverage thresholds
 pnpm test:integration  # builds the site, then checks the output
 pnpm test:e2e          # Playwright in Chrome, against dist/ (build first)
 ```
+
+From the repo root, the same steps run as tasks: `task lint:web`, `task test`, `task build`, `task test:integration`, `task test:e2e` and `task lighthouse`.
 
 ## Where the content lives
 
@@ -140,7 +144,13 @@ tests/unit/              Vitest unit tests, mirroring src/ one file per file
 tests/integration/       build the site, then test the output
 tests/e2e/               Playwright specs, in Chrome at desktop and phone sizes
 tests/support/           render helper, content fixtures, image stub, content-rule patterns, dist readers
+astro.config.mjs         site URL, integrations, fonts
+eslint.config.js         ESLint: TypeScript, Astro and accessibility rules
+.prettierrc.json         Prettier (skips .astro and .mdx, see .prettierignore)
 playwright.config.ts     Playwright: Chrome, preview server, projects
 vitest.config.ts         Vitest on Astro's Vite config, with coverage thresholds
+package.json             scripts and dependencies; pnpm is pinned by packageManager
+pnpm-workspace.yaml      dependency overrides and audit exceptions, each with a reason
+AGENTS.md                rules for coding agents working in website/
 private/                 full resume original (git-ignored, never published)
 ```

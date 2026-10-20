@@ -3,7 +3,9 @@
 OpenTofu modules for the Azure resources that host
 [jimmykurian.me](https://www.jimmykurian.me), with their tests. The modules
 aren't deployed from here yet: the live resources were created in the portal,
-and nothing in this folder plans or applies them.
+and nothing in this folder plans or applies them. The repo's architecture and
+principles are in the [root README](../README.md), and the rules for coding
+agents in [AGENTS.md](AGENTS.md).
 
 | Resource | Live name | Module |
 | --- | --- | --- |
@@ -32,7 +34,9 @@ infrastructure/
 ├── scripts/                  # run tests, check provider pins
 ├── .checkov.yaml             # Checkov static scan of modules/
 ├── .tflint.hcl               # TFLint rules and plugins
-└── .gitignore
+├── .gitignore
+├── AGENTS.md                 # rules for coding agents working here
+└── README.md
 ```
 
 The modules are generic: they take names, region, plan and domains as inputs
@@ -74,6 +78,8 @@ comments, like the website's tests.
 
 ```sh
 tofu fmt -recursive -check
+tofu -chdir=modules/azure/<module> init -backend=false   # then, for each module:
+tofu -chdir=modules/azure/<module> validate
 tflint --init && tflint --recursive --config "$PWD/.tflint.hcl"
 checkov --config-file .checkov.yaml
 ./scripts/check-provider-pins.sh            # every module pins the same provider version

@@ -6,11 +6,11 @@ The source of [jimmykurian.me](https://www.jimmykurian.me), Jimmy Kurian's perso
 
 | Folder | What it is | Docs |
 | --- | --- | --- |
-| `website/` | The Astro site: pages, components, content, the resume, and its unit, integration and end-to-end tests | [website/README.md](website/README.md) |
-| `infrastructure/` | OpenTofu modules and tests for the Azure resources (not yet used to deploy) | [infrastructure/README.md](infrastructure/README.md) |
-| Root | Tooling shared by both: `.mise.toml`, `Taskfile.yml`, `.config/`, `.githooks/`, `.devcontainer/`, `.github/` | [CONTRIBUTING.md](CONTRIBUTING.md) |
+| [`website/`](website/) | The Astro site: pages, components, content, the resume, and its unit, integration and end-to-end tests | [README](website/README.md), [AGENTS.md](website/AGENTS.md) |
+| [`infrastructure/`](infrastructure/) | OpenTofu modules and tests for the Azure resources (not yet used to deploy) | [README](infrastructure/README.md), [AGENTS.md](infrastructure/AGENTS.md) |
+| Root | Tooling shared by both: `.mise.toml`, `Taskfile.yml`, `.config/`, `.githooks/`, `.devcontainer/`, `.github/` | [CONTRIBUTING](CONTRIBUTING.md), [AGENTS.md](AGENTS.md) |
 
-Coding agents start from [AGENTS.md](AGENTS.md). Each subproject has its own.
+Coding agents start from the root [AGENTS.md](AGENTS.md), then read the subproject's own before working in it.
 
 ## Architecture
 
@@ -113,8 +113,8 @@ The devcontainer (`.devcontainer/`) does all of that on creation, for VS Code or
 .vscode/extensions.json  recommended editor extensions
 .mise.toml               tool versions
 Taskfile.yml             every check, test and build step, by name
-infrastructure/          OpenTofu modules and tests for the Azure resources (README, AGENTS.md)
-website/                 the Astro site (README, AGENTS.md)
+infrastructure/          OpenTofu modules and tests for the Azure resources (see infrastructure/README.md)
+website/                 the Astro site (see website/README.md)
 AGENTS.md                what coding agents need on every task
 LICENSE                  proprietary, all rights reserved
 SECURITY.md              how to report a vulnerability, and how the site is secured
