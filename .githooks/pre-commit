@@ -45,6 +45,9 @@ stylelint_staged() {
 }
 
 check "secrets" gitleaks gitleaks git --pre-commit --staged --no-banner --log-level warn --redact --config .config/gitleaks.toml .
+if stage '.'; then
+  check "secretlint" "$BIN/secretlint" "$BIN/secretlint" --secretlintrc .config/secretlintrc.json --maskSecrets "${FILES[@]}"
+fi
 
 # Runs task lint:lockfile against the staged lockfile, not the working copy.
 # shellcheck disable=SC2329 # called through check

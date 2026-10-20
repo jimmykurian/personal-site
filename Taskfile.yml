@@ -42,6 +42,7 @@ tasks:
     desc: Run the repository-wide checks
     cmds:
       - task: lint:secrets
+      - task: lint:secretlint
       - task: lint:lockfile
       - task: lint:dedupe
       - task: lint:audit
@@ -63,6 +64,11 @@ tasks:
     desc: Scan the git history for secrets and non-npm registry URLs (gitleaks)
     cmds:
       - gitleaks git --no-banner --redact --config .config/gitleaks.toml .
+
+  lint:secretlint:
+    desc: Scan the tracked files for secrets with secretlint's recommended rules (gitleaks covers the history)
+    cmds:
+      - git ls-files -z | xargs -0 {{.BIN}}/secretlint --secretlintrc .config/secretlintrc.json --maskSecrets
 
   lint:lockfile:
     desc: 'Check the lockfile: registry packages only, sha512 hashes, bounded overrides, pnpm only'

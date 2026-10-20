@@ -74,6 +74,7 @@ jobs:
     timeout-minutes: 15
     outputs:
       secrets: ${{ steps.secrets.outcome }}
+      secretlint: ${{ steps.secretlint.outcome }}
       lockfile: ${{ steps.lockfile.outcome }}
       dedupe: ${{ steps.dedupe.outcome }}
       audit: ${{ steps.audit.outcome }}
@@ -108,6 +109,9 @@ jobs:
       - id: secrets
         if: ${{ !cancelled() }}
         run: task lint:secrets
+      - id: secretlint
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: task lint:secretlint
       - id: lockfile
         if: ${{ !cancelled() }}
         run: task lint:lockfile
@@ -459,7 +463,8 @@ jobs:
                 title: 'Repository',
                 job: 'repository',
                 rows: [
-                  ['🔑', 'Secret scan (gitleaks)', 'secrets'],
+                  ['🔑', 'Secret scan, git history (gitleaks)', 'secrets'],
+                  ['🔐', 'Secret scan, current files (secretlint)', 'secretlint'],
                   ['📦', 'Lockfile rules', 'lockfile'],
                   ['📦', 'Lockfile dedupe', 'dedupe'],
                   ['🔒', 'npm audit', 'audit'],

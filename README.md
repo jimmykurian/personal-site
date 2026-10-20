@@ -64,6 +64,7 @@ src/data/site.json (typed schemas)   (fetched at build)      (downloaded at buil
 | Task | Checks | Config |
 | --- | --- | --- |
 | `lint:secrets` | gitleaks over the git history, including non-npm registry URLs | `.config/gitleaks.toml` |
+| `lint:secretlint` | secretlint's recommended rules over the tracked files, with secrets masked in the output | `.config/secretlintrc.json` |
 | `lint:lockfile` | the lockfile: packages from registry.npmjs.org only, sha512 hashes only, no git dependencies, an upper bound on every override range, no npm or Yarn lockfile | |
 | `lint:dedupe` | no duplicate versions in the lockfile that pnpm could merge | |
 | `lint:audit` | no high or critical advisories (`pnpm audit`) | `website/pnpm-workspace.yaml` |
@@ -100,7 +101,7 @@ Prettier skips `.astro` and `.mdx` files: whitespace between inline elements ren
 
 The git hooks in `.githooks/` are plain bash, so they need no `node_modules`:
 
-- **pre-commit:** checks the staged files (secrets, the lockfile, spelling, formatting, ESLint, Stylelint, yamllint, shellcheck, `tofu fmt`, actionlint) and refuses commits on `main`.
+- **pre-commit:** checks the staged files (secrets with gitleaks and secretlint, the lockfile, spelling, formatting, ESLint, Stylelint, yamllint, shellcheck, `tofu fmt`, actionlint) and refuses commits on `main`.
 - **commit-msg:** checks the message against Conventional Commits.
 - **pre-push:** refuses pushes to `main`, or deleting it. It runs the unit tests if `website/` changed and the module tests if `infrastructure/` changed, on a clean checkout of the pushed commit.
 
