@@ -39,6 +39,7 @@
     "@playwright/test": "~1.63.0",
     "@secretlint/secretlint-rule-preset-recommend": "^13.0.7",
     "@vitest/coverage-v8": "5.0.3",
+    "alex": "^11.0.1",
     "cspell": "^10.3.6",
     "eslint": "^10.12.0",
     "eslint-plugin-astro": "^3.2.1",
