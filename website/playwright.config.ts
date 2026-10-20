@@ -10,7 +10,8 @@ export default defineConfig({
   fullyParallel: true,
   forbidOnly: Boolean(process.env.CI),
   retries: process.env.CI ? 1 : 0,
-  reporter: process.env.CI ? [['github'], ['list']] : 'list',
+  // In CI the JSON report feeds the pass counts in the PR check table.
+  reporter: process.env.CI ? [['github'], ['list'], ['json', { outputFile: 'reports/e2e.json' }]] : 'list',
   use: {
     baseURL,
     // The installed Google Chrome, so no browser download is needed (GitHub's runners have it).
