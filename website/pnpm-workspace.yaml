@@ -1,3 +1,5 @@
+# Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+# Author: Jimmy Kurian
 # pnpm settings for the website (a single package, not a workspace).
 
 # Advisories in dev tools, fixed by forcing the patched release. Remove each once the

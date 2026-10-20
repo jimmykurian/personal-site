@@ -1,3 +1,5 @@
+# Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+# Author: Jimmy Kurian
 # Search engines and AI search (which cite and link back) are welcome.
 # Crawlers that collect pages to train AI models are not.
 # robots.txt is a request, not enforcement: reputable crawlers honour it.

@@ -1,3 +1,9 @@
+/**
+ * @file dist.ts
+ * @author Jimmy Kurian
+ * @copyright Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+ */
+
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
 import { parse, type HTMLElement } from 'node-html-parser';

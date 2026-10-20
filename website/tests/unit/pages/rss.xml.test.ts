@@ -1,3 +1,9 @@
+/**
+ * @file rss.xml.test.ts
+ * @author Jimmy Kurian
+ * @copyright Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+ */
+
 import { getCollection } from 'astro:content';
 import type { APIContext } from 'astro';
 import { describe, expect, it, vi } from 'vitest';

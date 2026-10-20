@@ -1,4 +1,6 @@
 #!/bin/bash
+# Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+# Author: Jimmy Kurian
 set -eo pipefail
 
 # Fails unless every module pins each provider to the same source and version,

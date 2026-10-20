@@ -1,3 +1,5 @@
+# Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+# Author: Jimmy Kurian
 # Packages exempt from the allowed list, each with its reason (task lint:licenses). One
 # package name per line; `*` matches any characters. An exclusion that matches no
 # installed package fails the check, so a stale entry can't linger.

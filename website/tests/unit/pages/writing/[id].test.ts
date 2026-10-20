@@ -1,3 +1,9 @@
+/**
+ * @file [id].test.ts
+ * @author Jimmy Kurian
+ * @copyright Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+ */
+
 import { getCollection, render as renderEntry } from 'astro:content';
 import { describe, expect, it, vi } from 'vitest';
 import PostPage, { getStaticPaths } from '../../../../src/pages/writing/[id].astro';

@@ -1,3 +1,9 @@
+/**
+ * @file images.ts
+ * @author Jimmy Kurian
+ * @copyright Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+ */
+
 import { vi } from 'vitest';
 
 // Smallest PNG header Astro's size probe accepts: signature plus an IHDR chunk.

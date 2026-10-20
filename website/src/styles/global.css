@@ -1,3 +1,9 @@
+/**
+ * @file global.css
+ * @author Jimmy Kurian
+ * @copyright Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+ */
+
 /* Palette: Sanzo Wada, A Dictionary of Color Combinations, no. 207, on white. */
 :root {
   --ink: #111314; /* Black: type, rules, buttons */

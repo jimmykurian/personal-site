@@ -1,3 +1,5 @@
+<!-- Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE. Author: Jimmy Kurian. -->
+
 # jimmykurian.me
 
 Jimmy Kurian's personal site: a portfolio, resume and blog at <https://www.jimmykurian.me>. The repository is public but proprietary, and Jimmy is its only contributor. This file holds what applies to every task; follow it unless told otherwise.

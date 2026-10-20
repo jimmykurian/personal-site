@@ -1,3 +1,5 @@
+// Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+// Author: Jimmy Kurian
 {
   "$schema": "https://unpkg.com/knip@6/schema-jsonc.json",
   // Run from the root Taskfile.yml (task lint:licenses).

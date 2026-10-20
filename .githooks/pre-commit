@@ -1,4 +1,6 @@
 #!/bin/bash
+# Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+# Author: Jimmy Kurian
 set -eo pipefail
 
 # Checks the staged files before each commit. A check whose tool isn't installed is
@@ -45,6 +47,9 @@ stylelint_staged() {
 }
 
 check "secrets" gitleaks gitleaks git --pre-commit --staged --no-banner --log-level warn --redact --config .config/linters/gitleaks.toml .
+if stage '.'; then
+  check "headers" task task lint:headers FILES="${FILES[*]}"
+fi
 if stage '.'; then
   check "secretlint" "$BIN/secretlint" "$BIN/secretlint" --secretlintrc .config/linters/secretlintrc.json --maskSecrets "${FILES[@]}"
 fi

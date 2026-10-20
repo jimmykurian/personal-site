@@ -1,3 +1,9 @@
+/**
+ * @file deploy.test.ts
+ * @author Jimmy Kurian
+ * @copyright Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+ */
+
 import { describe, expect, it } from 'vitest';
 import { fileFor, files, read } from '../support/dist';
 

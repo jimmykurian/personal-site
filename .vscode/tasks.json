@@ -1,3 +1,5 @@
+// Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+// Author: Jimmy Kurian
 {
   // Every check and test is in Taskfile.yml (the Task extension lists them). This file only
   // adds the dev server, so the Chrome launch configuration can start it.

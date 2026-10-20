@@ -1,3 +1,9 @@
+/**
+ * @file index.test.ts
+ * @author Jimmy Kurian
+ * @copyright Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+ */
+
 import { getCollection } from 'astro:content';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import HomePage from '../../../src/pages/index.astro';

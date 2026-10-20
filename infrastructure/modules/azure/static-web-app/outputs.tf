@@ -1,3 +1,6 @@
+# Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+# Author: Jimmy Kurian
+
 output "id" {
   description = "ID of the Static Web App."
   value       = azurerm_static_web_app.this.id

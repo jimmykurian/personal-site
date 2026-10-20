@@ -1,3 +1,5 @@
+# Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+# Author: Jimmy Kurian
 # Dependabot opens security updates only; Renovate (.github/renovate.json) handles version
 # updates. open-pull-requests-limit: 0 turns version updates off and leaves security updates
 # on (with "Dependabot security updates" enabled in the repo settings). Each ecosystem's

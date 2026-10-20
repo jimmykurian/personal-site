@@ -1,3 +1,9 @@
+/**
+ * @file PostList.test.ts
+ * @author Jimmy Kurian
+ * @copyright Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+ */
+
 import { describe, expect, it } from 'vitest';
 import PostList from '../../../src/components/PostList.astro';
 import { post } from '../../support/content';

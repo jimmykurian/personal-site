@@ -1,3 +1,5 @@
+# Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+# Author: Jimmy Kurian
 # yamllint for the repo's YAML (workflows, Taskfile, issue forms, pnpm settings).
 # Run by `task lint:yaml`; pnpm-lock.yaml is generated and left out.
 extends: default

@@ -1,3 +1,5 @@
+%% Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+%% Author: Jimmy Kurian
 flowchart TB
     C["ChatBotController<br/>POST /chatbot/ask"] -- "Send(message)" --> M["Mediator (generated)<br/>RequestLoggingBehavior around every handler"]
     subgraph Write["Command side: write"]

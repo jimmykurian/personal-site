@@ -1,3 +1,6 @@
+# Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+# Author: Jimmy Kurian
+
 resource "azurerm_static_web_app" "this" {
   name                = var.name
   resource_group_name = var.resource_group_name

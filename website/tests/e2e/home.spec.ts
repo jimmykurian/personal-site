@@ -1,3 +1,9 @@
+/**
+ * @file home.spec.ts
+ * @author Jimmy Kurian
+ * @copyright Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+ */
+
 import site from '../../src/data/site.json' with { type: 'json' };
 import { expect, test } from './fixtures';
 

@@ -1,3 +1,6 @@
+# Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+# Author: Jimmy Kurian
+
 variable "name" {
   description = "Name of the resource group."
   type        = string

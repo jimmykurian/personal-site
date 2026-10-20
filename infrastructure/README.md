@@ -1,3 +1,5 @@
+<!-- Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE. Author: Jimmy Kurian. -->
+
 # Infrastructure
 
 OpenTofu modules for the Azure resources that host
