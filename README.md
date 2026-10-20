@@ -70,6 +70,8 @@ src/data/site.json (typed schemas)   (fetched at build)      (downloaded at buil
 | `lint:shell` | shellcheck on the scripts and hooks | |
 | `lint:editorconfig` | every file against `.editorconfig` | `.config/editorconfig-checker.json` |
 | `lint:commits` | commit messages (commitlint) | `.config/commitlintrc.json` |
+| `lint:pr-title` | a pull request title, which becomes the squash commit (commitlint) | `.config/commitlintrc.json` |
+| `lint:pr-template` | a pull request body keeps every template section and replaces its instructions | `.github/PULL_REQUEST_TEMPLATE.md` |
 | `infra:check` | `tofu fmt` and `validate`, TFLint, Checkov, provider pins | `infrastructure/` |
 
 After `task build`, three more run against `dist/`:
@@ -104,7 +106,8 @@ The devcontainer (`.devcontainer/`) does all of that on creation, for VS Code or
 ## Structure
 
 ```text
-.github/workflows/       lint, build, test and deploy (azure-static-web-apps.yml); infrastructure checks
+.github/workflows/       lint, build, test and deploy (azure-static-web-apps.yml); infrastructure checks; PR labels, title and template checks
+.github/labeler.yml      which paths get which pull request label
 .github/ISSUE_TEMPLATE/  bug, feature and subtask forms; PULL_REQUEST_TEMPLATE.md beside it
 .github/renovate.json    dependency updates
 .config/                 configs for the repo-wide checks (cspell, markdownlint, gitleaks, lychee, ...)

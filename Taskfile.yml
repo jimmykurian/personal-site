@@ -126,6 +126,37 @@ tasks:
     cmds:
       - pnpm exec commitlint --config "{{.ROOT_DIR}}/.config/commitlintrc.json" --cwd "{{.ROOT_DIR}}" --from {{.FROM}} --to {{.TO | default "HEAD"}}
 
+  lint:pr-title:
+    desc: 'Check a pull request title against Conventional Commits and the scopes (PR_TITLE env)'
+    dir: website
+    cmds:
+      # The title becomes the squash commit on main, so it gets the commit-msg rules.
+      - printf '%s\n' "$PR_TITLE" | pnpm exec commitlint --config "{{.ROOT_DIR}}/.config/commitlintrc.json" --cwd "{{.ROOT_DIR}}"
+
+  lint:pr-template:
+    desc: 'Check a pull request body against .github/PULL_REQUEST_TEMPLATE.md (PR_BODY env, or BODY_FILE=path)'
+    cmds:
+      - silent: true
+        cmd: |
+          body="$(mktemp)"
+          headings="$(mktemp)"
+          # GitHub sends PR bodies with CRLF line endings.
+          if [ -n "{{.BODY_FILE}}" ]; then tr -d '\r' < "{{.BODY_FILE}}" > "$body"; else printf '%s\n' "${PR_BODY:-}" | tr -d '\r' > "$body"; fi
+          status=0
+          fail() { echo "lint:pr-template: $1"; status=1; }
+          if ! grep -q '[^[:space:]]' "$body"; then fail 'the body is empty; start from .github/PULL_REQUEST_TEMPLATE.md'; fi
+          # Every heading in the template must be in the body.
+          grep -E '^#{1,2} ' .github/PULL_REQUEST_TEMPLATE.md > "$headings"
+          while IFS= read -r heading; do
+            grep -qxF "$heading" "$body" || fail "missing section: $heading"
+          done < "$headings"
+          # The template's instructions must be replaced. Write N/A where a section doesn't apply.
+          for text in "Summarize the change and why it's needed." "Fixes # (issue)" "Delete the options that don't apply." "Add a screenshot or GIF of the change, or mark as N/A."; do
+            if grep -qF "$text" "$body"; then fail "template text left in place: $text"; fi
+          done
+          rm -f "$body" "$headings"
+          exit $status
+
   lint:links:
     desc: Check the external links in the built site (lychee; needs `task build`)
     cmds:
