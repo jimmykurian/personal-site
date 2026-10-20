@@ -1,0 +1,43 @@
+name: Pull request assignee
+
+# Assigns each new pull request to whoever opened it, unless someone is already assigned.
+# Bots such as Renovate can't be assigned, so their pull requests go to the repository
+# owner. Runs on pull_request, not pull_request_target: outside pull requests aren't
+# accepted.
+on:
+  pull_request:
+    types: [opened, reopened]
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pr-assign-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  assign:
+    name: Assign
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      pull-requests: write # adds the assignee
+    steps:
+      - name: Assign the author, or the owner for a bot
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          NUMBER: ${{ github.event.pull_request.number }}
+          AUTHOR: ${{ github.event.pull_request.user.login }}
+          AUTHOR_TYPE: ${{ github.event.pull_request.user.type }}
+          OWNER: ${{ github.repository_owner }}
+          ASSIGNEES: ${{ toJSON(github.event.pull_request.assignees) }}
+        run: |
+          if [[ "$(jq length <<< "$ASSIGNEES")" -gt 0 ]]; then
+            echo "Already assigned; leaving it."
+            exit 0
+          fi
+          assignee="$AUTHOR"
+          if [[ "$AUTHOR_TYPE" == "Bot" ]]; then assignee="$OWNER"; fi
+          gh api -X POST "repos/$REPO/issues/$NUMBER/assignees" -f "assignees[]=$assignee" --jq '.assignees[].login'

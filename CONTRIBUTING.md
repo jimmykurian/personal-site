@@ -101,8 +101,8 @@ Every change goes through a pull request; `main` doesn't take direct pushes:
 - PRs merge with squash, so the PR title becomes the commit on `main`: it
   follows Conventional Commits like any other commit message. CI checks the
   title with commitlint (`task lint:pr-title`) and the body against the
-  template (`task lint:pr-template`), and labels the PR by the paths it
-  changes (`.github/labeler.yml`).
+  template (`task lint:pr-template`), labels the PR by the paths it changes
+  (`.github/labeler.yml`), and assigns it to whoever opened it.
 - Merging needs the CI checks, CodeQL and a Copilot review to pass, and the
   ruleset requires the **Title** and **Template** checks by name. `main`
   keeps a linear history of signed commits, and can't be force-pushed or

@@ -106,7 +106,7 @@ The devcontainer (`.devcontainer/`) does all of that on creation, for VS Code or
 ## Structure
 
 ```text
-.github/workflows/       lint, build, test and deploy (azure-static-web-apps.yml); infrastructure checks; PR labels, title and template checks
+.github/workflows/       lint, build, test and deploy (azure-static-web-apps.yml); infrastructure checks; PR labels, assignee, title and template checks
 .github/labeler.yml      which paths get which pull request label
 .github/ISSUE_TEMPLATE/  bug, feature and subtask forms; PULL_REQUEST_TEMPLATE.md beside it
 .github/renovate.json    dependency updates
