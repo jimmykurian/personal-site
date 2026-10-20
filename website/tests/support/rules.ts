@@ -1,3 +1,9 @@
+/**
+ * @file rules.ts
+ * @author Jimmy Kurian
+ * @copyright Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+ */
+
 // Patterns for details the content rules keep off the public site and resume. Real values
 // are never written into the tests; these match the shape of the data instead.
 export const forbidden = {

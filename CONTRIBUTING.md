@@ -1,3 +1,5 @@
+<!-- Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE. Author: Jimmy Kurian. -->
+
 # Contributing
 
 This is the source of my personal site, [jimmykurian.me](https://www.jimmykurian.me).

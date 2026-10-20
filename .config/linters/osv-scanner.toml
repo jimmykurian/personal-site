@@ -1,3 +1,5 @@
+# Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+# Author: Jimmy Kurian
 # OSV-Scanner (task lint:osv) checks website/pnpm-lock.yaml against the OSV database, which
 # includes advisories below pnpm audit's high level. Each ignored advisory needs a reason;
 # remove it once a fix ships. The same advisories are ignored for pnpm audit in

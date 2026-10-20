@@ -1,3 +1,9 @@
+/**
+ * @file Header.test.ts
+ * @author Jimmy Kurian
+ * @copyright Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+ */
+
 import { describe, expect, it } from 'vitest';
 import Header from '../../../src/components/Header.astro';
 import site from '../../../src/data/site.json';

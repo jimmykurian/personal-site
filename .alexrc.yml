@@ -1,3 +1,5 @@
+# Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+# Author: Jimmy Kurian
 # alex (task lint:inclusive-language) checks the prose for insensitive or inconsiderate
 # wording. It reads this file from the repo root; it has no option for another path.
 # The allow list holds the rule IDs the existing writing uses on purpose. A new rule

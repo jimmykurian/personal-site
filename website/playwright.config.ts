@@ -1,3 +1,9 @@
+/**
+ * @file playwright.config.ts
+ * @author Jimmy Kurian
+ * @copyright Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+ */
+
 import { defineConfig, devices } from '@playwright/test';
 
 // End-to-end tests drive the built site in Chrome, at desktop and phone sizes. They serve

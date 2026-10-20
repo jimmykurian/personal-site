@@ -1,3 +1,5 @@
+// Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+// Author: Jimmy Kurian
 // markdownlint for the repo's Markdown (README, AGENTS, docs, GitHub templates).
 // Posts are MDX and are spell-checked, not linted here.
 {
@@ -16,5 +18,5 @@
   },
   "globs": ["**/*.md"],
   "gitignore": true,
-  "ignores": ["**/node_modules/**", "**/.terraform/**"]
+  "ignores": ["**/node_modules/**", "**/.terraform/**", "website/docs/**"]
 }

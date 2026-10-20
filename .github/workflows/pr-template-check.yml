@@ -1,3 +1,6 @@
+# Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+# Author: Jimmy Kurian
+
 name: Pull request template
 
 # Fails a pull request whose body doesn't follow .github/PULL_REQUEST_TEMPLATE.md. The

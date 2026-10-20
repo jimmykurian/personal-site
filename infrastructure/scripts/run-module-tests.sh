@@ -1,4 +1,6 @@
 #!/bin/bash
+# Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+# Author: Jimmy Kurian
 set -eo pipefail
 
 # Runs the OpenTofu tests in tests/ against their modules. Each test file is

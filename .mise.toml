@@ -1,3 +1,5 @@
+# Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+# Author: Jimmy Kurian
 # Every tool the repo needs, at one version, for local work, the git hooks, the
 # devcontainer and CI. Run `mise install` after cloning. pnpm is pinned by
 # packageManager in website/package.json; JavaScript tools by its lockfile.

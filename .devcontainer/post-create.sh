@@ -1,4 +1,6 @@
 #!/bin/bash
+# Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+# Author: Jimmy Kurian
 set -euo pipefail
 
 # Runs once when the devcontainer is created: tools, dependencies, Chrome and git hooks.

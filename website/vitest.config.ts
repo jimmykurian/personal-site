@@ -1,3 +1,9 @@
+/**
+ * @file vitest.config.ts
+ * @author Jimmy Kurian
+ * @copyright Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+ */
+
 /// <reference types="vitest/config" />
 import { getViteConfig } from 'astro/config';
 

@@ -1,3 +1,5 @@
+# Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+# Author: Jimmy Kurian
 # Labels for pull requests by what they change (actions/labeler, run by
 # .github/workflows/labeler.yml). A PR can get several.
 

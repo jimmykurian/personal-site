@@ -1,3 +1,5 @@
+<!-- Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE. Author: Jimmy Kurian. -->
+
 # website/
 
 The jimmykurian.me site: Astro 7 with static output, TypeScript, MDX and content collections. The repo-wide rules are in [../AGENTS.md](../AGENTS.md); this file covers working inside `website/`. Paths here are relative to `website/`.
@@ -17,6 +19,7 @@ The jimmykurian.me site: Astro 7 with static output, TypeScript, MDX and content
 - Use pnpm only, never npm, and never commit a `package-lock.json`. Use no client framework. Keep scripts small and inline, and have each one respect `prefers-reduced-motion` when it animates.
 - Every source change updates its matching unit test. `tests/unit/` mirrors `src/`, one test file per source file, written as Arrange, Act, Assert with the steps marked in comments. Keep tests offline: stub `fetch`, and mock `astro:content` with the helpers in `tests/support/`. Coverage thresholds in `vitest.config.ts` only go up.
 - Add an integration check in `tests/integration/` when a change affects what gets published: a page, file, header or rule.
+- Document every export in `src/**/*.ts` with a TSDoc comment (ESLint checks the syntax). After changing one, run `task docs` and commit `docs/`; CI fails if it's stale.
 - Anything that needs a real browser goes in `tests/e2e/`: scripts, focus, layout. It runs in installed Chrome (`channel: 'chrome'`) at desktop and phone sizes.
 - Prettier doesn't format `.astro` or `.mdx`. Whitespace between inline elements renders, so check spacing by hand, and check it on the page.
 - Verify with `task lint`, `task test`, `task build`, then `task test:integration` and `task test:e2e`. The commands and test helpers are in [../CONTRIBUTING.md](../CONTRIBUTING.md#tests).

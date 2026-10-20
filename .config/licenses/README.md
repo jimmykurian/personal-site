@@ -1,3 +1,5 @@
+<!-- Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE. Author: Jimmy Kurian. -->
+
 # Licenses
 
 `task lint:licenses` checks the license of every package installed in `website/node_modules`

@@ -1,3 +1,6 @@
+# Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+# Author: Jimmy Kurian
+
 name: Pull request assignee
 
 # Assigns each new pull request to whoever opened it, unless someone is already assigned.

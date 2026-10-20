@@ -1,3 +1,9 @@
+/**
+ * @file navigation.spec.ts
+ * @author Jimmy Kurian
+ * @copyright Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+ */
+
 import { expect, isPhone, test } from './fixtures';
 
 test.describe('skip link', () => {

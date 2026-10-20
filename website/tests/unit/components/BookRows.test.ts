@@ -1,3 +1,9 @@
+/**
+ * @file BookRows.test.ts
+ * @author Jimmy Kurian
+ * @copyright Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+ */
+
 import { describe, expect, it } from 'vitest';
 import BookRows from '../../../src/components/BookRows.astro';
 import { book } from '../../support/content';

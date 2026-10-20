@@ -1,3 +1,6 @@
+# Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+# Author: Jimmy Kurian
+
 name: CI
 
 # Every check, the deploy, and the PR check table, in one workflow:
@@ -74,6 +77,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     outputs:
+      headers: ${{ steps.headers.outcome }}
       secrets: ${{ steps.secrets.outcome }}
       secretlint: ${{ steps.secretlint.outcome }}
       lockfile: ${{ steps.lockfile.outcome }}
@@ -111,6 +115,9 @@ jobs:
 
       - id: install
         run: pnpm --dir website install --frozen-lockfile
+      - id: headers
+        if: ${{ !cancelled() }}
+        run: task lint:headers
       - id: secrets
         if: ${{ !cancelled() }}
         run: task lint:secrets
@@ -185,6 +192,7 @@ jobs:
       format: ${{ steps.format.outcome }}
       css: ${{ steps.css.outcome }}
       dead_code: ${{ steps.dead_code.outcome }}
+      docs: ${{ steps.docs.outcome }}
       unit: ${{ steps.unit.outcome }}
       build: ${{ steps.build.outcome }}
       integration: ${{ steps.integration.outcome }}
@@ -231,6 +239,10 @@ jobs:
       - id: dead_code
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: task lint:dead-code
+      # Regenerates the TypeDoc API docs and fails if the committed website/docs/ differs.
+      - id: docs
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: task docs:check
       # Unit tests with the coverage thresholds; the JSON report feeds the table's counts.
       - id: unit
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
@@ -449,6 +461,7 @@ jobs:
                   ['✨', 'Prettier', 'format'],
                   ['🎨', 'Stylelint', 'css'],
                   ['🧹', 'Dead code (knip)', 'dead_code'],
+                  ['📚', 'API docs up to date (TypeDoc)', 'docs'],
                   ['🧪', 'Unit tests and coverage', 'unit'],
                   ['🏗️', 'Build and resume PDF', 'build'],
                   ['🔗', 'Integration tests', 'integration'],
@@ -487,6 +500,7 @@ jobs:
                 rows: [
                   ['🔑', 'Secret scan, git history (gitleaks)', 'secrets'],
                   ['🔐', 'Secret scan, current files (secretlint)', 'secretlint'],
+                  ['©️', 'Copyright and author headers', 'headers'],
                   ['📦', 'Lockfile rules', 'lockfile'],
                   ['📦', 'Lockfile dedupe', 'dedupe'],
                   ['🔒', 'npm audit', 'audit'],
@@ -605,6 +619,7 @@ jobs:
             const w = needs.website?.outputs ?? {};
             const i = needs.infrastructure?.outputs ?? {};
             const files = {
+              'repository/headers.json': status(r.headers),
               'repository/lockfile.json': status(r.lockfile),
               'repository/dedupe.json': status(r.dedupe),
               'repository/workflows.json': status(r.actions),
@@ -621,6 +636,7 @@ jobs:
               'website/prettier.json': status(w.format),
               'website/stylelint.json': status(w.css),
               'website/dead-code.json': status(w.dead_code),
+              'website/docs.json': status(w.docs),
               'website/unit.json': tests(w.unit, w.unit_passed),
               'website/coverage.json': percent(w.line_coverage),
               'website/build.json': status(w.build),

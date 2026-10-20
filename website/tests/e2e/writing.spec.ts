@@ -1,3 +1,9 @@
+/**
+ * @file writing.spec.ts
+ * @author Jimmy Kurian
+ * @copyright Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+ */
+
 import { expect, test } from './fixtures';
 
 test.describe('writing', () => {

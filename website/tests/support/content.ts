@@ -1,3 +1,9 @@
+/**
+ * @file content.ts
+ * @author Jimmy Kurian
+ * @copyright Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+ */
+
 import type { CollectionEntry, CollectionKey } from 'astro:content';
 import { collections } from '../../src/content.config';
 import experience from '../../src/content/experience.json';

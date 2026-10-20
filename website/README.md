@@ -1,3 +1,5 @@
+<!-- Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE. Author: Jimmy Kurian. -->
+
 # website
 
 The Astro site behind [jimmykurian.me](https://www.jimmykurian.me). Paths here are relative to `website/`. The repo's architecture, principles and checks are in the [root README](../README.md), and the rules for coding agents in [AGENTS.md](AGENTS.md).
@@ -150,6 +152,9 @@ eslint.config.js         ESLint: TypeScript, Astro and accessibility rules
 .prettierignore          what Prettier skips (.astro, .mdx); the config is ../.config/formatters/prettierrc.json
 stylelint.config.mjs     Stylelint: BEM class names, Astro style blocks
 knip.jsonc               knip: dead code, and the tools run from the repo root
+typedoc.json             TypeDoc: builds docs/ from the TSDoc comments in src/
+tsdoc.json               the TSDoc tags (TypeDoc's), checked by ESLint's tsdoc/syntax
+docs/                    the generated API docs (task docs; CI fails if they're stale)
 playwright.config.ts     Playwright: Chrome, preview server, projects
 vitest.config.ts         Vitest on Astro's Vite config, with coverage thresholds
 package.json             scripts and dependencies; pnpm is pinned by packageManager

@@ -1,3 +1,9 @@
+/**
+ * @file container.ts
+ * @author Jimmy Kurian
+ * @copyright Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+ */
+
 import { experimental_AstroContainer as AstroContainer, type ContainerRenderOptions } from 'astro/container';
 import { parse } from 'node-html-parser';
 import type { AstroComponentFactory } from 'astro/runtime/server/index.js';

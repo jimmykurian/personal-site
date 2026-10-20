@@ -1,4 +1,6 @@
 #!/bin/bash
+# Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+# Author: Jimmy Kurian
 set -eo pipefail
 
 # Checks the staged files before each commit. A check whose tool isn't installed is
@@ -39,12 +41,27 @@ eslint_staged() {
   (cd website && ./node_modules/.bin/eslint --max-warnings 0 --no-warn-ignored "${@#website/}")
 }
 
+# Hands the staged paths to task lint:headers as a file, one path per line, so a path is
+# never expanded as shell code.
+# shellcheck disable=SC2329 # called through check
+headers_staged() {
+  local list status=0
+  list="$(mktemp)"
+  printf '%s\n' "$@" > "$list"
+  HEADER_FILES="$list" task lint:headers || status=1
+  rm -f "$list"
+  return "$status"
+}
+
 # shellcheck disable=SC2329 # called through check
 stylelint_staged() {
   (cd website && ./node_modules/.bin/stylelint "${@#website/}")
 }
 
 check "secrets" gitleaks gitleaks git --pre-commit --staged --no-banner --log-level warn --redact --config .config/linters/gitleaks.toml .
+if stage '.'; then
+  check "headers" task headers_staged "${FILES[@]}"
+fi
 if stage '.'; then
   check "secretlint" "$BIN/secretlint" "$BIN/secretlint" --secretlintrc .config/linters/secretlintrc.json --maskSecrets "${FILES[@]}"
 fi

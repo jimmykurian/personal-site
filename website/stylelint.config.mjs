@@ -1,3 +1,9 @@
+/**
+ * @file stylelint.config.mjs
+ * @author Jimmy Kurian
+ * @copyright Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+ */
+
 // Stylelint for the CSS in src/styles/ and in .astro style blocks (task lint:css).
 /** @type {import('stylelint').Config} */
 export default {

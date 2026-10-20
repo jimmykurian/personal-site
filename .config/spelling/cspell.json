@@ -11,7 +11,7 @@
     ".github/**/*.yml",
     ".gitmessage"
   ],
-  "ignorePaths": ["**/node_modules/**", "**/*.snap", "**/figure-sources/**"],
+  "ignorePaths": ["**/node_modules/**", "**/*.snap", "**/figure-sources/**", "website/docs/**"],
   "dictionaryDefinitions": [
     { "name": "project-words", "path": "./words.txt", "addWords": true }
   ],

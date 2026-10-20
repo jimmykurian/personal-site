@@ -1,0 +1,23 @@
+# Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+# Author: Jimmy Kurian
+# Files task lint:headers doesn't require the copyright and author header in, as extended
+# regular expressions matched against the repo-relative path. Each needs a reason.
+
+# The license is the copyright notice.
+^LICENSE$
+# Plain JSON has no comments, and these files are read by strict JSON parsers. JSON read as
+# JSONC (.vscode/, devcontainer.json, tsconfig.json, .jsonc) does carry the header.
+^\.config/.*\.json$
+^\.github/renovate\.json$
+^website/(package|tsdoc|typedoc)\.json$
+^website/public/.*\.json$
+^website/src/(content|data)/.*\.json$
+# Generated: lockfiles, test snapshots and the TypeDoc output.
+pnpm-lock\.yaml$
+\.terraform\.lock\.hcl$
+\.snap$
+^website/docs/
+# Images, fonts and PDFs.
+\.(svg|png|jpe?g|webp|ico|pdf|woff2?)$
+# Copied into the body of every new pull request.
+^\.github/PULL_REQUEST_TEMPLATE\.md$

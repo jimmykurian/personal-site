@@ -1,3 +1,13 @@
+/**
+ * @file content.config.ts
+ * @author Jimmy Kurian
+ * @copyright Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+ */
+/**
+ * The content collections and their schemas. A missing field or a bad date fails the build.
+ *
+ * @packageDocumentation
+ */
 import { defineCollection } from 'astro:content';
 import { file, glob } from 'astro/loaders';
 import { z } from 'astro/zod';
@@ -120,4 +130,11 @@ const books = defineCollection({
   }),
 });
 
+/**
+ * Every content collection, keyed by name:
+ *
+ * - `posts`: the blog posts, MDX in `src/content/posts/`
+ * - `experience`, `projects`, `writing` and `teaching`: the JSON files in `src/content/`
+ * - `books`: the Goodreads shelves, read at build time by {@link goodreadsLoader}
+ */
 export const collections = { posts, experience, projects, writing, teaching, books };

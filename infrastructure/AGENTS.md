@@ -1,3 +1,5 @@
+<!-- Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE. Author: Jimmy Kurian. -->
+
 # infrastructure/
 
 OpenTofu modules for the site's Azure resources, with their tests. Nothing here deploys yet: the live resources were made in the portal. The repo-wide rules are in [../AGENTS.md](../AGENTS.md); this file covers working inside `infrastructure/`. Paths here are relative to `infrastructure/`.

@@ -1,3 +1,5 @@
+# Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+# Author: Jimmy Kurian
 # Normalize line endings: text files are stored with LF and checked out with LF
 # on every OS, regardless of core.autocrlf.
 * text=auto eol=lf

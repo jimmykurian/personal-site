@@ -1,9 +1,14 @@
+# Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+# Author: Jimmy Kurian
 # v8r validates these configs against their published schemas (task lint:schemas). Most are
 # found through SchemaStore; customCatalog maps the rest. task lint:schemas
 # points v8r at this file with V8R_CONFIG_FILE.
+# website/typedoc.json is left out: its published schema re-declares the draft-07 meta-schema,
+# which v8r's validator rejects. TypeDoc checks its own options on every `task docs`.
 patterns:
   - website/package.json
   - website/tsconfig.json
+  - website/tsdoc.json
   - website/pnpm-workspace.yaml
   - .github/workflows/*.yml
   - .github/ISSUE_TEMPLATE/*.yml
@@ -33,9 +38,10 @@ customCatalog:
       location: https://docs.renovatebot.com/renovate-schema.json
     # SchemaStore's patterns don't match these paths.
     - name: tsconfig
-      description: TypeScript config
+      description: TypeScript config, with the copyright comment
       fileMatch: ['**/tsconfig.json']
       location: https://www.schemastore.org/tsconfig.json
+      parser: json5
     - name: commitlint
       description: commitlint config, in .config/ without the leading dot
       fileMatch: ['**/.config/commitlintrc.json']

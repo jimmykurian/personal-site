@@ -1,3 +1,9 @@
+/**
+ * @file resume-pdf.mjs
+ * @author Jimmy Kurian
+ * @copyright Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+ */
+
 // Prints the built /resume/ page to dist/resume.pdf with headless Chrome.
 // Run after `astro build`: `pnpm resume`. Serves dist/ itself, so it needs no other packages.
 import { createServer } from 'node:http';

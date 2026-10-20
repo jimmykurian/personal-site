@@ -1,3 +1,5 @@
+// Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+// Author: Jimmy Kurian
 // A container with every tool in .mise.toml, the website's dependencies, Chrome for the
 // Playwright tests and the git hooks. Works in VS Code and GitHub Codespaces.
 {

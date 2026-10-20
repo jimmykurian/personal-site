@@ -1,3 +1,9 @@
+/**
+ * @file check-licenses.mjs
+ * @author Jimmy Kurian
+ * @copyright Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+ */
+
 // Checks the license of every installed package (task lint:licenses). The allowed SPDX ids and
 // the excluded packages are in ../.config/licenses/. It reads each package's package.json in
 // node_modules, so it needs no network and no pnpm store.

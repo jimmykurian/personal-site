@@ -6,6 +6,8 @@ tags: [".NET", "Clean Architecture", "DDD", "CQRS", "Mediator", "Mapperly", "Age
 draft: false
 ---
 
+{/* Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE. Author: Jimmy Kurian. */}
+
 My team in Microsoft Frontier Company built a proof-of-concept AI chatbot as part of a larger effort to explore generative AI for our customers. The agent runs on Microsoft Agent Framework, the open-source .NET and Python SDK that the Semantic Kernel and AutoGen teams built as the successor to both.² The model is hosted on Microsoft Foundry, which used to be called Azure AI Foundry.¹
 
 A proof of concept has a way of turning into the production system, so we built this one as if it already was: Clean Architecture for the layering, Domain-Driven Design for the model, CQRS for the use cases, and the Mediator pattern, through the source-generated [Mediator](https://github.com/martinothamar/Mediator) library, to connect them.³ This post goes through how each one shows up in the code and what the combination bought us.

@@ -1,3 +1,5 @@
+# Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+# Author: Jimmy Kurian
 # Every check and test, by one name, for local runs, the git hooks and CI.
 # Tools come from .mise.toml (`mise install`) and website/node_modules (`task install`).
 # Run `task` to list the tasks.
@@ -41,6 +43,7 @@ tasks:
   lint:repo:
     desc: Run the repository-wide checks
     cmds:
+      - task: lint:headers
       - task: lint:secrets
       - task: lint:secretlint
       - task: lint:lockfile
@@ -62,6 +65,40 @@ tasks:
     cmds:
       - actionlint
       - zizmor --offline .github
+
+  lint:headers:
+    desc: Check every file has the copyright and author header (exceptions in .config/linters/headers-exclude.txt)
+    cmds:
+      - silent: true
+        cmd: |
+          patterns="$(mktemp)"
+          files="$(mktemp)"
+          grep -vE '^\s*(#|$)' .config/linters/headers-exclude.txt > "$patterns"
+          # HEADER_FILES is the path of a file listing paths one per line (the pre-commit hook's
+          # staged files). The paths are read as data, never expanded by the shell.
+          if [ -n "${HEADER_FILES:-}" ]; then cat "$HEADER_FILES"; else git ls-files; fi > "$files.all"
+          # grep exits 1 when every file is excluded; that's not a failure.
+          grep -v -E -f "$patterns" "$files.all" > "$files" || [ $? -eq 1 ]
+          status=0
+          while IFS= read -r file; do
+            [ -f "$file" ] || continue
+            top="$(head -n 25 "$file")"
+            case "$top" in
+              *"Copyright (c) 2026 Jimmy Kurian. All rights reserved."*) ;;
+              *) echo "lint:headers: $file has no copyright header"; status=1; continue ;;
+            esac
+            case "$top" in
+              *"Author: Jimmy Kurian"* | *"@author Jimmy Kurian"*) ;;
+              *) echo "lint:headers: $file has no author line"; status=1 ;;
+            esac
+            named="$(printf '%s\n' "$top" | sed -n 's/^ \* @file //p' | head -n 1)"
+            if [ -n "$named" ] && [ "$named" != "$(basename "$file")" ]; then
+              echo "lint:headers: $file names itself @file $named"
+              status=1
+            fi
+          done < "$files"
+          rm -f "$patterns" "$files" "$files.all"
+          exit $status
 
   lint:secrets:
     desc: Scan the git history for secrets and non-npm registry URLs (gitleaks)
@@ -155,7 +192,7 @@ tasks:
   lint:inclusive-language:
     desc: Check the docs, posts and site content for insensitive wording (alex, allow list in .alexrc.yml)
     cmds:
-      - git ls-files -z '*.md' | xargs -0 {{.BIN}}/alex --quiet
+      - git ls-files -z '*.md' ':!:website/docs/**' | xargs -0 {{.BIN}}/alex --quiet
       - git ls-files -z 'website/src/content/posts/*.mdx' 'website/src/content/posts/**/*.mdx' | xargs -0 {{.BIN}}/alex --quiet --mdx
       # The JSON files hold the site's own prose (experience, projects, writing, teaching, profile).
       - git ls-files -z 'website/src/content/*.json' 'website/src/data/*.json' | xargs -0 {{.BIN}}/alex --quiet --text
@@ -268,6 +305,30 @@ tasks:
     cmds:
       - pnpm build
       - pnpm resume
+
+  # Docs
+
+  docs:
+    desc: Generate the website's API docs into website/docs/ from its TSDoc comments (TypeDoc)
+    dir: website
+    cmds:
+      # astro sync writes the astro:content types TypeDoc needs (it loads the Goodreads shelves).
+      - pnpm exec astro sync
+      # `pnpm run`, since `pnpm docs` is a built-in pnpm command.
+      - pnpm run docs
+
+  docs:check:
+    desc: Check website/docs/ is up to date with the TSDoc comments (regenerates it, then compares)
+    cmds:
+      - task: docs
+      - cmd: |
+          changes="$(git status --porcelain --untracked-files=all -- website/docs)"
+          if [ -n "$changes" ]; then
+            echo "$changes"
+            git --no-pager diff --stat -- website/docs
+            echo "docs:check: website/docs/ is out of date; run task docs and commit it"
+            exit 1
+          fi
 
   # The test tasks pass extra arguments through: `task test -- --reporter=json ...`.
 

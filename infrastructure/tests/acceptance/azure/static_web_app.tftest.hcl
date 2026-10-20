@@ -1,3 +1,6 @@
+# Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+# Author: Jimmy Kurian
+
 mock_provider "azurerm" {
   mock_resource "azurerm_static_web_app" {
     defaults = {

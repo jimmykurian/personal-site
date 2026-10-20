@@ -1,3 +1,5 @@
+// Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+// Author: Jimmy Kurian
 {
   // Snippets for this repo's conventions: Arrange, Act, Assert tests and post frontmatter.
   "Vitest unit test (Arrange, Act, Assert)": {

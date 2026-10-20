@@ -1,3 +1,9 @@
+/**
+ * @file fixtures.ts
+ * @author Jimmy Kurian
+ * @copyright Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+ */
+
 import { test as base, expect, type Page } from '@playwright/test';
 
 /** The routes every visitor can reach, used for checks that apply to all pages. */

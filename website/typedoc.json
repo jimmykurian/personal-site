@@ -1,0 +1,40 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "name": "jimmykurian.me website",
+  "entryPoints": ["src/lib/*.ts", "src/pages/rss.xml.ts"],
+  "out": "docs",
+  "plugin": ["typedoc-plugin-markdown"],
+  "readme": "none",
+  "tsconfig": "tsconfig.json",
+  "skipErrorChecking": true,
+  "excludeExternals": true,
+  "excludePrivate": true,
+  "hideGenerator": true,
+  "gitRevision": "main",
+  "cleanOutputDir": true,
+  "sort": ["source-order"],
+  "validation": {
+    "notExported": false,
+    "invalidLink": true,
+    "notDocumented": true
+  },
+  "treatWarningsAsErrors": true,
+  "outputFileStrategy": "modules",
+  "useCodeBlocks": true,
+  "parametersFormat": "table",
+  "propertiesFormat": "table",
+  "typeDeclarationFormat": "table",
+  "excludeTags": [
+    "@override",
+    "@virtual",
+    "@privateRemarks",
+    "@satisfies",
+    "@overload",
+    "@inline",
+    "@inlineType",
+    "@file",
+    "@author",
+    "@copyright"
+  ],
+  "requiredToBeDocumented": ["Function", "TypeAlias", "Variable", "Class", "Interface", "Enum"]
+}

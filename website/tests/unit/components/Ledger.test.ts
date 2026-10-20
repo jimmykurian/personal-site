@@ -1,3 +1,9 @@
+/**
+ * @file Ledger.test.ts
+ * @author Jimmy Kurian
+ * @copyright Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+ */
+
 import { describe, expect, it } from 'vitest';
 import Ledger from '../../../src/components/Ledger.astro';
 import { dom, normalize, render } from '../../support/container';

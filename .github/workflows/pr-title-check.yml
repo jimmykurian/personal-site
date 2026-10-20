@@ -1,3 +1,6 @@
+# Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+# Author: Jimmy Kurian
+
 name: Pull request title
 
 # The title becomes the squash commit on main, so it must pass the same commitlint rules

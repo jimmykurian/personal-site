@@ -1,3 +1,5 @@
+# Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+# Author: Jimmy Kurian
 # Licenses allowed for the website's dependencies (task lint:licenses). One SPDX id per line;
 # `*` matches any characters. In a compound expression, OR needs one allowed side and AND
 # needs every side. Everything here is permissive, or file-level copyleft that unmodified
