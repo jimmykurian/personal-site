@@ -9,6 +9,7 @@ azurestaticapps
 bliki
 Bogard
 Brien
+brightgreen
 Bytespider
 commitlint
 commitlintrc
