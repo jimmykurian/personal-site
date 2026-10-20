@@ -14,6 +14,7 @@ exports[`Footer > shows the current year, name and city 1`] = `
 </a>
 </span>
 <span>Built with Astro, hosted on Azure Static Web Apps</span>
+<a href="https://github.com/jimmykurian/personal-site">Source</a>
 </p>
 </div>
 </footer>"
