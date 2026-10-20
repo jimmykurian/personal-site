@@ -9,6 +9,7 @@ patterns:
   - .github/ISSUE_TEMPLATE/*.yml
   - .github/renovate.json
   - .github/labeler.yml
+  - .github/dependabot.yml
   - .devcontainer/devcontainer.json
   - Taskfile.yml
   - .config/spelling/cspell.json
