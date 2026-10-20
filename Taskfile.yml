@@ -51,6 +51,7 @@ tasks:
       - task: lint:editorconfig
       - task: lint:markdown
       - task: lint:spelling
+      - task: lint:inclusive-language
       - task: lint:yaml
       - task: lint:schemas
 
@@ -137,6 +138,14 @@ tasks:
     desc: Spell-check the posts, pages, docs and code (cspell)
     cmds:
       - '{{.BIN}}/cspell lint --config .config/cspell.json --no-progress --dot {{.SPELLING_GLOBS}}'
+
+  lint:inclusive-language:
+    desc: Check the docs, posts and site content for insensitive wording (alex, allow list in .alexrc.yml)
+    cmds:
+      - git ls-files -z '*.md' | xargs -0 {{.BIN}}/alex --quiet
+      - git ls-files -z 'website/src/content/posts/*.mdx' 'website/src/content/posts/**/*.mdx' | xargs -0 {{.BIN}}/alex --quiet --mdx
+      # The JSON files hold the site's own prose (experience, projects, writing, teaching, profile).
+      - git ls-files -z 'website/src/content/*.json' 'website/src/data/*.json' | xargs -0 {{.BIN}}/alex --quiet --text
 
   lint:yaml:
     desc: Lint the YAML files (yamllint)

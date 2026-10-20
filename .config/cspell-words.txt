@@ -1,5 +1,6 @@
 # Names, products and terms the dictionaries don't know. One per line, sorted.
 ACMR
+alexrc
 ANAME
 Applebot
 artboards
@@ -27,6 +28,7 @@ goodreads
 gpgsign
 gstatic
 gsub
+handywoman
 hrefs
 HSTS
 hverlin

@@ -5,6 +5,7 @@
     "@commitlint/cli",
     "@commitlint/config-conventional",
     "@lhci/cli",
+    "alex",
     "cspell",
     "markdownlint-cli2",
     "secretlint",

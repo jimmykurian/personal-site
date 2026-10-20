@@ -71,6 +71,13 @@ if stage '\.(md|mdx|astro|ts|css|yml)$|^\.gitmessage$'; then
 fi
 if stage '\.md$'; then
   check "markdown" "$BIN/markdownlint-cli2" "$BIN/markdownlint-cli2" --config .config/.markdownlint-cli2.jsonc "${FILES[@]}"
+  check "inclusive language" "$BIN/alex" "$BIN/alex" --quiet "${FILES[@]}"
+fi
+if stage '^website/src/content/posts/.*\.mdx$'; then
+  check "inclusive language" "$BIN/alex" "$BIN/alex" --quiet --mdx "${FILES[@]}"
+fi
+if stage '^website/src/(content|data)/[^/]*\.json$'; then
+  check "inclusive language" "$BIN/alex" "$BIN/alex" --quiet --text "${FILES[@]}"
 fi
 if stage '^website/.*\.(ts|js|mjs|json|css|md|yml|yaml)$'; then
   check "format" "$BIN/prettier" "$BIN/prettier" --check --ignore-unknown \

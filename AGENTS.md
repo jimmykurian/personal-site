@@ -7,7 +7,7 @@ Jimmy Kurian's personal site: a portfolio, resume and blog at <https://www.jimmy
 - `website/`: the Astro site (static output, TypeScript, MDX, no client framework). Read [website/AGENTS.md](website/AGENTS.md) before working there.
 - `infrastructure/`: OpenTofu modules and tests for the Azure resources. Nothing there deploys yet. Read [infrastructure/AGENTS.md](infrastructure/AGENTS.md) before working there.
 - Root tooling: `.mise.toml` pins every tool version (Node included; pnpm stays pinned by `packageManager` in `website/package.json`). `Taskfile.yml` holds every command, and CI and the git hooks call those tasks. `.config/` holds the repo-wide linter configs, and `.githooks/` holds plain bash hooks.
-- Keep the root to the files already there. New project files go in `website/` or `infrastructure/`. Claude Code reads AGENTS.md files directly; there's no `CLAUDE.md`.
+- Keep the root to the files already there. New project files go in `website/` or `infrastructure/`. The one root linter config is `.alexrc.yml`: alex only reads its config from the linted files' folders and their parents. Claude Code reads AGENTS.md files directly; there's no `CLAUDE.md`.
 
 ## Working here
 

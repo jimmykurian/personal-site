@@ -83,6 +83,7 @@ jobs:
       editorconfig: ${{ steps.editorconfig.outcome }}
       markdown: ${{ steps.markdown.outcome }}
       spelling: ${{ steps.spelling.outcome }}
+      inclusive_language: ${{ steps.inclusive_language.outcome }}
       yaml: ${{ steps.yaml.outcome }}
       schemas: ${{ steps.schemas.outcome }}
       commits: ${{ steps.commits.outcome }}
@@ -136,6 +137,9 @@ jobs:
       - id: spelling
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: task lint:spelling
+      - id: inclusive_language
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: task lint:inclusive-language
       - id: yaml
         if: ${{ !cancelled() }}
         run: task lint:yaml
@@ -473,6 +477,7 @@ jobs:
                   ['📐', 'EditorConfig', 'editorconfig'],
                   ['📝', 'Markdown lint', 'markdown'],
                   ['📖', 'Spelling (cspell)', 'spelling'],
+                  ['🤝', 'Inclusive language (alex)', 'inclusive_language'],
                   ['📋', 'YAML lint', 'yaml'],
                   ['🗂️', 'Config schemas (v8r)', 'schemas'],
                   ['💬', 'Commit messages (commitlint)', 'commits'],

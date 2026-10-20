@@ -73,6 +73,7 @@ src/data/site.json (typed schemas)   (fetched at build)      (downloaded at buil
 | `lint:editorconfig` | every file against `.editorconfig` | `.config/editorconfig-checker.json` |
 | `lint:markdown` | markdownlint on the `.md` files | `.config/.markdownlint-cli2.jsonc` |
 | `lint:spelling` | cspell on posts, pages, docs and code | `.config/cspell.json`, words in `.config/cspell-words.txt` |
+| `lint:inclusive-language` | alex on the docs, posts and site content, for insensitive or inconsiderate wording | `.alexrc.yml` (allow list) |
 | `lint:yaml` | yamllint on the YAML files | `.config/yamllint.yml` |
 | `lint:schemas` | v8r validates the JSON, YAML and TOML configs against their published schemas | `.config/v8rrc.yml` |
 | `lint:commits` | commit messages (commitlint) | `.config/commitlintrc.json` |
@@ -101,7 +102,7 @@ Prettier skips `.astro` and `.mdx` files: whitespace between inline elements ren
 
 The git hooks in `.githooks/` are plain bash, so they need no `node_modules`:
 
-- **pre-commit:** checks the staged files (secrets with gitleaks and secretlint, the lockfile, spelling, formatting, ESLint, Stylelint, yamllint, shellcheck, `tofu fmt`, actionlint) and refuses commits on `main`.
+- **pre-commit:** checks the staged files (secrets with gitleaks and secretlint, the lockfile, spelling, inclusive language, formatting, ESLint, Stylelint, yamllint, shellcheck, `tofu fmt`, actionlint) and refuses commits on `main`.
 - **commit-msg:** checks the message against Conventional Commits.
 - **pre-push:** refuses pushes to `main`, or deleting it. It runs the unit tests if `website/` changed and the module tests if `infrastructure/` changed, on a clean checkout of the pushed commit.
 
@@ -134,6 +135,7 @@ The devcontainer (`.devcontainer/`) does all of that on creation, for VS Code or
 .devcontainer/           devcontainer with the pinned tools, dependencies and Chrome
 .vscode/                 VS Code: recommended extensions, settings, debug configs, the dev-server task, snippets
 .mise.toml               tool versions
+.alexrc.yml              inclusive-language allow list (alex reads it only from the root)
 Taskfile.yml             every check, test and build step, by name
 infrastructure/          OpenTofu modules and tests for the Azure resources (see infrastructure/README.md)
 website/                 the Astro site (see website/README.md)
