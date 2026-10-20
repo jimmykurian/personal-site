@@ -1,5 +1,7 @@
 {
   "$schema": "https://unpkg.com/knip@6/schema-jsonc.json",
+  // Run from the root Taskfile.yml (task lint:licenses).
+  "entry": ["scripts/check-licenses.mjs"],
   // These run from the root Taskfile.yml, the git hooks and .config/, which knip doesn't read.
   "ignoreDependencies": [
     "@commitlint/cli",

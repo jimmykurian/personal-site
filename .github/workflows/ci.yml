@@ -78,6 +78,7 @@ jobs:
       lockfile: ${{ steps.lockfile.outcome }}
       dedupe: ${{ steps.dedupe.outcome }}
       audit: ${{ steps.audit.outcome }}
+      licenses: ${{ steps.licenses.outcome }}
       actions: ${{ steps.actions.outcome }}
       shell: ${{ steps.shell.outcome }}
       editorconfig: ${{ steps.editorconfig.outcome }}
@@ -122,6 +123,9 @@ jobs:
       - id: audit
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: task lint:audit
+      - id: licenses
+        if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        run: task lint:licenses
       - id: actions
         if: ${{ !cancelled() }}
         run: task lint:actions
@@ -472,6 +476,7 @@ jobs:
                   ['📦', 'Lockfile rules', 'lockfile'],
                   ['📦', 'Lockfile dedupe', 'dedupe'],
                   ['🔒', 'npm audit', 'audit'],
+                  ['📜', 'Dependency licenses', 'licenses'],
                   ['🔧', 'Workflow lint (actionlint, zizmor)', 'actions'],
                   ['🐚', 'Shell lint (shellcheck)', 'shell'],
                   ['📐', 'EditorConfig', 'editorconfig'],

@@ -140,13 +140,14 @@ src/
   styles/global.css      tokens, type, layout
 public/                  favicon, robots.txt, og-default.png, staticwebapp.config.json
 scripts/resume-pdf.mjs   prints /resume/ to dist/resume.pdf
+scripts/check-licenses.mjs  checks the installed packages' licenses (task lint:licenses)
 tests/unit/              Vitest unit tests, mirroring src/ one file per file
 tests/integration/       build the site, then test the output
 tests/e2e/               Playwright specs, in Chrome at desktop and phone sizes
 tests/support/           render helper, content fixtures, image stub, content-rule patterns, dist readers
 astro.config.mjs         site URL, integrations, fonts
 eslint.config.js         ESLint: TypeScript, Astro and accessibility rules
-.prettierrc.json         Prettier (skips .astro and .mdx, see .prettierignore)
+.prettierignore          what Prettier skips (.astro, .mdx); the config is ../.config/formatters/prettierrc.json
 stylelint.config.mjs     Stylelint: BEM class names, Astro style blocks
 knip.jsonc               knip: dead code, and the tools run from the repo root
 playwright.config.ts     Playwright: Chrome, preview server, projects
