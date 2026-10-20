@@ -57,6 +57,7 @@ jobs:
           filters: |
             website:
               - website/**
+              - .config/formatters/**
               - .config/lighthouserc.json
               - .github/workflows/ci.yml
               - Taskfile.yml
