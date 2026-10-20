@@ -63,19 +63,20 @@ src/data/site.json (typed schemas)   (fetched at build)      (downloaded at buil
 
 | Task | Checks | Config |
 | --- | --- | --- |
-| `lint:secrets` | gitleaks over the git history, including non-npm registry URLs | `.config/gitleaks.toml` |
-| `lint:secretlint` | secretlint's recommended rules over the tracked files, with secrets masked in the output | `.config/secretlintrc.json` |
+| `lint:secrets` | gitleaks over the git history, including non-npm registry URLs | `.config/linters/gitleaks.toml` |
+| `lint:secretlint` | secretlint's recommended rules over the tracked files, with secrets masked in the output | `.config/linters/secretlintrc.json` |
 | `lint:lockfile` | the lockfile: packages from registry.npmjs.org only, sha512 hashes only, no git dependencies, an upper bound on every override range, no npm or Yarn lockfile | |
 | `lint:dedupe` | no duplicate versions in the lockfile that pnpm could merge | |
 | `lint:audit` | no high or critical advisories (`pnpm audit`) | `website/pnpm-workspace.yaml` |
+| `lint:licenses` | every installed package's license is on the allowed list, or the package is excluded with a reason | `.config/licenses/` |
 | `lint:actions` | actionlint and zizmor on the workflows | |
 | `lint:shell` | shellcheck on the scripts and hooks | |
-| `lint:editorconfig` | every file against `.editorconfig` | `.config/editorconfig-checker.json` |
-| `lint:markdown` | markdownlint on the `.md` files | `.config/.markdownlint-cli2.jsonc` |
-| `lint:spelling` | cspell on posts, pages, docs and code | `.config/cspell.json`, words in `.config/cspell-words.txt` |
+| `lint:editorconfig` | every file against `.editorconfig` | `.config/linters/editorconfig-checker.json` |
+| `lint:markdown` | markdownlint on the `.md` files | `.config/linters/.markdownlint-cli2.jsonc` |
+| `lint:spelling` | cspell on posts, pages, docs and code | `.config/spelling/cspell.json`, words in `.config/spelling/words.txt` |
 | `lint:inclusive-language` | alex on the docs, posts and site content, for insensitive or inconsiderate wording | `.alexrc.yml` (allow list) |
-| `lint:yaml` | yamllint on the YAML files | `.config/yamllint.yml` |
-| `lint:schemas` | v8r validates the JSON, YAML and TOML configs against their published schemas | `.config/v8rrc.yml` |
+| `lint:yaml` | yamllint on the YAML files | `.config/linters/yamllint.yml` |
+| `lint:schemas` | v8r validates the JSON, YAML and TOML configs against their published schemas | `.config/linters/v8rrc.yml` |
 | `lint:commits` | commit messages (commitlint) | `.config/commitlintrc.json` |
 | `lint:pr-title` | a pull request title, which becomes the squash commit (commitlint) | `.config/commitlintrc.json` |
 | `lint:pr-template` | a pull request body keeps every template section and replaces its instructions | `.github/PULL_REQUEST_TEMPLATE.md` |
@@ -86,7 +87,7 @@ src/data/site.json (typed schemas)   (fetched at build)      (downloaded at buil
 | --- | --- | --- |
 | `lint:astro` | `astro check` type-checks `.astro` and `.ts` files | `website/tsconfig.json` |
 | `lint:eslint` | ESLint, with accessibility rules for `.astro` markup | `website/eslint.config.js` |
-| `lint:format` | Prettier | `website/.prettierrc.json` |
+| `lint:format` | Prettier | `.config/formatters/prettierrc.json`, through `prettier` in `website/package.json` |
 | `lint:css` | Stylelint on `src/styles/` and `.astro` style blocks | `website/stylelint.config.mjs` |
 | `lint:dead-code` | knip: unused files, exports and dependencies | `website/knip.jsonc` |
 
@@ -96,7 +97,7 @@ After `task build`, three more run against `dist/`:
 
 - `task test:e2e` includes the axe checks on every page.
 - `task lighthouse` fails below 0.95 for accessibility, 0.9 for SEO and best practices, or 0.8 for performance (the median of 3 runs; CI runners are noisy), or above 0.1 layout shift. `/resume/` is left out: it's the print source for the PDF, noindexed, with small contact links.
-- `task lint:links` checks the external links with lychee (`.config/lychee.toml`). CI runs it nightly, after the deploy, so another site's outage doesn't block a push.
+- `task lint:links` checks the external links with lychee (`.config/linters/lychee.toml`). CI runs it nightly, after the deploy, so another site's outage doesn't block a push.
 
 Prettier skips `.astro` and `.mdx` files: whitespace between inline elements renders in Astro templates, and Prettier's MDX support is MDX 1.
 
@@ -130,7 +131,11 @@ The devcontainer (`.devcontainer/`) does all of that on creation, for VS Code or
 .github/labeler.yml      which paths get which pull request label
 .github/ISSUE_TEMPLATE/  bug, feature and subtask forms; PULL_REQUEST_TEMPLATE.md beside it
 .github/renovate.json    dependency updates
-.config/                 configs for the repo-wide checks (cspell, markdownlint, gitleaks, lychee, ...)
+.config/                 repo-wide check configs: commitlint and Lighthouse at the top, then
+  formatters/              Prettier
+  linters/                 gitleaks, secretlint, editorconfig, markdownlint, yamllint, v8r, lychee
+  spelling/                cspell and the project word list
+  licenses/                allowed licenses and excluded packages (with a README)
 .githooks/               pre-commit, commit-msg and pre-push hooks (task hooks:install)
 .devcontainer/           devcontainer with the pinned tools, dependencies and Chrome
 .vscode/                 VS Code: recommended extensions, settings, debug configs, the dev-server task, snippets

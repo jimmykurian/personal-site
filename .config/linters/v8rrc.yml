@@ -1,5 +1,6 @@
 # v8r validates these configs against their published schemas (task lint:schemas). Most are
-# found through SchemaStore; customCatalog maps the rest. v8r finds this file in .config/.
+# found through SchemaStore; customCatalog maps the rest. task lint:schemas
+# points v8r at this file with V8R_CONFIG_FILE.
 patterns:
   - website/package.json
   - website/tsconfig.json
@@ -10,13 +11,13 @@ patterns:
   - .github/labeler.yml
   - .devcontainer/devcontainer.json
   - Taskfile.yml
-  - .config/cspell.json
-  - .config/.markdownlint-cli2.jsonc
+  - .config/spelling/cspell.json
+  - .config/linters/.markdownlint-cli2.jsonc
   - .config/commitlintrc.json
-  - .config/editorconfig-checker.json
-  - .config/lychee.toml
-  - .config/yamllint.yml
-  - .config/v8rrc.yml
+  - .config/linters/editorconfig-checker.json
+  - .config/linters/lychee.toml
+  - .config/linters/yamllint.yml
+  - .config/linters/v8rrc.yml
 
 customCatalog:
   schemas:
@@ -40,20 +41,20 @@ customCatalog:
       location: https://www.schemastore.org/commitlintrc.json
     - name: editorconfig-checker
       description: editorconfig-checker config, in .config/ without the leading dot
-      fileMatch: ['**/.config/editorconfig-checker.json']
+      fileMatch: ['**/.config/linters/editorconfig-checker.json']
       location: https://raw.githubusercontent.com/editorconfig-checker/editorconfig-checker/main/.editorconfig-checker.schema.json
     - name: yamllint
       description: yamllint config
-      fileMatch: ['**/.config/yamllint.yml']
+      fileMatch: ['**/.config/linters/yamllint.yml']
       location: https://www.schemastore.org/yamllint.json
     - name: v8r
       description: This file
-      fileMatch: ['**/.config/v8rrc.yml']
+      fileMatch: ['**/.config/linters/v8rrc.yml']
       location: https://raw.githubusercontent.com/chris48s/v8r/main/config-schema.json
     # JSON with comments, read as JSON5.
     - name: markdownlint-cli2
       description: markdownlint-cli2 config
-      fileMatch: ['**/.config/.markdownlint-cli2.jsonc']
+      fileMatch: ['**/.config/linters/.markdownlint-cli2.jsonc']
       location: https://raw.githubusercontent.com/DavidAnson/markdownlint-cli2/main/schema/markdownlint-cli2-config-schema.json
       parser: json5
     - name: devcontainer.json

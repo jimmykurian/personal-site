@@ -44,9 +44,9 @@ stylelint_staged() {
   (cd website && ./node_modules/.bin/stylelint "${@#website/}")
 }
 
-check "secrets" gitleaks gitleaks git --pre-commit --staged --no-banner --log-level warn --redact --config .config/gitleaks.toml .
+check "secrets" gitleaks gitleaks git --pre-commit --staged --no-banner --log-level warn --redact --config .config/linters/gitleaks.toml .
 if stage '.'; then
-  check "secretlint" "$BIN/secretlint" "$BIN/secretlint" --secretlintrc .config/secretlintrc.json --maskSecrets "${FILES[@]}"
+  check "secretlint" "$BIN/secretlint" "$BIN/secretlint" --secretlintrc .config/linters/secretlintrc.json --maskSecrets "${FILES[@]}"
 fi
 
 # Runs task lint:lockfile against the staged lockfile, not the working copy.
@@ -64,13 +64,13 @@ if stage '(^|/)(pnpm-lock\.yaml|package-lock\.json|yarn\.lock)$'; then
 fi
 
 if stage '.'; then
-  check "editorconfig" editorconfig-checker editorconfig-checker -config .config/editorconfig-checker.json "${FILES[@]}"
+  check "editorconfig" editorconfig-checker editorconfig-checker -config .config/linters/editorconfig-checker.json "${FILES[@]}"
 fi
 if stage '\.(md|mdx|astro|ts|css|yml)$|^\.gitmessage$'; then
-  check "spelling" "$BIN/cspell" "$BIN/cspell" lint --config .config/cspell.json --no-progress --no-summary --dot --no-must-find-files "${FILES[@]}"
+  check "spelling" "$BIN/cspell" "$BIN/cspell" lint --config .config/spelling/cspell.json --no-progress --no-summary --dot --no-must-find-files "${FILES[@]}"
 fi
 if stage '\.md$'; then
-  check "markdown" "$BIN/markdownlint-cli2" "$BIN/markdownlint-cli2" --config .config/.markdownlint-cli2.jsonc "${FILES[@]}"
+  check "markdown" "$BIN/markdownlint-cli2" "$BIN/markdownlint-cli2" --config .config/linters/.markdownlint-cli2.jsonc "${FILES[@]}"
   check "inclusive language" "$BIN/alex" "$BIN/alex" --quiet "${FILES[@]}"
 fi
 if stage '^website/src/content/posts/.*\.mdx$'; then
@@ -81,7 +81,7 @@ if stage '^website/src/(content|data)/[^/]*\.json$'; then
 fi
 if stage '^website/.*\.(ts|js|mjs|json|css|md|yml|yaml)$'; then
   check "format" "$BIN/prettier" "$BIN/prettier" --check --ignore-unknown \
-    --ignore-path website/.prettierignore --config website/.prettierrc.json "${FILES[@]}"
+    --ignore-path website/.prettierignore --config .config/formatters/prettierrc.json "${FILES[@]}"
 fi
 if stage '^website/.*\.(ts|js|mjs|astro)$'; then
   check "eslint" "$BIN/eslint" eslint_staged "${FILES[@]}"
@@ -96,7 +96,7 @@ if stage '\.ya?ml$'; then
     if [[ "$file" != */pnpm-lock.yaml ]]; then YAML+=("$file"); fi
   done
   if [[ ${#YAML[@]} -gt 0 ]]; then
-    check "yamllint" yamllint yamllint --strict -c .config/yamllint.yml "${YAML[@]}"
+    check "yamllint" yamllint yamllint --strict -c .config/linters/yamllint.yml "${YAML[@]}"
   fi
 fi
 if stage '\.sh$|^\.githooks/'; then

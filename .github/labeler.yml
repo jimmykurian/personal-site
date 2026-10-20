@@ -63,7 +63,6 @@ configuration:
           - "website/tsconfig.json"
           - "website/astro.config.mjs"
           - "website/eslint.config.js"
-          - "website/.prettierrc.json"
           - "website/.prettierignore"
 
 hooks:
@@ -85,7 +84,7 @@ security:
   - changed-files:
       - any-glob-to-any-file:
           - "SECURITY.md"
-          - ".config/gitleaks.toml"
+          - ".config/linters/gitleaks.toml"
           - "website/public/staticwebapp.config.json"
           - "website/tests/support/rules.ts"
           - "website/tests/integration/content-rules.test.ts"

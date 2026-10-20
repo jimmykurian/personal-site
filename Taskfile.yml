@@ -46,6 +46,7 @@ tasks:
       - task: lint:lockfile
       - task: lint:dedupe
       - task: lint:audit
+      - task: lint:licenses
       - task: lint:actions
       - task: lint:shell
       - task: lint:editorconfig
@@ -64,12 +65,12 @@ tasks:
   lint:secrets:
     desc: Scan the git history for secrets and non-npm registry URLs (gitleaks)
     cmds:
-      - gitleaks git --no-banner --redact --config .config/gitleaks.toml .
+      - gitleaks git --no-banner --redact --config .config/linters/gitleaks.toml .
 
   lint:secretlint:
     desc: Scan the tracked files for secrets with secretlint's recommended rules (gitleaks covers the history)
     cmds:
-      - git ls-files -z | xargs -0 {{.BIN}}/secretlint --secretlintrc .config/secretlintrc.json --maskSecrets
+      - git ls-files -z | xargs -0 {{.BIN}}/secretlint --secretlintrc .config/linters/secretlintrc.json --maskSecrets
 
   lint:lockfile:
     desc: 'Check the lockfile: registry packages only, sha512 hashes, bounded overrides, pnpm only'
@@ -119,6 +120,12 @@ tasks:
     cmds:
       - pnpm audit --audit-level high
 
+  lint:licenses:
+    desc: Check every installed package's license against .config/licenses/
+    dir: website
+    cmds:
+      - node scripts/check-licenses.mjs
+
   lint:shell:
     desc: Lint the shell scripts and git hooks (shellcheck)
     cmds:
@@ -127,17 +134,17 @@ tasks:
   lint:editorconfig:
     desc: Check every file against .editorconfig
     cmds:
-      - editorconfig-checker -config .config/editorconfig-checker.json
+      - editorconfig-checker -config .config/linters/editorconfig-checker.json
 
   lint:markdown:
     desc: Lint the Markdown files (markdownlint)
     cmds:
-      - '{{.BIN}}/markdownlint-cli2 --config .config/.markdownlint-cli2.jsonc'
+      - '{{.BIN}}/markdownlint-cli2 --config .config/linters/.markdownlint-cli2.jsonc'
 
   lint:spelling:
     desc: Spell-check the posts, pages, docs and code (cspell)
     cmds:
-      - '{{.BIN}}/cspell lint --config .config/cspell.json --no-progress --dot {{.SPELLING_GLOBS}}'
+      - '{{.BIN}}/cspell lint --config .config/spelling/cspell.json --no-progress --dot {{.SPELLING_GLOBS}}'
 
   lint:inclusive-language:
     desc: Check the docs, posts and site content for insensitive wording (alex, allow list in .alexrc.yml)
@@ -150,13 +157,13 @@ tasks:
   lint:yaml:
     desc: Lint the YAML files (yamllint)
     cmds:
-      - git ls-files -z '*.yml' '*.yaml' ':!:website/pnpm-lock.yaml' | xargs -0 yamllint --strict -c .config/yamllint.yml
+      - git ls-files -z '*.yml' '*.yaml' ':!:website/pnpm-lock.yaml' | xargs -0 yamllint --strict -c .config/linters/yamllint.yml
 
   lint:schemas:
     desc: Validate the JSON, YAML and TOML configs against their published schemas (v8r)
     cmds:
-      # The files and the schemas SchemaStore can't match are in .config/v8rrc.yml.
-      - '{{.BIN}}/v8r'
+      # The files and the schemas SchemaStore can't match are in .config/linters/v8rrc.yml.
+      - V8R_CONFIG_FILE=.config/linters/v8rrc.yml {{.BIN}}/v8r
 
   lint:web:
     desc: Type-check, lint and format-check the website
@@ -239,7 +246,7 @@ tasks:
   lint:links:
     desc: Check the external links in the built site (lychee; needs `task build`)
     cmds:
-      - lychee --config .config/lychee.toml --no-progress --root-dir "$PWD/website/dist" website/dist
+      - lychee --config .config/linters/lychee.toml --no-progress --root-dir "$PWD/website/dist" website/dist
 
   format:
     desc: Format the website code (Prettier, ESLint fixes)

@@ -6,7 +6,7 @@ Jimmy Kurian's personal site: a portfolio, resume and blog at <https://www.jimmy
 
 - `website/`: the Astro site (static output, TypeScript, MDX, no client framework). Read [website/AGENTS.md](website/AGENTS.md) before working there.
 - `infrastructure/`: OpenTofu modules and tests for the Azure resources. Nothing there deploys yet. Read [infrastructure/AGENTS.md](infrastructure/AGENTS.md) before working there.
-- Root tooling: `.mise.toml` pins every tool version (Node included; pnpm stays pinned by `packageManager` in `website/package.json`). `Taskfile.yml` holds every command, and CI and the git hooks call those tasks. `.config/` holds the repo-wide linter configs, and `.githooks/` holds plain bash hooks.
+- Root tooling: `.mise.toml` pins every tool version (Node included; pnpm stays pinned by `packageManager` in `website/package.json`). `Taskfile.yml` holds every command, and CI and the git hooks call those tasks. `.config/` holds the repo-wide configs, grouped into `formatters/`, `linters/`, `spelling/` and `licenses/`, and `.githooks/` holds plain bash hooks.
 - Keep the root to the files already there. New project files go in `website/` or `infrastructure/`. The one root linter config is `.alexrc.yml`: alex only reads its config from the linted files' folders and their parents. Claude Code reads AGENTS.md files directly; there's no `CLAUDE.md`.
 
 ## Working here
@@ -15,7 +15,7 @@ Jimmy Kurian's personal site: a portfolio, resume and blog at <https://www.jimmy
 - Before you call a change done, run `task lint` and `task test`. Also run `task build`, `task test:integration` and `task test:e2e` when the change affects published output.
 - Every check fails the build. Never add `|| true`, `continue-on-error` or warn-only checks. Fix the finding, or skip it inline with a stated reason.
 - `main` takes changes only through squash-merged pull requests. Branch first, and fill in `.github/PULL_REQUEST_TEMPLATE.md`, keeping every heading and replacing its instructions. The PR title becomes the commit on `main`, so it follows Conventional Commits. CI checks both (`task lint:pr-template`, `task lint:pr-title`).
-- Commits follow Conventional Commits, with the scopes listed in `.gitmessage`. They're SSH-signed; never pass `--no-gpg-sign`. A new scope goes in both `.gitmessage` and `.config/commitlintrc.json`, and a new cspell word in `.config/cspell-words.txt`.
+- Commits follow Conventional Commits, with the scopes listed in `.gitmessage`. They're SSH-signed; never pass `--no-gpg-sign`. A new scope goes in both `.gitmessage` and `.config/commitlintrc.json`, and a new cspell word in `.config/spelling/words.txt`.
 - Install npm packages only from registry.npmjs.org. On a network that can't reach it, resolve lockfile changes in CI. Never point the lockfile at another registry; `task lint:lockfile` blocks that.
 - Never print secrets or tokens. Jimmy does the logins.
 

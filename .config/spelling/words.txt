@@ -39,6 +39,7 @@ jimmykurian
 knip
 Kurian
 lhci
+libvips
 lichess
 lighthouseci
 lighthouserc
