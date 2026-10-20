@@ -103,7 +103,8 @@ Every change goes through a pull request; `main` doesn't take direct pushes:
   title with commitlint (`task lint:pr-title`) and the body against the
   template (`task lint:pr-template`), and labels the PR by the paths it
   changes (`.github/labeler.yml`).
-- Merging needs the CI checks, CodeQL and a Copilot review to pass. `main`
+- Merging needs the CI checks, CodeQL and a Copilot review to pass, and the
+  ruleset requires the **Title** and **Template** checks by name. `main`
   keeps a linear history of signed commits, and can't be force-pushed or
   deleted.
 - Rebase the branch onto `main` rather than merging it in (`git pull --rebase`).
