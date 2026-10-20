@@ -150,7 +150,9 @@ gh ssh-key add ~/.ssh/id_ed25519.pub --type signing --title "<machine> signing"
 ## Before you push
 
 The pre-push hook runs `task test` when `website/` changed and `task infra:test`
-when `infrastructure/` changed, and refuses pushes to `main`. The rest is up to you:
+when `infrastructure/` changed, and refuses pushes to `main` or deleting it. The
+tests run on the working tree, so push the checked-out branch with no
+uncommitted changes under `website/` or `infrastructure/`. The rest is up to you:
 
 - [ ] `task lint`, `task test`, `task test:integration` and `task test:e2e`
       pass (the last two after `task build`)
