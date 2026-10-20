@@ -80,8 +80,7 @@ Coding agents (Claude Code, Codex, Copilot) read three AGENTS.md files.
 There's deliberately no `CLAUDE.md`, since Claude Code reads `AGENTS.md` directly.
 
 - [AGENTS.md](AGENTS.md) at the root holds only what applies to every task:
-  the map, how to work and verify, hosting, the content rules and the open
-  items.
+  the map, how to work and verify, hosting and the content rules.
 - [website/AGENTS.md](website/AGENTS.md) and
   [infrastructure/AGENTS.md](infrastructure/AGENTS.md) cover their own
   subprojects.
