@@ -68,16 +68,15 @@ tasks:
 
   lint:headers:
     desc: Check every file has the copyright and author header (exceptions in .config/linters/headers-exclude.txt)
-    vars:
-      # The pre-commit hook passes the staged files; otherwise every tracked file.
-      FILES: '{{.FILES | default ""}}'
     cmds:
       - silent: true
         cmd: |
           patterns="$(mktemp)"
           files="$(mktemp)"
           grep -vE '^\s*(#|$)' .config/linters/headers-exclude.txt > "$patterns"
-          if [ -n "{{.FILES}}" ]; then printf '%s\n' {{.FILES}}; else git ls-files; fi > "$files.all"
+          # HEADER_FILES is the path of a file listing paths one per line (the pre-commit hook's
+          # staged files). The paths are read as data, never expanded by the shell.
+          if [ -n "${HEADER_FILES:-}" ]; then cat "$HEADER_FILES"; else git ls-files; fi > "$files.all"
           # grep exits 1 when every file is excluded; that's not a failure.
           grep -v -E -f "$patterns" "$files.all" > "$files" || [ $? -eq 1 ]
           status=0
