@@ -1,0 +1,53 @@
+{
+  // Snippets for this repo's conventions: Arrange, Act, Assert tests and post frontmatter.
+  "Vitest unit test (Arrange, Act, Assert)": {
+    "scope": "typescript",
+    "prefix": "test-unit",
+    "body": [
+      "it('${1:does something}', async () => {",
+      "  // Arrange",
+      "  $2",
+      "",
+      "  // Act",
+      "  const html = await render(${3:Component});",
+      "",
+      "  // Assert",
+      "  expect(dom(html).querySelector('${4:selector}')).not.toBeNull();$0",
+      "});"
+    ],
+    "description": "A unit test with the steps marked, rendering through tests/support/container.ts"
+  },
+  "Playwright test (Arrange, Act, Assert)": {
+    "scope": "typescript",
+    "prefix": "test-e2e",
+    "body": [
+      "test('${1:does something}', async ({ page }) => {",
+      "  // Arrange",
+      "  await page.goto('${2:/}');",
+      "",
+      "  // Act",
+      "  $3",
+      "",
+      "  // Assert",
+      "  await expect(page.getByRole('${4:heading}')).toBeVisible();$0",
+      "});"
+    ],
+    "description": "An end-to-end test with the steps marked; import test and expect from tests/e2e/fixtures.ts"
+  },
+  "Post frontmatter": {
+    "scope": "mdx",
+    "prefix": "post",
+    "body": [
+      "---",
+      "title: \"${1:Post title}\"",
+      "description: \"${2:One or two sentences. Shows in the list, the feed, and link previews.}\"",
+      "pubDate: ${CURRENT_YEAR}-${CURRENT_MONTH}-${CURRENT_DATE}",
+      "tags: [\"${3:tag}\"]",
+      "draft: true",
+      "---",
+      "",
+      "$0"
+    ],
+    "description": "Frontmatter for a new post in src/content/posts/, as a draft"
+  }
+}

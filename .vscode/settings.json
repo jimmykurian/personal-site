@@ -1,0 +1,36 @@
+{
+  // Format on save with the repo's own tools. Prettier formats only files under a Prettier
+  // config (website/), and never .astro or .mdx: whitespace between inline elements renders.
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "prettier.requireConfig": true,
+  "[astro]": { "editor.formatOnSave": false },
+  "[mdx]": { "editor.formatOnSave": false },
+  "[markdown]": {
+    "editor.formatOnSave": false,
+    "editor.wordWrap": "on",
+    "editor.codeActionsOnSave": { "source.fixAll.markdownlint": "explicit" }
+  },
+  "[typescript]": {
+    "editor.codeActionsOnSave": { "source.fixAll.eslint": "explicit" }
+  },
+  "[shellscript]": { "editor.formatOnSave": false },
+  "[terraform]": { "editor.defaultFormatter": "opentofu.vscode-opentofu" },
+  "[terraform-vars]": { "editor.defaultFormatter": "opentofu.vscode-opentofu" },
+
+  // Linters read the same configs as `task lint`.
+  "eslint.workingDirectories": ["website"],
+  "eslint.validate": ["javascript", "typescript", "astro"],
+  "cSpell.import": ["./.config/cspell.json"],
+  "markdownlint.configFile": ".config/.markdownlint-cli2.jsonc",
+  "shellcheck.customArgs": ["--external-sources"],
+
+  // Tests.
+  "vitest.rootConfig": "website/vitest.config.ts",
+  "testing.automaticallyOpenPeekView": "failureInVisibleDocument",
+
+  "task.autoDetect": "on",
+  "github-actions.workflows.pinned.refresh.enabled": false,
+  "typescript.tsdk": "website/node_modules/typescript/lib",
+  "files.associations": { "*.mdx": "mdx", "**/.githooks/*": "shellscript" }
+}

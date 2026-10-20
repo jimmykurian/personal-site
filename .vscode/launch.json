@@ -1,0 +1,32 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Chrome: dev server",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:4321",
+      "webRoot": "${workspaceFolder}/website",
+      "preLaunchTask": "astro dev"
+    },
+    {
+      "name": "Debug unit tests (Vitest)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/website/node_modules/vitest/vitest.mjs",
+      "args": ["run", "--project", "unit", "--no-file-parallelism"],
+      "cwd": "${workspaceFolder}/website",
+      "console": "integratedTerminal",
+      "autoAttachChildProcesses": true
+    },
+    {
+      "name": "Debug end-to-end tests (Playwright)",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/website/node_modules/@playwright/test/cli.js",
+      "args": ["test", "--debug"],
+      "cwd": "${workspaceFolder}/website",
+      "console": "integratedTerminal"
+    }
+  ]
+}

@@ -110,7 +110,7 @@ The devcontainer (`.devcontainer/`) does all of that on creation, for VS Code or
 .config/                 configs for the repo-wide checks (cspell, markdownlint, gitleaks, lychee, ...)
 .githooks/               pre-commit, commit-msg and pre-push hooks (task hooks:install)
 .devcontainer/           devcontainer with the pinned tools, dependencies and Chrome
-.vscode/extensions.json  recommended editor extensions
+.vscode/                 VS Code: recommended extensions, settings, debug configs, the dev-server task, snippets
 .mise.toml               tool versions
 Taskfile.yml             every check, test and build step, by name
 infrastructure/          OpenTofu modules and tests for the Azure resources (see infrastructure/README.md)

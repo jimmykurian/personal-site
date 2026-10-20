@@ -10,7 +10,7 @@ vars:
   SPELLING_GLOBS: >-
     "**/*.md" "website/src/**/*.{mdx,astro,ts,css}" "website/tests/**/*.ts" "website/scripts/**"
     ".github/**/*.yml" "infrastructure/**/*.{tf,hcl,sh}" ".gitmessage" "Taskfile.yml" ".githooks/*"
-    ".devcontainer/*" ".mise.toml"
+    ".devcontainer/*" ".vscode/*" ".mise.toml"
 
 tasks:
   default:
