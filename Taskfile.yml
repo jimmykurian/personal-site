@@ -406,6 +406,8 @@ tasks:
     desc: Generate each module's docs into infrastructure/docs/modules/ (terraform-docs)
     dir: infrastructure
     cmds:
+      # Start from empty, so a removed or renamed module's page goes too.
+      - rm -rf docs/modules
       - for: { var: MODULES }
         cmd: mkdir -p docs/{{.ITEM}} && terraform-docs markdown table --config .terraform-docs.yml --output-file "$PWD/docs/{{.ITEM}}/README.md" {{.ITEM}}
     vars:
