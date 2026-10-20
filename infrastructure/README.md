@@ -83,6 +83,15 @@ Checkov has no policies for Static Web Apps or resource groups yet, so it
 reports nothing today; it covers any resource types added later. Accepted
 findings are skipped on the resource with `#checkov:skip=<ID>:<reason>`.
 
+## How the live resources were created
+
+Until these modules deploy, this is the record of the portal setup:
+
+1. Create a **Static Web App** on the **Free** plan. For the deployment source choose **Other**: the repo's workflow does the build.
+2. Copy the app's **deployment token** (Overview, "Manage deployment token") into the GitHub repo secret `AZURE_STATIC_WEB_APPS_API_TOKEN`. The workflow builds `website/` and uploads `website/dist/` with it (`skip_app_build: true`), and pull requests get their own preview environment.
+3. Under **Custom domains**, add `www.jimmykurian.me` and complete the CNAME validation. Then add `jimmykurian.me` as the apex, with TXT validation and an ALIAS record.
+4. Set `www.jimmykurian.me` as the default domain so the apex redirects to it. `site` in `website/astro.config.mjs` must match the canonical host.
+
 ## Not managed here
 
 - **DNS:** records live at Namecheap (BasicDNS). `www` is a CNAME to the app's

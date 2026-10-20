@@ -70,7 +70,7 @@ pnpm test:integration  # build the site, then check the output
 pnpm test:e2e      # Playwright in Chrome against dist/ (after pnpm build)
 ```
 
-`README.md` explains where each piece of content lives. Your editor should pick
+`website/README.md` explains where each piece of content lives. Your editor should pick
 up `.editorconfig` (2 spaces, LF, final newline); `.gitattributes` keeps line
 endings LF on every OS.
 
