@@ -1,3 +1,9 @@
+/**
+ * @file posts.test.ts
+ * @author Jimmy Kurian
+ * @copyright Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+ */
+
 import { getCollection } from 'astro:content';
 import { describe, expect, it, vi } from 'vitest';
 import { formatDate, getPosts, readingMinutes } from '../../../src/lib/posts';
@@ -65,6 +71,18 @@ describe('readingMinutes', () => {
 
     // Act
     const minutes = readingMinutes(`${prose}\n${code}`);
+
+    // Assert
+    expect(minutes).toBe(2);
+  });
+
+  it('ignores MDX comments, such as the copyright header', () => {
+    // Arrange
+    const prose = 'word '.repeat(460);
+    const comment = `{/* ${'note '.repeat(300)} */}`;
+
+    // Act
+    const minutes = readingMinutes(`${comment}\n${prose}`);
 
     // Assert
     expect(minutes).toBe(2);

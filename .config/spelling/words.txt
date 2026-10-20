@@ -1,3 +1,5 @@
+# Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+# Author: Jimmy Kurian
 # Names, products and terms the dictionaries don't know. One per line, sorted.
 ACMR
 alexrc
@@ -74,6 +76,8 @@ tflint
 tftest
 timonwong
 toplevel
+tsdoc
+typedoc
 unheaded
 unifiedjs
 unreviewed
