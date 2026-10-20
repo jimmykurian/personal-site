@@ -80,6 +80,7 @@ jobs:
       dedupe: ${{ steps.dedupe.outcome }}
       audit: ${{ steps.audit.outcome }}
       osv: ${{ steps.osv.outcome }}
+      dependency_review: ${{ steps.dependency_review.outcome }}
       licenses: ${{ steps.licenses.outcome }}
       actions: ${{ steps.actions.outcome }}
       shell: ${{ steps.shell.outcome }}
@@ -128,6 +129,14 @@ jobs:
       - id: osv
         if: ${{ !cancelled() }}
         run: task lint:osv
+      # Fails a pull request that adds a dependency with a known advisory. GitHub's dependency
+      # review, free on public repositories; it compares the PR with its base, so it can't
+      # run as a task.
+      - id: dependency_review
+        if: ${{ !cancelled() && github.event_name == 'pull_request' }}
+        uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294 # v5.0.0
+        with:
+          fail-on-severity: low
       - id: licenses
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: task lint:licenses
@@ -482,6 +491,7 @@ jobs:
                   ['📦', 'Lockfile dedupe', 'dedupe'],
                   ['🔒', 'npm audit', 'audit'],
                   ['🛡️', 'Vulnerabilities, every severity (OSV-Scanner)', 'osv'],
+                  ['🔎', 'Dependency review (new dependencies)', 'dependency_review'],
                   ['📜', 'Dependency licenses', 'licenses'],
                   ['🔧', 'Workflow lint (actionlint, zizmor)', 'actions'],
                   ['🐚', 'Shell lint (shellcheck)', 'shell'],
