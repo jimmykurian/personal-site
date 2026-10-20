@@ -80,6 +80,23 @@ describe('built pages', () => {
     expect(current).toEqual(Object.values(expected));
   });
 
+  it('links the source repository from the footer of every page that has one', () => {
+    // Arrange
+    const footers = pages()
+      .map(({ url, file }) => ({ url, footer: page(file).querySelector('footer.site-footer') }))
+      .filter(({ footer }) => footer);
+
+    // Act
+    const sources = footers.map(({ url, footer }) => {
+      const link = footer!.querySelectorAll('a').find((a) => a.text.trim() === 'Source');
+      return [url, link?.getAttribute('href')];
+    });
+
+    // Assert
+    expect(sources.map(([url]) => url)).toContain('/');
+    expect(sources).toEqual(footers.map(({ url }) => [url, site.repository]));
+  });
+
   it('adds Person structured data to the home page only', () => {
     // Arrange
     const withLd = pages().filter(({ file }) => page(file).querySelector('script[type="application/ld+json"]'));

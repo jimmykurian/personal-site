@@ -1,7 +1,11 @@
 # Contributing
 
 This is the source of my personal site, [jimmykurian.me](https://www.jimmykurian.me).
-It's private and [proprietary](LICENSE), so I don't take outside pull requests.
+The repository is public so you can see how the site is built, but it's
+[proprietary](LICENSE) and I'm its only contributor. I don't accept pull
+requests, issues or patches from anyone else; pull requests from forks are
+closed without review. Reading the code doesn't grant a license to reuse it.
+
 If you spot a typo, a broken link or something that looks wrong, email
 <hello@jimmykurian.me>. Security issues go through [SECURITY.md](SECURITY.md).
 
@@ -149,6 +153,9 @@ gh ssh-key add ~/.ssh/id_ed25519.pub --type signing --title "<machine> signing"
 - [ ] New posts render in `pnpm preview`, and `draft: true` is removed when
       they're ready
 - [ ] Nothing from `private/`, no `.env` file and no secret is staged
+- [ ] Nothing staged is unready to share: the repository is public, so a
+      committed draft is readable before it's published. Keep early drafts in
+      `private/` until they're ready
 - [ ] The content rules below hold
 - [ ] `pnpm-lock.yaml` changes only with a deliberate dependency change
 - [ ] `AGENTS.md` and `README.md` are updated if a decision or a command changed
