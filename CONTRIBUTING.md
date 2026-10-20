@@ -70,17 +70,25 @@ pnpm test:integration  # build the site, then check the output
 pnpm test:e2e      # Playwright in Chrome against dist/ (after pnpm build)
 ```
 
-`README.md` explains where each piece of content lives. Your editor should pick
+`website/README.md` explains where each piece of content lives. Your editor should pick
 up `.editorconfig` (2 spaces, LF, final newline); `.gitattributes` keeps line
 endings LF on every OS.
 
 ## AI-assisted development
 
-[AGENTS.md](AGENTS.md) at the root gives coding agents (Claude Code, Codex,
-Copilot) the decisions already made: stack, hosting, design, content rules and
-open items. There's deliberately no `CLAUDE.md`, since Claude Code reads
-`AGENTS.md` directly. When a decision changes, update `AGENTS.md` in the same
-commit.
+Coding agents (Claude Code, Codex, Copilot) read three AGENTS.md files.
+There's deliberately no `CLAUDE.md`, since Claude Code reads `AGENTS.md` directly.
+
+- [AGENTS.md](AGENTS.md) at the root holds only what applies to every task:
+  the map, how to work and verify, hosting and the content rules.
+- [website/AGENTS.md](website/AGENTS.md) and
+  [infrastructure/AGENTS.md](infrastructure/AGENTS.md) cover their own
+  subprojects.
+
+Keep them short. Each line is read on every task, so point to `README.md` or
+`CONTRIBUTING.md` for detail instead of copying it, and leave style to the
+linters. When a decision changes, update the AGENTS.md it belongs in, in the
+same commit.
 
 ## Workflow
 

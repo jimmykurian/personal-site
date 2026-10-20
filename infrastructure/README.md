@@ -3,7 +3,9 @@
 OpenTofu modules for the Azure resources that host
 [jimmykurian.me](https://www.jimmykurian.me), with their tests. The modules
 aren't deployed from here yet: the live resources were created in the portal,
-and nothing in this folder plans or applies them.
+and nothing in this folder plans or applies them. The repo's architecture and
+principles are in the [root README](../README.md), and the rules for coding
+agents in [AGENTS.md](AGENTS.md).
 
 | Resource | Live name | Module |
 | --- | --- | --- |
@@ -32,7 +34,9 @@ infrastructure/
 ├── scripts/                  # run tests, check provider pins
 ├── .checkov.yaml             # Checkov static scan of modules/
 ├── .tflint.hcl               # TFLint rules and plugins
-└── .gitignore
+├── .gitignore
+├── AGENTS.md                 # rules for coding agents working here
+└── README.md
 ```
 
 The modules are generic: they take names, region, plan and domains as inputs
@@ -74,6 +78,8 @@ comments, like the website's tests.
 
 ```sh
 tofu fmt -recursive -check
+tofu -chdir=modules/azure/<module> init -backend=false   # then, for each module:
+tofu -chdir=modules/azure/<module> validate
 tflint --init && tflint --recursive --config "$PWD/.tflint.hcl"
 checkov --config-file .checkov.yaml
 ./scripts/check-provider-pins.sh            # every module pins the same provider version
@@ -82,6 +88,15 @@ checkov --config-file .checkov.yaml
 Checkov has no policies for Static Web Apps or resource groups yet, so it
 reports nothing today; it covers any resource types added later. Accepted
 findings are skipped on the resource with `#checkov:skip=<ID>:<reason>`.
+
+## How the live resources were created
+
+Until these modules deploy, this is the record of the portal setup:
+
+1. Create a **Static Web App** on the **Free** plan. For the deployment source choose **Other**: the repo's workflow does the build.
+2. Copy the app's **deployment token** (Overview, "Manage deployment token") into the GitHub repo secret `AZURE_STATIC_WEB_APPS_API_TOKEN`. The workflow builds `website/` and uploads `website/dist/` with it (`skip_app_build: true`), and pull requests get their own preview environment.
+3. Under **Custom domains**, add `www.jimmykurian.me` and complete the CNAME validation. Then add `jimmykurian.me` as the apex, with TXT validation and an ALIAS record.
+4. Set `www.jimmykurian.me` as the default domain so the apex redirects to it. `site` in `website/astro.config.mjs` must match the canonical host.
 
 ## Not managed here
 
