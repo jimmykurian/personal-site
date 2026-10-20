@@ -33,9 +33,11 @@ infrastructure/
 ├── tests/
 │   ├── acceptance/azure/     # one test file per module
 │   └── integration/          # checks across a module: secrets, the site's domains
+├── docs/modules/             # generated module docs (terraform-docs), one README per module
 ├── scripts/                  # run tests, check provider pins
 ├── .checkov.yaml             # Checkov static scan of modules/
 ├── .tflint.hcl               # TFLint rules and plugins
+├── .terraform-docs.yml       # terraform-docs: Markdown tables for docs/modules/
 ├── .gitignore
 ├── AGENTS.md                 # rules for coding agents working here
 └── README.md
@@ -43,6 +45,18 @@ infrastructure/
 
 The modules are generic: they take names, region, plan and domains as inputs
 and know nothing about this site.
+
+## Module docs
+
+terraform-docs (pinned in the root `.mise.toml`) writes each module's inputs, outputs,
+resources and provider pins to `docs/modules/<group>/<module>/README.md`, from the
+descriptions in its `variables.tf` and `outputs.tf`:
+
+- [azure/resource-group](docs/modules/azure/resource-group/README.md)
+- [azure/static-web-app](docs/modules/azure/static-web-app/README.md)
+
+The pages are committed. `task infra:docs` regenerates them, and `task infra:docs:check`
+(run in CI) fails when they're out of date.
 
 ## Tools
 

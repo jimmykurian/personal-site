@@ -1,0 +1,16 @@
+# Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+# Author: Jimmy Kurian
+# terraform-docs builds docs/modules/<group>/<module>/README.md from each module's
+# variables, outputs, resources and provider pins (task infra:docs; task infra:docs:check
+# fails CI when they're stale).
+formatter: markdown table
+version: ">= 0.24"
+sort:
+  enabled: true
+  by: required
+settings:
+  anchor: true
+  default: true
+  required: true
+  sensitive: true
+  type: true

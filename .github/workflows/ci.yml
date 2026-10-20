@@ -316,6 +316,7 @@ jobs:
       tflint: ${{ steps.tflint.outcome }}
       checkov: ${{ steps.checkov.outcome }}
       pins: ${{ steps.pins.outcome }}
+      docs: ${{ steps.docs.outcome }}
       acceptance: ${{ steps.acceptance.outcome }}
       integration: ${{ steps.integration.outcome }}
       acceptance_passed: ${{ steps.metrics.outputs.acceptance_passed }}
@@ -329,7 +330,7 @@ jobs:
 
       - uses: jdx/mise-action@08ae2a091c038e1e05ec6f5115dc5c69d5a2a6b8 # v5.1.2
         with:
-          install_args: task opentofu tflint uv pipx:checkov
+          install_args: task opentofu tflint terraform-docs uv pipx:checkov
 
       - id: fmt
         run: task infra:fmt
@@ -348,6 +349,10 @@ jobs:
       - id: pins
         if: ${{ !cancelled() }}
         run: task infra:pins
+      # Regenerates the terraform-docs pages and fails if the committed infrastructure/docs/ differs.
+      - id: docs
+        if: ${{ !cancelled() }}
+        run: task infra:docs:check
       - id: acceptance
         if: ${{ !cancelled() }}
         run: mkdir -p reports && task infra:test -- acceptance | tee reports/acceptance.txt
@@ -486,6 +491,7 @@ jobs:
                   ['🔍', 'TFLint', 'tflint'],
                   ['🛡️', 'Security (Checkov)', 'checkov'],
                   ['📌', 'Provider pins', 'pins'],
+                  ['📚', 'Module docs up to date (terraform-docs)', 'docs'],
                   ['🧪', 'Acceptance tests', 'acceptance'],
                   ['🔗', 'Integration tests', 'integration'],
                 ],
@@ -648,6 +654,7 @@ jobs:
               'infrastructure/tflint.json': status(i.tflint),
               'infrastructure/checkov.json': status(i.checkov),
               'infrastructure/pins.json': status(i.pins),
+              'infrastructure/docs.json': status(i.docs),
               'infrastructure/acceptance.json': tests(i.acceptance, i.acceptance_passed && `${i.acceptance_passed} files`),
               'infrastructure/integration.json': tests(i.integration, i.integration_passed && `${i.integration_passed} files`),
               'security/gitleaks.json': status(r.secrets),
