@@ -212,10 +212,19 @@ Anything that needs a real browser belongs here: scripts, focus, scrolling, layo
 
 ## Deploys
 
-`.github/workflows/azure-static-web-apps.yml` runs `task lint`'s checks, then the
-unit tests with coverage, builds `website/` and prints the resume PDF, runs the
-integration, end-to-end and Lighthouse checks on the build, and uploads
-`website/dist/` to Azure Static Web Apps:
+`.github/workflows/ci.yml` runs every check and deploys. Three jobs run side by
+side, each check as its own step:
+
+- **Repository:** the repo-wide checks (`task lint:repo`) and the commit messages.
+- **Website:** the website's lint tasks, the unit tests with coverage, the build
+  and resume PDF, and the integration, end-to-end and Lighthouse checks on the
+  build.
+- **Infrastructure:** `task infra:check`'s checks and the module tests.
+
+On a pull request, the website and infrastructure jobs run only when their files
+change. A **Check table** job then posts one comment on the PR with each check's
+result and the coverage and test counts, and updates it on every push. When
+every job passes, the deploy uploads `website/dist/` to Azure Static Web Apps:
 
 | Trigger            | Result                                         |
 | ------------------ | ---------------------------------------------- |
@@ -228,9 +237,8 @@ If Goodreads can't be reached, the build fails and the last deploy stays live.
 Re-run the workflow once it's back.
 
 `infrastructure/` holds OpenTofu modules for the Azure resources, with their
-tests; they aren't deployed from there yet. `.github/workflows/infrastructure.yml`
-runs `task infra:check` and `task infra:test` when it changes; run them before
-you push.
+tests; they aren't deployed from there yet. Run `task infra:check` and
+`task infra:test` before you push a change there.
 
 ## Content rules
 

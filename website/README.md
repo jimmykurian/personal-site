@@ -147,6 +147,8 @@ tests/support/           render helper, content fixtures, image stub, content-ru
 astro.config.mjs         site URL, integrations, fonts
 eslint.config.js         ESLint: TypeScript, Astro and accessibility rules
 .prettierrc.json         Prettier (skips .astro and .mdx, see .prettierignore)
+stylelint.config.mjs     Stylelint: BEM class names, Astro style blocks
+knip.jsonc               knip: dead code, and the tools run from the repo root
 playwright.config.ts     Playwright: Chrome, preview server, projects
 vitest.config.ts         Vitest on Astro's Vite config, with coverage thresholds
 package.json             scripts and dependencies; pnpm is pinned by packageManager

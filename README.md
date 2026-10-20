@@ -57,22 +57,38 @@ src/data/site.json (typed schemas)   (fetched at build)      (downloaded at buil
 
 ## Quality checks
 
-`task lint` runs every check below. `task test`, `task build`, `task test:integration`, `task test:e2e` and `task lighthouse` cover the rest.
+`task lint` runs every check below: `lint:repo`, `lint:web` and `infra:check` run each group. `task test`, `task build`, `task test:integration`, `task test:e2e` and `task lighthouse` cover the rest.
+
+**Repository** (`task lint:repo`):
 
 | Task | Checks | Config |
 | --- | --- | --- |
-| `lint:web` | `astro check`, ESLint (with accessibility rules for `.astro` markup), Prettier | `website/eslint.config.js`, `website/.prettierrc.json` |
-| `lint:spelling` | cspell on posts, pages, docs and code | `.config/cspell.json`, words in `.config/cspell-words.txt` |
-| `lint:markdown` | markdownlint on the `.md` files | `.config/.markdownlint-cli2.jsonc` |
 | `lint:secrets` | gitleaks over the git history, including non-npm registry URLs | `.config/gitleaks.toml` |
 | `lint:lockfile` | the lockfile: packages from registry.npmjs.org only, sha512 hashes only, no git dependencies, an upper bound on every override range, no npm or Yarn lockfile | |
+| `lint:dedupe` | no duplicate versions in the lockfile that pnpm could merge | |
+| `lint:audit` | no high or critical advisories (`pnpm audit`) | `website/pnpm-workspace.yaml` |
 | `lint:actions` | actionlint and zizmor on the workflows | |
 | `lint:shell` | shellcheck on the scripts and hooks | |
 | `lint:editorconfig` | every file against `.editorconfig` | `.config/editorconfig-checker.json` |
+| `lint:markdown` | markdownlint on the `.md` files | `.config/.markdownlint-cli2.jsonc` |
+| `lint:spelling` | cspell on posts, pages, docs and code | `.config/cspell.json`, words in `.config/cspell-words.txt` |
+| `lint:yaml` | yamllint on the YAML files | `.config/yamllint.yml` |
+| `lint:schemas` | v8r validates the JSON, YAML and TOML configs against their published schemas | `.config/v8rrc.yml` |
 | `lint:commits` | commit messages (commitlint) | `.config/commitlintrc.json` |
 | `lint:pr-title` | a pull request title, which becomes the squash commit (commitlint) | `.config/commitlintrc.json` |
 | `lint:pr-template` | a pull request body keeps every template section and replaces its instructions | `.github/PULL_REQUEST_TEMPLATE.md` |
-| `infra:check` | `tofu fmt` and `validate`, TFLint, Checkov, provider pins | `infrastructure/` |
+
+**Website** (`task lint:web`):
+
+| Task | Checks | Config |
+| --- | --- | --- |
+| `lint:astro` | `astro check` type-checks `.astro` and `.ts` files | `website/tsconfig.json` |
+| `lint:eslint` | ESLint, with accessibility rules for `.astro` markup | `website/eslint.config.js` |
+| `lint:format` | Prettier | `website/.prettierrc.json` |
+| `lint:css` | Stylelint on `src/styles/` and `.astro` style blocks | `website/stylelint.config.mjs` |
+| `lint:dead-code` | knip: unused files, exports and dependencies | `website/knip.jsonc` |
+
+**Infrastructure** (`task infra:check`): `infra:fmt`, `infra:validate`, `infra:tflint`, `infra:checkov` and `infra:pins`, then `infra:test` for the module tests.
 
 After `task build`, three more run against `dist/`:
 
@@ -84,11 +100,13 @@ Prettier skips `.astro` and `.mdx` files: whitespace between inline elements ren
 
 The git hooks in `.githooks/` are plain bash, so they need no `node_modules`:
 
-- **pre-commit:** checks the staged files (secrets, the lockfile, spelling, formatting, ESLint, shellcheck, `tofu fmt`, actionlint) and refuses commits on `main`.
+- **pre-commit:** checks the staged files (secrets, the lockfile, spelling, formatting, ESLint, Stylelint, yamllint, shellcheck, `tofu fmt`, actionlint) and refuses commits on `main`.
 - **commit-msg:** checks the message against Conventional Commits.
 - **pre-push:** refuses pushes to `main`, or deleting it. It runs the unit tests if `website/` changed and the module tests if `infrastructure/` changed, on a clean checkout of the pushed commit.
 
 A check whose tool isn't installed is skipped with a warning. CI runs all of them, plus the build, e2e and Lighthouse.
+
+On a pull request, CI (`.github/workflows/ci.yml`) posts one comment with a table of every check's result for the Website, Infrastructure and Repository, with the coverage and test counts, and updates it on each push. The website and infrastructure checks run only when their files change.
 
 Renovate (`.github/renovate.json`) updates the npm packages, the actions, the OpenTofu provider and the `.mise.toml` tools on weekends.
 
@@ -106,7 +124,7 @@ The devcontainer (`.devcontainer/`) does all of that on creation, for VS Code or
 ## Structure
 
 ```text
-.github/workflows/       lint, build, test and deploy (azure-static-web-apps.yml); infrastructure checks; PR labels, assignee, title and template checks
+.github/workflows/       every check, the deploy and the PR check table (ci.yml); PR labels, assignee, title and template checks
 .github/labeler.yml      which paths get which pull request label
 .github/ISSUE_TEMPLATE/  bug, feature and subtask forms; PULL_REQUEST_TEMPLATE.md beside it
 .github/renovate.json    dependency updates
