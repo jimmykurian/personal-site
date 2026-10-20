@@ -28,7 +28,17 @@ describe('isAllowed', () => {
     expect(result).toBe(expected);
   });
 
-  it.each(['(MIT', 'MIT OR', 'OR MIT', 'MIT ISC', ''])('rejects the malformed expression "%s"', (expression) => {
+  it.each([
+    '(MIT',
+    'MIT OR',
+    'OR MIT',
+    'MIT ISC',
+    '',
+    'MIT WITH',
+    'WITH GPL-3.0-only MIT',
+    'MIT WITH WITH GPL-3.0-only',
+    '(MIT) WITH LLVM-exception',
+  ])('rejects the malformed expression "%s"', (expression) => {
     // Arrange (the allowed list above)
 
     // Act

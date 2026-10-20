@@ -26,26 +26,25 @@ const escape = (s) => s.replace(/[.+?^${}()|[\]\\]/g, '\\$&');
  * expression isn't allowed.
  */
 export function isAllowed(expression, allowed) {
-  const tokens = expression
-    .replace(/[()]/g, ' $& ')
-    .split(/\s+/)
-    .filter(Boolean)
-    .reduce((out, token, i, all) => {
-      // Drop "WITH <exception>": the base license decides.
-      if (/^with$/i.test(token) || /^with$/i.test(all[i - 1] ?? '')) return out;
-      return [...out, token];
-    }, []);
+  const tokens = expression.replace(/[()]/g, ' $& ').split(/\s+/).filter(Boolean);
   let at = 0;
   const peek = () => tokens[at];
   const isOp = (token, op) => new RegExp(`^${op}$`, 'i').test(token ?? '');
+  // A license or exception id: anything but a parenthesis or an operator.
+  const isId = (token) => token !== undefined && token !== '(' && token !== ')' && !/^(and|or|with)$/i.test(token);
 
   function atom() {
     const token = tokens[at++];
-    if (token === undefined || token === ')' || isOp(token, 'and') || isOp(token, 'or')) throw new Error('malformed');
     if (token === '(') {
       const value = or();
       if (tokens[at++] !== ')') throw new Error('malformed');
       return value;
+    }
+    if (!isId(token)) throw new Error('malformed');
+    // "<id> WITH <exception>": the base license decides, but the exception must be there.
+    if (isOp(peek(), 'with')) {
+      at++;
+      if (!isId(tokens[at++])) throw new Error('malformed');
     }
     return allowed.some((pattern) => matches(token, pattern));
   }
