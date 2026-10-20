@@ -28,6 +28,7 @@ Personal site. This file records the decisions already made; follow them unless 
 ## Commits
 
 - Messages follow Conventional Commits 1.0.0 (`feat(scope): …`, `fix`, `docs`, `ci`, `refactor`, `chore`). `.gitmessage` at the root is the template (`git config commit.template .gitmessage`) and lists the scopes.
+- `main` takes changes only through pull requests, merged with squash (the PR title, in Conventional Commits form, becomes the commit). The "Protect main" ruleset requires signed commits, linear history, passing CI and CodeQL, and a Copilot review, and blocks force-pushes and deletion.
 - Commits are signed with SSH (this repo's git config sets `commit.gpgsign`), so GitHub shows them as Verified. Don't pass `--no-gpg-sign`.
 
 ## Design

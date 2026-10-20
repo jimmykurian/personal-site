@@ -84,13 +84,18 @@ commit.
 
 ## Workflow
 
-The site is small and has one author, so work happens on `main`:
+Every change goes through a pull request; `main` doesn't take direct pushes:
 
-- Keep each commit to one change, and make sure `main` always builds.
-- Use a short-lived branch and a pull request when you want a preview first.
-  The workflow deploys each PR to its own staging URL and removes it when the
+- Work on a short-lived branch, keep each commit to one change, and open a PR
+  to `main` with the [template](.github/PULL_REQUEST_TEMPLATE.md) filled in.
+- The workflow deploys each PR to its own preview URL and removes it when the
   PR closes.
-- Rebase rather than merge (`git pull --rebase`).
+- PRs merge with squash, so the PR title becomes the commit on `main`: it
+  follows Conventional Commits like any other commit message.
+- Merging needs the CI checks, CodeQL and a Copilot review to pass. `main`
+  keeps a linear history of signed commits, and can't be force-pushed or
+  deleted.
+- Rebase the branch onto `main` rather than merging it in (`git pull --rebase`).
 
 ## Commits
 
