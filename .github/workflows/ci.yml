@@ -57,6 +57,7 @@ jobs:
           filters: |
             website:
               - website/**
+              - .config/formatters/**
               - .config/lighthouserc.json
               - .github/workflows/ci.yml
               - Taskfile.yml
@@ -78,6 +79,8 @@ jobs:
       lockfile: ${{ steps.lockfile.outcome }}
       dedupe: ${{ steps.dedupe.outcome }}
       audit: ${{ steps.audit.outcome }}
+      osv: ${{ steps.osv.outcome }}
+      dependency_review: ${{ steps.dependency_review.outcome }}
       licenses: ${{ steps.licenses.outcome }}
       actions: ${{ steps.actions.outcome }}
       shell: ${{ steps.shell.outcome }}
@@ -97,7 +100,7 @@ jobs:
 
       - uses: jdx/mise-action@08ae2a091c038e1e05ec6f5115dc5c69d5a2a6b8 # v5.1.2
         with:
-          install_args: node task actionlint zizmor shellcheck gitleaks editorconfig-checker uv pipx:yamllint
+          install_args: node task actionlint zizmor shellcheck gitleaks osv-scanner editorconfig-checker uv pipx:yamllint
 
       # Installs the pnpm version pinned in website/package.json (packageManager).
       - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
@@ -123,6 +126,17 @@ jobs:
       - id: audit
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: task lint:audit
+      - id: osv
+        if: ${{ !cancelled() }}
+        run: task lint:osv
+      # Fails a pull request that adds a dependency with a known advisory. GitHub's dependency
+      # review, free on public repositories; it compares the PR with its base, so it can't
+      # run as a task.
+      - id: dependency_review
+        if: ${{ !cancelled() && github.event_name == 'pull_request' }}
+        uses: actions/dependency-review-action@a1d282b36b6f3519aa1f3fc636f609c47dddb294 # v5.0.0
+        with:
+          fail-on-severity: low
       - id: licenses
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: task lint:licenses
@@ -476,6 +490,8 @@ jobs:
                   ['📦', 'Lockfile rules', 'lockfile'],
                   ['📦', 'Lockfile dedupe', 'dedupe'],
                   ['🔒', 'npm audit', 'audit'],
+                  ['🛡️', 'Vulnerabilities, every severity (OSV-Scanner)', 'osv'],
+                  ['🔎', 'Dependency review (new dependencies)', 'dependency_review'],
                   ['📜', 'Dependency licenses', 'licenses'],
                   ['🔧', 'Workflow lint (actionlint, zizmor)', 'actions'],
                   ['🐚', 'Shell lint (shellcheck)', 'shell'],
@@ -551,6 +567,112 @@ jobs:
             } else {
               await github.rest.issues.createComment({ ...context.repo, issue_number: context.issue.number, body });
             }
+
+  # Writes one shields.io endpoint JSON per check to the badges branch, for the README's
+  # status tables. Only main's results count: pushes, the nightly run and manual runs.
+  # One commit through the Git Data API, so no git credentials stay on the runner.
+  badges:
+    name: Badges
+    needs: [changes, repository, website, infrastructure]
+    if: always() && github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: write # commits to the badges branch
+    steps:
+      - uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        env:
+          NEEDS: ${{ toJSON(needs) }}
+        with:
+          script: |
+            const needs = JSON.parse(process.env.NEEDS);
+            const badge = (message, color) => ({ schemaVersion: 1, label: '', message, color });
+            const status = (outcome) =>
+              outcome === 'success'
+                ? badge('passing', 'brightgreen')
+                : outcome === 'failure'
+                  ? badge('failing', 'red')
+                  : badge(outcome || 'unknown', 'lightgrey');
+            // A test suite's badge shows its pass count when it passed.
+            const tests = (outcome, passed) =>
+              outcome === 'success' && passed ? badge(`${passed} passed`, 'brightgreen') : status(outcome);
+            const percent = (value) =>
+              value
+                ? badge(`${value}%`, Number(value) >= 95 ? 'brightgreen' : Number(value) >= 80 ? 'yellow' : 'red')
+                : badge('unknown', 'lightgrey');
+
+            const r = needs.repository?.outputs ?? {};
+            const w = needs.website?.outputs ?? {};
+            const i = needs.infrastructure?.outputs ?? {};
+            const files = {
+              'repository/lockfile.json': status(r.lockfile),
+              'repository/dedupe.json': status(r.dedupe),
+              'repository/workflows.json': status(r.actions),
+              'repository/shell.json': status(r.shell),
+              'repository/editorconfig.json': status(r.editorconfig),
+              'repository/markdown.json': status(r.markdown),
+              'repository/spelling.json': status(r.spelling),
+              'repository/language.json': status(r.inclusive_language),
+              'repository/yaml.json': status(r.yaml),
+              'repository/schemas.json': status(r.schemas),
+              'repository/commits.json': status(r.commits),
+              'website/types.json': status(w.astro),
+              'website/eslint.json': status(w.eslint),
+              'website/prettier.json': status(w.format),
+              'website/stylelint.json': status(w.css),
+              'website/dead-code.json': status(w.dead_code),
+              'website/unit.json': tests(w.unit, w.unit_passed),
+              'website/coverage.json': percent(w.line_coverage),
+              'website/build.json': status(w.build),
+              'website/integration.json': tests(w.integration, w.integration_passed),
+              'website/e2e.json': tests(w.e2e, w.e2e_passed),
+              'website/lighthouse.json': status(w.lighthouse),
+              'infrastructure/format.json': status(i.fmt),
+              'infrastructure/validate.json': status(i.validate),
+              'infrastructure/tflint.json': status(i.tflint),
+              'infrastructure/checkov.json': status(i.checkov),
+              'infrastructure/pins.json': status(i.pins),
+              'infrastructure/acceptance.json': tests(i.acceptance, i.acceptance_passed && `${i.acceptance_passed} files`),
+              'infrastructure/integration.json': tests(i.integration, i.integration_passed && `${i.integration_passed} files`),
+              'security/gitleaks.json': status(r.secrets),
+              'security/secretlint.json': status(r.secretlint),
+              'security/audit.json': status(r.audit),
+              'security/osv.json': status(r.osv),
+              'security/licenses.json': status(r.licenses),
+            };
+
+            const { owner, repo } = context.repo;
+            const ref = 'heads/badges';
+            let parent;
+            try {
+              parent = (await github.rest.git.getRef({ owner, repo, ref })).data.object.sha;
+            } catch (error) {
+              if (error.status !== 404) throw error;
+            }
+            const tree = await github.rest.git.createTree({
+              owner,
+              repo,
+              tree: Object.entries(files).map(([path, data]) => ({
+                path,
+                mode: '100644',
+                type: 'blob',
+                content: `${JSON.stringify(data)}\n`,
+              })),
+            });
+            if (parent) {
+              const { data: last } = await github.rest.git.getCommit({ owner, repo, commit_sha: parent });
+              if (last.tree.sha === tree.data.sha) return console.log('Badges unchanged');
+            }
+            const commit = await github.rest.git.createCommit({
+              owner,
+              repo,
+              message: `chore: update the CI badges for ${context.sha.slice(0, 7)}`,
+              tree: tree.data.sha,
+              parents: parent ? [parent] : [],
+            });
+            if (parent) await github.rest.git.updateRef({ owner, repo, ref, sha: commit.data.sha });
+            else await github.rest.git.createRef({ owner, repo, ref: `refs/${ref}`, sha: commit.data.sha });
+            console.log(`Updated ${Object.keys(files).length} badges`);
 
   close_preview:
     name: Close PR preview

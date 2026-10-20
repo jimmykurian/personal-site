@@ -46,6 +46,7 @@ tasks:
       - task: lint:lockfile
       - task: lint:dedupe
       - task: lint:audit
+      - task: lint:osv
       - task: lint:licenses
       - task: lint:actions
       - task: lint:shell
@@ -119,6 +120,11 @@ tasks:
     dir: website
     cmds:
       - pnpm audit --audit-level high
+
+  lint:osv:
+    desc: Check the lockfile against the OSV vulnerability database, every severity (OSV-Scanner)
+    cmds:
+      - osv-scanner scan source --config .config/linters/osv-scanner.toml --lockfile website/pnpm-lock.yaml
 
   lint:licenses:
     desc: Check every installed package's license against .config/licenses/

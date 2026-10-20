@@ -5,7 +5,7 @@
     "helpers:pinGitHubActionDigests",
     ":semanticCommits",
     ":semanticCommitScope(deps)",
-    "schedule:weekends"
+    "schedule:weekly"
   ],
   "enabledManagers": ["npm", "github-actions", "terraform", "mise"],
   "dependencyDashboard": true,
@@ -16,9 +16,14 @@
   "internalChecksFilter": "strict",
   "packageRules": [
     {
-      "description": "One PR a week for minor and patch updates; majors get their own PRs.",
+      "description": "Once a week (schedule:weekly, Monday before 4am): one PR for every minor and patch update.",
       "matchUpdateTypes": ["minor", "patch", "digest", "pin", "pinDigest"],
       "groupName": "minor and patch updates"
+    },
+    {
+      "description": "And one PR for every major update, kept apart so a breaking change doesn't hold up the rest.",
+      "matchUpdateTypes": ["major"],
+      "groupName": "major updates"
     },
     {
       "description": "The azurerm pin is ~> 5.8.0 in every module, and the pin check needs them equal.",
@@ -26,9 +31,7 @@
       "groupName": "OpenTofu providers"
     }
   ],
-  "vulnerabilityAlerts": {
-    "labels": ["security"],
-    "schedule": ["at any time"],
-    "minimumReleaseAge": null
-  }
+  "description": "Renovate handles version updates. Dependabot handles security updates (.github/dependabot.yml), so Renovate opens no vulnerability PRs.",
+  "vulnerabilityAlerts": { "enabled": false },
+  "osvVulnerabilityAlerts": false
 }
