@@ -1,0 +1,353 @@
+---
+// Print layout for the public resume. `pnpm resume` prints this page to dist/resume.pdf,
+// so the PDF comes from the same JSON as the site. Public copy: no home address, phone,
+// personal email, clearance or patent application number.
+import { Font } from 'astro:assets';
+import site from '../data/site.json';
+import { getOrdered } from '../lib/content';
+import { getWriting } from '../lib/writing';
+import '../styles/global.css';
+
+const experience = (await getOrdered('experience')).filter((e) => e.data.resume);
+const civilian = experience.filter((e) => e.data.group === 'civilian');
+const military = experience.filter((e) => e.data.group === 'military' && !e.data.training);
+const projects = (await getOrdered('projects')).filter((p) => !p.data.hidden);
+const writing = await getWriting();
+const teaching = await getOrdered('teaching');
+
+const host = (url: string) => url.replace(/^https?:\/\/(www\.)?/, '').replace(/\/$/, '');
+const siteHost = host(Astro.site?.href ?? '');
+
+const patents = writing.filter((w) => w.data.kind === 'patent');
+const publications = writing.filter((w) => w.data.kind === 'article' || w.data.kind === 'chapter');
+const talks = writing.filter((w) => w.data.kind === 'talk');
+const classes = teaching.filter((t) => t.data.resume);
+const memberships = teaching.filter((t) => t.data.group === 'community' && t.data.detail === 'Member');
+const volunteering = teaching.filter((t) => t.data.group === 'volunteering');
+
+// Degrees from the same school share one heading.
+const schools = Object.entries(Object.groupBy(site.resume.education, (e) => e.school)) as [
+  string,
+  (typeof site.resume.education)[number][],
+][];
+
+const roles = [
+  { label: 'Professional experience', items: civilian },
+  { label: 'Military experience', items: military },
+];
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <title>{site.name}, resume</title>
+    <Font cssVariable="--font-serif" preload={[{ style: 'normal' }]} />
+    <Font cssVariable="--font-sans" preload />
+  </head>
+  <body>
+    <main class="page">
+      <header class="head">
+        <h1 class="name">{site.name}</h1>
+        <p class="contact">
+          <a href={`mailto:${site.email}`}>{site.email}</a>
+          <a href={Astro.site?.href}>{siteHost}</a>
+          <a href={site.links.linkedin}>{host(site.links.linkedin)}</a>
+          <a href={site.links.github}>{host(site.links.github)}</a>
+        </p>
+      </header>
+
+      <section class="block">
+        <h2 class="label">Profile</h2>
+        <p>{site.resume.profile}</p>
+      </section>
+
+      <section class="block">
+        <h2 class="label">Education</h2>
+        <div class="stack">
+          {
+            schools.map(([school, degrees]) => (
+              <div class="entry">
+                <p class="line">
+                  <strong>{school}</strong>
+                  <span class="aside">{degrees[0].location}</span>
+                </p>
+                {degrees.map((e) => (
+                  <p class="line">
+                    <em>{e.degree}</em>
+                    <span class="aside">{e.year}</span>
+                  </p>
+                ))}
+              </div>
+            ))
+          }
+        </div>
+      </section>
+
+      {
+        roles.map((group) => (
+          <section class="block">
+            <h2 class="label">{group.label}</h2>
+            <div class="stack">
+              {group.items.map(({ data }) => (
+                <article class="entry">
+                  <p class="line">
+                    <strong>{data.resume!.org ?? data.org}</strong>
+                    <span class="aside">{data.resume!.location}</span>
+                  </p>
+                  <p class="line">
+                    <em>{data.resume!.title ?? data.role}</em>
+                    <span class="aside">{data.resume!.dates}</span>
+                  </p>
+                  {data.resume!.highlights.length > 0 && (
+                    <ul class="bullets">
+                      {data.resume!.highlights.map((h) => (
+                        <li>{h}</li>
+                      ))}
+                    </ul>
+                  )}
+                </article>
+              ))}
+            </div>
+          </section>
+        ))
+      }
+
+      <section class="block">
+        <h2 class="label">Teaching experience</h2>
+        <div class="stack">
+          {
+            classes.map(({ data }) => (
+              <article class="entry">
+                <p class="line">
+                  <strong>{data.title}</strong>
+                  <span class="aside">{data.resume!.location}</span>
+                </p>
+                <p class="line">
+                  <em>{data.resume!.role}</em>
+                  <span class="aside">{data.resume!.dates}</span>
+                </p>
+                {data.resume!.highlights.length > 0 && (
+                  <ul class="bullets">
+                    {data.resume!.highlights.map((h) => (
+                      <li>{h}</li>
+                    ))}
+                  </ul>
+                )}
+              </article>
+            ))
+          }
+        </div>
+      </section>
+
+      <section class="block">
+        <h2 class="label">Patents, publications and speaking</h2>
+        <ul class="bullets">
+          {
+            patents.map(({ data }) => (
+              <li>
+                <strong>Patent:</strong> “{data.title}” ({data.venue}), {data.year}.
+              </li>
+            ))
+          }
+          {
+            publications.map(({ data }) => (
+              <li>
+                “{data.title}”, {data.venue}, {data.year}.
+              </li>
+            ))
+          }
+          <li>
+            <strong>Speaking:</strong> {talks.map((t) => `${t.data.title} (${t.data.venue})`).join('; ')}.
+          </li>
+        </ul>
+      </section>
+
+      <section class="block">
+        <h2 class="label">Projects</h2>
+        <ul class="bullets">
+          {
+            projects.map(({ data }) => (
+              <li>
+                <strong>{data.title}</strong> ({data.kicker.replace(' · ', ', ')}): {data.summary}
+                {data.link && ` (${host(data.link.href)})`}
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section class="block">
+        <h2 class="label">Honors and awards</h2>
+        <ul class="bullets">{site.resume.honors.map((h) => <li>{h}</li>)}</ul>
+      </section>
+
+      <section class="block">
+        <h2 class="label">Certifications</h2>
+        <p>{site.certifications.join(' · ')}</p>
+      </section>
+
+      <section class="block">
+        <h2 class="label">Memberships and volunteering</h2>
+        <p>
+          <strong>Memberships:</strong> {memberships.map((m) => m.data.title).join(' · ')}
+        </p>
+        <p>
+          <strong>Volunteering:</strong> {volunteering.map((v) => v.data.title).join(' · ')}
+        </p>
+      </section>
+
+      <section class="block">
+        <h2 class="label">Skills</h2>
+        <div class="stack tight">
+          {
+            site.skills.map((s) => (
+              <p>
+                <strong>{s.label}:</strong> {s.items.join(', ')}
+              </p>
+            ))
+          }
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
+
+<style>
+  @page {
+    size: letter;
+    margin: 0.32in 0.5in;
+  }
+
+  body {
+    background: var(--paper);
+    font-size: 8.3pt;
+    line-height: 1.26;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .page {
+    max-width: 7.4in;
+    margin: 0 auto;
+    padding: 24px 0;
+  }
+
+  @media print {
+    .page {
+      max-width: none;
+      padding: 0;
+    }
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  /* Header: italic wordmark over the site's double rule. */
+  .head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 2pt 16pt;
+    padding-bottom: 6pt;
+    border-bottom: 2px solid var(--ink);
+    margin-bottom: 2pt;
+  }
+
+  .name {
+    font-family: var(--serif);
+    font-style: italic;
+    font-weight: 500;
+    font-size: 22pt;
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+
+  .contact {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0 10pt;
+    font-size: 8.4pt;
+    color: var(--accent-small);
+  }
+
+  /* Each section: small-caps heading over a hairline, as on the site's ledger. */
+  .block {
+    display: flex;
+    flex-direction: column;
+    gap: 2pt;
+    padding-top: 5pt;
+  }
+
+  .label {
+    padding-bottom: 2pt;
+    margin-bottom: 1pt;
+    border-bottom: 1px solid var(--ink);
+    font-size: 7.6pt;
+    font-weight: 600;
+    letter-spacing: var(--tracking-caps);
+    text-transform: uppercase;
+    break-after: avoid;
+  }
+
+  .stack {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5pt;
+  }
+
+  .stack.tight {
+    gap: 1pt;
+  }
+
+  /* Keep each heading with its first lines; long entries may continue on the next page. */
+  .line {
+    break-inside: avoid;
+    break-after: avoid;
+  }
+
+  .line {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12pt;
+  }
+
+  .line strong {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: 9.6pt;
+  }
+
+  .line em {
+    font-style: italic;
+  }
+
+  .aside {
+    flex: none;
+    font-size: 8.4pt;
+    font-variant-numeric: tabular-nums;
+    color: var(--accent-small);
+  }
+
+  .bullets {
+    margin: 1pt 0 0;
+    padding-left: 11pt;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .bullets li::marker {
+    color: var(--accent);
+  }
+
+  strong {
+    font-weight: 600;
+  }
+</style>

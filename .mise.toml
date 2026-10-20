@@ -1,0 +1,22 @@
+# Every tool the repo needs, at one version, for local work, the git hooks, the
+# devcontainer and CI. Run `mise install` after cloning. pnpm is pinned by
+# packageManager in website/package.json; JavaScript tools by its lockfile.
+# Renovate keeps these versions current.
+
+[tools]
+node = "22.23.3"
+task = "3.54.0"
+
+# Infrastructure
+opentofu = "1.11.5"
+tflint = "0.61.0"
+uv = "0.12.24" # runs pipx tools
+"pipx:checkov" = "3.3.27"
+
+# Repo checks
+actionlint = "1.7.12"
+zizmor = "1.30.1"
+shellcheck = "0.11.0"
+gitleaks = "8.30.1"
+lychee = "0.24.2"
+editorconfig-checker = "4.0.2"

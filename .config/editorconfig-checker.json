@@ -1,0 +1,3 @@
+{
+  "Exclude": ["\\.snap$", "pnpm-lock\\.yaml$", "\\.terraform\\.lock\\.hcl$"]
+}

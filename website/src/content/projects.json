@@ -1,0 +1,65 @@
+[
+  {
+    "id": "ai-dev-standards",
+    "hidden": true,
+    "kicker": "Standards · Microsoft Frontier Company",
+    "title": "AI-assisted development standards",
+    "summary": "AGENTS.md conventions and reusable GitHub Copilot skills, adopted team-wide and rolled out through guild sessions. Repetitive coding tasks down about 70%.",
+    "link": { "href": "https://devblogs.microsoft.com/ise/", "label": "Read the write-up" }
+  },
+  {
+    "id": "caira",
+    "logo": "microsoft",
+    "kicker": "Open source · Azure AI Foundry",
+    "title": "CAIRA, Composable AI Reference Architecture",
+    "summary": "Contributor to Microsoft's open-source Azure AI Foundry reference architectures. Wrote the integration guidance and templates that adjacent teams reuse.",
+    "link": { "href": "https://microsoft.github.io/CAIRA", "label": "microsoft.github.io/CAIRA" }
+  },
+  {
+    "id": "stealth-billing",
+    "logo": "stealth",
+    "kicker": "Founding Engineer · Stealth startup",
+    "title": "AI-assisted medical billing application",
+    "summary": "Founding engineer at an early-stage startup building AI-assisted software that makes medical billing clearer and faster. Currently in stealth."
+  },
+  {
+    "id": "clubscope",
+    "logo": "clubscope",
+    "kicker": "Technical Advisor · ClubScope",
+    "title": "Technical Advisor to the CEO",
+    "summary": "Advise ClubScope's CEO on technical direction for its AI platform, which brings finance, operations and membership data together for country, yacht, social and health clubs.",
+    "link": { "href": "https://clubscope.ai", "label": "clubscope.ai" }
+  },
+  {
+    "id": "cs-agent",
+    "hidden": true,
+    "kicker": "Client delivery · Medical technology",
+    "title": "AI customer-service agent",
+    "summary": "Copilot Studio agent with AWS integration for a global medical-technology company, projected to save 117,000+ support hours a year. Delivered ahead of schedule.",
+    "tags": ["Copilot Studio", "AWS", "Agent evals"]
+  },
+  {
+    "id": "turnaround",
+    "hidden": true,
+    "kicker": "Turnaround · Healthcare AI",
+    "title": "Two AI-enabled web products, redesigned and shipped early",
+    "summary": "Took an at-risk engagement from architecture redesign to production launch about two weeks ahead of deadline, beyond the planned scope.",
+    "tags": ["Architecture", "Delivery", "Client leadership"]
+  },
+  {
+    "id": "quality",
+    "hidden": true,
+    "kicker": "Quality & security",
+    "title": "Zero to 96% test coverage",
+    "summary": "3,400+ automated tests including AI-agent evals across two production codebases, 89 CodeQL findings remediated, and code-review turnaround cut about 25%.",
+    "tags": ["CodeQL", "Testcontainers", "LLM evaluation"]
+  },
+  {
+    "id": "advisory",
+    "hidden": true,
+    "kicker": "Executive advisory",
+    "title": "Agentic AI adoption, from scorecard to pilot",
+    "summary": "Defined a six-KPI quality scorecard adopted by client stakeholders and led the demos that took a new AI agent from proof of concept to pilot.",
+    "tags": ["Executive advisory", "KPIs", "Agent quality"]
+  }
+]

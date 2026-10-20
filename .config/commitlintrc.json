@@ -1,0 +1,12 @@
+{
+  "extends": ["@commitlint/config-conventional"],
+  "rules": {
+    "scope-enum": [
+      2,
+      "always",
+      ["home", "writing", "reading", "resume", "links", "footer", "seo", "swa", "infra", "content", "styles", "deps", "docs", "tooling"]
+    ],
+    "body-max-line-length": [0],
+    "footer-max-line-length": [0]
+  }
+}

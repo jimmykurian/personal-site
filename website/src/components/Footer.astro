@@ -1,0 +1,63 @@
+---
+import Icon from './Icon.astro';
+import site from '../data/site.json';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer wrap">
+  <div class="site-footer__inner meta">
+    <p>© {year} {site.name} · {site.location}</p>
+    <p class="site-footer__links">
+      <a href="/rss.xml">RSS</a>
+      <span class="site-footer__clock">
+        Off the clock:
+        <a href={site.links.lichess} class="site-footer__icon" aria-label="Chess on Lichess" title="Chess on Lichess">
+          <Icon name="lichess" size={16} />
+        </a>
+      </span>
+      <span>Built with Astro, hosted on Azure Static Web Apps</span>
+    </p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    padding-top: 16px;
+    padding-bottom: 40px;
+  }
+
+  .site-footer__inner {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--ink);
+  }
+
+  .site-footer__links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 20px;
+  }
+
+  .site-footer__clock {
+    display: inline-flex;
+    align-items: center;
+    gap: 2px;
+  }
+
+  .site-footer__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .site-footer__icon:hover {
+    color: var(--accent);
+  }
+</style>

@@ -1,0 +1,36 @@
+# Normalize line endings: text files are stored with LF and checked out with LF
+# on every OS, regardless of core.autocrlf.
+* text=auto eol=lf
+
+# Source and content
+*.astro     text diff=html
+*.mdx       text diff=markdown
+*.md        text diff=markdown
+*.ts        text
+*.mjs       text
+*.js        text
+*.css       text diff=css
+*.json      text
+*.yml       text
+*.yaml      text
+*.mmd       text
+*.txt       text
+*.svg       text
+*.xml       text
+*.snap      text
+.gitmessage text
+
+# Binary assets: never touch line endings, never show text diffs
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+*.gif   binary
+*.webp  binary
+*.avif  binary
+*.ico   binary
+*.pdf   binary
+*.woff  binary
+*.woff2 binary
+
+# Generated: collapse in GitHub diffs and leave out of language stats
+pnpm-lock.yaml linguist-generated=true -diff

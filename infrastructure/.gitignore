@@ -1,0 +1,16 @@
+# OpenTofu
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+*.tfvars
+crash.log
+crash.*.log
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Test files copied into modules while scripts/run-module-tests.sh runs
+# (the real ones live in tests/)
+modules/**/*.tftest.hcl

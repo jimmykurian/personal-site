@@ -1,0 +1,42 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`BookRows > labels the first row of each group with its name and count 1`] = `
+"<ul class="rows" data-paged>
+<li class="row book">
+<p class="row__date">
+<span class="meta-num book__group">Read</span>
+<span class="note">2 books</span>
+</p>
+<div class="row__body">
+<a href="https://www.goodreads.com/book/show/r0" class="book__title">Book r0</a>
+<p class="note">Author r0</p>
+</div>
+<p class="stars" role="img" aria-label="Rated 4 of 5">
+<span aria-hidden="true">★★★★<span class="stars__empty">★</span>
+</span>
+</p>
+</li>
+<li class="row book">
+<p class="row__date">
+</p>
+<div class="row__body">
+<a href="https://www.goodreads.com/book/show/r1" class="book__title">Book r1</a>
+<p class="note">Author r1</p>
+</div>
+<p class="stars" role="img" aria-label="Rated 4 of 5">
+<span aria-hidden="true">★★★★<span class="stars__empty">★</span>
+</span>
+</p>
+</li>
+<li class="row book">
+<p class="row__date">
+<span class="meta-num book__group">To read</span>
+<span class="note">1 book</span>
+</p>
+<div class="row__body">
+<a href="https://www.goodreads.com/book/show/t0" class="book__title">Book t0</a>
+<p class="note">Author t0</p>
+</div>
+</li>
+</ul>"
+`;

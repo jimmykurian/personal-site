@@ -1,0 +1,859 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import portrait from '../assets/portrait.jpg';
+import Ledger from '../components/Ledger.astro';
+import Icon from '../components/Icon.astro';
+import site from '../data/site.json';
+import { getOrdered } from '../lib/content';
+import { featuredLabel, getWriting, listLabel } from '../lib/writing';
+
+const experience = await getOrdered('experience');
+const civilian = experience.filter((e) => e.data.group === 'civilian');
+const military = experience.filter((e) => e.data.group === 'military');
+const service = site.sections.service;
+// Civilian career and military service share the job-row layout, each in its own section.
+const careers = [
+  { id: 'experience', label: 'Experience', heading: site.sections.experience.heading, note: site.sections.experience.note, jobs: civilian },
+  {
+    id: 'service',
+    label: service.label,
+    heading: service.heading,
+    note: `${service.org}, ${service.rank} · ${service.years}`,
+    jobs: military,
+  },
+];
+// Company logos and unit insignia, keyed by file name without the extension.
+const logoFiles = import.meta.glob<ImageMetadata>('../assets/{logos,insignia}/*.{svg,png,jpg}', {
+  eager: true,
+  import: 'default',
+});
+const logos = Object.fromEntries(
+  Object.entries(logoFiles).map(([path, img]) => [path.split('/').pop()!.replace(/\.(svg|png|jpg)$/, ''), img]),
+);
+const projects = (await getOrdered('projects')).filter((p) => !p.data.hidden);
+const featured = (await getWriting()).filter((w) => w.data.featured);
+// Publications keep "Article"/"Chapter" in the date column; the other headings already say what they are.
+const writingGroups = [
+  { label: 'Publications', kinds: ['article', 'chapter'], date: featuredLabel },
+  { label: 'Patents', kinds: ['patent'], date: listLabel },
+  { label: 'Talks', kinds: ['talk'], date: listLabel },
+]
+  .map((g) => ({ ...g, items: featured.filter((w) => g.kinds.includes(w.data.kind)) }))
+  .filter((g) => g.items.length > 0);
+const teaching = await getOrdered('teaching');
+
+const years = (start: number, end: number | null) => (start === end ? `${start}` : `${start} to ${end ?? 'now'}`);
+
+const groups = [
+  { key: 'teaching', label: 'Teaching' },
+  { key: 'speaking', label: 'Speaking' },
+  { key: 'community', label: 'Community' },
+] as const;
+
+const { sections } = site;
+---
+
+<Base current="home">
+  <section class="hero wrap" aria-labelledby="hero-title">
+    <div class="hero__main">
+      <p class="caps hero__eyebrow">{site.eyebrow.map((e) => e.text).join(' · ')}</p>
+      <h1 id="hero-title" class="display hero__title">
+        {site.headline.lead}{' '}
+        <span class="visually-hidden">{site.headline.emphasis}</span>{' '}
+        <em class="typed" aria-hidden="true" data-phrases={JSON.stringify(site.headline.rotating)}>{site.headline.emphasis}</em>.
+      </h1>
+      <p class="hero__intro">{site.intro}</p>
+      <div class="hero__actions">
+        <a href="#projects" class="btn hero__cta">Projects <Icon name="arrow" /></a>
+        <a href="/writing/" class="text-link">Read the writing</a>
+      </div>
+    </div>
+
+    <aside class="hero__aside" aria-label="About">
+      <figure class="portrait">
+        <Image src={portrait} alt={`Portrait of ${site.name}`} widths={[320]} sizes="(max-width: 720px) 100vw, 300px" loading="eager" fetchpriority="high" />
+      </figure>
+      <p class="meta">{site.portraitCaption}</p>
+      <p class="hero__social">
+        <a href={site.links.linkedin} class="hero__icon" aria-label="LinkedIn" title="LinkedIn"><Icon name="linkedin" size={20} /></a>
+        <a href={site.links.github} class="hero__icon" aria-label="GitHub" title="GitHub"><Icon name="github" size={20} /></a>
+        <a href={site.links.stackoverflow} class="hero__icon" aria-label="Stack Overflow" title="Stack Overflow"><Icon name="stackoverflow" size={20} /></a>
+        <a href={`mailto:${site.email}`} class="hero__icon" aria-label={`Email ${site.email}`} title="Email"><Icon name="mail" size={20} /></a>
+      </p>
+    </aside>
+  </section>
+
+  <section id="focus" class="focus wrap" aria-labelledby="focus-title">
+    <h2 id="focus-title" class="caps focus__label">{site.principlesLabel}</h2>
+    <ul class="focus__grid">
+      {
+        site.principles.map((p) => (
+          <li class="focus__item">
+            <h3 class="focus__title">{p.title}</h3>
+            <p class="focus__body">{p.body}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  {
+    careers.map((c) => (
+      <Ledger id={c.id} label={c.label} heading={c.heading} note={c.note}>
+        <ol class="rows">
+          {c.jobs.map(({ data }) => (
+            <li class="row job">
+              <div class="row__date job__meta">
+                <p class="meta-num job__years">{years(data.start, data.end)}</p>
+                {data.logo && logos[data.logo] && (
+                  <img
+                    class:list={['job__logo', { 'job__logo--insignia': data.group === 'military' }]}
+                    src={logos[data.logo].src}
+                    alt=""
+                    width={logos[data.logo].width}
+                    height={logos[data.logo].height}
+                    loading="lazy"
+                  />
+                )}
+              </div>
+              <div class="row__body job__body">
+                <h3 class="entry-title">
+                  {data.org}, {data.role}
+                </h3>
+                {data.team && <p class="note">{data.team}</p>}
+                {data.summary && <p>{data.summary}</p>}
+                {data.stack.length > 0 && <p class="meta">{data.stack.join(' · ')}</p>}
+              </div>
+            </li>
+          ))}
+        </ol>
+        {c.id === 'service' && (
+              <div class="decorations">
+                {service.decorations.map((d, j) => (
+                  <div class="decorations__col">
+                    <div class="decorations__group">
+                      <h3 class="caps caps-sm decorations__head">{d.label}</h3>
+                      <ul class="decorations__list">
+                        {d.items.map((item) => <li>{item}</li>)}
+                      </ul>
+                    </div>
+                    {/* Military education sits under the state decorations. */}
+                    {j === service.decorations.length - 1 && (
+                      <div class="decorations__group">
+                        <h3 class="caps caps-sm decorations__head">{service.education.label}</h3>
+                        <ul class="decorations__list">
+                          {service.education.items.map((e) => (
+                            <li>
+                              {e.name} <span class="meta-num">· {e.year}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+        )}
+      </Ledger>
+    ))
+  }
+
+  <Ledger id="projects" label="Projects" heading={sections.projects.heading}>
+    <div class="work">
+      {
+        projects.map(({ data }) => (
+          <article class="work__item">
+            {/* Fixed-height slot so cards with and without a logo line up. */}
+            <div class="work__logo">
+              {data.logo && logos[data.logo] && (
+                <img
+                  class="job__logo"
+                  src={logos[data.logo].src}
+                  alt=""
+                  width={logos[data.logo].width}
+                  height={logos[data.logo].height}
+                  loading="lazy"
+                />
+              )}
+            </div>
+            <p class="caps caps-sm work__kicker">{data.kicker}</p>
+            <h3 class="entry-title">{data.title}</h3>
+            <p class="work__summary">{data.summary}</p>
+            {data.link ? (
+              <a href={data.link.href} class="text-link work__link">
+                {data.link.label}
+              </a>
+            ) : (
+              data.tags.length > 0 && <p class="meta">{data.tags.join(' · ')}</p>
+            )}
+          </article>
+        ))
+      }
+    </div>
+  </Ledger>
+
+  <Ledger id="writing" label="Writing" heading={sections.writing.heading} note={sections.writing.note}>
+    <a slot="label" href="/writing/" class="text-link note-link">All writing, patents and talks</a>
+    {
+      writingGroups.map((g) => (
+        <div class="subsection">
+          <h3 class="caps subsection__head">{g.label}</h3>
+          <ul class="rows">
+            {g.items.map((item) => (
+              <li class="row">
+                <p class="row__date meta-num">{g.date(item)}</p>
+                <div class="row__body">
+                  {item.data.href ? (
+                    <a href={item.data.href} class="list-title">
+                      {item.data.title}
+                    </a>
+                  ) : (
+                    <p class="list-title">{item.data.title}</p>
+                  )}
+                  <p class="note">
+                    {item.data.venue}
+                    {item.data.featuredNote && `. ${item.data.featuredNote}`}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </Ledger>
+
+  <Ledger id="teaching" label="Teaching & community" heading={sections.teaching.heading}>
+    <div class="columns">
+      {
+        groups.map((g) => (
+          <div class="columns__col">
+            <h3 class="caps columns__head">{g.label}</h3>
+            <ul class="columns__list">
+              {teaching
+                .filter((t) => t.data.group === g.key)
+                .map(({ data }) => (
+                  <li>
+                    <span class="columns__title">{data.title}</span>
+                    {data.detail}
+                  </li>
+                ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+    <div class="volunteering">
+      <h3 class="caps columns__head">Volunteering</h3>
+      <ul class="rows">
+        {
+          teaching
+            .filter((t) => t.data.group === 'volunteering')
+            .map(({ data }) => (
+              <li class="row volunteering__row">
+                <p class="row__date meta-num">{data.years}</p>
+                <p class="row__body">
+                  <span class="columns__title">{data.title}</span>
+                  {data.detail}
+                </p>
+              </li>
+            ))
+        }
+      </ul>
+    </div>
+  </Ledger>
+
+  <section id="resume" class="credentials" aria-labelledby="resume-title">
+    <div class="wrap">
+      <div class="ledger ledger--bare">
+        <div class="ledger__label">
+          <h2 id="resume-title" class="caps">Credentials</h2>
+        </div>
+        <div class="ledger__body credentials__body">
+          <div class="credentials__col">
+            <h3 class="caps">Education</h3>
+            <ul class="columns__list">
+              {
+                site.education.map((e) => (
+                  <li>
+                    <span class="columns__title">{e.degree}</span>
+                    {e.detail}
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+          <div class="credentials__col">
+            <h3 class="caps">Certifications</h3>
+            <ul class="columns__list columns__list--tight">
+              {site.certifications.map((c) => <li>{c}</li>)}
+            </ul>
+          </div>
+          <div class="credentials__col credentials__col--narrow">
+            <h3 class="caps">Resume</h3>
+            <p>{site.resumeNote}</p>
+            <a href="/resume.pdf" class="btn">Download PDF <Icon name="download" /></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact" aria-labelledby="contact-title">
+    <div class="wrap">
+      <div class="ledger ledger--bare">
+        <div class="ledger__label">
+          <p class="caps">Contact</p>
+        </div>
+        <div class="ledger__body contact__body">
+          <h2 id="contact-title" class="display contact__title">{sections.contact.heading}</h2>
+          <p class="contact__text">{sections.contact.body}</p>
+          <div class="contact__actions">
+            <a href={`mailto:${site.email}`} class="btn contact__email">{site.email}</a>
+            <a href={site.links.linkedin} class="text-link">LinkedIn</a>
+            <a href={site.links.github} class="text-link">GitHub</a>
+            <a href={site.links.stackoverflow} class="text-link">Stack Overflow</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* Hero */
+  .hero {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 40px 72px;
+    padding-top: clamp(36px, 6vw, 88px);
+    padding-bottom: 40px;
+  }
+
+  .hero__main {
+    flex: 1 1 600px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+
+  .hero__eyebrow {
+    line-height: 1.7;
+    color: var(--accent-small);
+  }
+
+  .hero__title {
+    font-size: clamp(42px, 6vw, 84px);
+    line-height: 0.98;
+  }
+
+  /* Typed phrase: the caret blinks between words; static when motion is reduced. */
+  .typed::after {
+    content: '';
+    display: inline-block;
+    width: 0.06em;
+    height: 0.8em;
+    margin-left: 0.04em;
+    background: var(--accent);
+    vertical-align: -0.04em;
+    animation: caret 1s steps(1) infinite;
+  }
+
+  .typed.is-typing::after {
+    animation: none;
+  }
+
+  @keyframes caret {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .typed::after {
+      display: none;
+    }
+  }
+
+  .hero__intro {
+    max-width: 600px;
+    font-size: clamp(17px, 1.6vw, 20px);
+    line-height: 1.5;
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px 28px;
+    padding-top: 4px;
+  }
+
+  .hero__aside {
+    flex: 0 1 300px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding-top: 6px;
+  }
+
+  /* Glaucous Green mat inside a black hairline. */
+  .portrait {
+    padding: 10px;
+    border: 1px solid var(--ink);
+    background: var(--mist);
+  }
+
+  .portrait img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    object-position: 50% 25%;
+  }
+
+  .hero__social {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 6px;
+    margin-left: -12px;
+  }
+
+  /* Logos in the site's black, Sudan Brown on hover; each keeps a 44px tap target. */
+  .hero__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    color: var(--ink);
+    transition: color 0.15s ease;
+  }
+
+  .hero__icon:hover {
+    color: var(--accent);
+  }
+
+  @media (max-width: 720px) {
+    .hero {
+      gap: 24px;
+      padding-bottom: 28px;
+    }
+
+    .hero__main {
+      gap: 20px;
+    }
+
+    .hero__eyebrow {
+      font-size: 11px;
+    }
+
+    .hero__cta {
+      width: 100%;
+    }
+
+    .hero__aside {
+      flex-basis: 100%;
+      padding-top: 0;
+    }
+
+    .portrait img {
+      aspect-ratio: 4 / 3;
+    }
+  }
+
+  /* Areas of focus: one band, topics side by side. */
+  .focus {
+    padding-top: 24px;
+    padding-bottom: clamp(40px, 6vw, 80px);
+  }
+
+  .focus__label {
+    padding-top: 18px;
+    border-top: 1px solid var(--ink);
+    color: var(--accent-small);
+  }
+
+  .focus__grid {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 28px 32px;
+    padding: 20px 0 0;
+  }
+
+  .focus__item {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .focus__title {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(21px, 1.8vw, 24px);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+  }
+
+  .focus__body {
+    font-size: 15px;
+    line-height: 1.55;
+  }
+
+  @media (max-width: 1000px) {
+    .focus__grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 720px) {
+    .focus__grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px 20px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .focus__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  /* Experience and military service */
+  /* Decorations: U.S. and state, side by side under the military roles. */
+  .decorations {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
+    gap: 20px 40px;
+    padding-top: 22px;
+  }
+
+  .decorations__col {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+  }
+
+  .decorations__group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .decorations__head {
+    color: var(--accent-small);
+  }
+
+  .decorations__list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    font-size: 14px;
+    line-height: 1.45;
+  }
+
+  .job {
+    gap: 6px 32px;
+    padding: 26px 0;
+  }
+
+  .job:last-child {
+    border-bottom-color: var(--ink);
+  }
+
+  .job__meta {
+    align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
+  }
+
+  .job__years {
+    padding-top: 7px;
+  }
+
+  /* Logos in one color: flattened to ink and faded, so they sit quietly beside the type. */
+  .job__logo {
+    width: auto;
+    height: auto;
+    max-width: 96px;
+    max-height: 18px;
+    filter: brightness(0);
+    opacity: 0.62;
+  }
+
+  /* Unit insignia have detail a flat silhouette would lose, so they go grayscale and a little larger. */
+  .job__logo--insignia {
+    max-height: 34px;
+    filter: grayscale(1) contrast(1.1);
+    opacity: 0.72;
+  }
+
+  .job__body {
+    gap: 8px;
+  }
+
+  @media (max-width: 720px) {
+    .job {
+      padding: 18px 0;
+    }
+
+    .job__meta {
+      flex-direction: row;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .job__years {
+      padding-top: 0;
+    }
+
+    .job__body p:not(.note, .meta) {
+      font-size: 15px;
+    }
+  }
+
+  /* Projects: two columns, so a single project keeps a readable width. */
+  .work {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(360px, 100%), 1fr));
+    gap: 0 48px;
+  }
+
+  .work__item {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 24px 0 28px;
+    border-top: 1px solid var(--mist);
+  }
+
+  .work__logo {
+    display: flex;
+    align-items: center;
+    height: 18px;
+  }
+
+  .work__kicker {
+    color: var(--accent-small);
+  }
+
+  .work__summary {
+    font-size: 15px;
+  }
+
+  .work__link {
+    align-self: flex-start;
+    min-height: 40px;
+    font-size: 14px;
+  }
+
+  .work__item .meta {
+    padding-top: 6px;
+  }
+
+  /* Writing: publications, patents and talks as subsections. */
+  .subsection {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .subsection__head {
+    color: var(--accent-small);
+  }
+
+
+  .note-link {
+    min-height: 40px;
+    font-size: 14px;
+  }
+
+  /* Teaching, and the lists in the credentials band */
+  .columns {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px 40px;
+  }
+
+  .columns__col {
+    flex: 1 1 240px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding-top: 16px;
+    border-top: 1px solid var(--mist);
+  }
+
+  .columns__head {
+    color: var(--accent-small);
+  }
+
+  .columns__list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .columns__list--tight {
+    gap: 6px;
+  }
+
+  .columns__title {
+    display: block;
+    font-weight: 600;
+  }
+
+  .volunteering {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding-top: 16px;
+    border-top: 1px solid var(--mist);
+  }
+
+  .volunteering .rows {
+    border-top: 0;
+  }
+
+  .volunteering__row {
+    padding: 12px 0;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .volunteering__row .row__body {
+    display: block;
+  }
+
+  .volunteering__row .columns__title {
+    display: inline;
+  }
+
+  .volunteering__row .columns__title::after {
+    content: ' · ';
+    font-weight: 400;
+  }
+
+  /* Credentials band */
+  .credentials {
+    background: var(--mist);
+    padding-block: clamp(48px, 6vw, 72px);
+  }
+
+  .credentials__body {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 28px 40px;
+  }
+
+  .credentials__col {
+    flex: 1 1 240px;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+    font-size: 15px;
+  }
+
+  .credentials__col--narrow {
+    flex-basis: 200px;
+  }
+
+  /* Contact */
+  .contact {
+    padding-top: clamp(64px, 8vw, 112px);
+    padding-bottom: 48px;
+  }
+
+  .contact__body {
+    gap: 24px;
+  }
+
+  .contact__title {
+    font-size: clamp(40px, 5vw, 68px);
+    line-height: 1.02;
+  }
+
+  .contact__text {
+    max-width: 560px;
+    font-size: 18px;
+    line-height: 1.55;
+  }
+
+  .contact__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px 28px;
+  }
+
+  .contact__email {
+    text-transform: none;
+    letter-spacing: 0.02em;
+    font-size: 14px;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+  }
+</style>
+
+<script>
+  // Types and erases the headline's emphasis phrase in a loop. Screen readers get the
+  // first phrase from the hidden copy, and reduced-motion visitors see it without animation.
+  const el = document.querySelector<HTMLElement>('.typed');
+  const phrases: string[] = JSON.parse(el?.dataset.phrases ?? '[]');
+
+  if (el && phrases.length > 1 && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const title = el.closest('h1')!;
+    const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
+    // Hold the headline at the height of its longest phrase so the page below doesn't jump.
+    const reserve = () => {
+      const current = el.textContent;
+      title.style.minHeight = '';
+      const tallest = Math.max(
+        ...phrases.map((p) => {
+          el.textContent = p;
+          return title.offsetHeight;
+        }),
+      );
+      el.textContent = current;
+      title.style.minHeight = `${tallest}px`;
+    };
+    document.fonts.ready.then(reserve);
+    addEventListener('resize', reserve);
+
+    (async () => {
+      for (let i = 0; ; i = (i + 1) % phrases.length) {
+        const text = phrases[i];
+        await wait(i === 0 && el.textContent === text ? 3000 : 2600);
+        el.classList.add('is-typing');
+        for (let n = text.length; n >= 0; n--) {
+          el.textContent = text.slice(0, n);
+          await wait(35);
+        }
+        const next = phrases[(i + 1) % phrases.length];
+        await wait(300);
+        for (let n = 1; n <= next.length; n++) {
+          el.textContent = next.slice(0, n);
+          await wait(70 + Math.random() * 60);
+        }
+        el.classList.remove('is-typing');
+      }
+    })();
+  }
+</script>

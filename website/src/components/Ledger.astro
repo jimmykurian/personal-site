@@ -1,0 +1,39 @@
+---
+// One ruled section: a small-caps label column on the left, content on the right.
+interface Props {
+  id?: string;
+  label: string;
+  /** Render the label as the section's h2 (when there is no display heading). */
+  labelIsHeading?: boolean;
+  heading?: string;
+  note?: string;
+  bare?: boolean;
+  class?: string;
+}
+
+const { id, label, labelIsHeading = false, heading, note, bare = false, class: className } = Astro.props;
+const headingId = id ? `${id}-title` : undefined;
+const hasHeading = Boolean(heading) || labelIsHeading;
+const LabelTag = labelIsHeading ? 'h2' : 'p';
+---
+
+<section
+  id={id}
+  class:list={['section', className]}
+  aria-labelledby={hasHeading ? headingId : undefined}
+  aria-label={hasHeading ? undefined : label}
+>
+  <div class="wrap">
+    <div class:list={['ledger', { 'ledger--bare': bare }]}>
+      <div class="ledger__label">
+        <LabelTag class="caps" id={labelIsHeading ? headingId : undefined}>{label}</LabelTag>
+        {note && <p class="note">{note}</p>}
+        <slot name="label" />
+      </div>
+      <div class="ledger__body">
+        {heading && <h2 class="section-title" id={labelIsHeading ? undefined : headingId}>{heading}</h2>}
+        <slot />
+      </div>
+    </div>
+  </div>
+</section>

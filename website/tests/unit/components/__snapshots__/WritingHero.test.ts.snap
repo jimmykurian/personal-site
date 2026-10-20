@@ -1,0 +1,14 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`WritingHero > shows the label, title, intro and an RSS link by default 1`] = `
+"<section class="page-hero wrap" aria-labelledby="page-title">
+<div class="page-hero__label">
+<p class="caps page-hero__eyebrow">Writing</p>
+<a href="/rss.xml" class="text-link page-hero__rss">Subscribe via RSS</a>
+</div>
+<div class="page-hero__main">
+<h1 id="page-title" class="display page-hero__title">Writing, patents and talks.</h1>
+<p class="page-hero__intro">Long-form notes.</p>
+</div>
+</section>"
+`;

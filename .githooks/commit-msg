@@ -1,0 +1,19 @@
+#!/bin/bash
+set -eo pipefail
+
+# Checks the commit message against Conventional Commits and the scopes in .gitmessage
+# (.config/commitlintrc.json). Without commitlint installed, checks the header's shape.
+
+MSG="$(cd "$(dirname "$1")" && pwd)/$(basename "$1")"
+cd "$(git rev-parse --show-toplevel)/website"
+
+if [[ -x node_modules/.bin/commitlint ]]; then
+  exec node_modules/.bin/commitlint --config ../.config/commitlintrc.json --edit "$MSG"
+fi
+
+HEADER="$(grep -v '^#' "$MSG" | head -1)"
+PATTERN='^(feat|fix|docs|style|refactor|perf|test|build|ci|chore|revert)(\([a-z-]+\))?!?: .+'
+if [[ ! "$HEADER" =~ $PATTERN ]]; then
+  echo "commit-msg: \"$HEADER\" isn't a Conventional Commits header: type(scope): summary"
+  exit 1
+fi

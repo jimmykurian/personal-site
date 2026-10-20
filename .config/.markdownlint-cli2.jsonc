@@ -1,0 +1,20 @@
+// markdownlint for the repo's Markdown (README, AGENTS, docs, GitHub templates).
+// Posts are MDX and are spell-checked, not linted here.
+{
+  "config": {
+    "default": true,
+    // Prose is wrapped by the editor, not at a fixed width.
+    "MD013": false,
+    "MD024": { "siblings_only": true },
+    "MD033": { "allowed_elements": ["details", "summary", "kbd", "br", "img", "a"] },
+    // The PR template and issue forms start without a top-level heading.
+    "MD041": false,
+    "MD046": { "style": "fenced" },
+    "MD048": { "style": "backtick" },
+    // Table pipes needn't line up.
+    "MD060": false
+  },
+  "globs": ["**/*.md"],
+  "gitignore": true,
+  "ignores": ["**/node_modules/**", "**/.terraform/**"]
+}

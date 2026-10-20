@@ -1,0 +1,17 @@
+# gitleaks: the default rules, plus one for this repo.
+
+[extend]
+useDefault = true
+
+# Packages resolve from the public npm registry. A lockfile or .npmrc that points
+# at any other registry breaks installs for everyone else. pnpm writes a tarball
+# URL into the lockfile only when a package came from a non-default registry.
+[[rules]]
+id = "non-public-registry"
+description = "Package registry other than registry.npmjs.org"
+regex = '''(?i)(?:registry\s*[=:]|tarball:)\s*['"]?https?://[^\s'"]+'''
+keywords = ["registry", "tarball"]
+
+[[rules.allowlists]]
+regexTarget = "match"
+regexes = ['''registry\.npmjs\.org''']

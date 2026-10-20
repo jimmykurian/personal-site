@@ -1,0 +1,38 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`goodreadsLoader > turns each feed item into a book entry 1`] = `
+[
+  {
+    "data": {
+      "addedAt": "Sat, 01 Feb 2026 10:00:00 -0800",
+      "author": "Nicole Forsgren",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/42l.jpg",
+      "href": "https://www.goodreads.com/book/show/42",
+      "position": 0,
+      "rating": 5,
+      "readAt": "Mon, 05 Jan 2026 00:00:00 -0800",
+      "shelf": "favorites",
+      "subtitle": "The Science of Lean Software and DevOps",
+      "title": "Accelerate",
+      "toRead": false,
+    },
+    "id": "favorites-42",
+  },
+  {
+    "data": {
+      "addedAt": "Sat, 01 Feb 2026 10:00:00 -0800",
+      "author": "An Author",
+      "cover": undefined,
+      "href": "https://www.goodreads.com/book/show/7",
+      "position": 1,
+      "rating": 0,
+      "readAt": null,
+      "shelf": "favorites",
+      "subtitle": undefined,
+      "title": "Team Topologies",
+      "toRead": true,
+    },
+    "id": "favorites-7",
+  },
+]
+`;

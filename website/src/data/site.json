@@ -1,0 +1,239 @@
+{
+  "name": "Jimmy Kurian",
+  "title": "Jimmy Kurian, engineering leader for AI-assisted development",
+  "description": "Engineering leader at Microsoft Frontier Company, advising Fortune 500 executives on agentic AI. Patent co-inventor, published author, adjunct professor and Army National Guard cyber officer.",
+  "location": "Chicago, Illinois",
+  "jobTitle": "Senior Software Engineering Lead",
+  "employer": "Microsoft",
+  "email": "hello@jimmykurian.me",
+  "links": {
+    "linkedin": "https://www.linkedin.com/in/jimmykurian1",
+    "github": "https://github.com/jimmykurian",
+    "stackoverflow": "https://stackoverflow.com/users/1190157/jimmy-kurian",
+    "lichess": "https://lichess.org/@/jkurian1",
+    "goodreads": "https://www.goodreads.com/user/show/52431533-jimmy"
+  },
+  "goodreads": {
+    "userId": "52431533"
+  },
+  "eyebrow": [
+    {
+      "text": "Software Craftsman and Engineering Leader"
+    },
+    {
+      "text": "Adjunct Professor"
+    },
+    {
+      "text": "Veteran"
+    }
+  ],
+  "headline": {
+    "lead": "Engineering leader setting technical direction for",
+    "emphasis": "AI-assisted development",
+    "rotating": ["AI-assisted development", "agentic software", "software architecture", "engineering teams"]
+  },
+  "intro": "I lead a forward-deployed engineering team at Microsoft Frontier Company and advise Fortune 500 executives on agentic AI. Patent co-inventor, published author, adjunct computer-science professor, and Army National Guard cyber officer.",
+  "portraitCaption": "Senior Software Engineering Lead @ Microsoft",
+  "principlesLabel": "Areas of focus",
+  "principles": [
+    {
+      "title": "Software Design",
+      "body": "Small pieces with clear names and clear boundaries. Code is read far more often than it is written, so I design for the next engineer who has to change it."
+    },
+    {
+      "title": "Software Architecture",
+      "body": "Architecture is a socio-technical craft: systems mirror the teams that build them, and the order of decisions matters as much as the decisions themselves."
+    },
+    {
+      "title": "Agentic Software Development",
+      "body": "The model is only part of the system. I engineer the loop and the harness around it: the context, tools, guardrails and evals that let agents plan, act and check their own work."
+    },
+    {
+      "title": "Software Development Lifecycle",
+      "body": "Quality is built in, not inspected in. Automated tests, security scanning and fast reviews let a team build fast without breaking things later."
+    },
+    {
+      "title": "Engineering Leadership",
+      "body": "Clear intent, real ownership, and the trust to decide without waiting on me. Lessons from leading engineers and commanding Soldiers."
+    }
+  ],
+  "sections": {
+    "experience": {
+      "heading": "A decade across healthcare, finance and industry.",
+      "note": "Most of it hands-on. Healthcare, life sciences, financial services and industry."
+    },
+    "service": {
+      "label": "Military service",
+      "heading": "Signal, sustainment and cyber.",
+      "org": "Illinois Army National Guard",
+      "rank": "Captain",
+      "years": "2016 to now",
+      "decorations": [
+        {
+          "label": "U.S. decorations",
+          "items": [
+            "Army Commendation Medal, 3rd Award",
+            "Army Achievement Medal, 2nd Award",
+            "National Defense Service Medal",
+            "Global War on Terrorism Expeditionary Medal",
+            "Global War on Terrorism Service Medal",
+            "Humanitarian Service Medal",
+            "Armed Forces Service Medal, 2nd Award",
+            "Army Service Ribbon",
+            "Overseas Service Ribbon",
+            "Armed Forces Reserve Medal with M Device",
+            "Army Reserve Components Achievement Medal, 3rd Award"
+          ]
+        },
+        {
+          "label": "State decorations",
+          "items": [
+            "Illinois Abraham Lincoln Medal of Freedom",
+            "National Guard Emergency Service Ribbon",
+            "Illinois State Active Duty Service Ribbon",
+            "Illinois Military Long and Honorable Service Medal",
+            "Illinois Military Attendance Ribbon, 4th Award"
+          ]
+        }
+      ],
+      "education": {
+        "label": "Military education",
+        "items": [
+          {
+            "name": "Basic Combat Training",
+            "year": 2017
+          },
+          {
+            "name": "Federal Officer Candidate School",
+            "year": 2017
+          },
+          {
+            "name": "Signal Basic Officer Leaders Course",
+            "year": 2018
+          },
+          {
+            "name": "Simulations Operations Course",
+            "year": 2021
+          },
+          {
+            "name": "Company Level Pre-Command Course",
+            "year": 2022
+          },
+          {
+            "name": "Logistics Captains Career Course",
+            "year": 2022
+          },
+          {
+            "name": "Cyber Warfare Officer Transition Course",
+            "year": 2026
+          }
+        ]
+      }
+    },
+    "projects": {
+      "heading": "Building, advising and open source."
+    },
+    "writing": {
+      "heading": "Recent writing, patents and talks.",
+      "note": "Published here first, syndicated with a canonical link."
+    },
+    "teaching": {
+      "heading": "Classrooms, panels and service."
+    },
+    "contact": {
+      "heading": "Get in touch.",
+      "body": "Advisory, speaking, teaching, or a conversation about agentic AI in regulated industries. Email is best."
+    }
+  },
+  "education": [
+    {
+      "degree": "MBA, University of Illinois",
+      "detail": "Gies College of Business, 2023"
+    },
+    {
+      "degree": "MS, Software Engineering, DePaul University",
+      "detail": "2015"
+    },
+    {
+      "degree": "BS, Information Technology, DePaul University",
+      "detail": "2014"
+    }
+  ],
+  "certifications": [
+    "IEEE CS Professional Software Engineering Master",
+    "ISC2 Certified Secure Software Lifecycle Professional",
+    "PMI Project Management Professional",
+    "PMI Agile Certified Practitioner",
+    "AXELOS ITIL v4 Foundation",
+    "Carnegie Mellon SEI Software Architecture Professional",
+    "InfoQ Certified Software Architect in Emerging Technologies (ICSAET)"
+  ],
+  "resumeNote": "Two pages, PDF.",
+  "skills": [
+    {
+      "label": "Languages and frameworks",
+      "items": ["C# / .NET", "TypeScript / JavaScript (React, Angular, Vue)", "Python", "SQL (T-SQL, Cosmos DB)"]
+    },
+    {
+      "label": "Cloud and DevOps",
+      "items": [
+        "Azure (AI Foundry, Functions, AKS)",
+        "Docker",
+        "Kubernetes",
+        "Terraform",
+        "Azure DevOps",
+        "GitHub Actions"
+      ]
+    },
+    {
+      "label": "AI engineering",
+      "items": [
+        "Azure OpenAI",
+        "Microsoft Agent Framework",
+        "RAG and embeddings",
+        "LLM evaluation",
+        "Prompt management"
+      ]
+    },
+    {
+      "label": "Architecture and practices",
+      "items": [
+        "Distributed systems",
+        "DDD",
+        "API design",
+        "Secure SDLC",
+        "Observability",
+        "SRE / SLOs",
+        "Agile / Scrum"
+      ]
+    }
+  ],
+  "resume": {
+    "profile": "Engineering leader setting technical direction for AI-assisted development at Microsoft's Frontier Company, with standards published publicly and adopted across teams. Advisor to Fortune 500 executives on agentic AI; patent co-inventor, published author, adjunct computer-science professor, and Army National Guard cyber officer. Over a decade of full-stack and cloud experience delivering AI solutions for healthcare, life-sciences and industrial clients, hands-on with Azure AI Foundry, Microsoft Agent Framework and agentic AI engineering.",
+    "education": [
+      {
+        "school": "University of Illinois",
+        "location": "Champaign, IL",
+        "degree": "Master of Business Administration",
+        "year": "Class of 2023"
+      },
+      {
+        "school": "DePaul University",
+        "location": "Chicago, IL",
+        "degree": "Master of Science in Software Engineering",
+        "year": "Class of 2015"
+      },
+      {
+        "school": "DePaul University",
+        "location": "Chicago, IL",
+        "degree": "Bachelor of Science in Information Technology",
+        "year": "Class of 2014"
+      }
+    ],
+    "honors": [
+      "Military at Microsoft, Leadership & Impact Recognition (FY26): Chapters Lead Liaison, Companywide Leadership Team.",
+      "Army Commendation Medal (3 awards): company command, deployment preparation and operational leadership.",
+      "Army Achievement Medal (2 awards): joint operations readiness and Soldier wellness."
+    ]
+  }
+}

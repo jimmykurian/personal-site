@@ -1,0 +1,15 @@
+{
+  "recommendations": [
+    "astro-build.astro-vscode",
+    "dbaeumer.vscode-eslint",
+    "esbenp.prettier-vscode",
+    "streetsidesoftware.code-spell-checker",
+    "davidanson.vscode-markdownlint",
+    "editorconfig.editorconfig",
+    "opentofu.vscode-opentofu",
+    "ms-playwright.playwright",
+    "vitest.explorer",
+    "hverlin.mise-vscode",
+    "task.vscode-task"
+  ]
+}

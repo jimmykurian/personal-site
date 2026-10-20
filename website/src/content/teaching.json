@@ -1,0 +1,174 @@
+[
+  {
+    "id": "snhu",
+    "group": "teaching",
+    "title": "Southern New Hampshire University",
+    "detail": "Adjunct Professor, CS-250 Software Development Lifecycle, 2026 to present",
+    "resume": {
+      "role": "Adjunct Professor, CS-250: Software Development Lifecycle",
+      "location": "Remote",
+      "dates": "Apr 2026 – Present",
+      "highlights": [
+        "Deliver instruction, assessment and mentorship to online learners in the School of Engineering, Technology & Aeronautics."
+      ]
+    }
+  },
+  {
+    "id": "uchicago",
+    "group": "teaching",
+    "title": "University of Chicago",
+    "detail": "Teaching Assistant, Intro and Applied Software Engineering (MPCS 51200, 51220), 2020 to 2021",
+    "resume": {
+      "role": "Teaching Assistant, MPCS 51200: Intro to Software Engineering and 51220: Applied Software Engineering",
+      "location": "Chicago, IL",
+      "dates": "Apr 2020 – Mar 2021"
+    }
+  },
+  {
+    "id": "devry",
+    "group": "teaching",
+    "title": "DeVry University",
+    "detail": "Guest Lecturer, operating systems and cloud, 2019",
+    "resume": {
+      "role": "Guest Lecturer, CEIS 106: Introduction to Operating Systems (cloud computing focus)",
+      "location": "Chicago, IL",
+      "dates": "Oct 2019"
+    }
+  },
+  {
+    "id": "depaul",
+    "group": "teaching",
+    "title": "DePaul University",
+    "detail": "Guest Lecturer, Agile fundamentals, 2017 to 2018",
+    "resume": {
+      "role": "Guest Lecturer, IT 394: Software Projects for Community Clients (Agile fundamentals)",
+      "location": "Chicago, IL",
+      "dates": "2017 – 2018"
+    }
+  },
+  {
+    "id": "ai-impact-summit",
+    "group": "speaking",
+    "title": "AI Impact Summit",
+    "detail": "Panelist, alongside IEEE, IBM and Google, 2026"
+  },
+  {
+    "id": "cio-roundtable",
+    "group": "speaking",
+    "title": "CIO roundtable",
+    "detail": "Invitation-only session on agentic AI and enterprise content governance, 2026"
+  },
+  {
+    "id": "depaul-talk",
+    "group": "speaking",
+    "title": "DePaul University",
+    "detail": "Tech talk, \"Build Fast, Don't Break Later,\" 2026"
+  },
+  {
+    "id": "military-at-microsoft",
+    "group": "community",
+    "title": "Military at Microsoft",
+    "detail": "Chapters Lead Liaison on the companywide leadership team. Leadership & Impact recognition, FY26"
+  },
+  {
+    "id": "ieee-cs",
+    "group": "community",
+    "title": "IEEE Computer Society",
+    "detail": "Member"
+  },
+  {
+    "id": "acm",
+    "group": "community",
+    "title": "Association for Computing Machinery (ACM)",
+    "detail": "Member"
+  },
+  {
+    "id": "pmi",
+    "group": "community",
+    "title": "Project Management Institute (PMI)",
+    "detail": "Member"
+  },
+  {
+    "id": "isc2",
+    "group": "community",
+    "title": "ISC2",
+    "detail": "Member"
+  },
+  {
+    "id": "knights-of-columbus",
+    "group": "volunteering",
+    "title": "Knights of Columbus",
+    "detail": "Council Member, 4th Degree",
+    "years": "2018 to now"
+  },
+  {
+    "id": "global-shapers",
+    "group": "volunteering",
+    "title": "Global Shapers Community, World Economic Forum",
+    "detail": "Global Shaper, Chicago Hub",
+    "years": "2018 to 2023"
+  },
+  {
+    "id": "toastmasters",
+    "group": "volunteering",
+    "title": "Toastmasters International",
+    "detail": "Sergeant at Arms",
+    "years": "2021 to 2023"
+  },
+  {
+    "id": "rotaract",
+    "group": "volunteering",
+    "title": "Rotaract Club of Chicago",
+    "detail": "Member",
+    "years": "2022 to 2023"
+  },
+  {
+    "id": "american-legion",
+    "group": "volunteering",
+    "title": "The American Legion",
+    "detail": "Member",
+    "years": "2018 to 2023"
+  },
+  {
+    "id": "cset-foretell",
+    "group": "volunteering",
+    "title": "Center for Security and Emerging Technology",
+    "detail": "Foretell Forecaster",
+    "years": "2020 to 2021"
+  },
+  {
+    "id": "code-for-america",
+    "group": "volunteering",
+    "title": "Code for America",
+    "detail": "Volunteer Developer, Uptown Brigade",
+    "years": "2019 to 2020"
+  },
+  {
+    "id": "codenow",
+    "group": "volunteering",
+    "title": "CodeNow",
+    "detail": "Volunteer Programming Instructor",
+    "years": "2018 to 2019"
+  },
+  {
+    "id": "mbmhmc",
+    "group": "volunteering",
+    "title": "My Block, My Hood, My City",
+    "detail": "Mentor",
+    "years": "2017"
+  },
+  {
+    "id": "south-loop-pantry",
+    "group": "volunteering",
+    "title": "South Loop Community Church Food Pantry",
+    "detail": "Volunteer",
+    "years": "2015 to 2016"
+  },
+  {
+    "id": "akshaya-patra",
+    "group": "volunteering",
+    "title": "The Akshaya Patra Foundation",
+    "detail": "Webmaster, DePaul University chapter",
+    "years": "2011 to 2014"
+  }
+]

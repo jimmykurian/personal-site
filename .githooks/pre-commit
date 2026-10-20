@@ -1,0 +1,72 @@
+#!/bin/bash
+set -eo pipefail
+
+# Checks the staged files before each commit. A check whose tool isn't installed is
+# skipped with a warning (run `mise install` and `task install`); CI runs every check.
+# Install with `task hooks:install`. Skip once with `git commit --no-verify`.
+
+cd "$(git rev-parse --show-toplevel)"
+BIN=website/node_modules/.bin
+FAILED=0
+
+# Sets FILES to the staged (added, copied, modified or renamed) files matching a regex.
+stage() {
+  FILES=()
+  while IFS= read -r file; do FILES+=("$file"); done < <(git diff --cached --name-only --diff-filter=ACMR | grep -E "$1" || true)
+  [[ ${#FILES[@]} -gt 0 ]]
+}
+
+# Runs a check, or skips it when its tool isn't installed.
+check() {
+  local name="$1" tool="$2"
+  shift 2
+  if ! command -v "$tool" > /dev/null; then
+    echo "pre-commit: $name skipped ($tool not installed)"
+    return 0
+  fi
+  "$@" || { echo "pre-commit: $name failed"; FAILED=1; }
+}
+
+# shellcheck disable=SC2329 # called through check
+eslint_staged() {
+  (cd website && ./node_modules/.bin/eslint --max-warnings 0 --no-warn-ignored "${@#website/}")
+}
+
+check "secrets" gitleaks gitleaks git --pre-commit --staged --no-banner --log-level warn --redact --config .config/gitleaks.toml .
+
+# gitleaks skips lock files, so this checks the staged one for packages from another registry.
+# shellcheck disable=SC2329 # called through check
+lockfile_registry() {
+  ! git show :website/pnpm-lock.yaml | grep -n 'tarball:'
+}
+if stage '^website/pnpm-lock\.yaml$'; then
+  check "lockfile registry" git lockfile_registry
+fi
+
+if stage '.'; then
+  check "editorconfig" editorconfig-checker editorconfig-checker -config .config/editorconfig-checker.json "${FILES[@]}"
+fi
+if stage '\.(md|mdx|astro|ts|css|yml)$|^\.gitmessage$'; then
+  check "spelling" "$BIN/cspell" "$BIN/cspell" lint --config .config/cspell.json --no-progress --no-summary --dot --no-must-find-files "${FILES[@]}"
+fi
+if stage '\.md$'; then
+  check "markdown" "$BIN/markdownlint-cli2" "$BIN/markdownlint-cli2" --config .config/.markdownlint-cli2.jsonc "${FILES[@]}"
+fi
+if stage '^website/.*\.(ts|js|mjs|json|css|md|yml|yaml)$'; then
+  check "format" "$BIN/prettier" "$BIN/prettier" --check --ignore-unknown \
+    --ignore-path website/.prettierignore --config website/.prettierrc.json "${FILES[@]}"
+fi
+if stage '^website/.*\.(ts|js|mjs|astro)$'; then
+  check "eslint" "$BIN/eslint" eslint_staged "${FILES[@]}"
+fi
+if stage '\.sh$|^\.githooks/'; then
+  check "shellcheck" shellcheck shellcheck "${FILES[@]}"
+fi
+if stage '\.(tf|tftest\.hcl)$'; then
+  check "tofu fmt" tofu tofu fmt -check -diff "${FILES[@]}"
+fi
+if stage '^\.github/workflows/'; then
+  check "actionlint" actionlint actionlint "${FILES[@]}"
+fi
+
+exit "$FAILED"

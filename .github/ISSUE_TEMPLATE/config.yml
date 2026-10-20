@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Questions and feedback
+    url: https://www.jimmykurian.me/#contact
+    about: For questions or a note about the site, email hello@jimmykurian.me instead of opening an issue.
+  - name: Report a security issue
+    url: https://github.com/jimmykurian/personal-site/blob/main/SECURITY.md
+    about: Please don't open an issue for a vulnerability; follow the security policy.

@@ -1,0 +1,87 @@
+name: Subtask
+description: A subtask that is part of a larger feature
+title: "[Subtask]: "
+labels: ["subtask"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this template for one piece of work that belongs to a parent
+        feature issue.
+
+  - type: input
+    id: parent
+    attributes:
+      label: Parent Issue
+      description: Link to the parent feature issue.
+      placeholder: "#123"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      description: Which part of the site does this subtask affect?
+      options:
+        - Pages and components
+        - Content (posts, JSON data)
+        - Data loaders (Goodreads)
+        - Styles or design
+        - Resume
+        - Build, CI or deploy
+        - Hosting, DNS or email
+        - Documentation
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: What needs to be done in this subtask?
+      placeholder: A clear description of the work to be completed.
+    validations:
+      required: true
+
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: Acceptance Criteria
+      description: How do we know this subtask is complete?
+      placeholder: |
+        - [ ] Criterion 1
+        - [ ] Criterion 2
+        - [ ] `pnpm build`, `pnpm test` and `task lint` pass
+        - [ ] Checked at desktop and phone widths
+    validations:
+      required: true
+
+  - type: textarea
+    id: files
+    attributes:
+      label: Files to Modify
+      description: List the key files or directories that will change (paths relative to website/).
+      placeholder: |
+        - `src/pages/reading/index.astro`
+        - `src/lib/goodreads.ts`
+    validations:
+      required: false
+
+  - type: textarea
+    id: dependencies
+    attributes:
+      label: Dependencies
+      description: List any subtasks that must be completed before this one.
+      placeholder: "Blocked by #124, #125"
+    validations:
+      required: false
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Implementation Notes
+      description: Any additional context, design decisions, or technical notes.
+    validations:
+      required: false

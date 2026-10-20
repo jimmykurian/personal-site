@@ -1,0 +1,21 @@
+sequenceDiagram
+    participant Client
+    participant Controller as ChatBotController<br/>(API)
+    participant Mediator as Mediator<br/>(generated)
+    participant Handler as WriteConversationContext<br/>CommandHandler<br/>(Application)
+    participant Store as CosmosDataStore<br/>(Infrastructure)
+    participant Cosmos as Azure Cosmos DB
+
+    Client->>Controller: POST /chatbot/ask
+    Controller->>Mediator: Send(WriteConversationContextCommand)
+    Note over Mediator,Handler: RequestLoggingBehavior<br/>wraps the handler call
+    Mediator->>Handler: Handle(command, cancellationToken)
+    Handler->>Handler: Validate (FluentValidation)
+    Handler->>Store: WriteConversationContextAsync(fullResponse)
+    Store->>Store: ToDocument(context) via Mapperly
+    Store->>Cosmos: CreateItemAsync(document, partitionKey)
+    Cosmos-->>Store: 201 Created
+    Store-->>Handler: completes
+    Handler-->>Mediator: Result.Ok()
+    Mediator-->>Controller: Result
+    Controller-->>Client: 200 OK

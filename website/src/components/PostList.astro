@@ -1,0 +1,191 @@
+---
+import { readingMinutes, type Post } from '../lib/posts';
+
+interface Props {
+  posts: Post[];
+}
+
+const { posts } = Astro.props;
+
+// Posts arrive newest first; group them by year, then by month within the year. Map.groupBy
+// keeps that order (Object.groupBy would sort the numeric year keys oldest first).
+const year = (d: Date) => String(d.getUTCFullYear());
+const monthName = (d: Date) => d.toLocaleDateString('en-US', { month: 'long', timeZone: 'UTC' });
+const monthId = (d: Date) => d.toISOString().slice(0, 7);
+const day = (d: Date) => d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' });
+
+const years = [...Map.groupBy(posts, (p) => year(p.data.pubDate))].map(([year, list]) => ({
+  year,
+  months: [...Map.groupBy(list, (p) => monthId(p.data.pubDate)).values()],
+}));
+---
+
+<section id="posts" class="section" aria-labelledby="posts-title">
+  <div class="wrap">
+    <div class="ledger">
+      <div class="ledger__label">
+        <h2 id="posts-title" class="caps">Posts</h2>
+        {
+          years.length > 0 && (
+            <nav aria-label="Posts by date" class="archive-nav">
+              {years.map(({ year, months }) => (
+                <div class="archive-nav__year">
+                  <a href={`#y${year}`} class="archive-nav__link archive-nav__link--year">
+                    {year}
+                  </a>
+                  {months.map((list) => (
+                    <a href={`#${monthId(list[0].data.pubDate)}`} class="archive-nav__link">
+                      {monthName(list[0].data.pubDate)}
+                    </a>
+                  ))}
+                </div>
+              ))}
+            </nav>
+          )
+        }
+      </div>
+      <div class="ledger__body">
+        {
+          posts.length === 0 ? (
+            <p class="empty">
+              No posts yet. The <a href="/rss.xml" class="text-link">RSS feed</a> will carry the first one.
+            </p>
+          ) : (
+            <div class="archive">
+              {years.map(({ year, months }) => (
+                <section id={`y${year}`} class="year" aria-labelledby={`y${year}-title`}>
+                  <h3 id={`y${year}-title`} class="year__title">
+                    {year}
+                  </h3>
+                  {months.map((list) => (
+                    <section id={monthId(list[0].data.pubDate)} class="month" aria-label={`${monthName(list[0].data.pubDate)} ${year}`}>
+                      <h4 class="caps month__title">{monthName(list[0].data.pubDate)}</h4>
+                      <ul class="rows">
+                        {list.map((post) => (
+                          <li class="row post">
+                            <p class="row__date meta-num">
+                              <time datetime={post.data.pubDate.toISOString()}>{day(post.data.pubDate)}</time> ·{' '}
+                              {readingMinutes(post.body)} min
+                            </p>
+                            <div class="row__body post__body">
+                              <a href={`/writing/${post.id}/`} class="post__title">
+                                {post.data.title}
+                                {post.data.draft && <span class="caps caps-sm post__draft">Draft</span>}
+                              </a>
+                              <p class="post__desc">{post.data.description}</p>
+                            </div>
+                          </li>
+                        ))}
+                      </ul>
+                    </section>
+                  ))}
+                </section>
+              ))}
+            </div>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Archive: year, then its months indented beneath. */
+  .archive-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-top: 4px;
+    font-size: 14px;
+  }
+
+  .archive-nav__year {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .archive-nav__link {
+    display: inline-flex;
+    align-items: center;
+    min-height: 32px;
+    padding-left: 14px;
+    color: var(--accent-small);
+  }
+
+  .archive-nav__link--year {
+    padding-left: 0;
+    font-weight: 600;
+    color: var(--ink);
+  }
+
+  @media (max-width: 860px) {
+    .archive-nav__year {
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0 16px;
+    }
+
+    .archive-nav__link {
+      padding-left: 0;
+    }
+  }
+
+  .archive {
+    display: flex;
+    flex-direction: column;
+    gap: 56px;
+  }
+
+  .year {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .year__title {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 30px;
+    line-height: 1;
+    letter-spacing: -0.01em;
+  }
+
+  .year,
+  .month {
+    scroll-margin-top: 24px;
+  }
+
+  .month__title {
+    padding-bottom: 12px;
+    color: var(--accent-small);
+  }
+
+  .post {
+    padding: 24px 0;
+  }
+
+  .post__body {
+    gap: 6px;
+  }
+
+  .post__title {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: clamp(22px, 2vw, 26px);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  .post__draft {
+    margin-left: 10px;
+    vertical-align: middle;
+    color: var(--accent-small);
+  }
+
+  .post__desc {
+    font-size: 15px;
+    line-height: 1.55;
+  }
+</style>

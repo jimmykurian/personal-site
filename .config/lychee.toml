@@ -1,0 +1,22 @@
+# lychee: checks the external links in the built site (website/dist). Internal
+# links and anchors are covered by website/tests/integration.
+
+# Links to this site are checked by the integration tests; the live site may not
+# have a page yet that a branch adds.
+exclude = [
+  '^https?://(www\.)?jimmykurian\.me',
+  '^https?://localhost',
+  '^https?://127\.0\.0\.1',
+  # Book pages come from the Goodreads feed, and Goodreads answers bots with 503.
+  '^https://www\.goodreads\.com/book/show/',
+]
+exclude_all_private = true
+include_mail = false
+
+# Some sites refuse bots (403) or rate-limit them (429) while working fine in a
+# browser; those aren't broken links.
+accept = ["200..=299", "403", "429"]
+max_retries = 2
+timeout = 20
+max_concurrency = 8
+user_agent = "Mozilla/5.0 (compatible; link check for jimmykurian.me)"

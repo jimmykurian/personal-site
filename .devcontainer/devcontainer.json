@@ -1,0 +1,35 @@
+// A container with every tool in .mise.toml, the website's dependencies, Chrome for the
+// Playwright tests and the git hooks. Works in VS Code and GitHub Codespaces.
+{
+  "name": "jimmykurian.me",
+  "image": "mcr.microsoft.com/devcontainers/base:ubuntu-24.04",
+  "features": {
+    "ghcr.io/devcontainers-extra/features/mise:1": {}
+  },
+  "containerEnv": {
+    "MISE_TRUSTED_CONFIG_PATHS": "${containerWorkspaceFolder}"
+  },
+  "postCreateCommand": ".devcontainer/post-create.sh",
+  "forwardPorts": [4321, 4329],
+  "portsAttributes": {
+    "4321": { "label": "astro dev" },
+    "4329": { "label": "astro preview (e2e tests)", "onAutoForward": "silent" }
+  },
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "astro-build.astro-vscode",
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "streetsidesoftware.code-spell-checker",
+        "davidanson.vscode-markdownlint",
+        "editorconfig.editorconfig",
+        "opentofu.vscode-opentofu",
+        "ms-playwright.playwright",
+        "vitest.explorer",
+        "hverlin.mise-vscode",
+        "task.vscode-task"
+      ]
+    }
+  }
+}

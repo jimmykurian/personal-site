@@ -1,0 +1,57 @@
+---
+import Base from '../../layouts/Base.astro';
+import Ledger from '../../components/Ledger.astro';
+import PostList from '../../components/PostList.astro';
+import WritingHero from '../../components/WritingHero.astro';
+import { getPosts } from '../../lib/posts';
+import { getWriting, listLabel } from '../../lib/writing';
+
+const posts = await getPosts();
+const writing = await getWriting();
+
+const sections = [
+  { id: 'publications', label: 'Publications', items: writing.filter((w) => w.data.kind === 'article' || w.data.kind === 'chapter') },
+  { id: 'patents', label: 'Patents', items: writing.filter((w) => w.data.kind === 'patent') },
+  { id: 'talks', label: 'Talks', items: writing.filter((w) => w.data.kind === 'talk') },
+];
+---
+
+<Base
+  title="Writing"
+  description="Long-form on engineering practice, AI-assisted development, and leading forward-deployed teams, plus publications, patents and talks."
+  current="writing"
+>
+  <WritingHero
+    label="Writing"
+    title="Writing, patents and talks."
+    intro="Long-form on engineering practice, AI-assisted development, and leading forward-deployed teams. Posts are published here first and syndicated elsewhere with a canonical link back."
+  >
+    <Fragment slot="title">Writing, patents <em>and</em> talks.</Fragment>
+  </WritingHero>
+
+  <PostList posts={posts} />
+
+  {
+    sections.map((s) => (
+      <Ledger id={s.id} label={s.label} labelIsHeading>
+        <ul class="rows">
+          {s.items.map((item) => (
+            <li class="row">
+              <p class="row__date meta-num">{listLabel(item)}</p>
+              <div class="row__body">
+                {item.data.href ? (
+                  <a href={item.data.href} class="list-title">
+                    {item.data.title}
+                  </a>
+                ) : (
+                  <p class="list-title">{item.data.title}</p>
+                )}
+                <p class="note">{item.data.venue}</p>
+              </div>
+            </li>
+          ))}
+        </ul>
+      </Ledger>
+    ))
+  }
+</Base>

@@ -1,0 +1,82 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`PostList > groups posts by year, then month 1`] = `
+"<section id="posts" class="section" aria-labelledby="posts-title">
+<div class="wrap">
+<div class="ledger">
+<div class="ledger__label">
+<h2 id="posts-title" class="caps">Posts</h2>
+<nav aria-label="Posts by date" class="archive-nav">
+<div class="archive-nav__year">
+<a href="#y2026" class="archive-nav__link archive-nav__link--year">2026</a>
+<a href="#2026-11" class="archive-nav__link">November</a>
+<a href="#2026-10" class="archive-nav__link">October</a>
+</div>
+<div class="archive-nav__year">
+<a href="#y2025" class="archive-nav__link archive-nav__link--year">2025</a>
+<a href="#2025-12" class="archive-nav__link">December</a>
+</div>
+</nav>
+</div>
+<div class="ledger__body">
+<div class="archive">
+<section id="y2026" class="year" aria-labelledby="y2026-title">
+<h3 id="y2026-title" class="year__title">2026</h3>
+<section id="2026-11" class="month" aria-label="November 2026">
+<h4 class="caps month__title">November</h4>
+<ul class="rows">
+<li class="row post">
+<p class="row__date meta-num">
+<time datetime="2026-11-02T00:00:00.000Z">Nov 2</time> · 2 min</p>
+<div class="row__body post__body">
+<a href="/writing/november/" class="post__title">November post</a>
+<p class="post__desc">About november.</p>
+</div>
+</li>
+</ul>
+</section>
+<section id="2026-10" class="month" aria-label="October 2026">
+<h4 class="caps month__title">October</h4>
+<ul class="rows">
+<li class="row post">
+<p class="row__date meta-num">
+<time datetime="2026-10-17T00:00:00.000Z">Oct 17</time> · 16 min</p>
+<div class="row__body post__body">
+<a href="/writing/october-b/" class="post__title">Second October post</a>
+<p class="post__desc">About october-b.</p>
+</div>
+</li>
+<li class="row post">
+<p class="row__date meta-num">
+<time datetime="2026-10-01T00:00:00.000Z">Oct 1</time> · 2 min</p>
+<div class="row__body post__body">
+<a href="/writing/october-a/" class="post__title">First October post<span class="caps caps-sm post__draft">Draft</span>
+</a>
+<p class="post__desc">About october-a.</p>
+</div>
+</li>
+</ul>
+</section>
+</section>
+<section id="y2025" class="year" aria-labelledby="y2025-title">
+<h3 id="y2025-title" class="year__title">2025</h3>
+<section id="2025-12" class="month" aria-label="December 2025">
+<h4 class="caps month__title">December</h4>
+<ul class="rows">
+<li class="row post">
+<p class="row__date meta-num">
+<time datetime="2025-12-31T00:00:00.000Z">Dec 31</time> · 2 min</p>
+<div class="row__body post__body">
+<a href="/writing/last-year/" class="post__title">Last year</a>
+<p class="post__desc">About last-year.</p>
+</div>
+</li>
+</ul>
+</section>
+</section>
+</div>
+</div>
+</div>
+</div>
+</section>"
+`;

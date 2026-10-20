@@ -1,0 +1,15 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`404 page > says the page is missing and links back to the home page and writing 1`] = `
+"<section class="wrap missing" aria-labelledby="missing-title">
+<div class="ledger ledger--bare">
+<div class="ledger__label">
+<p class="caps">404</p>
+</div>
+<div class="ledger__body">
+<h1 id="missing-title" class="display missing__title">Nothing <em>here</em>.</h1>
+<p class="missing__text">The page may have moved when the site was rebuilt. Try the <a href="/" class="text-link">home page</a> or the <a href="/writing/" class="text-link">writing</a>.</p>
+</div>
+</div>
+</section>"
+`;

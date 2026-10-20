@@ -1,0 +1,99 @@
+name: Feature Request
+description: Suggest a new page, section or improvement for the site
+title: "[Feature]: "
+labels: ["enhancement", "triage"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Suggest a change to the site. Check it against the content and design
+        rules in CONTRIBUTING.md first.
+
+  - type: dropdown
+    id: area
+    attributes:
+      label: Feature Area
+      description: Which part of the site would this affect?
+      options:
+        - Home
+        - Writing (/writing/ or posts)
+        - Reading (/reading/)
+        - Resume
+        - Header, footer or links
+        - SEO, RSS or sitemap
+        - Styles or design
+        - Build, deploy or hosting
+        - Documentation
+        - New page or section
+        - Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement
+      description: What's missing or awkward today?
+      placeholder: "Visitors can't easily..."
+    validations:
+      required: false
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: Describe the change you'd like.
+      placeholder: A clear and concise description of what you want to happen.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives Considered
+      description: Describe any other approaches you've considered.
+      placeholder: List any alternatives...
+    validations:
+      required: false
+
+  - type: textarea
+    id: mockups
+    attributes:
+      label: Mockups / Examples
+      description: If applicable, add mockups, a link to the Design canvas, or examples from other sites.
+      placeholder: Drag and drop images here or paste links...
+    validations:
+      required: false
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How important is this?
+      options:
+        - Nice to have
+        - Important
+        - Needed before the next post or launch
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: rules
+    attributes:
+      label: Rules
+      description: The site's standing decisions (see CONTRIBUTING.md and AGENTS.md).
+      options:
+        - label: Fits the design rules (ledger layout; no cards, pills, numbered sections or monospace eyebrows; palette 207)
+          required: false
+        - label: Keeps the content rules (anonymized clients; no clearance, patent number or private contact details)
+          required: false
+        - label: Needs no client-side framework, or explains why it does
+          required: false
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Add any other context or screenshots about the request.
+    validations:
+      required: false

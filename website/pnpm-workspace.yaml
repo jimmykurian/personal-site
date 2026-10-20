@@ -1,0 +1,17 @@
+# pnpm settings for the website (a single package, not a workspace).
+
+# Advisories in dev tools, fixed by forcing the patched release. Neither code path runs:
+# Lighthouse CI never opens the inquirer editor or fetches ftp:// URLs.
+overrides:
+  tmp: '^0.2.7' # GHSA-ph9p-34f9-6g65, via @lhci/cli > inquirer > external-editor
+  basic-ftp: '^6.2.3' # GHSA-c475-qrg2-pj4r, via @lhci/cli > proxy-agent > get-uri
+
+# Advisories with no patched release, in dev tools only. Remove each once a fix ships.
+auditConfig:
+  ignoreGhsas:
+    # extract-zip, used by puppeteer to download browsers. Lighthouse uses the installed
+    # Chrome and never downloads one.
+    - GHSA-jmr9-qjv8-65gv
+    - GHSA-7pqw-9j4j-h8q3
+    # braces, via markdownlint-cli2's globbing. The patterns are this repo's own.
+    - GHSA-vfj7-8cjw-p6xm

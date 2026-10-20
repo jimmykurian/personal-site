@@ -1,0 +1,164 @@
+# Every check and test, by one name, for local runs, the git hooks and CI.
+# Tools come from .mise.toml (`mise install`) and website/node_modules (`task install`).
+# Run `task` to list the tasks.
+
+version: '3'
+
+vars:
+  # JavaScript tools installed by website/package.json, run from the repo root.
+  BIN: website/node_modules/.bin
+  SPELLING_GLOBS: >-
+    "**/*.md" "website/src/**/*.{mdx,astro,ts,css}" "website/tests/**/*.ts" "website/scripts/**"
+    ".github/**/*.yml" "infrastructure/**/*.{tf,hcl,sh}" ".gitmessage" "Taskfile.yml" ".githooks/*"
+    ".devcontainer/*" ".mise.toml"
+
+tasks:
+  default:
+    cmds:
+      - task --list
+    silent: true
+
+  install:
+    desc: Install the pinned tools and the website's dependencies
+    cmds:
+      - mise install
+      - pnpm --dir website install --frozen-lockfile
+
+  hooks:install:
+    desc: Use the git hooks in .githooks/
+    cmds:
+      - git config core.hooksPath .githooks
+
+  # Checks
+
+  lint:
+    desc: Run every check (no build needed)
+    cmds:
+      - task: lint:actions
+      - task: lint:secrets
+      - task: lint:lockfile
+      - task: lint:shell
+      - task: lint:editorconfig
+      - task: lint:markdown
+      - task: lint:spelling
+      - task: lint:web
+      - task: infra:check
+
+  lint:actions:
+    desc: Lint the GitHub Actions workflows (actionlint, zizmor)
+    cmds:
+      - actionlint
+      - zizmor --offline .github
+
+  lint:secrets:
+    desc: Scan the git history for secrets and non-npm registry URLs (gitleaks)
+    cmds:
+      - gitleaks git --no-banner --redact --config .config/gitleaks.toml .
+
+  lint:lockfile:
+    desc: Check that every locked package comes from the public npm registry
+    cmds:
+      # pnpm writes a tarball URL only for packages from a non-default registry, and gitleaks skips lock files.
+      - '! grep -n "tarball:" website/pnpm-lock.yaml'
+
+  lint:shell:
+    desc: Lint the shell scripts and git hooks (shellcheck)
+    cmds:
+      - shellcheck infrastructure/scripts/*.sh .githooks/* .devcontainer/*.sh
+
+  lint:editorconfig:
+    desc: Check every file against .editorconfig
+    cmds:
+      - editorconfig-checker -config .config/editorconfig-checker.json
+
+  lint:markdown:
+    desc: Lint the Markdown files (markdownlint)
+    cmds:
+      - '{{.BIN}}/markdownlint-cli2 --config .config/.markdownlint-cli2.jsonc'
+
+  lint:spelling:
+    desc: Spell-check the posts, pages, docs and code (cspell)
+    cmds:
+      - '{{.BIN}}/cspell lint --config .config/cspell.json --no-progress --dot {{.SPELLING_GLOBS}}'
+
+  lint:web:
+    desc: Type-check, lint and format-check the website
+    dir: website
+    cmds:
+      - pnpm check
+      - pnpm lint
+
+  lint:commits:
+    desc: 'Check commit messages in a range: task lint:commits FROM=<sha> TO=<sha>'
+    dir: website
+    requires:
+      vars: [FROM]
+    cmds:
+      - pnpm exec commitlint --config "{{.ROOT_DIR}}/.config/commitlintrc.json" --cwd "{{.ROOT_DIR}}" --from {{.FROM}} --to {{.TO | default "HEAD"}}
+
+  lint:links:
+    desc: Check the external links in the built site (lychee; needs `task build`)
+    cmds:
+      - lychee --config .config/lychee.toml --no-progress --root-dir "$PWD/website/dist" website/dist
+
+  format:
+    desc: Format the website code (Prettier, ESLint fixes)
+    dir: website
+    cmds:
+      - pnpm format
+
+  # Build and tests
+
+  build:
+    desc: Build the site and print the resume PDF
+    dir: website
+    cmds:
+      - pnpm build
+      - pnpm resume
+
+  test:
+    desc: Run the unit tests with coverage
+    dir: website
+    cmds:
+      - pnpm test:coverage
+
+  test:integration:
+    desc: Check the built site (needs `task build`)
+    dir: website
+    env:
+      INTEGRATION_DIST: .
+    cmds:
+      - pnpm test:integration
+
+  test:e2e:
+    desc: Drive the built site in Chrome, including axe accessibility checks (needs `task build`)
+    dir: website
+    cmds:
+      - pnpm test:e2e
+
+  lighthouse:
+    desc: Run Lighthouse on the built site (needs `task build`)
+    cmds:
+      - '{{.BIN}}/lhci autorun --config=.config/lighthouserc.json'
+
+  # Infrastructure
+
+  infra:check:
+    desc: Format, validate, lint and scan the OpenTofu modules, and check provider pins
+    dir: infrastructure
+    cmds:
+      - tofu fmt -recursive -check -diff
+      - for: { var: MODULES }
+        cmd: tofu -chdir={{.ITEM}} init -backend=false -input=false > /dev/null && tofu -chdir={{.ITEM}} validate
+      - tflint --init > /dev/null && tflint --recursive --config "$PWD/.tflint.hcl"
+      - checkov --config-file .checkov.yaml
+      - ./scripts/check-provider-pins.sh
+    vars:
+      MODULES:
+        sh: find modules -name versions.tf -exec dirname {} \; | sort
+
+  infra:test:
+    desc: Run the OpenTofu module tests
+    dir: infrastructure
+    cmds:
+      - ./scripts/run-module-tests.sh

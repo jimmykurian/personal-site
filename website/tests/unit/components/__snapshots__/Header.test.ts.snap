@@ -1,0 +1,57 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Header > shows the wordmark, the primary nav and the resume link 1`] = `
+"<header class="site-header wrap">
+<div class="site-header__bar">
+<a href="/" class="wordmark" aria-current="page">Jimmy Kurian</a>
+<nav aria-label="Primary" class="nav nav--wide">
+<a href="/#experience" class="nav__link">Experience</a>
+<a href="/#service" class="nav__link">Service</a>
+<a href="/#projects" class="nav__link">Projects</a>
+<a href="/writing/" class="nav__link">Writing</a>
+<a href="/reading/" class="nav__link">Reading</a>
+<a href="/#teaching" class="nav__link">Teaching</a>
+<a href="/#contact" class="nav__link">Contact</a>
+<a href="/#resume" class="btn nav__resume">Resume</a>
+</nav>
+<details class="menu">
+<summary class="menu__toggle">
+<span class="menu__open">Menu <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+<path d="M4 7h16">
+</path>
+<path d="M4 12h16">
+</path>
+<path d="M4 17h16">
+</path>
+</svg>
+</span>
+<span class="menu__close">Close <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
+<path d="M6 6l12 12">
+</path>
+<path d="M18 6L6 18">
+</path>
+</svg>
+</span>
+</summary>
+<nav aria-label="Primary" class="menu__panel">
+<a href="/#experience" class="menu__link">Experience</a>
+<a href="/#service" class="menu__link">Service</a>
+<a href="/#projects" class="menu__link">Projects</a>
+<a href="/writing/" class="menu__link">Writing</a>
+<a href="/reading/" class="menu__link">Reading</a>
+<a href="/#teaching" class="menu__link">Teaching</a>
+<a href="/#contact" class="menu__link">Contact</a>
+<a href="/#resume" class="menu__link">Resume</a>
+</nav>
+</details>
+</div>
+<div class="site-header__rule" aria-hidden="true">
+</div>
+</header>
+<script>
+  // Close the phone menu after following an in-page link.
+  document.querySelectorAll('.menu__link').forEach((a) =>
+    a.addEventListener('click', () => a.closest('details')?.removeAttribute('open')),
+  );
+</script>"
+`;

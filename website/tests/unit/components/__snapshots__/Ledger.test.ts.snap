@@ -1,0 +1,17 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Ledger > labels the section by its display heading 1`] = `
+"<section id="projects" class="section" aria-labelledby="projects-title">
+<div class="wrap">
+<div class="ledger">
+<div class="ledger__label">
+<p class="caps">Projects</p>
+</div>
+<div class="ledger__body">
+<h2 class="section-title" id="projects-title">Selected work</h2>
+<p>Body</p>
+</div>
+</div>
+</div>
+</section>"
+`;

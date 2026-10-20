@@ -1,0 +1,26 @@
+flowchart TB
+    C["ChatBotController<br/>POST /chatbot/ask"] -- "Send(message)" --> M["Mediator (generated)<br/>RequestLoggingBehavior around every handler"]
+    subgraph Write["Command side: write"]
+        WH["WriteConversationContext<br/>CommandHandler"] --> WV{"Valid?<br/>(FluentValidation)"}
+        WV -- "no" --> WF(["Result.Fail"])
+        WV -- "yes" --> WS["CosmosDataStore<br/>(ICosmosDataStore)"]
+        WS -- "Mapperly: context<br/>to document" --> WD[("Azure Cosmos DB<br/>CreateItemAsync, insert-only")]
+        WD --> WOK(["Result.Ok"])
+    end
+    subgraph Read["Query side: read"]
+        RH1["GetChatResponse<br/>QueryHandler"] -- "RunAsync(question, session)" --> RA["AIAgent + AgentSession<br/>(Agent Framework)"]
+        RH2["GetUpdatedChatHistory<br/>QueryHandler"] -- "read" --> RS["IChatHistoryProvider<br/>(in-memory)"]
+        RA --> ROK1(["Result.Ok(ChatTurn)"])
+        RS --> ROK2(["Result.Ok(ChatHistory)"])
+    end
+    M -- "WriteConversationContext<br/>Command" --> WH
+    M -- "GetChatResponseQuery" --> RH1
+    M -- "GetUpdatedChatHistoryQuery" --> RH2
+    classDef store fill:#b4cdc2,stroke:#111314,color:#111314
+    classDef decision fill:#f5ece7,stroke:#a36752,color:#111314
+    classDef fail fill:#ffffff,stroke:#a36752,color:#111314,stroke-dasharray:4 3
+    classDef ok fill:#ffffff,stroke:#111314,color:#111314
+    class WD,RS store
+    class WV decision
+    class WF fail
+    class WOK,ROK1,ROK2 ok

@@ -1,0 +1,239 @@
+[
+  {
+    "id": "microsoft",
+    "logo": "microsoft",
+    "org": "Microsoft",
+    "role": "Senior Software Engineering Lead",
+    "start": 2022,
+    "end": null,
+    "team": "Frontier Company, forward-deployed engineering team, healthcare AI",
+    "summary": "Lead a five-engineer team delivering AI and full-stack solutions for Fortune 500 healthcare, life-sciences and industrial clients. Set the team's AI-assisted development standards, advise client executives and Microsoft leadership on agentic AI, co-authored an operating-model redesign for durable squads with embedded tech leads, and raised test coverage from zero to 96% across two production codebases.",
+    "stack": ["Azure AI Foundry", "Microsoft Agent Framework", "Copilot Studio", "TypeScript", "C# / .NET"],
+    "resume": {
+      "location": "Chicago, IL (hybrid)",
+      "dates": "Jul 2022 – Present",
+      "title": "Senior Software Engineering Lead, Forward Deployed Engineering (Healthcare AI)",
+      "highlights": [
+        "Technical direction: set team-wide AI-assisted development standards (AGENTS.md, reusable GitHub Copilot skills), cutting repetitive coding tasks ~70%; published on Microsoft's public engineering blog and led guild adoption sessions.",
+        "Leadership: lead a five-engineer team in Microsoft's Frontier Company delivering AI and full-stack solutions for Fortune 500 healthcare, life-sciences and industrial clients; co-authored an operating-model redesign (durable squads, embedded tech leads) to improve delivery continuity.",
+        "Executive advisory: advise client executives and Microsoft leadership on agentic AI adoption; defined a six-KPI quality scorecard adopted by client stakeholders and led demos advancing a new AI agent from proof of concept to pilot.",
+        "AI solution delivery: designed and built an AI customer-service agent (Copilot Studio with AWS integration) for a global medical-technology company, projected to save 117,000+ support hours annually; delivered ahead of schedule.",
+        "Turnaround and delivery: turned around an at-risk client engagement, leading two AI-enabled web products from architecture redesign to production launch ~2 weeks ahead of deadline while exceeding planned scope.",
+        "Quality and security: raised automated test coverage from zero to as high as 96% (3,400+ tests, incl. AI-agent evals) across two production codebases, remediated 89 static-analysis (CodeQL) findings, and cut code-review turnaround ~25%.",
+        "Data engineering: built reusable data-enrichment and aggregation services for a Fortune 500 manufacturer, eliminating ~40% of duplicated code and accelerating data-processing jobs ~25%.",
+        "Mentoring and enablement: authored documentation and led hands-on workshops cutting engineer onboarding time in half and enabling client engineers to ship in days, not weeks; serve as a technical hiring interviewer."
+      ]
+    }
+  },
+  {
+    "id": "optum",
+    "logo": "optum",
+    "org": "Optum Health",
+    "role": "Lead Software Engineer",
+    "start": 2021,
+    "end": 2022,
+    "summary": "Led a globally distributed full-stack team of four across the US, Ireland and India on the Clinical Claims Audit Platform: clinical case notes and user-metadata services with micro-frontend UIs.",
+    "stack": ["React", "TypeScript", "Azure Functions", "Cosmos DB", "Redis", "Terraform"],
+    "resume": {
+      "location": "Remote",
+      "dates": "Jun 2021 – Jul 2022",
+      "highlights": [
+        "Led a globally distributed (US, Ireland, India) full-stack Agile Scrum team of four engineers; drove design and architectural decisions with core dev and product teams while mentoring junior engineers.",
+        "Clinical case notes and user metadata: built services and micro-frontend UIs for the Clinical Claims Audit Platform [React, TypeScript, Piral, Chakra UI, Azure Functions, Cosmos DB (Gremlin API), Azure Cache for Redis, Docker, Terraform]."
+      ]
+    }
+  },
+  {
+    "id": "stonex",
+    "logo": "stonex",
+    "org": "StoneX Group",
+    "role": "Senior Software Engineer",
+    "start": 2020,
+    "end": 2021,
+    "summary": "Customer-facing trading and market-intelligence platforms: Risk Simulator for options and futures risk modeling, SPOC for OTC structured-product pricing, Subscriptions, and the Gain Futures API 2.0 rewrite on FIX Protocol and WebSockets.",
+    "stack": ["React", "Angular", "Vue", "C# / .NET Core", "SQL Server", "Redis"],
+    "resume": {
+      "location": "Chicago, IL",
+      "dates": "Jan 2020 – May 2021",
+      "org": "StoneX Group Inc. (formerly INTL FCStone)",
+      "highlights": [
+        "Built customer-facing trading and market-intelligence platforms: Risk Simulator (options/futures risk modeling), SPOC (OTC structured-product pricing), Subscriptions, and the Gain Futures API 2.0 rewrite (FIX Protocol/WebSockets).",
+        "Drove design and architectural decisions on a four-engineer Agile Kanban team while mentoring junior engineers [React, Angular, Vue, TypeScript, C#/.NET Core 3.1, SQL Server, Redis, Azure DevOps]."
+      ]
+    }
+  },
+  {
+    "id": "dfin",
+    "logo": "dfin",
+    "org": "Donnelley Financial Solutions",
+    "role": "Software Engineer",
+    "start": 2018,
+    "end": 2020,
+    "summary": "ArcFiling and ArcReporting, SEC-filing automation taken from inception to market-ready products. Angular front ends and ASP.NET Core services with CQRS, Clean Architecture and DDD on Azure.",
+    "resume": {
+      "location": "Chicago, IL",
+      "dates": "Jan 2018 – Jan 2020",
+      "org": "Donnelley Financial Solutions (DFIN)",
+      "highlights": [
+        "ArcFiling and ArcReporting: helped develop SEC-filing automation web apps from inception to mature, market-ready products on an Agile Scrum team; mentored and trained junior developers.",
+        "Built Angular/TypeScript front ends and C# ASP.NET Core services applying CQRS, Clean Architecture and DDD on Azure (Key Vault, Functions, Azure DevOps CI/CD, Docker/Kubernetes, Terraform); tested with xUnit, Karma/Jasmine and Selenium."
+      ]
+    }
+  },
+  {
+    "id": "guggenheim",
+    "logo": "guggenheim",
+    "org": "Guggenheim Partners",
+    "role": "Software Engineer",
+    "start": 2015,
+    "end": 2017,
+    "summary": "Custom fixed-income applications: report generation and FTP tooling, reporting utilities, and client invoicing. C#, ASP.NET MVC, VB.NET, T-SQL.",
+    "resume": {
+      "location": "Chicago, IL",
+      "dates": "Aug 2015 – Dec 2017",
+      "highlights": [
+        "Developed custom fixed-income applications (BRS AutoProc for report generation and FTP, BRS Utilities for reporting, and Client Invoicing) in C# ASP.NET MVC, VB.NET, DevExpress and T-SQL; partnered with stakeholders on requirements."
+      ]
+    }
+  },
+  {
+    "id": "hitachi",
+    "logo": "hitachi",
+    "org": "Hitachi Consulting",
+    "role": "IT Consultant",
+    "start": 2014,
+    "end": 2015,
+    "summary": "Gathered client requirements and advised on options, risks and cost-benefit trade-offs across multiple industries.",
+    "resume": {
+      "location": "Chicago, IL",
+      "dates": "Sep 2014 – Aug 2015",
+      "highlights": [
+        "Gathered client requirements and advised on options, risks and cost-benefit trade-offs across multiple industries."
+      ]
+    }
+  },
+  {
+    "id": "guard-176-cpt",
+    "group": "military",
+    "logo": "91st-cyber-dui",
+    "org": "176th Cyber Protection Team",
+    "role": "Cyber Analytic Support Officer",
+    "start": 2025,
+    "end": null,
+    "summary": "Threat analysis, detection engineering, and advanced cyber training, including a software supply-chain tabletop exercise.",
+    "resume": {
+      "location": "Bloomington, IL",
+      "dates": "Jun 2025 – Present",
+      "org": "Illinois Army National Guard, 176th Cyber Protection Team",
+      "title": "Captain (O-3), Cyber Analytic Support Officer",
+      "highlights": [
+        "Provide analytic support to defensive cyberspace operations, including threat analysis and detection engineering.",
+        "Design and deliver advanced cyber training, including a software supply-chain attack tabletop exercise and detection-engineering labs (Elastic, Kibana, KQL)."
+      ]
+    }
+  },
+  {
+    "id": "guard-433-cdr",
+    "group": "military",
+    "logo": "108th-sustainment-ssi",
+    "org": "433rd Signal Company",
+    "role": "Company Commander",
+    "start": 2022,
+    "end": 2025,
+    "team": "34th DSTB · Chicago, Illinois",
+    "summary": "Commanded 30-plus Soldiers, including a 2024 deployment to the CENTCOM area of responsibility.",
+    "resume": {
+      "location": "Chicago, IL",
+      "dates": "Mar 2022 – May 2025",
+      "org": "Illinois Army National Guard, 433rd Signal Company",
+      "title": "Captain (O-3), Commander",
+      "highlights": [
+        "Commanded 30-plus Soldiers, including a 2024 Title 10 deployment to the U.S. Central Command (CENTCOM) area of responsibility; oversaw advanced communication systems, ensuring operational readiness."
+      ]
+    }
+  },
+  {
+    "id": "guard-34dsb-as3",
+    "group": "military",
+    "logo": "108th-sustainment-ssi",
+    "org": "34th Division Sustainment Brigade",
+    "role": "Assistant S3",
+    "start": 2021,
+    "end": 2022,
+    "team": "Headquarters · Chicago, Illinois",
+    "resume": {
+      "location": "Chicago, IL",
+      "dates": "Jul 2021 – Mar 2022",
+      "org": "Illinois Army National Guard, 34th Division Sustainment Brigade",
+      "title": "1st Lieutenant (O-2), Assistant Operations Officer (S3)",
+      "highlights": [
+        "Planned, coordinated and tracked large-scale operational missions for 2,000+ personnel; served as subject-matter expert in Knowledge Management and Modeling & Simulations."
+      ]
+    }
+  },
+  {
+    "id": "guard-433-pl",
+    "group": "military",
+    "logo": "108th-sustainment-ssi",
+    "org": "433rd Signal Company",
+    "role": "Platoon Leader",
+    "start": 2017,
+    "end": 2021,
+    "team": "34th DSTB · Chicago, Illinois",
+    "summary": "Mobilized for the COVID-19 response and the 2021 U.S. Capitol response.",
+    "resume": {
+      "location": "Chicago, IL",
+      "dates": "Sep 2017 – Jul 2021",
+      "org": "Illinois Army National Guard, 433rd Signal Company",
+      "title": "2nd Lieutenant (O-1), Platoon Leader and Executive Officer",
+      "highlights": [
+        "Led a team of 14 personnel executing complex operational plans; managed voice, data and information networks.",
+        "Mobilized for domestic operations: COVID-19 response (2020) and U.S. Capitol Response II, Task Force Illini (2021)."
+      ]
+    }
+  },
+  {
+    "id": "guard-signal-student",
+    "training": true,
+    "group": "military",
+    "logo": "442nd-signal",
+    "org": "442nd Signal Battalion",
+    "role": "Signal BOLC Student",
+    "start": 2018,
+    "end": 2019,
+    "team": "B Company · Fort Gordon, Georgia"
+  },
+  {
+    "id": "guard-ocs",
+    "training": true,
+    "group": "military",
+    "logo": "11th-infantry-dui",
+    "org": "3rd Battalion, 11th Infantry Regiment",
+    "role": "Officer Candidate",
+    "start": 2017,
+    "end": 2017,
+    "team": "B Company · Fort Benning, Georgia"
+  },
+  {
+    "id": "guard-bct",
+    "training": true,
+    "group": "military",
+    "logo": "48th-infantry-dui",
+    "org": "1st Battalion, 48th Infantry Regiment",
+    "role": "Trainee",
+    "start": 2017,
+    "end": 2017,
+    "team": "C Company · Fort Leonard Wood, Missouri"
+  },
+  {
+    "id": "guard-rsp",
+    "training": true,
+    "group": "military",
+    "logo": "il-arng-dui",
+    "org": "Recruit Sustainment Program",
+    "role": "Recruit",
+    "start": 2016,
+    "end": 2017,
+    "team": "F Company · Crestwood, Illinois"
+  }
+]

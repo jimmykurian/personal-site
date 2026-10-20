@@ -1,0 +1,10 @@
+framework:
+  - terraform
+compact: true
+soft-fail: false
+directory:
+  - modules
+
+# Every check runs. Accepted findings are skipped on the resource itself with
+# `#checkov:skip=<ID>:<reason>`, so a skip never hides the same check on a new
+# resource.

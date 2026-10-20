@@ -1,0 +1,54 @@
+{
+  "name": "jimmykurian.me",
+  "version": "1.0.0",
+  "private": true,
+  "license": "UNLICENSED",
+  "type": "module",
+  "description": "Personal site of Jimmy Kurian, built with Astro and hosted on Azure Static Web Apps.",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "check": "astro check",
+    "lint": "eslint --max-warnings 0 . && prettier --check .",
+    "format": "prettier --write . && eslint --fix .",
+    "resume": "node scripts/resume-pdf.mjs",
+    "test": "vitest run --project unit",
+    "test:coverage": "vitest run --project unit --coverage",
+    "test:watch": "vitest --project unit",
+    "test:integration": "vitest run --project integration",
+    "test:e2e": "playwright test"
+  },
+  "dependencies": {
+    "@astrojs/mdx": "^8.1.0",
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.4",
+    "astro": "^7.4.0"
+  },
+  "engines": {
+    "node": ">=22.22.0"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@axe-core/playwright": "^4.13.0",
+    "@commitlint/cli": "^21.2.3",
+    "@commitlint/config-conventional": "^21.2.3",
+    "@eslint/js": "^10.0.1",
+    "@lhci/cli": "^0.15.1",
+    "@playwright/test": "~1.63.0",
+    "@vitest/coverage-v8": "5.0.3",
+    "cspell": "^10.3.6",
+    "eslint": "^10.12.0",
+    "eslint-plugin-astro": "^3.2.1",
+    "eslint-plugin-jsx-a11y-x": "^0.2.0",
+    "globals": "^17.13.0",
+    "markdownlint-cli2": "^0.23.3",
+    "node-html-parser": "^9.0.4",
+    "prettier": "^3.9.10",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.71.2",
+    "vitest": "^5.0.3"
+  },
+  "packageManager": "pnpm@11.28.3"
+}

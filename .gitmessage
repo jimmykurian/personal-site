@@ -1,0 +1,41 @@
+# <type>(<scope>): <description>
+# │       │             │
+# │       │             └─> Summary in present tense. Not capitalized. No period at the end.
+# │       │
+# │       └─> Scope: home|writing|reading|resume|links|footer|seo|swa|infra|content|styles|deps|docs|tooling (optional)
+# │
+# └─> Type: feat, fix, docs, style, refactor, perf, test, build, ci, chore
+
+# Body (optional): Explain *what* and *why* vs. *how*
+
+
+# Footer (optional): Reference issues, breaking changes
+# Examples:
+#   Fixes #123
+#   BREAKING CHANGE: <description>
+
+# ─────────────────────────────────────────────────────────────
+# Conventional Commits v1.0.0 - https://conventionalcommits.org
+# ─────────────────────────────────────────────────────────────
+# Types:
+#   feat:     A new feature (MINOR version bump)
+#   fix:      A bug fix (PATCH version bump)
+#   docs:     Documentation only changes
+#   style:    Formatting, missing semicolons, etc (no code change)
+#   refactor: Code change that neither fixes a bug nor adds a feature
+#   perf:     Performance improvement
+#   test:     Adding or correcting tests
+#   build:    Changes to build system or dependencies
+#   ci:       Changes to CI configuration files and scripts
+#   chore:    Other changes that don't modify src or test files
+#
+# Breaking Changes:
+#   Add ! after type/scope: feat!: or feat(writing)!:
+#   Or add footer: BREAKING CHANGE: <description>
+#
+# Examples:
+#   feat(reading): add a favorites shelf
+#   fix(swa): stop redirecting /resume.pdf to /resume.pdf/
+#   docs: update README with setup instructions
+#   feat!: drop the /writing/tags/ pages
+# ─────────────────────────────────────────────────────────────
