@@ -34,13 +34,18 @@ eslint_staged() {
 
 check "secrets" gitleaks gitleaks git --pre-commit --staged --no-banner --log-level warn --redact --config .config/gitleaks.toml .
 
-# gitleaks skips lock files, so this checks the staged one for packages from another registry.
+# Runs task lint:lockfile against the staged lockfile, not the working copy.
 # shellcheck disable=SC2329 # called through check
-lockfile_registry() {
-  ! git show :website/pnpm-lock.yaml | grep -n 'tarball:'
+lockfile_staged() {
+  local copy status=0
+  copy="$(mktemp)"
+  git show :website/pnpm-lock.yaml > "$copy"
+  task lint:lockfile LOCKFILE="$copy" || status=1
+  rm -f "$copy"
+  return "$status"
 }
-if stage '^website/pnpm-lock\.yaml$'; then
-  check "lockfile registry" git lockfile_registry
+if stage '(^|/)(pnpm-lock\.yaml|package-lock\.json|yarn\.lock)$'; then
+  check "lockfile" task lockfile_staged
 fi
 
 if stage '.'; then

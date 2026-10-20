@@ -56,10 +56,25 @@ tasks:
       - gitleaks git --no-banner --redact --config .config/gitleaks.toml .
 
   lint:lockfile:
-    desc: Check that every locked package comes from the public npm registry
+    desc: 'Check the lockfile: registry packages only, sha512 hashes, bounded overrides, pnpm only'
+    vars:
+      # The pre-commit hook passes a copy of the staged lockfile.
+      LOCKFILE: '{{.LOCKFILE | default "website/pnpm-lock.yaml"}}'
     cmds:
-      # pnpm writes a tarball URL only for packages from a non-default registry, and gitleaks skips lock files.
-      - '! grep -n "tarball:" website/pnpm-lock.yaml'
+      # gitleaks skips lock files, so these checks cover the lockfile instead.
+      - silent: true
+        cmd: |
+          status=0
+          fail() { echo "lint:lockfile: $1"; status=1; }
+          # pnpm writes a tarball URL only for packages from a non-default registry.
+          if grep -n 'tarball:' "{{.LOCKFILE}}"; then fail 'packages from another registry (above)'; fi
+          if grep -nE 'integrity: sha(1|256)-' "{{.LOCKFILE}}"; then fail 'integrity hashes other than sha512 (above)'; fi
+          if grep -nE 'resolution: \{[^}]*(type: git|commit:|repo:)' "{{.LOCKFILE}}"; then fail 'packages resolved from git (above)'; fi
+          if awk '/^overrides:/ { o = 1; next } /^[^ ]/ { o = 0 } o && />=/ && !/</ { print NR ": " $0; found = 1 } END { exit !found }' "{{.LOCKFILE}}"; then
+            fail 'overrides with no upper bound (above); bound them with ^ or ~'
+          fi
+          if git ls-files -- '*package-lock.json' '*yarn.lock' | grep .; then fail 'npm or Yarn lock files (above); this repo uses pnpm'; fi
+          exit $status
 
   lint:shell:
     desc: Lint the shell scripts and git hooks (shellcheck)
