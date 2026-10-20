@@ -1,3 +1,4 @@
+import type { AstroIntegrationLogger } from 'astro';
 import type { Loader } from 'astro/loaders';
 
 // Goodreads closed its API in 2020, but each shelf of a public profile still has an RSS
@@ -6,6 +7,39 @@ import type { Loader } from 'astro/loaders';
 // instead of shipping an empty reading list.
 
 const PAGE_LIMIT = 20; // 100 books per page
+
+// Goodreads now and then answers with a brief 5xx. Retry those, rate limits and network
+// errors twice (0.3s, then 0.6s, or the server's Retry-After up to 10s) before failing.
+const RETRIES = 2;
+const RETRY_STATUSES = new Set([408, 429, 500, 502, 503, 504]);
+const MAX_RETRY_AFTER_MS = 10_000;
+
+const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
+
+function retryDelay(res: Response | undefined, attempt: number) {
+  const retryAfter = Number(res?.headers.get('Retry-After'));
+  if ((res?.status === 429 || res?.status === 503) && retryAfter > 0) {
+    return Math.min(retryAfter * 1000, MAX_RETRY_AFTER_MS);
+  }
+  return 300 * 2 ** attempt;
+}
+
+async function fetchFeed(url: string, label: string, logger: AstroIntegrationLogger) {
+  for (let attempt = 0; ; attempt++) {
+    let res: Response | undefined;
+    let problem: string;
+    try {
+      res = await fetch(url, { headers: { 'User-Agent': 'jimmykurian.me build' } });
+      if (res.ok || !RETRY_STATUSES.has(res.status) || attempt === RETRIES) return res;
+      problem = `HTTP ${res.status}`;
+    } catch (error) {
+      if (attempt === RETRIES) throw error;
+      problem = String(error);
+    }
+    logger.warn(`${label}: ${problem}, retrying (${attempt + 1} of ${RETRIES})`);
+    await wait(retryDelay(res, attempt));
+  }
+}
 
 const entities: Record<string, string> = { amp: '&', lt: '<', gt: '>', quot: '"', apos: "'" };
 const decode = (s: string) =>
@@ -26,11 +60,11 @@ const splitTitle = (raw: string) => {
   return { title, subtitle: rest.join(': ') || undefined };
 };
 
-async function fetchShelf(userId: string, shelf: string) {
+async function fetchShelf(userId: string, shelf: string, logger: AstroIntegrationLogger) {
   const items: string[] = [];
   for (let page = 1; page <= PAGE_LIMIT; page++) {
     const url = `https://www.goodreads.com/review/list_rss/${userId}?shelf=${shelf}&page=${page}`;
-    const res = await fetch(url, { headers: { 'User-Agent': 'jimmykurian.me build' } });
+    const res = await fetchFeed(url, `Goodreads ${shelf} page ${page}`, logger);
     if (!res.ok) throw new Error(`Goodreads ${shelf} page ${page}: HTTP ${res.status}`);
     const batch = (await res.text()).match(/<item>[\s\S]*?<\/item>/g) ?? [];
     if (batch.length === 0) break;
@@ -45,7 +79,7 @@ export function goodreadsLoader({ userId, shelves }: { userId: string; shelves: 
     load: async ({ store, logger, parseData }) => {
       const books = [];
       for (const shelf of shelves) {
-        const items = await fetchShelf(userId, shelf);
+        const items = await fetchShelf(userId, shelf, logger);
         logger.info(`${shelf}: ${items.length} books`);
         for (const [position, item] of items.entries()) {
           const id = `${shelf}-${field(item, 'book_id')}`;

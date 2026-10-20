@@ -7,7 +7,7 @@ The jimmykurian.me site: Astro 7 with static output, TypeScript, MDX and content
 - `src/pages/`: the routes: home, `/writing/`, posts, `/reading/`, `/resume/`, the 404 page and the RSS feed.
 - `src/components/` and `src/layouts/Base.astro`: the shared markup (head, header, footer, JSON-LD).
 - `src/content/` and `src/data/site.json`: the content. Posts are MDX in `src/content/posts/<slug>/`. The rest is JSON. [README.md](README.md#where-the-content-lives) says what lives where.
-- `src/lib/goodreads.ts`: builds `/reading/` from the Goodreads shelf RSS feeds at build time (no API). If Goodreads is unreachable, the build fails, so the last deploy stays live.
+- `src/lib/goodreads.ts`: builds `/reading/` from the Goodreads shelf RSS feeds at build time (no API). It retries a brief 5xx, rate limit or network error twice; if Goodreads still fails, the build fails, so the last deploy stays live.
 - `scripts/resume-pdf.mjs`: prints `/resume/` to `dist/resume.pdf` with the installed Chrome.
 - `tests/`: `unit/` (Vitest with Astro's container API), `integration/` (checks the built `dist/`), `e2e/` (Playwright), and `support/` (shared helpers).
 

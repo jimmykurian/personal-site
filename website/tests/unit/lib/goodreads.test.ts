@@ -1,4 +1,4 @@
-import { describe, expect, it, vi } from 'vitest';
+import { afterEach, describe, expect, it, vi } from 'vitest';
 import { goodreadsLoader } from '../../../src/lib/goodreads';
 
 type Item = Partial<
@@ -50,14 +50,34 @@ function context() {
     clear: vi.fn(() => entries.clear()),
     set: vi.fn((entry: { id: string; data: Record<string, unknown> }) => entries.set(entry.id, entry)),
   };
-  const logger = { info: vi.fn() };
+  const logger = { info: vi.fn(), warn: vi.fn() };
   const parseData = vi.fn(async ({ data }: { id: string; data: Record<string, unknown> }) => data);
   return { entries, store, logger, parseData, ctx: { store, logger, parseData } as never };
+}
+
+/** Answers each request with the next response in turn; the last one repeats. */
+function stubResponses(...responses: (() => Response | Promise<never>)[]) {
+  const fetch = vi.fn(async () => (responses.length > 1 ? responses.shift()! : responses[0])());
+  vi.stubGlobal('fetch', fetch);
+  return fetch;
+}
+
+/** Runs a load with fake timers, so retry waits pass instantly. */
+async function loadWithTimers(shelves: string[], ctx: never) {
+  vi.useFakeTimers({ toFake: ['setTimeout'] });
+  const result = load(shelves, ctx);
+  result.catch(() => {});
+  await vi.runAllTimersAsync();
+  return result;
 }
 
 const load = (shelves: string[], ctx: never) => goodreadsLoader({ userId: '52431533', shelves }).load(ctx);
 
 describe('goodreadsLoader', () => {
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
   it('is named for the build log', () => {
     // Arrange
     const loader = goodreadsLoader({ userId: '1', shelves: [] });
@@ -190,17 +210,127 @@ describe('goodreadsLoader', () => {
     expect(fetch).toHaveBeenCalledWith(expect.any(String), { headers: { 'User-Agent': 'jimmykurian.me build' } });
   });
 
-  it('fails the build when Goodreads errors, without touching the store', async () => {
+  it('fails the build when Goodreads keeps erroring after two retries, without touching the store', async () => {
     // Arrange
-    stubGoodreads({}, 503);
-    const { store, ctx } = context();
+    const fetch = stubGoodreads({}, 503);
+    const { store, logger, ctx } = context();
 
     // Act
-    const result = load(['favorites'], ctx);
+    const result = loadWithTimers(['favorites'], ctx);
 
     // Assert
     await expect(result).rejects.toThrow('Goodreads favorites page 1: HTTP 503');
+    expect(fetch).toHaveBeenCalledTimes(3);
+    expect(logger.warn).toHaveBeenCalledWith('Goodreads favorites page 1: HTTP 503, retrying (1 of 2)');
     expect(store.clear).not.toHaveBeenCalled();
+  });
+
+  it('retries a brief 5xx and loads the shelf once Goodreads answers', async () => {
+    // Arrange
+    const ok = () => new Response(feed(item({ book_id: '7' })));
+    const fetch = stubResponses(
+      () => new Response('', { status: 502 }),
+      ok,
+      () => new Response(feed()),
+    );
+    const { entries, ctx } = context();
+
+    // Act
+    await loadWithTimers(['favorites'], ctx);
+
+    // Assert
+    expect(fetch).toHaveBeenCalledTimes(3);
+    expect([...entries.keys()]).toEqual(['favorites-7']);
+  });
+
+  it('retries a network error', async () => {
+    // Arrange
+    const fetch = stubResponses(
+      () => Promise.reject(new TypeError('fetch failed')),
+      () => new Response(feed()),
+    );
+    const { logger, ctx } = context();
+
+    // Act
+    await loadWithTimers(['favorites'], ctx);
+
+    // Assert
+    expect(fetch).toHaveBeenCalledTimes(2);
+    expect(logger.warn).toHaveBeenCalledWith('Goodreads favorites page 1: TypeError: fetch failed, retrying (1 of 2)');
+  });
+
+  it('fails on a network error that outlasts the retries', async () => {
+    // Arrange
+    const fetch = stubResponses(() => Promise.reject(new TypeError('fetch failed')));
+    const { ctx } = context();
+
+    // Act
+    const result = loadWithTimers(['favorites'], ctx);
+
+    // Assert
+    await expect(result).rejects.toThrow('fetch failed');
+    expect(fetch).toHaveBeenCalledTimes(3);
+  });
+
+  it("doesn't retry an error that won't go away, such as a 404", async () => {
+    // Arrange
+    const fetch = stubGoodreads({}, 404);
+    const { logger, ctx } = context();
+
+    // Act
+    const result = loadWithTimers(['favorites'], ctx);
+
+    // Assert
+    await expect(result).rejects.toThrow('Goodreads favorites page 1: HTTP 404');
+    expect(fetch).toHaveBeenCalledTimes(1);
+    expect(logger.warn).not.toHaveBeenCalled();
+  });
+
+  it('waits 0.3s, then 0.6s, between retries', async () => {
+    // Arrange
+    vi.useFakeTimers({ toFake: ['setTimeout'] });
+    const fetch = stubGoodreads({}, 500);
+    const { ctx } = context();
+
+    // Act
+    const result = load(['favorites'], ctx);
+    result.catch(() => {});
+    await vi.advanceTimersByTimeAsync(299);
+    const beforeFirstWait = fetch.mock.calls.length;
+    await vi.advanceTimersByTimeAsync(1);
+    const afterFirstWait = fetch.mock.calls.length;
+    await vi.advanceTimersByTimeAsync(599);
+    const beforeSecondWait = fetch.mock.calls.length;
+    await vi.advanceTimersByTimeAsync(1);
+
+    // Assert
+    expect([beforeFirstWait, afterFirstWait, beforeSecondWait, fetch.mock.calls.length]).toEqual([1, 2, 2, 3]);
+    await expect(result).rejects.toThrow('HTTP 500');
+  });
+
+  it("waits as long as a 503 or 429's Retry-After says, up to 10s", async () => {
+    // Arrange
+    vi.useFakeTimers({ toFake: ['setTimeout'] });
+    const fetch = stubResponses(
+      () => new Response('', { status: 429, headers: { 'Retry-After': '2' } }),
+      () => new Response('', { status: 503, headers: { 'Retry-After': '3600' } }),
+      () => new Response(feed()),
+    );
+    const { ctx } = context();
+
+    // Act
+    const result = load(['favorites'], ctx);
+    await vi.advanceTimersByTimeAsync(1999);
+    const beforeRetryAfter = fetch.mock.calls.length;
+    await vi.advanceTimersByTimeAsync(1);
+    const afterRetryAfter = fetch.mock.calls.length;
+    await vi.advanceTimersByTimeAsync(9999);
+    const beforeCap = fetch.mock.calls.length;
+    await vi.advanceTimersByTimeAsync(1);
+    await result;
+
+    // Assert
+    expect([beforeRetryAfter, afterRetryAfter, beforeCap, fetch.mock.calls.length]).toEqual([1, 2, 2, 3]);
   });
 
   it('replaces the store contents with schema-checked entries', async () => {
