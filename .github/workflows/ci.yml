@@ -475,16 +475,29 @@ jobs:
               },
             ];
 
+            // Passing means every job either succeeded or was skipped on purpose: a website
+            // or infrastructure job whose files didn't change. A failed or cancelled job,
+            // including Changes, or a job that didn't run because Changes failed, fails it.
+            const changesRan = needs.changes?.result === 'success';
+            const notRun = (r) => r === 'failure' || r === 'cancelled' || (r === 'skipped' && !changesRan);
+            const failed = Object.values(needs).some(({ result: r }) => notRun(r)) || !changesRan;
+
             const lines = [];
-            let failed = false;
+            if (!changesRan) {
+              const how = needs.changes?.result === 'cancelled' ? 'was cancelled' : 'failed';
+              lines.push(`⚠️ *Change detection ${how}, so the checks below didn't run.*`, '');
+            }
             for (const { title, job, rows, metrics } of sections) {
               const { result: jobResult, outputs = {} } = needs[job] ?? {};
               lines.push(`### ${title}`, '');
-              if (jobResult === 'skipped' && job !== 'repository') {
-                lines.push(`⏭️ *No ${title.toLowerCase()} changes*`, '');
+              if (jobResult === 'cancelled') {
+                lines.push('⏹️ *Cancelled*', '');
                 continue;
               }
-              if (jobResult === 'failure') failed = true;
+              if (jobResult === 'skipped') {
+                lines.push(changesRan ? `⏭️ *No ${title.toLowerCase()} changes*` : '⚠️ *Not run*', '');
+                continue;
+              }
               lines.push('| Check | Result |', '|:------|:-------|');
               for (const [emoji, label, key] of rows) lines.push(`| ${emoji} **${label}** | ${result(outputs[key])} |`);
               lines.push('');
@@ -501,7 +514,7 @@ jobs:
             const body = [
               '## 🔍 PR check results',
               '',
-              `**Overall:** ${failed ? '❌ Some checks failed' : '✅ All checks passed'}`,
+              `**Overall:** ${failed ? '❌ Some checks failed or didn\'t run' : '✅ All checks passed'}`,
               '',
               ...lines,
               '🔗 External links are checked nightly, after the deploy. The PR title and template have their own checks.',
