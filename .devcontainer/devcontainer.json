@@ -19,11 +19,17 @@
     "vscode": {
       "extensions": [
         "astro-build.astro-vscode",
+        "unifiedjs.vscode-mdx",
         "dbaeumer.vscode-eslint",
         "esbenp.prettier-vscode",
         "streetsidesoftware.code-spell-checker",
         "davidanson.vscode-markdownlint",
         "editorconfig.editorconfig",
+        "timonwong.shellcheck",
+        "redhat.vscode-yaml",
+        "github.vscode-github-actions",
+        "github.vscode-pull-request-github",
+        "mermaidchart.vscode-mermaid-chart",
         "opentofu.vscode-opentofu",
         "ms-playwright.playwright",
         "vitest.explorer",

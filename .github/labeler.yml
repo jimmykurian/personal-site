@@ -1,0 +1,105 @@
+# Labels for pull requests by what they change (actions/labeler, run by
+# .github/workflows/labeler.yml). A PR can get several.
+
+# Subprojects
+
+website:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "website/**"
+
+infrastructure:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "infrastructure/**"
+
+# What a website change touches
+
+content:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "website/src/content/**"
+          - "website/src/data/**"
+          - "website/src/assets/**"
+
+design:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "website/src/styles/**"
+          - "website/src/components/**"
+          - "website/src/layouts/**"
+
+tests:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "**/tests/**"
+          - "**/*.test.*"
+          - "**/*.spec.*"
+          - "**/*.tftest.hcl"
+          - "website/vitest.config.ts"
+          - "website/playwright.config.ts"
+
+# Cross-cutting
+
+ci/cd:
+  - changed-files:
+      - any-glob-to-any-file:
+          - ".github/**"
+
+configuration:
+  - changed-files:
+      - any-glob-to-any-file:
+          - ".config/**"
+          - ".devcontainer/**"
+          - ".vscode/**"
+          - ".editorconfig"
+          - ".gitignore"
+          - ".gitattributes"
+          - ".gitmessage"
+          - ".mise.toml"
+          - "Taskfile.yml"
+          - "website/package.json"
+          - "website/pnpm-workspace.yaml"
+          - "website/tsconfig.json"
+          - "website/astro.config.mjs"
+          - "website/eslint.config.js"
+          - "website/.prettierrc.json"
+          - "website/.prettierignore"
+
+hooks:
+  - changed-files:
+      - any-glob-to-any-file:
+          - ".githooks/**"
+
+documentation:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "**/*.md"
+
+agents:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "**/AGENTS.md"
+
+security:
+  - changed-files:
+      - any-glob-to-any-file:
+          - "SECURITY.md"
+          - ".config/gitleaks.toml"
+          - "website/public/staticwebapp.config.json"
+          - "website/tests/support/rules.ts"
+          - "website/tests/integration/content-rules.test.ts"
+
+# Automation
+
+dependencies:
+  - head-branch:
+      - "^renovate/"
+  - changed-files:
+      - any-glob-to-any-file:
+          - "website/pnpm-lock.yaml"
+          - "infrastructure/**/.terraform.lock.hcl"
+
+automated:
+  - head-branch:
+      - "^renovate/"

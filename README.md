@@ -39,7 +39,7 @@ src/data/site.json (typed schemas)   (fetched at build)      (downloaded at buil
 
 - **Content is data.** The pages render JSON collections and MDX posts, validated by the schemas in `website/src/content.config.ts`. A bad field fails the build instead of shipping.
 - **Built once, served static.** There's no server, database, login or cookie. `public/staticwebapp.config.json` sets the security headers, the 404 page and caching.
-- **External data comes in at build time.** `/reading/` is built from the Goodreads RSS feeds, covers and fonts are downloaded and optimized then, and the live site makes no third-party requests. A nightly rebuild picks up new books. If Goodreads is down, the build fails and the last deploy stays live.
+- **External data comes in at build time.** `/reading/` is built from the Goodreads RSS feeds, covers and fonts are downloaded and optimized then, and the live site makes no third-party requests. A nightly rebuild picks up new books. Brief Goodreads errors are retried; if it's still down, the build fails and the last deploy stays live.
 - **The resume is a page.** `/resume/` renders from the same data as the site, and CI prints it to `/resume.pdf`, so the two never disagree.
 - **Infrastructure as code, in progress.** The Azure resources were created in the portal. `infrastructure/` models them as generic OpenTofu modules, tested against a mocked provider, ready to take over deploys later.
 
@@ -70,6 +70,8 @@ src/data/site.json (typed schemas)   (fetched at build)      (downloaded at buil
 | `lint:shell` | shellcheck on the scripts and hooks | |
 | `lint:editorconfig` | every file against `.editorconfig` | `.config/editorconfig-checker.json` |
 | `lint:commits` | commit messages (commitlint) | `.config/commitlintrc.json` |
+| `lint:pr-title` | a pull request title, which becomes the squash commit (commitlint) | `.config/commitlintrc.json` |
+| `lint:pr-template` | a pull request body keeps every template section and replaces its instructions | `.github/PULL_REQUEST_TEMPLATE.md` |
 | `infra:check` | `tofu fmt` and `validate`, TFLint, Checkov, provider pins | `infrastructure/` |
 
 After `task build`, three more run against `dist/`:
@@ -104,13 +106,14 @@ The devcontainer (`.devcontainer/`) does all of that on creation, for VS Code or
 ## Structure
 
 ```text
-.github/workflows/       lint, build, test and deploy (azure-static-web-apps.yml); infrastructure checks
+.github/workflows/       lint, build, test and deploy (azure-static-web-apps.yml); infrastructure checks; PR labels, assignee, title and template checks
+.github/labeler.yml      which paths get which pull request label
 .github/ISSUE_TEMPLATE/  bug, feature and subtask forms; PULL_REQUEST_TEMPLATE.md beside it
 .github/renovate.json    dependency updates
 .config/                 configs for the repo-wide checks (cspell, markdownlint, gitleaks, lychee, ...)
 .githooks/               pre-commit, commit-msg and pre-push hooks (task hooks:install)
 .devcontainer/           devcontainer with the pinned tools, dependencies and Chrome
-.vscode/extensions.json  recommended editor extensions
+.vscode/                 VS Code: recommended extensions, settings, debug configs, the dev-server task, snippets
 .mise.toml               tool versions
 Taskfile.yml             every check, test and build step, by name
 infrastructure/          OpenTofu modules and tests for the Azure resources (see infrastructure/README.md)

@@ -72,7 +72,7 @@ Resume-only detail (month dates, locations, bullets, ranks, course codes) sits i
 
 ### The reading list
 
-`/reading/` comes from Goodreads. Goodreads has no public API any more, so `src/lib/goodreads.ts` reads the RSS feeds for the `currently-reading`, `favorites` and `software-engineering` shelves (listed in `src/content.config.ts`) of the profile in `site.json` (`goodreads.userId`) at build time, and covers are downloaded and optimized then. The workflow rebuilds every night at 11:00 UTC, so a finished book shows up by the next morning; run the workflow by hand to update sooner. The profile must stay public. If Goodreads can't be reached the build fails rather than shipping an empty list, and the last deploy stays live.
+`/reading/` comes from Goodreads. Goodreads has no public API any more, so `src/lib/goodreads.ts` reads the RSS feeds for the `currently-reading`, `favorites` and `software-engineering` shelves (listed in `src/content.config.ts`) of the profile in `site.json` (`goodreads.userId`) at build time, and covers are downloaded and optimized then. The workflow rebuilds every night at 11:00 UTC, so a finished book shows up by the next morning; run the workflow by hand to update sooner. The profile must stay public. Goodreads sometimes answers with a brief 5xx, so each feed request is retried twice (after 0.3s and 0.6s, or the server's `Retry-After`, up to 10s) on a 5xx, 408, 429 or network error. If Goodreads still can't be reached the build fails rather than shipping an empty list, and the last deploy stays live.
 
 ## Tests
 

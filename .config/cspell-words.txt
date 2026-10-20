@@ -43,6 +43,7 @@ mapperly
 martinfowler
 martinothamar
 MediatR
+mermaidchart
 Namecheap
 nameof
 networkidle
@@ -64,9 +65,12 @@ staticwebapp
 Taskfile
 tflint
 tftest
+timonwong
 toplevel
 unheaded
+unifiedjs
 unreviewed
+Vitest
 Wada
 WCAG
 westus

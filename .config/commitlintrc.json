@@ -1,5 +1,5 @@
 {
-  "extends": ["@commitlint/config-conventional"],
+  "extends": ["../website/node_modules/@commitlint/config-conventional/lib/index.js"],
   "rules": {
     "scope-enum": [
       2,

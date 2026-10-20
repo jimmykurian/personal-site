@@ -1,0 +1,24 @@
+{
+  // Every check and test is in Taskfile.yml (the Task extension lists them). This file only
+  // adds the dev server, so the Chrome launch configuration can start it.
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "astro dev",
+      "type": "shell",
+      "command": "pnpm dev",
+      "options": { "cwd": "${workspaceFolder}/website" },
+      "isBackground": true,
+      "problemMatcher": {
+        // Reports no problems: the matcher only tracks when the server is ready. VS Code
+        // still requires the file, location and message groups.
+        "pattern": { "regexp": "^$", "file": 1, "location": 2, "message": 3 },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "astro",
+          "endsPattern": "Local\\s+http"
+        }
+      }
+    }
+  ]
+}

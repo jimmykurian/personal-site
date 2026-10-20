@@ -1,0 +1,35 @@
+name: Pull request template
+
+# Fails a pull request whose body doesn't follow .github/PULL_REQUEST_TEMPLATE.md. The
+# rules live in Taskfile.yml (task lint:pr-template); this only passes it the body.
+on:
+  pull_request:
+    types: [opened, edited, synchronize, reopened]
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pr-template-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  template:
+    name: Template
+    # Renovate writes its own bodies.
+    if: ${{ !startsWith(github.head_ref, 'renovate/') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: jdx/mise-action@08ae2a091c038e1e05ec6f5115dc5c69d5a2a6b8 # v5.1.2
+        with:
+          install_args: task
+
+      - run: task lint:pr-template
+        env:
+          PR_BODY: ${{ github.event.pull_request.body }}
