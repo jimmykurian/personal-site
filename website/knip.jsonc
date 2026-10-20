@@ -1,0 +1,12 @@
+{
+  "$schema": "https://unpkg.com/knip@6/schema-jsonc.json",
+  // These run from the root Taskfile.yml, the git hooks and .config/, which knip doesn't read.
+  "ignoreDependencies": [
+    "@commitlint/cli",
+    "@commitlint/config-conventional",
+    "@lhci/cli",
+    "cspell",
+    "markdownlint-cli2",
+    "v8r",
+  ],
+}

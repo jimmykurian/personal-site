@@ -39,6 +39,11 @@ eslint_staged() {
   (cd website && ./node_modules/.bin/eslint --max-warnings 0 --no-warn-ignored "${@#website/}")
 }
 
+# shellcheck disable=SC2329 # called through check
+stylelint_staged() {
+  (cd website && ./node_modules/.bin/stylelint "${@#website/}")
+}
+
 check "secrets" gitleaks gitleaks git --pre-commit --staged --no-banner --log-level warn --redact --config .config/gitleaks.toml .
 
 # Runs task lint:lockfile against the staged lockfile, not the working copy.
@@ -70,6 +75,19 @@ if stage '^website/.*\.(ts|js|mjs|json|css|md|yml|yaml)$'; then
 fi
 if stage '^website/.*\.(ts|js|mjs|astro)$'; then
   check "eslint" "$BIN/eslint" eslint_staged "${FILES[@]}"
+fi
+if stage '^website/src/.*\.(css|astro)$'; then
+  check "stylelint" "$BIN/stylelint" stylelint_staged "${FILES[@]}"
+fi
+if stage '\.ya?ml$'; then
+  # Every YAML file but the generated pnpm-lock.yaml.
+  YAML=()
+  for file in "${FILES[@]}"; do
+    if [[ "$file" != */pnpm-lock.yaml ]]; then YAML+=("$file"); fi
+  done
+  if [[ ${#YAML[@]} -gt 0 ]]; then
+    check "yamllint" yamllint yamllint --strict -c .config/yamllint.yml "${YAML[@]}"
+  fi
 fi
 if stage '\.sh$|^\.githooks/'; then
   check "shellcheck" shellcheck shellcheck "${FILES[@]}"

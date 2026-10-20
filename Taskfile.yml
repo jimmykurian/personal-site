@@ -34,15 +34,24 @@ tasks:
   lint:
     desc: Run every check (no build needed)
     cmds:
-      - task: lint:actions
+      - task: lint:repo
+      - task: lint:web
+      - task: infra:check
+
+  lint:repo:
+    desc: Run the repository-wide checks
+    cmds:
       - task: lint:secrets
       - task: lint:lockfile
+      - task: lint:dedupe
+      - task: lint:audit
+      - task: lint:actions
       - task: lint:shell
       - task: lint:editorconfig
       - task: lint:markdown
       - task: lint:spelling
-      - task: lint:web
-      - task: infra:check
+      - task: lint:yaml
+      - task: lint:schemas
 
   lint:actions:
     desc: Lint the GitHub Actions workflows (actionlint, zizmor)
@@ -91,6 +100,18 @@ tasks:
           if git ls-files -- '*package-lock.json' '*yarn.lock' | grep .; then fail 'npm or Yarn lock files (above); this repo uses pnpm'; fi
           exit $status
 
+  lint:dedupe:
+    desc: Check the lockfile has no duplicate versions pnpm could merge (pnpm dedupe)
+    dir: website
+    cmds:
+      - pnpm dedupe --check
+
+  lint:audit:
+    desc: Fail on high or critical advisories in the website's dependencies (pnpm audit)
+    dir: website
+    cmds:
+      - pnpm audit --audit-level high
+
   lint:shell:
     desc: Lint the shell scripts and git hooks (shellcheck)
     cmds:
@@ -111,12 +132,55 @@ tasks:
     cmds:
       - '{{.BIN}}/cspell lint --config .config/cspell.json --no-progress --dot {{.SPELLING_GLOBS}}'
 
+  lint:yaml:
+    desc: Lint the YAML files (yamllint)
+    cmds:
+      - git ls-files -z '*.yml' '*.yaml' ':!:website/pnpm-lock.yaml' | xargs -0 yamllint --strict -c .config/yamllint.yml
+
+  lint:schemas:
+    desc: Validate the JSON, YAML and TOML configs against their published schemas (v8r)
+    cmds:
+      # The files and the schemas SchemaStore can't match are in .config/v8rrc.yml.
+      - '{{.BIN}}/v8r'
+
   lint:web:
     desc: Type-check, lint and format-check the website
+    cmds:
+      - task: lint:astro
+      - task: lint:eslint
+      - task: lint:format
+      - task: lint:css
+      - task: lint:dead-code
+
+  lint:astro:
+    desc: Type-check the .astro and .ts files (astro check)
     dir: website
     cmds:
       - pnpm check
-      - pnpm lint
+
+  lint:eslint:
+    desc: Lint the website code, with accessibility rules for .astro markup (ESLint)
+    dir: website
+    cmds:
+      - pnpm exec eslint --max-warnings 0 .
+
+  lint:format:
+    desc: Check the website's formatting (Prettier)
+    dir: website
+    cmds:
+      - pnpm exec prettier --check .
+
+  lint:css:
+    desc: Lint the CSS in src/ and in .astro style blocks (Stylelint)
+    dir: website
+    cmds:
+      - pnpm exec stylelint "src/**/*.{css,astro}"
+
+  lint:dead-code:
+    desc: Find unused files, exports and dependencies (knip)
+    dir: website
+    cmds:
+      - pnpm exec knip --no-progress
 
   lint:commits:
     desc: 'Check commit messages in a range: task lint:commits FROM=<sha> TO=<sha>'
@@ -177,11 +241,13 @@ tasks:
       - pnpm build
       - pnpm resume
 
+  # The test tasks pass extra arguments through: `task test -- --reporter=json ...`.
+
   test:
     desc: Run the unit tests with coverage
     dir: website
     cmds:
-      - pnpm test:coverage
+      - pnpm test:coverage {{.CLI_ARGS}}
 
   test:integration:
     desc: Check the built site (needs `task build`)
@@ -189,13 +255,13 @@ tasks:
     env:
       INTEGRATION_DIST: .
     cmds:
-      - pnpm test:integration
+      - pnpm test:integration {{.CLI_ARGS}}
 
   test:e2e:
     desc: Drive the built site in Chrome, including axe accessibility checks (needs `task build`)
     dir: website
     cmds:
-      - pnpm test:e2e
+      - pnpm test:e2e {{.CLI_ARGS}}
 
   lighthouse:
     desc: Run Lighthouse on the built site (needs `task build`)
@@ -206,20 +272,49 @@ tasks:
 
   infra:check:
     desc: Format, validate, lint and scan the OpenTofu modules, and check provider pins
+    cmds:
+      - task: infra:fmt
+      - task: infra:validate
+      - task: infra:tflint
+      - task: infra:checkov
+      - task: infra:pins
+
+  infra:fmt:
+    desc: Check the OpenTofu formatting (tofu fmt)
     dir: infrastructure
     cmds:
       - tofu fmt -recursive -check -diff
+
+  infra:validate:
+    desc: Validate each OpenTofu module (tofu validate)
+    dir: infrastructure
+    cmds:
       - for: { var: MODULES }
         cmd: tofu -chdir={{.ITEM}} init -backend=false -input=false > /dev/null && tofu -chdir={{.ITEM}} validate
-      - tflint --init > /dev/null && tflint --recursive --config "$PWD/.tflint.hcl"
-      - checkov --config-file .checkov.yaml
-      - ./scripts/check-provider-pins.sh
     vars:
       MODULES:
         sh: find modules -name versions.tf -exec dirname {} \; | sort
 
-  infra:test:
-    desc: Run the OpenTofu module tests
+  infra:tflint:
+    desc: Lint the OpenTofu modules (TFLint)
     dir: infrastructure
     cmds:
-      - ./scripts/run-module-tests.sh
+      - tflint --init > /dev/null && tflint --recursive --config "$PWD/.tflint.hcl"
+
+  infra:checkov:
+    desc: Scan the OpenTofu modules for misconfigurations (Checkov)
+    dir: infrastructure
+    cmds:
+      - checkov --config-file .checkov.yaml
+
+  infra:pins:
+    desc: Check every module pins the same provider version
+    dir: infrastructure
+    cmds:
+      - ./scripts/check-provider-pins.sh
+
+  infra:test:
+    desc: 'Run the OpenTofu module tests (all, or: task infra:test -- acceptance|integration)'
+    dir: infrastructure
+    cmds:
+      - ./scripts/run-module-tests.sh {{.CLI_ARGS}}

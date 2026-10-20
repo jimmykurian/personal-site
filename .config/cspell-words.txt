@@ -14,7 +14,9 @@ commitlintrc
 cutover
 davidanson
 dbaeumer
+dedupe
 devblogs
+dorny
 eastus
 esbenp
 Forsgren
@@ -32,6 +34,7 @@ ihdr
 infoq
 jimmybogard
 jimmykurian
+knip
 Kurian
 lhci
 lichess

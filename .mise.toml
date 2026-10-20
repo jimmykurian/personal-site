@@ -12,6 +12,7 @@ opentofu = "1.11.5"
 tflint = "0.61.0"
 uv = "0.12.24" # runs pipx tools
 "pipx:checkov" = "3.3.27"
+"pipx:yamllint" = "1.38.0"
 
 # Repo checks
 actionlint = "1.7.12"
