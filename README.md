@@ -199,7 +199,7 @@ infrastructure/          OpenTofu modules for the Azure resources, not yet deplo
   modules/azure/           resource-group, and static-web-app with its custom domains
   tests/                   acceptance (one per module) and integration tofu tests, mocked provider
   scripts/                 run the module tests, check provider pins
-AGENTS.md                project decisions for coding agents, Claude Code included
+AGENTS.md                what coding agents need on every task (website/ and infrastructure/ have their own)
 LICENSE                  proprietary, all rights reserved
 SECURITY.md              how to report a vulnerability, and how the site is secured
 CONTRIBUTING.md          setup, commits, signing, checks before pushing, content rules
