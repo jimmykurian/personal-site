@@ -9,6 +9,13 @@ cd "$(git rev-parse --show-toplevel)"
 BIN=website/node_modules/.bin
 FAILED=0
 
+# main takes changes only through pull requests.
+if [[ "$(git symbolic-ref --short -q HEAD)" == "main" ]]; then
+  echo "pre-commit: main takes changes only through pull requests. Create a branch first"
+  echo "(git switch -c <branch>), or bypass once with git commit --no-verify."
+  exit 1
+fi
+
 # Sets FILES to the staged (added, copied, modified or renamed) files matching a regex.
 stage() {
   FILES=()
@@ -34,13 +41,18 @@ eslint_staged() {
 
 check "secrets" gitleaks gitleaks git --pre-commit --staged --no-banner --log-level warn --redact --config .config/gitleaks.toml .
 
-# gitleaks skips lock files, so this checks the staged one for packages from another registry.
+# Runs task lint:lockfile against the staged lockfile, not the working copy.
 # shellcheck disable=SC2329 # called through check
-lockfile_registry() {
-  ! git show :website/pnpm-lock.yaml | grep -n 'tarball:'
+lockfile_staged() {
+  local copy status=0
+  copy="$(mktemp)"
+  git show :website/pnpm-lock.yaml > "$copy"
+  task lint:lockfile LOCKFILE="$copy" || status=1
+  rm -f "$copy"
+  return "$status"
 }
-if stage '^website/pnpm-lock\.yaml$'; then
-  check "lockfile registry" git lockfile_registry
+if stage '(^|/)(pnpm-lock\.yaml|package-lock\.json|yarn\.lock)$'; then
+  check "lockfile" task lockfile_staged
 fi
 
 if stage '.'; then

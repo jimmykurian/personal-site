@@ -147,7 +147,7 @@ The tests use the installed Chrome (`channel: 'chrome'`), so there's no browser 
 | `lint:spelling` | cspell on posts, pages, docs and code | `.config/cspell.json`, words in `.config/cspell-words.txt` |
 | `lint:markdown` | markdownlint on the `.md` files | `.config/.markdownlint-cli2.jsonc` |
 | `lint:secrets` | gitleaks over the git history, including non-npm registry URLs | `.config/gitleaks.toml` |
-| `lint:lockfile` | every locked package comes from registry.npmjs.org | |
+| `lint:lockfile` | the lockfile: packages from registry.npmjs.org only, sha512 hashes only, no git dependencies, an upper bound on every override range, no npm or Yarn lockfile | |
 | `lint:actions` | actionlint and zizmor on the workflows | |
 | `lint:shell` | shellcheck on the scripts and hooks | |
 | `lint:editorconfig` | every file against `.editorconfig` | `.config/editorconfig-checker.json` |
@@ -162,7 +162,7 @@ After `task build`, three more run against `dist/`:
 
 Prettier skips `.astro` and `.mdx` files: whitespace between inline elements renders in Astro templates, and Prettier's MDX support is MDX 1.
 
-The git hooks check the staged files (secrets, spelling, formatting, ESLint, shellcheck, `tofu fmt`, actionlint) and the commit message. A check whose tool isn't installed is skipped with a warning; CI runs all of them.
+The git hooks check the staged files (secrets, the lockfile, spelling, formatting, ESLint, shellcheck, `tofu fmt`, actionlint) and the commit message, and refuse commits on `main`. Before a push they refuse pushes to `main` (and deleting it) and run the unit tests if `website/` changed and the module tests if `infrastructure/` changed, on a clean checkout of the pushed commit. A check whose tool isn't installed is skipped with a warning; CI runs all of them, plus the build, e2e and Lighthouse.
 
 Renovate (`.github/renovate.json`) updates npm packages, actions (pinned to commit SHAs), the OpenTofu provider and the `.mise.toml` tools on weekends, once a version is 7 days old.
 
@@ -190,7 +190,7 @@ The Azure resources were set up in the portal with the steps below. `infrastruct
 .github/ISSUE_TEMPLATE/  bug, feature and subtask forms; PULL_REQUEST_TEMPLATE.md beside it
 .github/renovate.json    dependency updates
 .config/                 configs for the repo-wide checks (cspell, markdownlint, gitleaks, lychee, ...)
-.githooks/               pre-commit and commit-msg hooks (task hooks:install)
+.githooks/               pre-commit, commit-msg and pre-push hooks (task hooks:install)
 .devcontainer/           devcontainer with the pinned tools, dependencies and Chrome
 .vscode/extensions.json  recommended editor extensions
 .mise.toml               tool versions

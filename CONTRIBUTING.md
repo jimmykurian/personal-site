@@ -51,7 +51,7 @@ git config commit.template .gitmessage
 
 mise install
 task install         # the website's dependencies
-task hooks:install   # pre-commit and commit-msg hooks
+task hooks:install   # pre-commit, commit-msg and pre-push hooks
 
 cd website
 pnpm dev        # http://localhost:4321
@@ -84,13 +84,18 @@ commit.
 
 ## Workflow
 
-The site is small and has one author, so work happens on `main`:
+Every change goes through a pull request; `main` doesn't take direct pushes:
 
-- Keep each commit to one change, and make sure `main` always builds.
-- Use a short-lived branch and a pull request when you want a preview first.
-  The workflow deploys each PR to its own staging URL and removes it when the
+- Work on a short-lived branch, keep each commit to one change, and open a PR
+  to `main` with the [template](.github/PULL_REQUEST_TEMPLATE.md) filled in.
+- The workflow deploys each PR to its own preview URL and removes it when the
   PR closes.
-- Rebase rather than merge (`git pull --rebase`).
+- PRs merge with squash, so the PR title becomes the commit on `main`: it
+  follows Conventional Commits like any other commit message.
+- Merging needs the CI checks, CodeQL and a Copilot review to pass. `main`
+  keeps a linear history of signed commits, and can't be force-pushed or
+  deleted.
+- Rebase the branch onto `main` rather than merging it in (`git pull --rebase`).
 
 ## Commits
 
@@ -143,6 +148,11 @@ gh ssh-key add ~/.ssh/id_ed25519.pub --type signing --title "<machine> signing"
 `git log -1 --format='%G?'` prints `G` for a good signature.
 
 ## Before you push
+
+The pre-push hook runs `task test` when `website/` changed and `task infra:test`
+when `infrastructure/` changed, and refuses pushes to `main` or deleting it. The
+tests run on the working tree, so push the checked-out branch with no
+uncommitted changes under `website/` or `infrastructure/`. The rest is up to you:
 
 - [ ] `task lint`, `task test`, `task test:integration` and `task test:e2e`
       pass (the last two after `task build`)
