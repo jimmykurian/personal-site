@@ -1,0 +1,48 @@
+#!/bin/bash
+set -eo pipefail
+
+# Refuses pushes to main, then runs the fast tests for what the pushed commits change: the
+# unit tests for website/ and the module tests for infrastructure/. A suite whose tools
+# aren't installed is skipped with a warning; CI runs every test, including the build,
+# e2e and Lighthouse. Install with `task hooks:install`. Skip once with `git push --no-verify`.
+
+cd "$(git rev-parse --show-toplevel)"
+ZERO=0000000000000000000000000000000000000000
+CHANGED=""
+
+while read -r _local_ref local_sha remote_ref remote_sha; do
+  # Branch deletions push nothing to test.
+  [[ "$local_sha" == "$ZERO" ]] && continue
+  if [[ "$remote_ref" == "refs/heads/main" ]]; then
+    echo "pre-push: main takes changes only through pull requests. Push a branch and open a PR."
+    exit 1
+  fi
+  if [[ "$remote_sha" == "$ZERO" ]]; then
+    # A new branch: everything since it left main.
+    CHANGED+="$(git diff --name-only "origin/main...$local_sha")"$'\n'
+  else
+    CHANGED+="$(git diff --name-only "$remote_sha..$local_sha")"$'\n'
+  fi
+done
+
+FAILED=0
+
+# Runs a suite, or skips it when what it needs isn't installed.
+suite() {
+  local name="$1" needs="$2"
+  shift 2
+  if [[ ! -e "$needs" ]] && ! command -v "$needs" > /dev/null; then
+    echo "pre-push: $name skipped ($needs not installed)"
+    return 0
+  fi
+  "$@" || { echo "pre-push: $name failed"; FAILED=1; }
+}
+
+if grep -q '^website/' <<< "$CHANGED"; then
+  suite "unit tests" website/node_modules task test
+fi
+if grep -q '^infrastructure/' <<< "$CHANGED"; then
+  suite "module tests" tofu task infra:test
+fi
+
+exit "$FAILED"
