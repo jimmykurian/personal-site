@@ -14,7 +14,7 @@
     "title": "Coordinating AI-Assisted Development with AGENTS.md and Skills",
     "venue": "Microsoft ISE Developer Blog, with D. Hillis",
     "year": 2026,
-    "href": "https://devblogs.microsoft.com/ise/",
+    "href": "https://devblogs.microsoft.com/ise/ai-assisted-development-agents-skills-copilot-cli/",
     "featured": true
   },
   {
@@ -23,7 +23,7 @@
     "title": "Integration Testing with Testcontainers",
     "venue": "Microsoft ISE Developer Blog",
     "year": 2025,
-    "href": "https://devblogs.microsoft.com/ise/"
+    "href": "https://devblogs.microsoft.com/ise/testing-with-testcontainers/"
   },
   {
     "id": "dockerizing-uv",
@@ -31,7 +31,7 @@
     "title": "Dockerizing UV",
     "venue": "Microsoft ISE Developer Blog",
     "year": 2025,
-    "href": "https://devblogs.microsoft.com/ise/"
+    "href": "https://devblogs.microsoft.com/ise/dockerizing-uv/"
   },
   {
     "id": "consensus-driven-analysis",
