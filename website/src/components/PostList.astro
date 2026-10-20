@@ -121,8 +121,7 @@ const years = [...Map.groupBy(posts, (p) => year(p.data.pubDate))].map(([year, l
 
   @media (max-width: 860px) {
     .archive-nav__year {
-      flex-direction: row;
-      flex-wrap: wrap;
+      flex-flow: row wrap;
       align-items: center;
       gap: 0 16px;
     }

@@ -104,15 +104,15 @@ const total = groups.reduce((n, [, list]) => n + list.length, 0);
   }
 
   @media (max-width: 640px) {
-    .book .row__date:empty {
-      display: none;
-    }
-
     .book .row__date {
       flex-direction: row;
       align-items: baseline;
       gap: 10px;
       padding-top: 8px;
+    }
+
+    .book .row__date:empty {
+      display: none;
     }
 
     .stars {
