@@ -23,7 +23,7 @@ Personal site. This file records the decisions already made; follow them unless 
   - New words for cspell go in `.config/cspell-words.txt`; new commit scopes go in both `.gitmessage` and `.config/commitlintrc.json`.
   - Packages come only from registry.npmjs.org. If it's unreachable locally, resolve lockfile changes in CI; `task lint:lockfile` and gitleaks block other registries.
 - Domain registered and DNS hosted at Namecheap (BasicDNS); no Cloudflare. `www` is a CNAME to the app's default host, and the apex is an ALIAS to the same host (verified with a TXT record). `www` is the canonical host, and the apex redirects to it once `www` is the default domain in Azure.
-- The old site is an about.me page. Cancel it after the DNS cutover.
+- The old site is an about.me page, to be cancelled now that DNS points here (see Open items).
 
 ## Commits
 
@@ -56,4 +56,7 @@ Personal site. This file records the decisions already made; follow them unless 
 
 - Real URLs for the ISE blog posts and the InfoQ article.
 - Namecheap Mail Settings → Email Forwarding, with `hello` forwarding to the personal Gmail. The site already shows `hello@`, so this must work before launch.
-- Later: per-post OG images, Giscus comments, and Clarity or Cloudflare analytics.
+- Cancel the old about.me page.
+- Give the Renovate GitHub app access to `jimmykurian/personal-site`; it was set up for the old private repo, so dependency updates aren't running.
+- Remove `GHSA-r7fv-28h4-cvq7` (markdown-it, via markdownlint-cli2) from `auditConfig.ignoreGhsas` in `pnpm-workspace.yaml` once Renovate moves markdownlint-cli2 onto markdown-it 15.0.2 or later.
+- Later: per-post OG images, and Clarity or Cloudflare analytics. No comment system for now (Giscus was declined).
