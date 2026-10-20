@@ -11,6 +11,7 @@ task = "3.54.0"
 
 # Infrastructure
 opentofu = "1.11.5"
+terraform-docs = "0.24.0"
 tflint = "0.61.0"
 uv = "0.12.24" # runs pipx tools
 "pipx:checkov" = "3.3.27"

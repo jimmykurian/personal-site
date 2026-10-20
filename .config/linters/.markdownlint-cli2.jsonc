@@ -18,5 +18,5 @@
   },
   "globs": ["**/*.md"],
   "gitignore": true,
-  "ignores": ["**/node_modules/**", "**/.terraform/**", "website/docs/**"]
+  "ignores": ["**/node_modules/**", "**/.terraform/**", "website/docs/**", "infrastructure/docs/**"]
 }

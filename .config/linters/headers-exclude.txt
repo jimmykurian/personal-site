@@ -17,6 +17,7 @@ pnpm-lock\.yaml$
 \.terraform\.lock\.hcl$
 \.snap$
 ^website/docs/
+^infrastructure/docs/
 # Images, fonts and PDFs.
 \.(svg|png|jpe?g|webp|ico|pdf|woff2?)$
 # Copied into the body of every new pull request.
