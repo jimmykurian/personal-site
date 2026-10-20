@@ -51,7 +51,7 @@ git config commit.template .gitmessage
 
 mise install
 task install         # the website's dependencies
-task hooks:install   # pre-commit and commit-msg hooks
+task hooks:install   # pre-commit, commit-msg and pre-push hooks
 
 cd website
 pnpm dev        # http://localhost:4321
@@ -148,6 +148,9 @@ gh ssh-key add ~/.ssh/id_ed25519.pub --type signing --title "<machine> signing"
 `git log -1 --format='%G?'` prints `G` for a good signature.
 
 ## Before you push
+
+The pre-push hook runs `task test` when `website/` changed and `task infra:test`
+when `infrastructure/` changed, and refuses pushes to `main`. The rest is up to you:
 
 - [ ] `task lint`, `task test`, `task test:integration` and `task test:e2e`
       pass (the last two after `task build`)
