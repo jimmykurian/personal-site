@@ -1,0 +1,22 @@
+# yamllint for the repo's YAML (workflows, Taskfile, issue forms, pnpm settings).
+# Run by `task lint:yaml`; pnpm-lock.yaml is generated and left out.
+extends: default
+
+rules:
+  # Long lines are fine in commands and descriptions; editors wrap.
+  line-length: disable
+  # No leading `---`: none of these files hold more than one document.
+  document-start: disable
+  # GitHub Actions' `on:` key reads as a boolean to YAML 1.1.
+  truthy:
+    allowed-values: ['true', 'false']
+    check-keys: false
+  comments:
+    min-spaces-from-content: 1
+  indentation:
+    spaces: 2
+    indent-sequences: consistent
+  # Prettier's style for flow maps: `{ var: MODULES }`.
+  braces:
+    min-spaces-inside: 0
+    max-spaces-inside: 1

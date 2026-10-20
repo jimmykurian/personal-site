@@ -4,7 +4,7 @@ import { parse, type HTMLElement } from 'node-html-parser';
 import { inject } from 'vitest';
 
 /** The built site's dist/ directory, from the integration setup. */
-export const distDir = () => join(inject('buildRoot'), 'dist');
+const distDir = () => join(inject('buildRoot'), 'dist');
 
 /** Every file in dist/, as site paths ("/writing/index.html"). */
 export function files(): string[] {

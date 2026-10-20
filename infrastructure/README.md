@@ -46,7 +46,7 @@ and know nothing about this site.
 
 OpenTofu, TFLint and Checkov are pinned in the root `.mise.toml`; `mise install`
 installs them. From the repo root, `task infra:check` runs the checks below and
-`task infra:test` the tests, as `.github/workflows/infrastructure.yml` does on
+`task infra:test` the tests, as the Infrastructure job in `.github/workflows/ci.yml` does on
 every change here.
 
 ## Tests

@@ -1,0 +1,18 @@
+# Packages exempt from the allowed list, each with its reason (task lint:licenses). One
+# package name per line; `*` matches any characters. An exclusion that matches no
+# installed package fails the check, so a stale entry can't linger.
+
+# CC BY-SA 4.0 dictionary data for the cspell dev tool; never part of the built site.
+@cspell/dict-en-common-misspellings
+
+# sharp's prebuilt libvips (LGPL-3.0-or-later), loaded at build time to optimize images and
+# never shipped. The package name carries the platform, so it differs on a Mac and in CI.
+@img/sharp-libvips-*
+
+# No license field published; the upstream repositories are MIT. Dependencies of Lighthouse CI.
+event-stream
+map-stream
+split
+
+# Ambiguous "BSD" with no version; a dependency of Lighthouse CI.
+parse-cache-control

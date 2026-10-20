@@ -309,13 +309,14 @@ const roles = [
   .line {
     break-inside: avoid;
     break-after: avoid;
-  }
-
-  .line {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
     gap: 12pt;
+  }
+
+  strong {
+    font-weight: 600;
   }
 
   .line strong {
@@ -345,9 +346,5 @@ const roles = [
 
   .bullets li::marker {
     color: var(--accent);
-  }
-
-  strong {
-    font-weight: 600;
   }
 </style>

@@ -21,8 +21,8 @@
   // Linters read the same configs as `task lint`.
   "eslint.workingDirectories": ["website"],
   "eslint.validate": ["javascript", "typescript", "astro"],
-  "cSpell.import": ["./.config/cspell.json"],
-  "markdownlint.configFile": ".config/.markdownlint-cli2.jsonc",
+  "cSpell.import": ["./.config/spelling/cspell.json"],
+  "markdownlint.configFile": ".config/linters/.markdownlint-cli2.jsonc",
   "shellcheck.customArgs": ["--external-sources"],
 
   // Tests.

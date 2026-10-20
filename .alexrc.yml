@@ -1,0 +1,39 @@
+# alex (task lint:inclusive-language) checks the prose for insensitive or inconsiderate
+# wording. It reads this file from the repo root; it has no option for another path.
+# The allow list holds the rule IDs the existing writing uses on purpose. A new rule
+# outside it fails the build, so add one here only with a reason.
+allow:
+  # Engineering terms: git hooks, hosting, attack surfaces, rejected or failed checks,
+  # whitespace in templates, and the Black and White palette colors.
+  - hook
+  - hooks
+  - host-hostess
+  - hostesses-hosts
+  - attack
+  - attacks
+  - reject
+  - failed
+  - failure
+  - whitespace
+  - black
+  - white
+  - color
+  # Ordinary words the profanity list marks "in some cases": "no period" (commit rules),
+  # "joint operations" (a military award), "in good faith" (SECURITY.md), "laid out" (a
+  # post), and The American Legion and a church food pantry (community entries).
+  - period
+  - joint
+  - faith
+  - laid
+  - american
+  - church
+  # Titles and page parts: "Software Craftsman", Master's degrees, the home page's hero.
+  - handyman-handywoman
+  - master
+  - hero-heroine
+  # Words in a post's explanations, and "he" for a named person in that post.
+  - just
+  - easy
+  - simple
+  - obvious
+  - he-she

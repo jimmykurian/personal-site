@@ -1,0 +1,64 @@
+# v8r validates these configs against their published schemas (task lint:schemas). Most are
+# found through SchemaStore; customCatalog maps the rest. task lint:schemas
+# points v8r at this file with V8R_CONFIG_FILE.
+patterns:
+  - website/package.json
+  - website/tsconfig.json
+  - website/pnpm-workspace.yaml
+  - .github/workflows/*.yml
+  - .github/ISSUE_TEMPLATE/*.yml
+  - .github/renovate.json
+  - .github/labeler.yml
+  - .devcontainer/devcontainer.json
+  - Taskfile.yml
+  - .config/spelling/cspell.json
+  - .config/linters/.markdownlint-cli2.jsonc
+  - .config/commitlintrc.json
+  - .config/linters/editorconfig-checker.json
+  - .config/linters/lychee.toml
+  - .config/linters/yamllint.yml
+  - .config/linters/v8rrc.yml
+
+customCatalog:
+  schemas:
+    # SchemaStore lists more than one match for these two.
+    - name: Pull Request Labeler
+      description: actions/labeler config
+      fileMatch: ['**/.github/labeler.yml']
+      location: https://www.schemastore.org/pull-request-labeler.json
+    - name: Renovate
+      description: Renovate repository config
+      fileMatch: ['**/.github/renovate.json']
+      location: https://docs.renovatebot.com/renovate-schema.json
+    # SchemaStore's patterns don't match these paths.
+    - name: tsconfig
+      description: TypeScript config
+      fileMatch: ['**/tsconfig.json']
+      location: https://www.schemastore.org/tsconfig.json
+    - name: commitlint
+      description: commitlint config, in .config/ without the leading dot
+      fileMatch: ['**/.config/commitlintrc.json']
+      location: https://www.schemastore.org/commitlintrc.json
+    - name: editorconfig-checker
+      description: editorconfig-checker config, in .config/ without the leading dot
+      fileMatch: ['**/.config/linters/editorconfig-checker.json']
+      location: https://raw.githubusercontent.com/editorconfig-checker/editorconfig-checker/main/.editorconfig-checker.schema.json
+    - name: yamllint
+      description: yamllint config
+      fileMatch: ['**/.config/linters/yamllint.yml']
+      location: https://www.schemastore.org/yamllint.json
+    - name: v8r
+      description: This file
+      fileMatch: ['**/.config/linters/v8rrc.yml']
+      location: https://raw.githubusercontent.com/chris48s/v8r/main/config-schema.json
+    # JSON with comments, read as JSON5.
+    - name: markdownlint-cli2
+      description: markdownlint-cli2 config
+      fileMatch: ['**/.config/linters/.markdownlint-cli2.jsonc']
+      location: https://raw.githubusercontent.com/DavidAnson/markdownlint-cli2/main/schema/markdownlint-cli2-config-schema.json
+      parser: json5
+    - name: devcontainer.json
+      description: Dev container config
+      fileMatch: ['**/.devcontainer/devcontainer.json']
+      location: https://raw.githubusercontent.com/devcontainers/spec/main/schemas/devContainer.base.schema.json
+      parser: json5

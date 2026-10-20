@@ -4,7 +4,7 @@
   --accent: #a36752; /* Sudan Brown: display accents, hover underlines */
   --accent-small: #8f5a47; /* Sudan Brown, darkened for text under ~18px */
   --mist: #b4cdc2; /* Glaucous Green: hairlines, credentials band, portrait frame */
-  --paper: #ffffff;
+  --paper: #fff;
 
   --serif: var(--font-serif), Georgia, serif;
   --sans: var(--font-sans), 'Franklin Gothic', system-ui, sans-serif;
@@ -24,6 +24,7 @@
 }
 
 html {
+  /* stylelint-disable-next-line property-no-vendor-prefix -- iOS Safari supports only the prefixed property */
   -webkit-text-size-adjust: 100%;
   scroll-padding-top: 24px;
 }

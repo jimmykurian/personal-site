@@ -1,0 +1,25 @@
+# Licenses allowed for the website's dependencies (task lint:licenses). One SPDX id per line;
+# `*` matches any characters. In a compound expression, OR needs one allowed side and AND
+# needs every side. Everything here is permissive, or file-level copyleft that unmodified
+# dependencies satisfy.
+MIT
+# MIT No Attribution: more permissive than MIT.
+MIT-0
+ISC
+0BSD
+Apache-2.0
+BSD-2-Clause
+BSD-3-Clause
+BlueOak-1.0.0
+CC0-1.0
+Unlicense
+# Attribution licenses on data packages (the SPDX license list itself).
+CC-BY-3.0
+CC-BY-4.0
+Python-2.0
+PSF-2.0
+Artistic-2.0
+WTFPL
+Zlib
+# File-level weak copyleft, satisfied by unmodified dependencies.
+MPL-2.0

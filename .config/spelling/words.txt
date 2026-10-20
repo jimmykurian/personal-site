@@ -1,5 +1,6 @@
 # Names, products and terms the dictionaries don't know. One per line, sorted.
 ACMR
+alexrc
 ANAME
 Applebot
 artboards
@@ -14,7 +15,9 @@ commitlintrc
 cutover
 davidanson
 dbaeumer
+dedupe
 devblogs
+dorny
 eastus
 esbenp
 Forsgren
@@ -25,6 +28,7 @@ goodreads
 gpgsign
 gstatic
 gsub
+handywoman
 hrefs
 HSTS
 hverlin
@@ -32,8 +36,10 @@ ihdr
 infoq
 jimmybogard
 jimmykurian
+knip
 Kurian
 lhci
+libvips
 lichess
 lighthouseci
 lighthouserc
