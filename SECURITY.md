@@ -15,8 +15,9 @@ or older versions to patch; a fix ships with the next deploy.
 ## Reporting a vulnerability
 
 **Please don't report security issues through public channels.** Email
-<hello@jimmykurian.me> with the details. The repository is private, so GitHub
-issues and private vulnerability reporting aren't available.
+<hello@jimmykurian.me> with the details. The repository is public, so don't
+open a GitHub issue or pull request about it; anything posted there is visible
+to everyone.
 
 Please include:
 

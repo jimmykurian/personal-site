@@ -236,4 +236,4 @@ website/
 
 ## License
 
-Proprietary. All rights reserved; see [LICENSE](LICENSE). Third-party packages, fonts and icons keep their own licenses.
+Proprietary. All rights reserved; see [LICENSE](LICENSE). The source is public to read, but I'm its only contributor and don't accept pull requests or issues ([CONTRIBUTING.md](CONTRIBUTING.md)). Third-party packages, fonts and icons keep their own licenses.
