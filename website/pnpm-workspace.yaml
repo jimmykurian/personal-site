@@ -1,10 +1,18 @@
 # pnpm settings for the website (a single package, not a workspace).
 
-# Advisories in dev tools, fixed by forcing the patched release. Neither code path runs:
-# Lighthouse CI never opens the inquirer editor or fetches ftp:// URLs.
+# Advisories in dev tools, fixed by forcing the patched release. Remove each once the
+# dependency that pulls it in requires the fix itself.
 overrides:
   tmp: '^0.2.7' # GHSA-ph9p-34f9-6g65, via @lhci/cli > inquirer > external-editor
   basic-ftp: '^6.2.3' # GHSA-c475-qrg2-pj4r, via @lhci/cli > proxy-agent > get-uri
+  # GHSA-r7fv-28h4-cvq7, via markdownlint-cli2, which pins 15.0.1.
+  markdown-it: '^15.0.2'
+  # GHSA-r4xh-jqrq-34v2, via markdownlint-cli2, which pins 1.8.0; the rest already use 1.9.
+  'smol-toml@<1.9.0': '^1.9.0'
+  # GHSA-238p-pmpm-9mq7, via markdownlint > micromark-extension-math (^0.16).
+  'katex@<0.18.2': '^0.18.2'
+  # GHSA-w5hq-g745-h8pq, via @lhci/cli (^8.3). uuid 11 keeps the require('uuid').v4 API.
+  'uuid@<11.1.1': '^11.1.1'
 
 # Advisories with no patched release, in dev tools only. Remove each once a fix ships.
 auditConfig:
@@ -15,9 +23,3 @@ auditConfig:
     - GHSA-7pqw-9j4j-h8q3
     # braces, via markdownlint-cli2's globbing. The patterns are this repo's own.
     - GHSA-vfj7-8cjw-p6xm
-
-    # Advisories patched upstream more recently than the 7-day release age Renovate waits for.
-    # Remove each once Renovate moves the dependency past the fix.
-    # markdown-it smartquotes, via markdownlint-cli2 (patched in 15.0.2, 2026-10-20). The
-    # rule runs only with markdown-it's typographer option, which markdownlint leaves off.
-    - GHSA-r7fv-28h4-cvq7
