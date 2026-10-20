@@ -172,6 +172,7 @@ jobs:
       integration_total: ${{ steps.metrics.outputs.integration_total }}
       e2e_passed: ${{ steps.metrics.outputs.e2e_passed }}
       e2e_total: ${{ steps.metrics.outputs.e2e_total }}
+      e2e_skipped: ${{ steps.metrics.outputs.e2e_skipped }}
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -242,8 +243,10 @@ jobs:
               fi
             done
             if [[ -f reports/e2e.json ]]; then
+              # Tests skipped at one size (phone-only or desktop-only checks) aren't counted.
               echo "e2e_passed=$(jq '.stats.expected + .stats.flaky' reports/e2e.json)"
-              echo "e2e_total=$(jq '.stats.expected + .stats.flaky + .stats.unexpected + .stats.skipped' reports/e2e.json)"
+              echo "e2e_total=$(jq '.stats.expected + .stats.flaky + .stats.unexpected' reports/e2e.json)"
+              echo "e2e_skipped=$(jq '.stats.skipped' reports/e2e.json)"
             fi
           } >> "$GITHUB_OUTPUT"
 
@@ -432,6 +435,7 @@ jobs:
                   ['Unit tests', o.unit_total && `${o.unit_passed}/${o.unit_total}`],
                   ['Integration tests', o.integration_total && `${o.integration_passed}/${o.integration_total}`],
                   ['End-to-end tests', o.e2e_total && `${o.e2e_passed}/${o.e2e_total}`],
+                  ['End-to-end tests skipped at one size', o.e2e_skipped && o.e2e_skipped !== '0' && o.e2e_skipped],
                 ],
               },
               {
