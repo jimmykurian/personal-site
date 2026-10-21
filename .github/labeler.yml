@@ -38,6 +38,7 @@ tests:
           - "**/*.test.*"
           - "**/*.spec.*"
           - "**/*.tftest.hcl"
+          - "**/*.feature"
           - "website/vitest.config.ts"
           - "website/playwright.config.ts"
 

@@ -254,7 +254,7 @@ jobs:
       # Checks the built site that is about to be deployed: links, feeds, content rules, config.
       - id: integration
         if: ${{ !cancelled() && steps.build.outcome == 'success' }}
-        run: task test:integration -- --reporter=default --reporter=json --outputFile.json=reports/integration.json
+        run: task test:integration
       # Drives the same build in Chrome at desktop and phone sizes, including axe checks.
       - id: e2e
         if: ${{ !cancelled() && steps.build.outcome == 'success' }}
@@ -274,12 +274,17 @@ jobs:
               echo "line_coverage=$(jq '.total.lines.pct' coverage/coverage-summary.json)"
               echo "branch_coverage=$(jq '.total.branches.pct' coverage/coverage-summary.json)"
             fi
-            for suite in unit integration; do
-              if [[ -f "reports/$suite.json" ]]; then
-                echo "${suite}_passed=$(jq '.numPassedTests' "reports/$suite.json")"
-                echo "${suite}_total=$(jq '.numTotalTests' "reports/$suite.json")"
-              fi
-            done
+            if [[ -f reports/unit.json ]]; then
+              echo "unit_passed=$(jq '.numPassedTests' reports/unit.json)"
+              echo "unit_total=$(jq '.numTotalTests' reports/unit.json)"
+            fi
+            # Cucumber's JSON report (tests/integration/cucumber.mjs): a scenario passes when
+            # every step and hook in it did.
+            if [[ -f reports/integration.json ]]; then
+              scenarios='[.[].elements[] | select(.type == "scenario")]'
+              echo "integration_passed=$(jq "$scenarios | map(select(all(.steps[]; .result.status == \"passed\"))) | length" reports/integration.json)"
+              echo "integration_total=$(jq "$scenarios | length" reports/integration.json)"
+            fi
             if [[ -f reports/e2e.json ]]; then
               # Tests skipped at one size (phone-only or desktop-only checks) aren't counted.
               echo "e2e_passed=$(jq '.stats.expected + .stats.flaky' reports/e2e.json)"
@@ -469,7 +474,7 @@ jobs:
                   ['📚', 'API docs up to date (TypeDoc)', 'docs'],
                   ['🧪', 'Unit tests and coverage', 'unit'],
                   ['🏗️', 'Build and resume PDF', 'build'],
-                  ['🔗', 'Integration tests', 'integration'],
+                  ['🔗', 'Integration tests (Cucumber)', 'integration'],
                   ['🖥️', 'End-to-end and axe (Chrome)', 'e2e'],
                   ['🚀', 'Lighthouse', 'lighthouse'],
                 ],
@@ -477,7 +482,7 @@ jobs:
                   ['Line coverage', o.line_coverage && `${o.line_coverage}%`],
                   ['Branch coverage', o.branch_coverage && `${o.branch_coverage}%`],
                   ['Unit tests', o.unit_total && `${o.unit_passed}/${o.unit_total}`],
-                  ['Integration tests', o.integration_total && `${o.integration_passed}/${o.integration_total}`],
+                  ['Integration scenarios', o.integration_total && `${o.integration_passed}/${o.integration_total}`],
                   ['End-to-end tests', o.e2e_total && `${o.e2e_passed}/${o.e2e_total}`],
                   ['End-to-end tests skipped at one size', o.e2e_skipped && o.e2e_skipped !== '0' && o.e2e_skipped],
                 ],

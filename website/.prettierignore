@@ -6,6 +6,7 @@ dist/
 coverage/
 pnpm-lock.yaml
 test-results/
+reports/
 playwright-report/
 .lighthouseci/
 **/__snapshots__/
