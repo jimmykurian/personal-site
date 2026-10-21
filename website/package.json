@@ -18,7 +18,7 @@
     "test": "vitest run --project unit",
     "test:coverage": "vitest run --project unit --coverage",
     "test:watch": "vitest --project unit",
-    "test:integration": "vitest run --project integration",
+    "test:integration": "cucumber-js --config tests/integration/cucumber.mjs",
     "test:e2e": "playwright test"
   },
   "dependencies": {
@@ -35,6 +35,7 @@
     "@axe-core/playwright": "^4.13.0",
     "@commitlint/cli": "^21.2.3",
     "@commitlint/config-conventional": "^21.2.3",
+    "@cucumber/cucumber": "^13.3.0",
     "@eslint/js": "^10.0.1",
     "@lhci/cli": "^0.15.1",
     "@playwright/test": "~1.63.0",
@@ -56,6 +57,7 @@
     "stylelint": "^17.16.0",
     "stylelint-config-html": "^2.0.0",
     "stylelint-config-standard": "^40.0.0",
+    "tsx": "^4.23.15",
     "typedoc": "^0.28.20",
     "typedoc-plugin-markdown": "^4.14.1",
     "typescript": "~6.0.3",
