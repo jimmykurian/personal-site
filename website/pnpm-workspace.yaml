@@ -15,13 +15,17 @@ overrides:
   'katex@<0.18.2': '^0.18.2'
   # GHSA-w5hq-g745-h8pq, via @lhci/cli (^8.3). uuid 11 keeps the require('uuid').v4 API.
   'uuid@<11.1.1': '^11.1.1'
+  # Unused dependencies with unpatched advisories, removed ('-') rather than patched.
+  # GHSA-jmr9-qjv8-65gv and GHSA-7pqw-9j4j-h8q3: @puppeteer/browsers imports extract-zip only
+  # to unpack a downloaded browser. Lighthouse (via @lhci/cli) uses the installed Chrome and
+  # never downloads one.
+  '@puppeteer/browsers>extract-zip': '-'
+  # GHSA-hp3w-g68c-fv3c (sprintf-js): js-yaml 3 (via @lhci/utils) needs argparse 1 only for
+  # its own command-line tool, never for the library @lhci/utils calls.
+  'js-yaml@3>argparse': '-'
 
 # Advisories with no patched release, in dev tools only. Remove each once a fix ships.
 auditConfig:
   ignoreGhsas:
-    # extract-zip, used by puppeteer to download browsers. Lighthouse uses the installed
-    # Chrome and never downloads one.
-    - GHSA-jmr9-qjv8-65gv
-    - GHSA-7pqw-9j4j-h8q3
     # braces, via markdownlint-cli2's globbing. The patterns are this repo's own.
     - GHSA-vfj7-8cjw-p6xm

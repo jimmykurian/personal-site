@@ -3,26 +3,11 @@
 # OSV-Scanner (task lint:osv) checks website/pnpm-lock.yaml against the OSV database, which
 # includes advisories below pnpm audit's high level. Each ignored advisory needs a reason;
 # remove it once a fix ships. The same advisories are ignored for pnpm audit in
-# website/pnpm-workspace.yaml.
-
-# extract-zip symlink path traversal and symlink file writes: no patched release. Only
-# puppeteer uses it, to download browsers; Lighthouse CI uses the installed Chrome.
-[[IgnoredVulns]]
-id = "GHSA-jmr9-qjv8-65gv"
-reason = "No patched release; puppeteer's browser download, which Lighthouse CI never runs"
-
-[[IgnoredVulns]]
-id = "GHSA-7pqw-9j4j-h8q3"
-reason = "No patched release; puppeteer's browser download, which Lighthouse CI never runs"
+# website/pnpm-workspace.yaml. extract-zip and sprintf-js are removed from the tree there
+# instead of ignored.
 
 # braces stack exhaustion on deeply nested patterns: no patched release for 3.x. It reaches
 # the repo through markdownlint-cli2's globbing, which only expands this repo's own patterns.
 [[IgnoredVulns]]
 id = "GHSA-vfj7-8cjw-p6xm"
 reason = "No patched release; markdownlint-cli2 expands only this repo's own glob patterns"
-
-# sprintf-js unbounded precision (moderate): no patched release. It reaches the repo through
-# js-yaml 3 > argparse 1, which uses it only to format argparse's own help text.
-[[IgnoredVulns]]
-id = "GHSA-hp3w-g68c-fv3c"
-reason = "No patched release; argparse 1 (via js-yaml 3) formats only its own help text with it"
