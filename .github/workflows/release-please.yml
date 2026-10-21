@@ -25,11 +25,20 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      # RELEASE_PLEASE_TOKEN is a fine-grained token for this repository only (Contents, Issues
-      # and Pull requests: read and write). A release PR opened with GITHUB_TOKEN wouldn't start
-      # the required checks, so it could never merge.
+      # A short-lived token from Jimmy's private GitHub App, installed on this repository only.
+      # GitHub signs the commits an App makes through the API, so the release commit is
+      # Verified, and unlike GITHUB_TOKEN, the App's PR starts the required checks.
+      - name: Create the release app token
+        id: app-token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          client-id: ${{ secrets.RELEASE_APP_CLIENT_ID }}
+          private-key: ${{ secrets.RELEASE_APP_PRIVATE_KEY }}
+          permission-contents: write
+          permission-issues: write
+          permission-pull-requests: write
       - uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5.0.0
         with:
-          token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
+          token: ${{ steps.app-token.outputs.token }}
           config-file: .github/release-please-config.json
           manifest-file: .github/.release-please-manifest.json

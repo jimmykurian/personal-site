@@ -56,7 +56,7 @@ How the resources were created, and the OpenTofu modules that model them: [infra
 
 ## Secrets
 
-The deploy needs one secret, `AZURE_STATIC_WEB_APPS_API_TOKEN`, used only by the Deploy and Close PR preview jobs. Release Please uses a second, `RELEASE_PLEASE_TOKEN`, a fine-grained token for this repository only. Every other job runs with `contents: read` and the narrowest extra permission it needs.
+The deploy needs one secret, `AZURE_STATIC_WEB_APPS_API_TOKEN`, used only by the Deploy and Close PR preview jobs. Release Please signs in as a private GitHub App installed on this repository only, with the `RELEASE_APP_CLIENT_ID` and `RELEASE_APP_PRIVATE_KEY` secrets. Every other job runs with `contents: read` and the narrowest extra permission it needs.
 
 ## Releases
 
@@ -80,4 +80,4 @@ Release Please versions `website/` and `infrastructure/` from the Conventional C
 - [Security overview](../security/overview.md)
 - [Testing strategy](../testing/testing-strategy.md)
 
-Last reviewed: 2026-10-20
+Last reviewed: 2026-10-21

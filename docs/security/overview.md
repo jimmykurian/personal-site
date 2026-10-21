@@ -44,7 +44,7 @@ The site is static: no server code, database, login, forms or cookies. What's le
 | Secret | Used by | Access |
 | --- | --- | --- |
 | `AZURE_STATIC_WEB_APPS_API_TOKEN` | The Deploy and Close PR preview jobs | Uploads to, and removes previews from, the one Static Web App |
-| `RELEASE_PLEASE_TOKEN` | The Release Please workflow | A fine-grained token for this repository only: Contents, Issues and Pull requests |
+| `RELEASE_APP_CLIENT_ID`, `RELEASE_APP_PRIVATE_KEY` | The Release Please workflow | A private GitHub App installed on this repository only: Contents, Issues and Pull requests. The workflow mints a token from them that expires in an hour |
 
 - Workflows default to `contents: read`, and each job asks only for the extra permission it needs. Checkouts don't keep credentials (`persist-credentials: false`).
 - `.env` files are git-ignored; the build needs no keys.
@@ -96,4 +96,4 @@ The site runs in a personal Azure subscription, never a work tenant. DNS is at N
 - [CONTRIBUTING.md, Quality checks](../../CONTRIBUTING.md#quality-checks): every check and its config
 - [Deployment overview](../deployment/overview.md)
 
-Last reviewed: 2026-10-20
+Last reviewed: 2026-10-21

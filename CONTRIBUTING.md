@@ -346,10 +346,13 @@ tests; they aren't deployed from there yet. Run `task infra:check` and
 - The settings are in `.github/release-please-config.json`, and the current
   versions in `.github/.release-please-manifest.json`. Never edit a version or
   a changelog by hand.
-- The workflow uses the `RELEASE_PLEASE_TOKEN` secret, a fine-grained token
-  for this repository only, with read and write access to Contents, Issues
-  and Pull requests. A PR opened with the default `GITHUB_TOKEN` wouldn't
-  start the required checks, so it could never merge.
+- The workflow signs in as a private GitHub App installed on this repository
+  only, with read and write access to Contents, Issues and Pull requests. It
+  mints a token that lasts an hour from the `RELEASE_APP_CLIENT_ID` and
+  `RELEASE_APP_PRIVATE_KEY` secrets (`actions/create-github-app-token`).
+  GitHub signs the App's commits, so the release PR's commit is Verified. A PR
+  opened with the default `GITHUB_TOKEN` wouldn't start the required checks,
+  so it could never merge.
 
 ## Content rules
 
