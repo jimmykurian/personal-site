@@ -130,7 +130,7 @@ C4Container
     Person(jimmy, "Jimmy")
 
     System_Boundary(repo, "jimmykurian/personal-site") {
-        Container(website, "website/", "Astro 7, TypeScript, MDX", "Content collections, pages, components and the Goodreads loader; builds to a static dist/")
+        Container(website, "website/", "Astro 7, TypeScript, MDX", "Content collections, pages, components and the Goodreads loader, built to a static dist/")
         Container(infra, "infrastructure/", "OpenTofu", "Generic resource-group and static-web-app modules, tested against a mocked provider")
         Container(tooling, "Root tooling", "mise, Task, bash hooks", "Pinned tool versions, every command, the git hooks and the linter configs")
         Container(ci, "CI", "GitHub Actions", "Checks, build, deploy, PR check table, badges, nightly rebuild and link check")
@@ -146,7 +146,7 @@ C4Container
     Rel(ci, infra, "Validates, scans and tests")
     Rel(website, goodreads, "Fetches at build time", "HTTPS")
     Rel(ci, swa, "Uploads dist/", "deploy token")
-    Rel(infra, swa, "Models; doesn't deploy yet")
+    Rel(infra, swa, "Models it, with no deploys yet")
     Rel(visitor, dns, "Resolves")
     Rel(visitor, swa, "Loads pages", "HTTPS")
 
@@ -286,7 +286,7 @@ sequenceDiagram
         CI->>SWA: Upload dist/ to production
         CI->>GH: Update the README badges (badges branch)
     else A check failed
-        CI--xSWA: No deploy; the last one stays live
+        CI--xSWA: No deploy, and the last one stays live
     end
     GH->>RP: push to main
     RP->>GH: Open or update the release PR (versions and CHANGELOG.md)
@@ -310,7 +310,7 @@ sequenceDiagram
         CI->>GR: Retry, up to twice per page
     end
     alt A shelf still can't be read
-        CI--xSWA: Build fails; the last deploy stays live
+        CI--xSWA: Build fails, and the last deploy stays live
     else Every shelf read
         CI->>CI: Build, test, print resume.pdf
         CI->>SWA: Upload dist/ to production
