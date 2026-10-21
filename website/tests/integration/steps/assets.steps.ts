@@ -64,8 +64,22 @@ Then('every one is served from \\/_astro\\/', function (this: SiteWorld) {
   assert.deepEqual(elsewhere, []);
 });
 
-Then("the page doesn't hot-link Goodreads' image host", function () {
-  assert.ok(!read('/reading/index.html').includes('gr-assets.com'), '/reading/ references gr-assets.com');
+// Goodreads serves its cover images from gr-assets.com and its subdomains.
+const isGoodreadsImageHost = (hostname: string) => hostname === 'gr-assets.com' || hostname.endsWith('.gr-assets.com');
+
+Then("nothing on the page loads from Goodreads' image host", function () {
+  const root = page('/reading/index.html');
+  const urls = [
+    ...root.querySelectorAll('[src], [href]').map((el) => el.getAttribute('src') ?? el.getAttribute('href')!),
+    ...root.querySelectorAll('[srcset]').flatMap((el) =>
+      el
+        .getAttribute('srcset')!
+        .split(',')
+        .map((s) => s.trim().split(/\s+/)[0]),
+    ),
+  ];
+  const hotLinked = urls.filter((url) => URL.canParse(url) && isGoodreadsImageHost(new URL(url).hostname));
+  assert.deepEqual(hotLinked, []);
 });
 
 When('I collect every image on every page', function (this: SiteWorld) {

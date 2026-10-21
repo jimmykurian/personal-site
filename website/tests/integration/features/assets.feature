@@ -23,7 +23,7 @@ Feature: Assets served from the site
     When I collect the cover images on the reading page
     Then there is at least one
     And every one is served from /_astro/
-    And the page doesn't hot-link Goodreads' image host
+    And nothing on the page loads from Goodreads' image host
 
   Scenario: Every image has alt text
     When I collect every image on every page
