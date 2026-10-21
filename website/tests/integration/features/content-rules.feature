@@ -10,26 +10,12 @@ Feature: Content rules across the whole build
   Background:
     Given the production build of the site
 
-  Scenario Outline: No published file contains <rule>
+  # Every rule in tests/support/rules.ts, read at run time, so a new rule is checked without
+  # editing this file: a personal Gmail address, a phone number, a security clearance, a patent
+  # application number and a street address.
+  Scenario: No published file breaks a content rule
     When I read every published text file
-    Then none of them contains <rule>
-
-    Examples:
-      | rule                        |
-      | a personal Gmail address    |
-      | a phone number              |
-      | a security clearance        |
-      | a patent application number |
-      | a street address            |
-
-  Scenario: The examples above cover every content rule
-    When I list the content rules in tests/support/rules.ts
-    Then they are exactly:
-      | a personal Gmail address    |
-      | a phone number              |
-      | a security clearance        |
-      | a patent application number |
-      | a street address            |
+    Then none of them matches any content rule in tests/support/rules.ts
 
   Scenario: hello@ is the only email address
     When I collect every email address in the published pages and feeds
