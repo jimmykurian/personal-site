@@ -129,6 +129,10 @@ E2E_BASE_URL=https://www.jimmykurian.me pnpm test:e2e   # against the live site
 
 The tests use the installed Chrome (`channel: 'chrome'`), so there's no browser download. A failing run keeps a trace in `test-results/` (`pnpm exec playwright show-trace <file>`); CI uploads it as an artifact.
 
+## Releases
+
+Release Please versions the site from the Conventional Commits on `main` that change `website/`, in `package.json` and `CHANGELOG.md`, and tags each release `website-v<version>`. See [CONTRIBUTING.md, Releases](../CONTRIBUTING.md#releases).
+
 ## Layout
 
 ```text
