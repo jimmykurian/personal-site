@@ -12,6 +12,18 @@ const SITE = 'https://www.jimmykurian.me';
 // Files produced after the build by other steps.
 const generatedLater = new Set(['/resume.pdf']);
 
+/**
+ * A reference's path on this site: root-relative as written, or the path of an absolute URL
+ * whose origin is exactly the site's. A prefix check would also accept another host that
+ * starts with the same name, such as www.jimmykurian.me.example.com.
+ */
+function sitePath(url: string): string | undefined {
+  if (url.startsWith('/')) return url;
+  if (!URL.canParse(url)) return undefined;
+  const { origin, pathname, search, hash } = new URL(url);
+  return origin === SITE ? `${pathname}${search}${hash}` : undefined;
+}
+
 /** Every internal URL a page references, from links, images, scripts and styles. */
 function references(file: string): string[] {
   const root = page(file);
@@ -25,9 +37,7 @@ function references(file: string): string[] {
         .map((s) => s.trim().split(/\s+/)[0]),
     ),
   ];
-  return urls
-    .map((url) => (url.startsWith(SITE) ? url.slice(SITE.length) || '/' : url))
-    .filter((url) => url.startsWith('/') && !url.startsWith('//'));
+  return urls.map(sitePath).filter((url): url is string => url !== undefined && !url.startsWith('//'));
 }
 
 describe('internal links', () => {
