@@ -30,8 +30,8 @@ Jimmy Kurian's personal site: a portfolio, resume and blog at <https://www.jimmy
 
 ## More detail
 
-- `README.md`: the architecture, the principles, the checks table and the repo structure.
-- `CONTRIBUTING.md`: setup, the workflow, signed commits, tests, deploys, and the content and design rules.
+- `README.md`: the architecture diagrams, the principles, a summary of the checks and the repo structure.
+- `CONTRIBUTING.md`: setup, the workflow, signed commits, every check with its config and the git hooks, tests, deploys, releases, and the content and design rules.
 - `website/README.md`: where each piece of content lives, posts, the resume, the reading list and the test suites.
 - `infrastructure/README.md`: the modules, their tests and checks, and how the live resources were created.
 

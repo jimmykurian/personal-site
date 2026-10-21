@@ -21,6 +21,7 @@ changes here.
 - [AI-assisted development](#ai-assisted-development)
 - [Workflow](#workflow)
 - [Commits](#commits)
+- [Quality checks](#quality-checks)
 - [Before you push](#before-you-push)
 - [Tests](#tests)
 - [Deploys](#deploys)
@@ -163,6 +164,69 @@ gh ssh-key add ~/.ssh/id_ed25519.pub --type signing --title "<machine> signing"
 ```
 
 `git log -1 --format='%G?'` prints `G` for a good signature.
+
+## Quality checks
+
+`task lint` runs every check below: `lint:repo`, `lint:web` and `infra:check` run each group. `task test`, `task build`, `task test:integration`, `task test:e2e` and `task lighthouse` cover the rest.
+
+**Repository** (`task lint:repo`):
+
+| Task | Checks | Config |
+| --- | --- | --- |
+| `lint:headers` | every file starts with the copyright and author header, and any `@file` tag names its own file | `.config/linters/headers-exclude.txt` (exceptions) |
+| `lint:secrets` | gitleaks over the git history, including non-npm registry URLs | `.config/linters/gitleaks.toml` |
+| `lint:secretlint` | secretlint's recommended rules over the tracked files, with secrets masked in the output | `.config/linters/secretlintrc.json` |
+| `lint:lockfile` | the lockfile: packages from registry.npmjs.org only, sha512 hashes only, no git dependencies, an upper bound on every override range, no npm or Yarn lockfile | |
+| `lint:dedupe` | no duplicate versions in the lockfile that pnpm could merge | |
+| `lint:audit` | no high or critical advisories (`pnpm audit`) | `website/pnpm-workspace.yaml` |
+| `lint:osv` | OSV-Scanner checks the lockfile against the OSV database, every severity | `.config/linters/osv-scanner.toml` |
+| `lint:licenses` | every installed package's license is on the allowed list, or the package is excluded with a reason | `.config/licenses/` |
+| `lint:actions` | actionlint and zizmor on the workflows | |
+| `lint:shell` | shellcheck on the scripts and hooks | |
+| `lint:editorconfig` | every file against `.editorconfig` | `.config/linters/editorconfig-checker.json` |
+| `lint:markdown` | markdownlint on the `.md` files | `.config/linters/.markdownlint-cli2.jsonc` |
+| `lint:spelling` | cspell on posts, pages, docs and code | `.config/spelling/cspell.json`, words in `.config/spelling/words.txt` |
+| `lint:inclusive-language` | alex on the docs, posts and site content, for insensitive or inconsiderate wording | `.alexrc.yml` (allow list) |
+| `lint:yaml` | yamllint on the YAML files | `.config/linters/yamllint.yml` |
+| `lint:schemas` | v8r validates the JSON, YAML and TOML configs against their published schemas | `.config/linters/v8rrc.yml` |
+| `lint:commits` | commit messages (commitlint) | `.config/commitlintrc.json` |
+| `lint:pr-title` | a pull request title, which becomes the squash commit (commitlint) | `.config/commitlintrc.json` |
+| `lint:pr-template` | a pull request body keeps every template section and replaces its instructions | `.github/PULL_REQUEST_TEMPLATE.md` |
+
+**Website** (`task lint:web`):
+
+| Task | Checks | Config |
+| --- | --- | --- |
+| `lint:astro` | `astro check` type-checks `.astro` and `.ts` files | `website/tsconfig.json` |
+| `lint:eslint` | ESLint, with accessibility rules for `.astro` markup | `website/eslint.config.js` |
+| `lint:format` | Prettier | `.config/formatters/prettierrc.json`, through `prettier` in `website/package.json` |
+| `lint:css` | Stylelint on `src/styles/` and `.astro` style blocks | `website/stylelint.config.mjs` |
+| `lint:dead-code` | knip: unused files, exports and dependencies | `website/knip.jsonc` |
+| `docs:check` | the TypeDoc API docs in `website/docs/` match the TSDoc comments (`task docs` regenerates them) | `website/typedoc.json`, `website/tsdoc.json` |
+
+**Infrastructure** (`task infra:check`): `infra:fmt`, `infra:validate`, `infra:tflint`, `infra:checkov` and `infra:pins`, then `infra:test` for the module tests. `infra:docs:check` fails if the terraform-docs pages in `infrastructure/docs/` are out of date; `task infra:docs` regenerates them.
+
+After `task build`, three more run against `dist/`:
+
+- `task test:e2e` includes the axe checks on every page.
+- `task lighthouse` fails below 0.95 for accessibility, 0.9 for SEO and best practices, or 0.8 for performance (the median of 3 runs; CI runners are noisy), or above 0.1 layout shift. `/resume/` is left out: it's the print source for the PDF, noindexed, with small contact links.
+- `task lint:links` checks the external links with lychee (`.config/linters/lychee.toml`). CI runs it nightly, after the deploy, so another site's outage doesn't block a push.
+
+Prettier skips `.astro` and `.mdx` files: whitespace between inline elements renders in Astro templates, and Prettier's MDX support is MDX 1.
+
+The git hooks in `.githooks/` are plain bash, so they need no `node_modules`:
+
+- **pre-commit:** checks the staged files (secrets with gitleaks and secretlint, the lockfile, spelling, inclusive language, formatting, ESLint, Stylelint, yamllint, shellcheck, `tofu fmt`, actionlint) and refuses commits on `main`.
+- **commit-msg:** checks the message against Conventional Commits.
+- **pre-push:** refuses pushes to `main`, or deleting it. It runs the unit tests if `website/` changed and the module tests if `infrastructure/` changed, on the working tree, so it refuses the push when the working tree isn't the pushed commit.
+
+A check whose tool isn't installed is skipped with a warning. CI runs all of them, plus the build, e2e and Lighthouse.
+
+On a pull request, CI (`.github/workflows/ci.yml`) posts one comment with a table of every check's result for the Website, Infrastructure and Repository, with the coverage and test counts, and updates it on each push. The website and infrastructure checks run only when their files change.
+
+Renovate (`.github/renovate.json`) handles version updates for the npm packages, the actions, the OpenTofu provider and the `.mise.toml` tools: once a week, grouped into one pull request for minor and patch updates, one for majors and one for the provider. Dependabot (`.github/dependabot.yml`) handles security updates only, as soon as an advisory lands, grouped per ecosystem. On each pull request, GitHub's dependency review fails a change that adds a dependency with a known advisory.
+
+Release Please (`.github/workflows/release-please.yml`) keeps a release PR open that bumps the version and `CHANGELOG.md` of `website/` and `infrastructure/` from the Conventional Commits since their last release. Merging it tags each package and publishes a GitHub Release. See [Releases](#releases).
 
 ## Before you push
 
