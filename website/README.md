@@ -16,7 +16,7 @@ pnpm resume            # print /resume/ to dist/resume.pdf (after a build)
 pnpm check             # type-check .astro and .ts files (astro check)
 pnpm lint              # ESLint and Prettier; pnpm format fixes what it can
 pnpm test              # unit tests (Vitest); test:coverage adds the coverage thresholds
-pnpm test:integration  # builds the site, then checks the output
+pnpm test:integration  # builds the site, then runs the Cucumber features on it
 pnpm test:e2e          # Playwright in Chrome, against dist/ (build first)
 ```
 
@@ -78,7 +78,7 @@ Resume-only detail (month dates, locations, bullets, ranks, course codes) sits i
 
 ## Tests
 
-There are three suites: unit and integration tests on [Vitest](https://vitest.dev), and end-to-end tests on [Playwright](https://playwright.dev).
+There are three suites: unit tests on [Vitest](https://vitest.dev), integration tests as [Cucumber](https://github.com/cucumber/cucumber-js) behavior specs, and end-to-end tests on [Playwright](https://playwright.dev).
 
 **Unit tests** live in `tests/unit/`, one file per source file, in the same folders as `src/` (`src/lib/posts.ts` is tested by `tests/unit/lib/posts.test.ts`). They use Astro's container API, so components and pages render exactly as they do in the build, without a server.
 
@@ -94,7 +94,7 @@ pnpm vitest run -u     # accept intended changes to snapshots
 - Snapshots (`__snapshots__/`) cover stable markup: icons, header, footer, ledger, post list, book rows, the 404 page, the RSS feed and parsed Goodreads entries. Review a snapshot diff like any other change.
 - Shared helpers and fixtures are in `tests/support/`.
 
-**Integration tests** live in `tests/integration/`. They build the whole production site once (real content, the live Goodreads shelves, downloaded fonts) into a temporary folder, then check the output:
+**Integration tests** live in `tests/integration/`, written in Gherkin: each `features/*.feature` file is one area, with scenarios that read as plain sentences, and `steps/*.steps.ts` holds the step definitions. They build the whole production site once (real content, the live Goodreads shelves, downloaded fonts) into a temporary folder, then check the output:
 
 - every route is built, one page per published post and no drafts, each with a title, one `h1`, a description and a www canonical URL (the 404 and resume pages are `noindex` instead)
 - every internal link, image, script and `#anchor` resolves to something in the build, and every page with the footer links the source repository
@@ -102,14 +102,15 @@ pnpm vitest run -u     # accept intended changes to snapshots
 - no published file breaks a content rule, and `hello@` is the only email address
 - fonts, styles and covers are served from the site, with no third-party requests
 - `staticwebapp.config.json` and `robots.txt` are deployed as intended
-- `scripts/resume-pdf.mjs` prints a PDF (skipped when Chrome isn't installed)
+- `scripts/resume-pdf.mjs` prints a PDF (tagged `@chrome`, and skipped when Chrome isn't installed)
 
 ```sh
 pnpm test:integration                          # build into a temp folder, then test it
 INTEGRATION_DIST=. pnpm test:integration       # test the existing dist/ instead
+pnpm test:integration --tags @feeds            # run one feature by its tag
 ```
 
-CI runs the integration tests against the exact `dist/` it is about to deploy.
+CI runs the integration tests against the exact `dist/` it is about to deploy, and counts passed scenarios from the JSON report in `reports/integration.json`.
 
 **End-to-end tests** live in `tests/e2e/` (`*.spec.ts`, configured in `playwright.config.ts`). Playwright serves `dist/` with `astro preview` and drives it in Google Chrome at a desktop size (1280×800) and a phone size (Pixel 7), checking what only a browser can:
 
@@ -144,7 +145,7 @@ public/                  favicon, robots.txt, og-default.png, staticwebapp.confi
 scripts/resume-pdf.mjs   prints /resume/ to dist/resume.pdf
 scripts/check-licenses.mjs  checks the installed packages' licenses (task lint:licenses)
 tests/unit/              Vitest unit tests, mirroring src/ one file per file
-tests/integration/       build the site, then test the output
+tests/integration/       Cucumber features and steps: build the site, then test the output
 tests/e2e/               Playwright specs, in Chrome at desktop and phone sizes
 tests/support/           render helper, content fixtures, image stub, content-rule patterns, dist readers
 astro.config.mjs         site URL, integrations, fonts

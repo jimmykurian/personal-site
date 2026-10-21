@@ -27,17 +27,6 @@ export default getViteConfig({
         extends: true,
         test: { name: 'unit', include: ['tests/unit/**/*.test.ts'] },
       },
-      {
-        // Builds the whole site once, then checks the output (see tests/integration/setup.ts).
-        extends: true,
-        test: {
-          name: 'integration',
-          include: ['tests/integration/**/*.test.ts'],
-          globalSetup: ['tests/integration/setup.ts'],
-          hookTimeout: 300_000,
-          testTimeout: 60_000,
-        },
-      },
     ],
   },
 });

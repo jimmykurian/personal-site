@@ -29,3 +29,9 @@ auditConfig:
   ignoreGhsas:
     # braces, via markdownlint-cli2's globbing. The patterns are this repo's own.
     - GHSA-vfj7-8cjw-p6xm
+
+# Install scripts are off unless listed here. esbuild (via tsx, which runs the Cucumber
+# integration suite) gets its binary from its platform package, so its postinstall check
+# isn't needed.
+allowBuilds:
+  esbuild: false

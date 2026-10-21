@@ -70,7 +70,7 @@ pnpm resume        # print /resume/ to dist/resume.pdf (after a build)
 pnpm check        # type-check .astro and .ts files (astro check)
 pnpm lint         # ESLint and Prettier; pnpm format fixes what it can
 pnpm test          # unit tests (Vitest); pnpm test:watch reruns on save
-pnpm test:integration  # build the site, then check the output
+pnpm test:integration  # build the site, then run the Cucumber features on it
 pnpm test:e2e      # Playwright in Chrome against dist/ (after pnpm build)
 ```
 
@@ -267,11 +267,26 @@ the same path (`src/components/Header.astro` → `tests/unit/components/Header.t
 - Snapshot only stable markup, normalized with `normalize()`. Update snapshots with
   `pnpm vitest run -u` when a change is intended.
 
-`tests/integration/` tests the built site instead. `setup.ts` runs a production build into
-a temporary folder (or uses the `dist/` named by `INTEGRATION_DIST`), and each test reads
-the output through `tests/support/dist.ts`. They need the network, since the build reads
-Goodreads and downloads the fonts. When a change affects what gets published (a new page,
-file, header or rule), add a check there.
+`tests/integration/` tests the built site instead, as behavior specs run by
+[Cucumber](https://github.com/cucumber/cucumber-js) (`tests/integration/cucumber.mjs`):
+
+- Each `features/*.feature` file describes one area in Gherkin: a `Feature` with its
+  "So that, As, I want" story, a `Background` of `Given the production build of the site`,
+  and `Scenario`s (or a `Scenario Outline` with `Examples`) that read as plain sentences.
+- `steps/*.steps.ts` holds the step definitions. `Given`, `When` and `Then` are Arrange,
+  Act and Assert: a `When` step stores what it found with `this.remember()`, and its `Then`
+  steps read it back with `this.recall()` (`support/world.ts`). Assert with
+  `node:assert/strict`, and collect every failure into one `deepEqual` so a report names
+  them all.
+- `support/hooks.ts` runs a production build into a temporary folder once (or uses the
+  `dist/` named by `INTEGRATION_DIST`), and the steps read it through
+  `tests/support/dist.ts`. Tag a scenario `@chrome` when it needs a local Chrome; it's
+  skipped without one.
+- The suite fails on an undefined or pending step (`strict`). It needs the network, since
+  the build reads Goodreads and downloads the fonts.
+
+When a change affects what gets published (a new page, file, header or rule), add a
+scenario there, reusing an existing step where one fits.
 
 `tests/e2e/` holds the Playwright specs. They import `test` and `expect` from
 `tests/e2e/fixtures.ts`, which fails a test on console errors, uncaught exceptions and

@@ -3,7 +3,14 @@
 {
   "$schema": "https://unpkg.com/knip@6/schema-jsonc.json",
   // Run from the root Taskfile.yml (task lint:licenses).
-  "entry": ["scripts/check-licenses.mjs"],
+  // The Cucumber suite: its config imports the support code and step definitions, which
+  // knip's Cucumber plugin doesn't follow from tests/integration/.
+  "entry": [
+    "scripts/check-licenses.mjs",
+    "tests/integration/cucumber.mjs",
+    "tests/integration/support/*.{ts,mjs}",
+    "tests/integration/steps/**/*.ts",
+  ],
   // These run from the root Taskfile.yml, the git hooks and .config/, which knip doesn't read.
   "ignoreDependencies": [
     "@commitlint/cli",

@@ -7,10 +7,22 @@
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join, relative, sep } from 'node:path';
 import { parse, type HTMLElement } from 'node-html-parser';
-import { inject } from 'vitest';
 
-/** The built site's dist/ directory, from the integration setup. */
-const distDir = () => join(inject('buildRoot'), 'dist');
+let root: string | undefined;
+
+/** Records where the integration hooks built the site: the folder that holds `dist/`. */
+export function setBuildRoot(dir: string): void {
+  root = dir;
+}
+
+/** The folder holding the built site as `dist/`, the layout scripts/resume-pdf.mjs expects. */
+export function buildRoot(): string {
+  if (!root) throw new Error('No build yet: the integration hooks set it before the first scenario');
+  return root;
+}
+
+/** The built site's dist/ directory. */
+const distDir = () => join(buildRoot(), 'dist');
 
 /** Every file in dist/, as site paths ("/writing/index.html"). */
 export function files(): string[] {
