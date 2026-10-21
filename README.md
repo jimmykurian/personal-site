@@ -65,7 +65,7 @@ Coding agents start from the root [AGENTS.md](AGENTS.md), then read the subproje
 ### System overview
 
 ```mermaid
-flowchart LR
+flowchart TB
     jimmy(["Jimmy"])
     visitor(["Visitor"])
 
