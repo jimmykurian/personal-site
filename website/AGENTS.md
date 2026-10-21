@@ -12,13 +12,13 @@ The jimmykurian.me site: Astro 7 with static output, TypeScript, MDX and content
 - `src/lib/goodreads.ts`: builds `/reading/` from the Goodreads shelf RSS feeds at build time (no API). It retries a brief 5xx, rate limit or network error twice; if Goodreads still fails, the build fails, so the last deploy stays live.
 - `scripts/resume-pdf.mjs`: prints `/resume/` to `dist/resume.pdf` with the installed Chrome.
 - `scripts/check-licenses.mjs`: checks every installed package's license against `../.config/licenses/` (`task lint:licenses`).
-- `tests/`: `unit/` (Vitest with Astro's container API), `integration/` (checks the built `dist/`), `e2e/` (Playwright), and `support/` (shared helpers).
+- `tests/`: `unit/` (Vitest with Astro's container API), `integration/` (Cucumber features and step definitions that check the built `dist/`), `e2e/` (Playwright), and `support/` (shared helpers).
 
 ## Working here
 
 - Use pnpm only, never npm, and never commit a `package-lock.json`. Use no client framework. Keep scripts small and inline, and have each one respect `prefers-reduced-motion` when it animates.
 - Every source change updates its matching unit test. `tests/unit/` mirrors `src/`, one test file per source file, written as Arrange, Act, Assert with the steps marked in comments. Keep tests offline: stub `fetch`, and mock `astro:content` with the helpers in `tests/support/`. Coverage thresholds in `vitest.config.ts` only go up.
-- Add an integration check in `tests/integration/` when a change affects what gets published: a page, file, header or rule.
+- Add an integration scenario in `tests/integration/features/` when a change affects what gets published: a page, file, header or rule. Write it in plain Gherkin, reuse existing steps where they fit, and keep `Given`, `When` and `Then` as Arrange, Act and Assert.
 - Document every export in `src/**/*.ts` with a TSDoc comment (ESLint checks the syntax). After changing one, run `task docs` and commit `docs/`; CI fails if it's stale.
 - Anything that needs a real browser goes in `tests/e2e/`: scripts, focus, layout. It runs in installed Chrome (`channel: 'chrome'`) at desktop and phone sizes.
 - Prettier doesn't format `.astro` or `.mdx`. Whitespace between inline elements renders, so check spacing by hand, and check it on the page.
