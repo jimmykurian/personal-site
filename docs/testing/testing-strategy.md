@@ -66,7 +66,7 @@ The tests use `tofu test` with a mocked `azurerm` provider, so nothing plans or 
 | Stage | Runs | Blocks |
 | --- | --- | --- |
 | `git push` (pre-push hook) | The unit tests if `website/` changed, the module tests if `infrastructure/` changed | The push |
-| Pull request (CI) | Every suite for the parts that changed, then a preview deploy | The merge (required checks) |
+| Pull request (CI) | Every suite for the parts that changed, then a preview deploy if `website/` changed | The merge (required checks) |
 | `main` (CI) | Every suite again | The production deploy |
 | Nightly (CI) | Every suite, then the external link check | That night's deploy |
 

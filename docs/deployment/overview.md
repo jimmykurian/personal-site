@@ -6,7 +6,7 @@ How a change becomes the live site: one CI workflow builds, checks and uploads t
 
 ## Pipeline
 
-`.github/workflows/ci.yml` runs every check and the deploy. A deploy happens only when every check job passes.
+`.github/workflows/ci.yml` runs every check and the deploy. A deploy happens only when the Website job built and tested the site and every other check job passed (Infrastructure may be skipped). On a pull request, the Website and Infrastructure jobs run only when their files changed, so a PR that doesn't touch `website/` (docs-only or infrastructure-only) gets no preview. On `main`, nightly and manual runs, the Website job always runs, so every merge redeploys production.
 
 ```mermaid
 flowchart LR
@@ -14,7 +14,7 @@ flowchart LR
     changes --> repository["Repository<br/>repo-wide checks"]
     changes --> website["Website<br/>lint, unit tests, build,<br/>integration, e2e, Lighthouse"]
     changes --> infrastructure["Infrastructure<br/>fmt, validate, TFLint,<br/>Checkov, module tests"]
-    repository & website & infrastructure --> deploy{"All passed?"}
+    repository & website & infrastructure --> deploy{"Website built and<br/>every check passed?"}
     deploy -- yes --> swa["Upload dist/ to<br/>Azure Static Web Apps"]
     deploy -- no --> keep["No deploy;<br/>the last one stays live"]
     swa --> links["External links<br/>(nightly and manual only)"]
@@ -24,11 +24,11 @@ flowchart LR
 | --- | --- | --- |
 | Changes | Always | Decides which of `website/` and `infrastructure/` changed (`dorny/paths-filter`) |
 | Repository | Always | Secrets, lockfile, audit, OSV, licenses, workflows, shell, Markdown, spelling, YAML, schemas, headers and commit messages |
-| Website | When `website/` changed | Type-check, ESLint, Prettier, Stylelint, knip, the TypeDoc check, unit tests with coverage, the build and resume PDF, then integration, end-to-end and Lighthouse on the build |
-| Infrastructure | When `infrastructure/` changed | `task infra:check`, the terraform-docs check and the module tests |
-| Deploy | When the check jobs pass | Downloads the built `dist/` artifact and uploads it |
-| Check table | Pull requests | Posts one comment with every check's result, the coverage and test counts |
-| Badges | `main` | Writes the README status badges to the `badges` branch |
+| Website | On a PR, when `website/` changed; always on `main`, nightly and manual runs | Type-check, ESLint, Prettier, Stylelint, knip, the TypeDoc check, unit tests with coverage, the build and resume PDF, then integration, end-to-end and Lighthouse on the build |
+| Infrastructure | On a PR, when `infrastructure/` changed; always otherwise | `task infra:check`, the terraform-docs check and the module tests |
+| Deploy | When Repository and Website pass, and Infrastructure passes or is skipped | Downloads the built `dist/` artifact and uploads it |
+| Check table | Pull requests, pass or fail | Posts one comment with every check's result, the coverage and test counts |
+| Badges | `main`, pass or fail | Writes the README status badges to the `badges` branch |
 | External links | Nightly and manual | Checks the external links in the build with lychee |
 | Close PR preview | A PR closes | Removes that PR's preview environment |
 
@@ -38,8 +38,8 @@ The build is never repeated for the deploy: the Website job uploads `website/dis
 
 | Trigger | Result |
 | --- | --- |
-| Pull request to `main` | A preview environment with its own URL, commented on the PR and removed when the PR closes |
-| Push to `main` (a merged PR) | Production at <https://www.jimmykurian.me> |
+| Pull request to `main` that changes `website/` | A preview environment with its own URL, commented on the PR and removed when the PR closes |
+| Push to `main` (a merged PR) | Production at <https://www.jimmykurian.me>, whatever changed |
 | Nightly, 11:00 UTC | A rebuild, so `/reading/` picks up Goodreads changes, then the external link check |
 | Manual (`workflow_dispatch`) | A rebuild on demand, plus the link check |
 

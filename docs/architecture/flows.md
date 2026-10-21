@@ -48,15 +48,20 @@ sequenceDiagram
     and Reviews
         GH->>GH: CodeQL, Copilot review, Title and Template checks
     end
-    CI->>SWA: Upload dist/ to a preview environment
-    CI->>GH: Comment the check table and the preview URL
+    CI->>GH: Comment the check table (whatever the results)
+    alt website/ changed and every check passed
+        CI->>SWA: Upload dist/ to a preview environment
+        CI->>GH: Comment the preview URL
+    else No website build, or a check failed
+        Note over CI,SWA: No preview
+    end
     Jimmy->>GH: Enable auto-merge
     GH->>GH: Squash-merge once the required checks pass
     GH->>CI: push to main
-    CI->>CI: Same checks on main
+    CI->>CI: Every check on main (the Website job always runs here)
+    CI->>GH: Update the README badges (badges branch), pass or fail
     alt Every check passed
         CI->>SWA: Upload dist/ to production
-        CI->>GH: Update the README badges (badges branch)
     else A check failed
         CI--xSWA: No deploy, and the last one stays live
     end

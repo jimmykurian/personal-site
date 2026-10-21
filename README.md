@@ -95,7 +95,7 @@ flowchart TB
     repo -- "every push and PR" --> ci
     bots -. "scans, reviews, updates, releases" .-> repo
     goodreads & fonts --> ci
-    ci -- "uploads dist/ when every check passes" --> swa
+    ci -- "uploads dist/ when the site was built<br/>and every check passed" --> swa
     infra -. "models it, no deploys yet" .-> swa
     visitor -- "www.jimmykurian.me" --> dns
     visitor -- "HTTPS" --> swa
