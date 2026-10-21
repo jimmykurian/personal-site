@@ -112,3 +112,11 @@ sequenceDiagram
         SWA-->>Visitor: 404 with /404.html
     end
 ```
+
+## See also
+
+- [Architecture index](README.md)
+- [Deployment overview](../deployment/overview.md)
+- [Testing strategy](../testing/testing-strategy.md)
+
+Last reviewed: 2026-10-20

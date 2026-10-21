@@ -155,7 +155,7 @@ badges branch            the README status badges, written by CI (never merged; 
 .mise.toml               tool versions
 .alexrc.yml              inclusive-language allow list (alex reads it only from the root)
 Taskfile.yml             every check, test and build step, by name
-docs/architecture/       C4, UML, flow and sequence diagrams (Mermaid), indexed in its README
+docs/                    architecture, deployment, design, security and testing docs, and the docs style guide
 infrastructure/          OpenTofu modules and tests for the Azure resources (see infrastructure/README.md)
 website/                 the Astro site (see website/README.md)
 AGENTS.md                what coding agents need on every task

@@ -108,3 +108,11 @@ classDiagram
     WritingPages --> writingLib
     ReadingPage --> books
 ```
+
+## See also
+
+- [Architecture index](README.md)
+- [Design guidelines](../design/design-guidelines.md)
+- [TypeDoc API docs](../../website/docs/README.md)
+
+Last reviewed: 2026-10-20

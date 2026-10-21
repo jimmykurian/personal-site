@@ -2,7 +2,7 @@
 
 # Architecture
 
-How jimmykurian.me is built, deployed and served, in Mermaid diagrams that GitHub renders in place. The root [README](../../README.md#architecture) has the one-page system view.
+The diagram index: how jimmykurian.me is built, deployed and served, in Mermaid diagrams that GitHub renders in place. The root [README](../../README.md#architecture) has the one-page system view.
 
 | Diagram | Kind | Shows |
 | --- | --- | --- |
@@ -15,3 +15,10 @@ How jimmykurian.me is built, deployed and served, in Mermaid diagrams that GitHu
 | [A visitor's request](flows.md#a-visitors-request) | Sequence | DNS, the static page and its headers, cached assets, the apex redirect and the 404 page |
 
 Keep them in step with the code: a change to the collections, the CI jobs or the hosting updates the diagram that shows it.
+
+## See also
+
+- [Documentation index](../README.md)
+- [Deployment overview](../deployment/overview.md)
+
+Last reviewed: 2026-10-20
