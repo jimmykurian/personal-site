@@ -106,7 +106,8 @@ Every change goes through a pull request; `main` doesn't take direct pushes:
   follows Conventional Commits like any other commit message. CI checks the
   title with commitlint (`task lint:pr-title`) and the body against the
   template (`task lint:pr-template`), labels the PR by the paths it changes
-  (`.github/labeler.yml`), and assigns it to whoever opened it.
+  (`.github/labeler.yml`), and assigns it to whoever opened it (the owner for
+  a bot's PR, except a release PR; see [Releases](#releases)).
 - Merging needs the CI checks, CodeQL and a Copilot review to pass. The
   ruleset requires the **Title**, **Template**, **Repository**, **Website**,
   **Infrastructure** and **CodeQL** checks by name; a job skipped because its
@@ -330,7 +331,9 @@ tests; they aren't deployed from there yet. Run `task infra:check` and
 (`.github/workflows/release-please.yml`) versions `website/` and
 `infrastructure/` separately, from the Conventional Commits on `main`:
 
-- After each merge it opens or updates one release PR, `chore: release main`.
+- After each merge it opens or updates one release PR, `chore: release main`,
+  from the App's bot. The PR is assigned to that bot and requests Jimmy's
+  review (`.github/workflows/pr-assign-author.yml`).
   It bumps the version of each package that changed and adds the commits to
   that package's `CHANGELOG.md`. `website/` takes its version from
   `package.json`; `infrastructure/` from `version.txt`.
