@@ -6,6 +6,7 @@ alexrc
 ANAME
 Applebot
 artboards
+autonumber
 autorun
 azurestaticapps
 bliki

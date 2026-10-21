@@ -56,34 +56,290 @@ Coding agents start from the root [AGENTS.md](AGENTS.md), then read the subproje
 
 ## Architecture
 
-```text
-src/content/*.json, posts/*.mdx      Goodreads shelf RSS     fonts
-src/data/site.json (typed schemas)   (fetched at build)      (downloaded at build)
-              |                             |                       |
-              +-----------------------------+-----------------------+
-                                            |
-                                            v
-                              astro build (static output)
-                                            |
-                                            v
-              dist/: HTML, RSS, sitemap, optimized images, and
-              resume.pdf (printed from /resume/ by headless Chrome)
-                                            |
-                                            v
-    unit tests -> integration tests on dist/ -> e2e + axe in Chrome -> Lighthouse
-                                            |
-                                            v
-          Azure Static Web Apps (Free): production on main, a preview per PR
-                                            |
-                                            v
-          www.jimmykurian.me (DNS at Namecheap; www is the canonical host)
-```
-
 - **Content is data.** The pages render JSON collections and MDX posts, validated by the schemas in `website/src/content.config.ts`. A bad field fails the build instead of shipping.
 - **Built once, served static.** There's no server, database, login or cookie. `public/staticwebapp.config.json` sets the security headers, the 404 page and caching.
 - **External data comes in at build time.** `/reading/` is built from the Goodreads RSS feeds, covers and fonts are downloaded and optimized then, and the live site makes no third-party requests. A nightly rebuild picks up new books. Brief Goodreads errors are retried; if it's still down, the build fails and the last deploy stays live.
 - **The resume is a page.** `/resume/` renders from the same data as the site, and CI prints it to `/resume.pdf`, so the two never disagree.
 - **Infrastructure as code, in progress.** The Azure resources were created in the portal. `infrastructure/` models them as generic OpenTofu modules, tested against a mocked provider, ready to take over deploys later.
+
+### Build and deploy
+
+```mermaid
+flowchart TD
+    content["src/content/*.json, posts/*.mdx<br/>src/data/site.json<br/>(typed schemas)"]
+    goodreads["Goodreads shelf RSS<br/>(fetched at build)"]
+    fonts["Google Fonts<br/>(downloaded at build)"]
+    unit["Unit tests on src/"]
+    build["astro build<br/>(static output)"]
+    dist["dist/: HTML, RSS, sitemap, optimized images,<br/>and resume.pdf (printed from /resume/ by headless Chrome)"]
+
+    subgraph checks["Checks on the built site"]
+        direction LR
+        integration["Integration tests<br/>on dist/"] --> e2e["e2e + axe<br/>in Chrome"] --> lighthouse["Lighthouse"]
+    end
+
+    swa["Azure Static Web Apps (Free)<br/>production on main, a preview per PR"]
+    www["www.jimmykurian.me<br/>(DNS at Namecheap; www is the canonical host)"]
+
+    content & goodreads & fonts --> build --> dist --> checks
+    unit --> deploy{"Every check passed?"}
+    checks --> deploy
+    deploy -- yes --> swa --> www
+    deploy -- no --> stop["No deploy; the last one stays live"]
+```
+
+### System context (C4)
+
+Who uses the site, and the outside systems it depends on.
+
+```mermaid
+C4Context
+    title System context: jimmykurian.me
+
+    Person(visitor, "Visitor", "Reads the portfolio, resume, posts and reading list")
+    Person(jimmy, "Jimmy", "Writes the content and code, and merges every change through a PR")
+
+    System(site, "jimmykurian.me", "Static portfolio, resume and blog, rebuilt on every merge and nightly")
+
+    System_Ext(github, "GitHub", "Repository, Actions CI, CodeQL, Copilot review, Renovate, Dependabot, Release Please")
+    System_Ext(azure, "Azure Static Web Apps", "Hosts the built site: production and a preview per PR")
+    System_Ext(dns, "Namecheap DNS", "www CNAME and apex ALIAS to the Static Web App")
+    System_Ext(goodreads, "Goodreads", "Public shelf RSS feeds")
+    System_Ext(fonts, "Google Fonts", "Web fonts")
+
+    Rel(visitor, site, "Reads", "HTTPS")
+    Rel(jimmy, github, "Pushes branches, reviews and merges PRs")
+    Rel(github, site, "Builds, tests and deploys")
+    Rel(site, azure, "Is served from")
+    Rel(visitor, dns, "Resolves www.jimmykurian.me")
+    Rel(site, goodreads, "Reads the shelves at build time")
+    Rel(site, fonts, "Downloads the fonts at build time")
+
+    UpdateLayoutConfig($c4ShapeInRow="3", $c4BoundaryInRow="1")
+```
+
+### Containers (C4)
+
+What's inside the repository, and how each part reaches production.
+
+```mermaid
+C4Container
+    title Containers: jimmykurian/personal-site
+
+    Person(visitor, "Visitor")
+    Person(jimmy, "Jimmy")
+
+    System_Boundary(repo, "jimmykurian/personal-site") {
+        Container(website, "website/", "Astro 7, TypeScript, MDX", "Content collections, pages, components and the Goodreads loader; builds to a static dist/")
+        Container(infra, "infrastructure/", "OpenTofu", "Generic resource-group and static-web-app modules, tested against a mocked provider")
+        Container(tooling, "Root tooling", "mise, Task, bash hooks", "Pinned tool versions, every command, the git hooks and the linter configs")
+        Container(ci, "CI", "GitHub Actions", "Checks, build, deploy, PR check table, badges, nightly rebuild and link check")
+    }
+
+    System_Ext(swa, "Azure Static Web Apps", "jimmykurian-me in rg-personal-site")
+    System_Ext(goodreads, "Goodreads", "Shelf RSS feeds")
+    System_Ext(dns, "Namecheap DNS", "www and apex records")
+
+    Rel(jimmy, tooling, "Runs task lint, task test, task build")
+    Rel(ci, tooling, "Runs the same tasks")
+    Rel(ci, website, "Builds and tests")
+    Rel(ci, infra, "Validates, scans and tests")
+    Rel(website, goodreads, "Fetches at build time", "HTTPS")
+    Rel(ci, swa, "Uploads dist/", "deploy token")
+    Rel(infra, swa, "Models; doesn't deploy yet")
+    Rel(visitor, dns, "Resolves")
+    Rel(visitor, swa, "Loads pages", "HTTPS")
+
+    UpdateLayoutConfig($c4ShapeInRow="3", $c4BoundaryInRow="1")
+```
+
+### Content model (UML)
+
+The content collections in `website/src/content.config.ts`, the helpers in `website/src/lib/` and the pages that read them.
+
+```mermaid
+classDiagram
+    direction LR
+
+    class posts {
+        <<collection: src/content/posts/*.mdx>>
+        +string title
+        +string description
+        +Date pubDate
+        +Date updatedDate?
+        +string[] tags
+        +boolean draft
+        +URL canonical?
+    }
+    class experience {
+        <<collection: experience.json>>
+        +civilian|military group
+        +string org
+        +string role
+        +int start
+        +int end?
+        +string[] stack
+        +boolean training
+        +ResumeRole resume?
+    }
+    class projects {
+        <<collection: projects.json>>
+        +string kicker
+        +string title
+        +string summary
+        +Link link?
+        +string[] tags
+        +boolean hidden
+    }
+    class writing {
+        <<collection: writing.json>>
+        +article|chapter|patent|talk kind
+        +string title
+        +string venue
+        +int year?
+        +URL href?
+        +boolean featured
+    }
+    class teaching {
+        <<collection: teaching.json>>
+        +teaching|speaking|community|volunteering group
+        +string title
+        +string detail
+        +string years?
+        +ResumeRole resume?
+    }
+    class books {
+        <<collection: Goodreads RSS>>
+        +string shelf
+        +int position
+        +string title
+        +string author
+        +int rating
+        +Date readAt?
+        +URL cover?
+        +URL href
+    }
+
+    class goodreadsLoader {
+        <<loader: lib/goodreads.ts>>
+        +goodreadsLoader(userId, shelves) Loader
+    }
+    class postsLib {
+        <<lib/posts.ts>>
+        +getPosts() Post[]
+        +readingMinutes(body) number
+        +formatDate(date) string
+    }
+    class writingLib {
+        <<lib/writing.ts>>
+        +getWriting() WritingItem[]
+        +featuredLabel(item) string
+        +listLabel(item) string
+    }
+    class contentLib {
+        <<lib/content.ts>>
+        +getOrdered(collection) Entry[]
+    }
+
+    goodreadsLoader ..> books : loads
+    postsLib ..> posts : reads, drops drafts
+    writingLib ..> writing : reads
+    contentLib ..> experience : orders
+    contentLib ..> projects : orders
+    contentLib ..> teaching : orders
+
+    class HomePage["/ and /resume/"]
+    class WritingPages["/writing/, /writing/[id]/, rss.xml"]
+    class ReadingPage["/reading/"]
+    HomePage --> contentLib
+    HomePage --> writingLib
+    WritingPages --> postsLib
+    WritingPages --> writingLib
+    ReadingPage --> books
+```
+
+### A change, from branch to production
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Jimmy
+    participant GH as GitHub
+    participant CI as GitHub Actions (CI)
+    participant SWA as Azure Static Web Apps
+    participant RP as Release Please
+
+    Jimmy->>GH: Push a branch and open a PR (template, Conventional Commits title)
+    GH->>CI: pull_request
+    par Checks
+        CI->>CI: Repository, Website, Infrastructure jobs (only the parts that changed)
+    and Reviews
+        GH->>GH: CodeQL, Copilot review, Title and Template checks
+    end
+    CI->>SWA: Upload dist/ to a preview environment
+    CI->>GH: Comment the check table and the preview URL
+    Jimmy->>GH: Enable auto-merge
+    GH->>GH: Squash-merge once the required checks pass
+    GH->>CI: push to main
+    CI->>CI: Same checks on main
+    alt Every check passed
+        CI->>SWA: Upload dist/ to production
+        CI->>GH: Update the README badges (badges branch)
+    else A check failed
+        CI--xSWA: No deploy; the last one stays live
+    end
+    GH->>RP: push to main
+    RP->>GH: Open or update the release PR (versions and CHANGELOG.md)
+    CI->>SWA: Remove the preview when the PR closes
+```
+
+### Nightly rebuild
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant Cron as Schedule (11:00 UTC)
+    participant CI as GitHub Actions (CI)
+    participant GR as Goodreads RSS
+    participant SWA as Azure Static Web Apps
+    participant Web as External sites
+
+    Cron->>CI: schedule
+    CI->>GR: Fetch each shelf's feed pages (goodreadsLoader)
+    alt 5xx, rate limit or network error
+        CI->>GR: Retry, up to twice per page
+    end
+    alt A shelf still can't be read
+        CI--xSWA: Build fails; the last deploy stays live
+    else Every shelf read
+        CI->>CI: Build, test, print resume.pdf
+        CI->>SWA: Upload dist/ to production
+        CI->>Web: Check the external links (lychee)
+    end
+```
+
+### A visitor's request
+
+```mermaid
+sequenceDiagram
+    autonumber
+    actor Visitor
+    participant DNS as Namecheap DNS
+    participant SWA as Azure Static Web Apps
+
+    Visitor->>DNS: Look up www.jimmykurian.me
+    DNS-->>Visitor: CNAME to the Static Web App's host
+    Visitor->>SWA: GET /writing/
+    SWA-->>Visitor: Prebuilt HTML, with the security headers from staticwebapp.config.json
+    Visitor->>SWA: GET /_astro/*.css, images, fonts
+    SWA-->>Visitor: Fingerprinted files, cached for a year
+    opt The apex, jimmykurian.me
+        SWA-->>Visitor: Redirect to www, the default domain
+    end
+    opt A missing page
+        SWA-->>Visitor: 404 with /404.html
+    end
+```
 
 ## Principles
 
