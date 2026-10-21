@@ -18,6 +18,7 @@ Jimmy Kurian's personal site: a portfolio, resume and blog at <https://www.jimmy
 - Every check fails the build. Never add `|| true`, `continue-on-error` or warn-only checks. Fix the finding, or skip it inline with a stated reason.
 - `main` takes changes only through squash-merged pull requests. Branch first, and fill in `.github/PULL_REQUEST_TEMPLATE.md`, keeping every heading and replacing its instructions. The PR title becomes the commit on `main`, so it follows Conventional Commits. CI checks both (`task lint:pr-template`, `task lint:pr-title`).
 - Commits follow Conventional Commits, with the scopes listed in `.gitmessage`. They're SSH-signed; never pass `--no-gpg-sign`. A new scope goes in both `.gitmessage` and `.config/commitlintrc.json`, and a new cspell word in `.config/spelling/words.txt`.
+- Release Please versions `website/` and `infrastructure/` from the commits on `main` (see CONTRIBUTING.md, Releases). Never edit a version, a `CHANGELOG.md` or `.github/.release-please-manifest.json` by hand.
 - Install npm packages only from registry.npmjs.org. On a network that can't reach it, resolve lockfile changes in CI. Never point the lockfile at another registry; `task lint:lockfile` blocks that.
 - Never print secrets or tokens. Jimmy does the logins.
 

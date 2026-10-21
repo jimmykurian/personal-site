@@ -192,7 +192,7 @@ tasks:
   lint:inclusive-language:
     desc: Check the docs, posts and site content for insensitive wording (alex, allow list in .alexrc.yml)
     cmds:
-      - git ls-files -z '*.md' ':!:website/docs/**' ':!:infrastructure/docs/**' | xargs -0 {{.BIN}}/alex --quiet
+      - git ls-files -z '*.md' ':!:website/docs/**' ':!:infrastructure/docs/**' ':!:**/CHANGELOG.md' | xargs -0 {{.BIN}}/alex --quiet
       - git ls-files -z 'website/src/content/posts/*.mdx' 'website/src/content/posts/**/*.mdx' | xargs -0 {{.BIN}}/alex --quiet --mdx
       # The JSON files hold the site's own prose (experience, projects, writing, teaching, profile).
       - git ls-files -z 'website/src/content/*.json' 'website/src/data/*.json' | xargs -0 {{.BIN}}/alex --quiet --text

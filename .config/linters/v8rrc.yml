@@ -13,6 +13,8 @@ patterns:
   - .github/workflows/*.yml
   - .github/ISSUE_TEMPLATE/*.yml
   - .github/renovate.json
+  - .github/release-please-config.json
+  - .github/.release-please-manifest.json
   - .github/labeler.yml
   - .github/dependabot.yml
   - .devcontainer/devcontainer.json

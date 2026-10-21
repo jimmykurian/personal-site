@@ -24,6 +24,7 @@ changes here.
 - [Before you push](#before-you-push)
 - [Tests](#tests)
 - [Deploys](#deploys)
+- [Releases](#releases)
 - [Content rules](#content-rules)
 - [Design rules](#design-rules)
 
@@ -105,10 +106,12 @@ Every change goes through a pull request; `main` doesn't take direct pushes:
   title with commitlint (`task lint:pr-title`) and the body against the
   template (`task lint:pr-template`), labels the PR by the paths it changes
   (`.github/labeler.yml`), and assigns it to whoever opened it.
-- Merging needs the CI checks, CodeQL and a Copilot review to pass, and the
-  ruleset requires the **Title** and **Template** checks by name. `main`
-  keeps a linear history of signed commits, and can't be force-pushed or
-  deleted.
+- Merging needs the CI checks, CodeQL and a Copilot review to pass. The
+  ruleset requires the **Title**, **Template**, **Repository**, **Website**,
+  **Infrastructure** and **CodeQL** checks by name; a job skipped because its
+  files didn't change counts as passed. Auto-merge is on, and merged branches
+  are deleted. `main` keeps a linear history of signed commits, and can't be
+  force-pushed or deleted.
 - Rebase the branch onto `main` rather than merging it in (`git pull --rebase`).
 
 ## Commits
@@ -241,6 +244,33 @@ Re-run the workflow once it's back.
 `infrastructure/` holds OpenTofu modules for the Azure resources, with their
 tests; they aren't deployed from there yet. Run `task infra:check` and
 `task infra:test` before you push a change there.
+
+## Releases
+
+[Release Please](https://github.com/googleapis/release-please)
+(`.github/workflows/release-please.yml`) versions `website/` and
+`infrastructure/` separately, from the Conventional Commits on `main`:
+
+- After each merge it opens or updates one release PR, `chore: release main`.
+  It bumps the version of each package that changed and adds the commits to
+  that package's `CHANGELOG.md`. `website/` takes its version from
+  `package.json`; `infrastructure/` from `version.txt`.
+- A `fix` is a patch release and a `feat` a minor one, and a `!` or
+  `BREAKING CHANGE` footer is a major one (a minor one while a version is below
+  1.0). `docs` and `refactor` commits are listed too; `chore`, `ci`, `build`,
+  `test` and `style` aren't.
+- A commit counts for a package only if it changes files in that folder, so
+  changes to the root tooling alone never make a release.
+- Merging the release PR tags each package (`website-v1.1.0`,
+  `infrastructure-v0.2.0`) and publishes a GitHub Release. A release doesn't
+  deploy anything: every merge to `main` already deploys the site.
+- The settings are in `.github/release-please-config.json`, and the current
+  versions in `.github/.release-please-manifest.json`. Never edit a version or
+  a changelog by hand.
+- The workflow uses the `RELEASE_PLEASE_TOKEN` secret, a fine-grained token
+  for this repository only, with read and write access to Contents, Issues
+  and Pull requests. A PR opened with the default `GITHUB_TOKEN` wouldn't
+  start the required checks, so it could never merge.
 
 ## Content rules
 

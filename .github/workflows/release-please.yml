@@ -1,0 +1,35 @@
+# Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+# Author: Jimmy Kurian
+#
+# Release Please: on each push to main, keeps one release PR open that bumps the version and
+# CHANGELOG.md of each package that changed (website/, infrastructure/), from the
+# Conventional Commits since the last release. Merging that PR tags each package
+# (website-v1.2.0, infrastructure-v0.2.0) and publishes a GitHub Release for it. Config and
+# versions live in .github/release-please-config.json and .github/.release-please-manifest.json.
+
+name: Release Please
+
+on:
+  push:
+    branches: [main]
+
+permissions: {}
+
+concurrency:
+  group: release-please
+  cancel-in-progress: false
+
+jobs:
+  release-please:
+    name: Release Please
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      # RELEASE_PLEASE_TOKEN is a fine-grained token for this repository only (Contents, Issues
+      # and Pull requests: read and write). A release PR opened with GITHUB_TOKEN wouldn't start
+      # the required checks, so it could never merge.
+      - uses: googleapis/release-please-action@45996ed1f6d02564a971a2fa1b5860e934307cf7 # v5.0.0
+        with:
+          token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
+          config-file: .github/release-please-config.json
+          manifest-file: .github/.release-please-manifest.json
