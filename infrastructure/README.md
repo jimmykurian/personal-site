@@ -105,6 +105,13 @@ Checkov has no policies for Static Web Apps or resource groups yet, so it
 reports nothing today; it covers any resource types added later. Accepted
 findings are skipped on the resource with `#checkov:skip=<ID>:<reason>`.
 
+## Releases
+
+Release Please versions the modules from the Conventional Commits on `main`
+that change `infrastructure/`, in `version.txt` and `CHANGELOG.md`, and tags
+each release `infrastructure-v<version>`. See
+[CONTRIBUTING.md, Releases](../CONTRIBUTING.md#releases).
+
 ## How the live resources were created
 
 Until these modules deploy, this is the record of the portal setup:
