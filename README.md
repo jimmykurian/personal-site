@@ -56,34 +56,52 @@ Coding agents start from the root [AGENTS.md](AGENTS.md), then read the subproje
 
 ## Architecture
 
-```text
-src/content/*.json, posts/*.mdx      Goodreads shelf RSS     fonts
-src/data/site.json (typed schemas)   (fetched at build)      (downloaded at build)
-              |                             |                       |
-              +-----------------------------+-----------------------+
-                                            |
-                                            v
-                              astro build (static output)
-                                            |
-                                            v
-              dist/: HTML, RSS, sitemap, optimized images, and
-              resume.pdf (printed from /resume/ by headless Chrome)
-                                            |
-                                            v
-    unit tests -> integration tests on dist/ -> e2e + axe in Chrome -> Lighthouse
-                                            |
-                                            v
-          Azure Static Web Apps (Free): production on main, a preview per PR
-                                            |
-                                            v
-          www.jimmykurian.me (DNS at Namecheap; www is the canonical host)
-```
-
 - **Content is data.** The pages render JSON collections and MDX posts, validated by the schemas in `website/src/content.config.ts`. A bad field fails the build instead of shipping.
 - **Built once, served static.** There's no server, database, login or cookie. `public/staticwebapp.config.json` sets the security headers, the 404 page and caching.
 - **External data comes in at build time.** `/reading/` is built from the Goodreads RSS feeds, covers and fonts are downloaded and optimized then, and the live site makes no third-party requests. A nightly rebuild picks up new books. Brief Goodreads errors are retried; if it's still down, the build fails and the last deploy stays live.
 - **The resume is a page.** `/resume/` renders from the same data as the site, and CI prints it to `/resume.pdf`, so the two never disagree.
 - **Infrastructure as code, in progress.** The Azure resources were created in the portal. `infrastructure/` models them as generic OpenTofu modules, tested against a mocked provider, ready to take over deploys later.
+
+### System overview
+
+```mermaid
+flowchart TB
+    jimmy(["Jimmy"])
+    visitor(["Visitor"])
+
+    subgraph repo["GitHub: jimmykurian/personal-site"]
+        website["website/<br/>Astro 7, TypeScript, MDX"]
+        infra["infrastructure/<br/>OpenTofu modules"]
+        tooling["Root tooling<br/>mise, Task, git hooks"]
+    end
+
+    subgraph github["GitHub services"]
+        ci["GitHub Actions CI<br/>lint, test, build, deploy,<br/>nightly rebuild"]
+        bots["CodeQL, Copilot review, Renovate,<br/>Dependabot, Release Please"]
+    end
+
+    subgraph inputs["Fetched at build time"]
+        goodreads["Goodreads shelf RSS"]
+        fonts["Google Fonts"]
+    end
+
+    subgraph azure["Azure, personal subscription"]
+        swa["Static Web Apps (Free)<br/>production and a preview per PR"]
+    end
+
+    dns["Namecheap DNS<br/>www CNAME, apex ALIAS"]
+
+    jimmy -- "branches and PRs" --> repo
+    repo -- "every push and PR" --> ci
+    bots -. "scans, reviews, updates, releases" .-> repo
+    goodreads & fonts --> ci
+    ci -- "uploads dist/ when the site was built<br/>and every check passed" --> swa
+    infra -. "models it, no deploys yet" .-> swa
+    visitor -- "www.jimmykurian.me" --> dns
+    visitor -- "HTTPS" --> swa
+```
+
+[docs/architecture/](docs/architecture/README.md) has the rest: the C4 context and container views, a UML class diagram of the content model, and flow and sequence diagrams for the build, a change reaching production, the nightly rebuild and a visitor's request.
 
 ## Principles
 
@@ -99,66 +117,11 @@ src/data/site.json (typed schemas)   (fetched at build)      (downloaded at buil
 
 ## Quality checks
 
-`task lint` runs every check below: `lint:repo`, `lint:web` and `infra:check` run each group. `task test`, `task build`, `task test:integration`, `task test:e2e` and `task lighthouse` cover the rest.
+Every check fails the build; none is warn-only. `task lint` runs them all, grouped into the repository, the website and the infrastructure, and `task test`, `task build`, `task test:integration`, `task test:e2e` and `task lighthouse` cover the rest. The git hooks run the fast ones on each commit and push.
 
-**Repository** (`task lint:repo`):
+On each pull request, CI runs every check for the parts that changed and posts one comment with a table of the results, the coverage and the test counts; merging needs them to pass. Renovate handles version updates weekly, Dependabot handles security updates, and Release Please versions `website/` and `infrastructure/`.
 
-| Task | Checks | Config |
-| --- | --- | --- |
-| `lint:headers` | every file starts with the copyright and author header, and any `@file` tag names its own file | `.config/linters/headers-exclude.txt` (exceptions) |
-| `lint:secrets` | gitleaks over the git history, including non-npm registry URLs | `.config/linters/gitleaks.toml` |
-| `lint:secretlint` | secretlint's recommended rules over the tracked files, with secrets masked in the output | `.config/linters/secretlintrc.json` |
-| `lint:lockfile` | the lockfile: packages from registry.npmjs.org only, sha512 hashes only, no git dependencies, an upper bound on every override range, no npm or Yarn lockfile | |
-| `lint:dedupe` | no duplicate versions in the lockfile that pnpm could merge | |
-| `lint:audit` | no high or critical advisories (`pnpm audit`) | `website/pnpm-workspace.yaml` |
-| `lint:osv` | OSV-Scanner checks the lockfile against the OSV database, every severity | `.config/linters/osv-scanner.toml` |
-| `lint:licenses` | every installed package's license is on the allowed list, or the package is excluded with a reason | `.config/licenses/` |
-| `lint:actions` | actionlint and zizmor on the workflows | |
-| `lint:shell` | shellcheck on the scripts and hooks | |
-| `lint:editorconfig` | every file against `.editorconfig` | `.config/linters/editorconfig-checker.json` |
-| `lint:markdown` | markdownlint on the `.md` files | `.config/linters/.markdownlint-cli2.jsonc` |
-| `lint:spelling` | cspell on posts, pages, docs and code | `.config/spelling/cspell.json`, words in `.config/spelling/words.txt` |
-| `lint:inclusive-language` | alex on the docs, posts and site content, for insensitive or inconsiderate wording | `.alexrc.yml` (allow list) |
-| `lint:yaml` | yamllint on the YAML files | `.config/linters/yamllint.yml` |
-| `lint:schemas` | v8r validates the JSON, YAML and TOML configs against their published schemas | `.config/linters/v8rrc.yml` |
-| `lint:commits` | commit messages (commitlint) | `.config/commitlintrc.json` |
-| `lint:pr-title` | a pull request title, which becomes the squash commit (commitlint) | `.config/commitlintrc.json` |
-| `lint:pr-template` | a pull request body keeps every template section and replaces its instructions | `.github/PULL_REQUEST_TEMPLATE.md` |
-
-**Website** (`task lint:web`):
-
-| Task | Checks | Config |
-| --- | --- | --- |
-| `lint:astro` | `astro check` type-checks `.astro` and `.ts` files | `website/tsconfig.json` |
-| `lint:eslint` | ESLint, with accessibility rules for `.astro` markup | `website/eslint.config.js` |
-| `lint:format` | Prettier | `.config/formatters/prettierrc.json`, through `prettier` in `website/package.json` |
-| `lint:css` | Stylelint on `src/styles/` and `.astro` style blocks | `website/stylelint.config.mjs` |
-| `lint:dead-code` | knip: unused files, exports and dependencies | `website/knip.jsonc` |
-| `docs:check` | the TypeDoc API docs in `website/docs/` match the TSDoc comments (`task docs` regenerates them) | `website/typedoc.json`, `website/tsdoc.json` |
-
-**Infrastructure** (`task infra:check`): `infra:fmt`, `infra:validate`, `infra:tflint`, `infra:checkov` and `infra:pins`, then `infra:test` for the module tests. `infra:docs:check` fails if the terraform-docs pages in `infrastructure/docs/` are out of date; `task infra:docs` regenerates them.
-
-After `task build`, three more run against `dist/`:
-
-- `task test:e2e` includes the axe checks on every page.
-- `task lighthouse` fails below 0.95 for accessibility, 0.9 for SEO and best practices, or 0.8 for performance (the median of 3 runs; CI runners are noisy), or above 0.1 layout shift. `/resume/` is left out: it's the print source for the PDF, noindexed, with small contact links.
-- `task lint:links` checks the external links with lychee (`.config/linters/lychee.toml`). CI runs it nightly, after the deploy, so another site's outage doesn't block a push.
-
-Prettier skips `.astro` and `.mdx` files: whitespace between inline elements renders in Astro templates, and Prettier's MDX support is MDX 1.
-
-The git hooks in `.githooks/` are plain bash, so they need no `node_modules`:
-
-- **pre-commit:** checks the staged files (secrets with gitleaks and secretlint, the lockfile, spelling, inclusive language, formatting, ESLint, Stylelint, yamllint, shellcheck, `tofu fmt`, actionlint) and refuses commits on `main`.
-- **commit-msg:** checks the message against Conventional Commits.
-- **pre-push:** refuses pushes to `main`, or deleting it. It runs the unit tests if `website/` changed and the module tests if `infrastructure/` changed, on a clean checkout of the pushed commit.
-
-A check whose tool isn't installed is skipped with a warning. CI runs all of them, plus the build, e2e and Lighthouse.
-
-On a pull request, CI (`.github/workflows/ci.yml`) posts one comment with a table of every check's result for the Website, Infrastructure and Repository, with the coverage and test counts, and updates it on each push. The website and infrastructure checks run only when their files change.
-
-Renovate (`.github/renovate.json`) handles version updates for the npm packages, the actions, the OpenTofu provider and the `.mise.toml` tools: once a week, grouped into one pull request for minor and patch updates, one for majors and one for the provider. Dependabot (`.github/dependabot.yml`) handles security updates only, as soon as an advisory lands, grouped per ecosystem. On each pull request, GitHub's dependency review fails a change that adds a dependency with a known advisory.
-
-Release Please (`.github/workflows/release-please.yml`) keeps a release PR open that bumps the version and `CHANGELOG.md` of `website/` and `infrastructure/` from the Conventional Commits since their last release. Merging it tags each package and publishes a GitHub Release. See [CONTRIBUTING.md](CONTRIBUTING.md#releases).
+[CONTRIBUTING.md](CONTRIBUTING.md#quality-checks) lists every check, its config and the hooks.
 
 ## Getting started
 
@@ -192,6 +155,7 @@ badges branch            the README status badges, written by CI (never merged; 
 .mise.toml               tool versions
 .alexrc.yml              inclusive-language allow list (alex reads it only from the root)
 Taskfile.yml             every check, test and build step, by name
+docs/                    architecture, deployment, design, security and testing docs, and the docs style guide
 infrastructure/          OpenTofu modules and tests for the Azure resources (see infrastructure/README.md)
 website/                 the Astro site (see website/README.md)
 AGENTS.md                what coding agents need on every task

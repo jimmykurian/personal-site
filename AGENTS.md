@@ -7,9 +7,10 @@ Jimmy Kurian's personal site: a portfolio, resume and blog at <https://www.jimmy
 ## Map
 
 - `website/`: the Astro site (static output, TypeScript, MDX, no client framework). Read [website/AGENTS.md](website/AGENTS.md) before working there.
+- `docs/`: architecture (Mermaid C4, UML, flow and sequence diagrams), deployment, design, security and testing, indexed in `docs/README.md` and written to `docs/STYLE_GUIDE.md`. Update the doc or diagram that covers a part you change, in the same PR. The root README keeps only the system overview.
 - `infrastructure/`: OpenTofu modules and tests for the Azure resources. Nothing there deploys yet. Read [infrastructure/AGENTS.md](infrastructure/AGENTS.md) before working there.
 - Root tooling: `.mise.toml` pins every tool version (Node included; pnpm stays pinned by `packageManager` in `website/package.json`). `Taskfile.yml` holds every command, and CI and the git hooks call those tasks. `.config/` holds the repo-wide configs, grouped into `formatters/`, `linters/`, `spelling/` and `licenses/`, and `.githooks/` holds plain bash hooks.
-- Keep the root to the files already there. New project files go in `website/` or `infrastructure/`. The one root linter config is `.alexrc.yml`: alex only reads its config from the linted files' folders and their parents. Claude Code reads AGENTS.md files directly; there's no `CLAUDE.md`.
+- Keep the root to the files already there. New project files go in `website/` or `infrastructure/`, and repo-wide docs in `docs/`. The one root linter config is `.alexrc.yml`: alex only reads its config from the linted files' folders and their parents. Claude Code reads AGENTS.md files directly; there's no `CLAUDE.md`.
 
 ## Working here
 
@@ -30,9 +31,10 @@ Jimmy Kurian's personal site: a portfolio, resume and blog at <https://www.jimmy
 
 ## More detail
 
-- `README.md`: the architecture, the principles, the checks table and the repo structure.
-- `CONTRIBUTING.md`: setup, the workflow, signed commits, tests, deploys, and the content and design rules.
+- `README.md`: the system overview diagram, the principles, a summary of the checks and the repo structure.
+- `CONTRIBUTING.md`: setup, the workflow, signed commits, every check with its config and the git hooks, tests, deploys, releases, and the content and design rules.
 - `website/README.md`: where each piece of content lives, posts, the resume, the reading list and the test suites.
+- `docs/README.md`: the index of the architecture, deployment, design, security and testing docs.
 - `infrastructure/README.md`: the modules, their tests and checks, and how the live resources were created.
 
 ## Content rules (everything published)
