@@ -7,9 +7,10 @@ Jimmy Kurian's personal site: a portfolio, resume and blog at <https://www.jimmy
 ## Map
 
 - `website/`: the Astro site (static output, TypeScript, MDX, no client framework). Read [website/AGENTS.md](website/AGENTS.md) before working there.
+- `docs/architecture/`: the architecture diagrams in Mermaid (C4, UML, flows and sequences). Update the one that shows a part you change. The root README keeps only the system overview.
 - `infrastructure/`: OpenTofu modules and tests for the Azure resources. Nothing there deploys yet. Read [infrastructure/AGENTS.md](infrastructure/AGENTS.md) before working there.
 - Root tooling: `.mise.toml` pins every tool version (Node included; pnpm stays pinned by `packageManager` in `website/package.json`). `Taskfile.yml` holds every command, and CI and the git hooks call those tasks. `.config/` holds the repo-wide configs, grouped into `formatters/`, `linters/`, `spelling/` and `licenses/`, and `.githooks/` holds plain bash hooks.
-- Keep the root to the files already there. New project files go in `website/` or `infrastructure/`. The one root linter config is `.alexrc.yml`: alex only reads its config from the linted files' folders and their parents. Claude Code reads AGENTS.md files directly; there's no `CLAUDE.md`.
+- Keep the root to the files already there. New project files go in `website/` or `infrastructure/`, and repo-wide docs in `docs/`. The one root linter config is `.alexrc.yml`: alex only reads its config from the linted files' folders and their parents. Claude Code reads AGENTS.md files directly; there's no `CLAUDE.md`.
 
 ## Working here
 
@@ -30,9 +31,10 @@ Jimmy Kurian's personal site: a portfolio, resume and blog at <https://www.jimmy
 
 ## More detail
 
-- `README.md`: the architecture diagrams, the principles, a summary of the checks and the repo structure.
+- `README.md`: the system overview diagram, the principles, a summary of the checks and the repo structure.
 - `CONTRIBUTING.md`: setup, the workflow, signed commits, every check with its config and the git hooks, tests, deploys, releases, and the content and design rules.
 - `website/README.md`: where each piece of content lives, posts, the resume, the reading list and the test suites.
+- `docs/architecture/README.md`: the index of the detailed architecture diagrams.
 - `infrastructure/README.md`: the modules, their tests and checks, and how the live resources were created.
 
 ## Content rules (everything published)
