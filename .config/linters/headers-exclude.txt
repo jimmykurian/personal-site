@@ -9,6 +9,7 @@
 # JSONC (.vscode/, devcontainer.json, tsconfig.json, .jsonc) does carry the header.
 ^\.config/.*\.json$
 ^\.github/renovate\.json$
+^\.github/(release-please-config|\.release-please-manifest)\.json$
 ^website/(package|tsdoc|typedoc)\.json$
 ^website/public/.*\.json$
 ^website/src/(content|data)/.*\.json$
@@ -18,6 +19,8 @@ pnpm-lock\.yaml$
 \.snap$
 ^website/docs/
 ^infrastructure/docs/
+(^|/)CHANGELOG\.md$
+^infrastructure/version\.txt$
 # Images, fonts and PDFs.
 \.(svg|png|jpe?g|webp|ico|pdf|woff2?)$
 # Copied into the body of every new pull request.

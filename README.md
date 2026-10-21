@@ -158,6 +158,8 @@ On a pull request, CI (`.github/workflows/ci.yml`) posts one comment with a tabl
 
 Renovate (`.github/renovate.json`) handles version updates for the npm packages, the actions, the OpenTofu provider and the `.mise.toml` tools: once a week, grouped into one pull request for minor and patch updates, one for majors and one for the provider. Dependabot (`.github/dependabot.yml`) handles security updates only, as soon as an advisory lands, grouped per ecosystem. On each pull request, GitHub's dependency review fails a change that adds a dependency with a known advisory.
 
+Release Please (`.github/workflows/release-please.yml`) keeps a release PR open that bumps the version and `CHANGELOG.md` of `website/` and `infrastructure/` from the Conventional Commits since their last release. Merging it tags each package and publishes a GitHub Release. See [CONTRIBUTING.md](CONTRIBUTING.md#releases).
+
 ## Getting started
 
 ```sh
@@ -172,12 +174,13 @@ The devcontainer (`.devcontainer/`) does all of that on creation, for VS Code or
 ## Structure
 
 ```text
-.github/workflows/       every check, the deploy and the PR check table (ci.yml); PR labels, assignee, title and template checks
+.github/workflows/       every check, the deploy and the PR check table (ci.yml); PR labels, assignee, title and template checks; releases
 .github/labeler.yml      which paths get which pull request label
 badges branch            the README status badges, written by CI (never merged; not a working branch)
 .github/ISSUE_TEMPLATE/  bug, feature and subtask forms; PULL_REQUEST_TEMPLATE.md beside it
 .github/renovate.json    version updates (weekly, grouped)
 .github/dependabot.yml   security updates only
+.github/*release-please* Release Please's settings and the current version of each package
 .config/                 repo-wide check configs: commitlint and Lighthouse at the top, then
   formatters/              Prettier
   linters/                 gitleaks, secretlint, editorconfig, markdownlint, yamllint, v8r, lychee

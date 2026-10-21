@@ -20,8 +20,8 @@ concurrency:
 jobs:
   template:
     name: Template
-    # Renovate and Dependabot write their own bodies.
-    if: ${{ !startsWith(github.head_ref, 'renovate/') && !startsWith(github.head_ref, 'dependabot/') }}
+    # Renovate, Dependabot and Release Please write their own bodies.
+    if: ${{ !startsWith(github.head_ref, 'renovate/') && !startsWith(github.head_ref, 'dependabot/') && !startsWith(github.head_ref, 'release-please--') }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
