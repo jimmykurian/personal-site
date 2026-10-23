@@ -330,6 +330,18 @@ tasks:
             exit 1
           fi
 
+  metrics:
+    desc: Print the code metrics (lines of code with scc, function complexity with ESLint)
+    dir: website
+    cmds:
+      - node scripts/code-metrics.mjs
+
+  metrics:readme:
+    desc: Write the code metrics into the README's METRICS block (CI proposes them in a PR)
+    dir: website
+    cmds:
+      - node scripts/code-metrics.mjs --write
+
   # The test tasks pass extra arguments through: `task test -- --reporter=json ...`.
 
   test:

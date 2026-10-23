@@ -44,6 +44,42 @@ Each badge is a check from the last CI run on `main` (`.github/workflows/ci.yml`
 | --- | --- | --- | --- |
 | [![Azure](https://img.shields.io/badge/%20-Static%20Web%20Apps%20%28Free%29-0078D4?style=flat-square&logo=icloud&logoColor=white&labelColor=555)](https://azure.microsoft.com/products/app-service/static) | [![GitHub Actions](https://img.shields.io/badge/%20-CI%20and%20deploy-2088FF?style=flat-square&logo=githubactions&logoColor=white&labelColor=555)](https://github.com/jimmykurian/personal-site/actions) | [![Namecheap](https://img.shields.io/badge/%20-DNS-DE3723?style=flat-square&logo=namecheap&logoColor=white&labelColor=555)](https://www.namecheap.com/) | [![Goodreads](https://img.shields.io/badge/%20-reading%20list%20%28RSS%29-372213?style=flat-square&logo=goodreads&logoColor=white&labelColor=555)](https://www.goodreads.com/) |
 
+## Code metrics
+
+The size and complexity of the code: lines of code without blanks or comments ([scc](https://github.com/boyter/scc)), and the cyclomatic complexity of every function (ESLint's `complexity` rule). After a merge that changes the code, `.github/workflows/code-metrics.yml` proposes an update in a pull request. Run `task metrics` to see them locally.
+
+<!-- METRICS:START -->
+
+| Metric | Website | Infrastructure | Total |
+| --- | --- | --- | --- |
+| Files | 24 | 8 | 32 |
+| Lines of code | 3,026 | 138 | 3,164 |
+| Functions | 175 | – | 175 |
+| Average complexity | 1.8 | – | 1.8 |
+| Max complexity | 8 | – | 8 |
+| Modules | – | 2 | 2 |
+| Resources | – | 3 | 3 |
+
+<details>
+<summary>The 10 most complex functions</summary>
+
+| Function | Where | Complexity |
+| --- | --- | --- |
+| `installedPackages` | `website/scripts/check-licenses.mjs:96` | 8 |
+| `main` | `website/scripts/check-licenses.mjs:135` | 8 |
+| `load` | `website/src/lib/goodreads.ts:105` | 8 |
+| `collectComplexity` | `website/scripts/code-metrics.mjs:38` | 7 |
+| `retryDelay` | `website/src/lib/goodreads.ts:28` | 7 |
+| `fetchFeed` | `website/src/lib/goodreads.ts:36` | 7 |
+| `atom` | `website/scripts/check-licenses.mjs:42` | 6 |
+| `licenseOf` | `website/scripts/check-licenses.mjs:86` | 6 |
+| arrow function | `website/src/pages/index.astro:110` | 6 |
+| async arrow function | `website/src/pages/index.astro:845` | 6 |
+
+</details>
+
+<!-- METRICS:END -->
+
 ## Repository
 
 | Folder | What it is | Docs |
@@ -137,7 +173,7 @@ The devcontainer (`.devcontainer/`) does all of that on creation, for VS Code or
 ## Structure
 
 ```text
-.github/workflows/       every check, the deploy and the PR check table (ci.yml); PR labels, assignee, title and template checks; releases
+.github/workflows/       every check, the deploy and the PR check table (ci.yml); PR labels, assignee, title and template checks; releases; code metrics
 .github/labeler.yml      which paths get which pull request label
 badges branch            the README status badges, written by CI (never merged; not a working branch)
 .github/ISSUE_TEMPLATE/  bug, feature and subtask forms; PULL_REQUEST_TEMPLATE.md beside it

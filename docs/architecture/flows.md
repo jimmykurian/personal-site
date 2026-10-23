@@ -67,6 +67,10 @@ sequenceDiagram
     end
     GH->>RP: push to main
     RP->>GH: Open or update the release PR (versions and CHANGELOG.md)
+    opt The code changed
+        GH->>CI: push to main (code-metrics.yml)
+        CI->>GH: Open or update the code metrics PR, if a number changed
+    end
     CI->>SWA: Remove the preview when the PR closes
 ```
 
@@ -124,4 +128,4 @@ sequenceDiagram
 - [Deployment overview](../deployment/overview.md)
 - [Testing strategy](../testing/testing-strategy.md)
 
-Last reviewed: 2026-10-20
+Last reviewed: 2026-10-23
