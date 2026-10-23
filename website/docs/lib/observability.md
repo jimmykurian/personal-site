@@ -14,7 +14,7 @@ See `docs/observability.md`.
 
 ### ObservabilityEnv
 
-Defined in: src/lib/observability.ts:14
+Defined in: [src/lib/observability.ts:14](https://github.com/jimmykurian/personal-site/blob/main/website/src/lib/observability.ts#L14)
 
 The build's public settings: set from GitHub repository variables on `main` only.
 
@@ -22,16 +22,16 @@ The build's public settings: set from GitHub repository variables on `main` only
 
 | Property | Type | Defined in |
 | ------ | ------ | ------ |
-| <a id="public_sentry_dsn"></a> `PUBLIC_SENTRY_DSN?` | `string` | src/lib/observability.ts:15 |
-| <a id="public_sentry_release"></a> `PUBLIC_SENTRY_RELEASE?` | `string` | src/lib/observability.ts:16 |
-| <a id="public_posthog_key"></a> `PUBLIC_POSTHOG_KEY?` | `string` | src/lib/observability.ts:17 |
-| <a id="public_posthog_host"></a> `PUBLIC_POSTHOG_HOST?` | `string` | src/lib/observability.ts:18 |
+| <a id="public_sentry_dsn"></a> `PUBLIC_SENTRY_DSN?` | `string` | [src/lib/observability.ts:15](https://github.com/jimmykurian/personal-site/blob/main/website/src/lib/observability.ts#L15) |
+| <a id="public_sentry_release"></a> `PUBLIC_SENTRY_RELEASE?` | `string` | [src/lib/observability.ts:16](https://github.com/jimmykurian/personal-site/blob/main/website/src/lib/observability.ts#L16) |
+| <a id="public_posthog_key"></a> `PUBLIC_POSTHOG_KEY?` | `string` | [src/lib/observability.ts:17](https://github.com/jimmykurian/personal-site/blob/main/website/src/lib/observability.ts#L17) |
+| <a id="public_posthog_host"></a> `PUBLIC_POSTHOG_HOST?` | `string` | [src/lib/observability.ts:18](https://github.com/jimmykurian/personal-site/blob/main/website/src/lib/observability.ts#L18) |
 
 ***
 
 ### Loaders
 
-Defined in: src/lib/observability.ts:33
+Defined in: [src/lib/observability.ts:33](https://github.com/jimmykurian/personal-site/blob/main/website/src/lib/observability.ts#L33)
 
 Loads each SDK; the defaults import them, so each is only downloaded when it's used.
 
@@ -39,9 +39,9 @@ Loads each SDK; the defaults import them, so each is only downloaded when it's u
 
 | Property | Type | Description | Defined in |
 | ------ | ------ | ------ | ------ |
-| <a id="sentry"></a> `sentry` | () => `Promise`\<`SentryLike`\> | Loads `@sentry/browser`. | src/lib/observability.ts:35 |
-| <a id="posthog"></a> `posthog` | () => `Promise`\<`PostHogLike`\> | Loads `posthog-js`. | src/lib/observability.ts:37 |
-| <a id="idle"></a> `idle` | (`fn`) => `void` | Runs `fn` once the browser is idle, so PostHog never slows the first paint. | src/lib/observability.ts:39 |
+| <a id="sentry"></a> `sentry` | () => `Promise`\<`SentryLike`\> | Loads `@sentry/browser`. | [src/lib/observability.ts:35](https://github.com/jimmykurian/personal-site/blob/main/website/src/lib/observability.ts#L35) |
+| <a id="posthog"></a> `posthog` | () => `Promise`\<`PostHogLike`\> | Loads `posthog-js`. | [src/lib/observability.ts:37](https://github.com/jimmykurian/personal-site/blob/main/website/src/lib/observability.ts#L37) |
+| <a id="idle"></a> `idle` | (`fn`) => `void` | Runs `fn` once the browser is idle, so PostHog never slows the first paint. | [src/lib/observability.ts:39](https://github.com/jimmykurian/personal-site/blob/main/website/src/lib/observability.ts#L39) |
 
 ## Functions
 
@@ -51,7 +51,7 @@ Loads each SDK; the defaults import them, so each is only downloaded when it's u
 function sentryOptions(env, origin): Record<string, unknown>;
 ```
 
-Defined in: src/lib/observability.ts:52
+Defined in: [src/lib/observability.ts:52](https://github.com/jimmykurian/personal-site/blob/main/website/src/lib/observability.ts#L52)
 
 Sentry: uncaught errors from this site's own scripts. No tracing, replay or personal data.
 
@@ -74,7 +74,7 @@ Sentry: uncaught errors from this site's own scripts. No tracing, replay or pers
 function posthogOptions(env): Record<string, unknown>;
 ```
 
-Defined in: src/lib/observability.ts:67
+Defined in: [src/lib/observability.ts:67](https://github.com/jimmykurian/personal-site/blob/main/website/src/lib/observability.ts#L67)
 
 PostHog: named events only, with no cookies, storage, profiles, autocapture or replay.
 
@@ -101,7 +101,7 @@ function startObservability(
 ): Promise<void>;
 ```
 
-Defined in: src/lib/observability.ts:96
+Defined in: [src/lib/observability.ts:96](https://github.com/jimmykurian/personal-site/blob/main/website/src/lib/observability.ts#L96)
 
 Starts whichever tools the build has settings for. Without any (local, test and preview
 builds), it does nothing.

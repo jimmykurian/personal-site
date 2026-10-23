@@ -16,7 +16,7 @@ Named events for PostHog: `track()` and the rule that turns a click into an even
 type EventProps = Record<string, string>;
 ```
 
-Defined in: src/lib/track.ts:11
+Defined in: [src/lib/track.ts:11](https://github.com/jimmykurian/personal-site/blob/main/website/src/lib/track.ts#L11)
 
 An event's properties: only what was clicked, never anything about the visitor.
 
@@ -28,7 +28,7 @@ An event's properties: only what was clicked, never anything about the visitor.
 type Capture = (event, props?) => void;
 ```
 
-Defined in: src/lib/track.ts:14
+Defined in: [src/lib/track.ts:14](https://github.com/jimmykurian/personal-site/blob/main/website/src/lib/track.ts#L14)
 
 Sends one event; set by `observability.ts` once PostHog has loaded.
 
@@ -51,7 +51,7 @@ Sends one event; set by `observability.ts` once PostHog has loaded.
 const QUEUE_LIMIT: 20 = 20;
 ```
 
-Defined in: src/lib/track.ts:17
+Defined in: [src/lib/track.ts:17](https://github.com/jimmykurian/personal-site/blob/main/website/src/lib/track.ts#L17)
 
 Events tracked before PostHog loads are held, up to this many, then sent.
 
@@ -63,7 +63,7 @@ Events tracked before PostHog loads are held, up to this many, then sent.
 function track(event, props?): void;
 ```
 
-Defined in: src/lib/track.ts:29
+Defined in: [src/lib/track.ts:29](https://github.com/jimmykurian/personal-site/blob/main/website/src/lib/track.ts#L29)
 
 Sends an event to PostHog, or holds it until PostHog loads. Without PostHog (a local or
 preview build), nothing is ever sent.
@@ -87,7 +87,7 @@ preview build), nothing is ever sent.
 function setCapture(fn): void;
 ```
 
-Defined in: src/lib/track.ts:39
+Defined in: [src/lib/track.ts:39](https://github.com/jimmykurian/personal-site/blob/main/website/src/lib/track.ts#L39)
 
 Connects `track()` to PostHog, and sends the events held so far.
 
@@ -114,7 +114,7 @@ function eventFor(el, origin):
   | undefined;
 ```
 
-Defined in: src/lib/track.ts:60
+Defined in: [src/lib/track.ts:60](https://github.com/jimmykurian/personal-site/blob/main/website/src/lib/track.ts#L60)
 
 The event a click on `el` sends, if any:
 - an element with `data-track` sends that event, with its link target
