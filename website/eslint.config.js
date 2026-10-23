@@ -30,6 +30,8 @@ export default tseslint.config(
   astro.configs['jsx-a11y-recommended'],
   {
     languageOptions: { globals: { ...globals.browser, ...globals.node } },
+    // Split a function before it passes 10 paths; the README's code metrics show the most complex.
+    rules: { complexity: ['error', 10] },
   },
   {
     // TypeScript (astro check) already reports undefined names, and knows Astro's global types.
