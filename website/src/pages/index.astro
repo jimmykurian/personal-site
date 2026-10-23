@@ -68,6 +68,8 @@ const { sections } = site;
         <span class="visually-hidden">{site.headline.emphasis}</span>{' '}
         <em class="typed" aria-hidden="true" data-phrases={JSON.stringify(site.headline.rotating)}>{site.headline.emphasis}</em>.
       </h1>
+      <!-- Shown only while the headline moves: WCAG 2.2.2 needs a way to stop it. -->
+      <button type="button" class="caps hero__pause" hidden>Pause animation</button>
       <p class="hero__intro">{site.intro}</p>
       <div class="hero__actions">
         <a href="#projects" class="btn hero__cta">Projects <Icon name="arrow" /></a>
@@ -369,6 +371,31 @@ const { sections } = site;
 
   .typed.is-typing::after {
     animation: none;
+  }
+
+  .typed.is-done::after {
+    display: none;
+  }
+
+  .hero__pause {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--ink);
+    cursor: pointer;
+  }
+
+  .hero__pause[hidden] {
+    display: none;
+  }
+
+  .hero__pause:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--accent);
+    text-underline-offset: 0.25em;
   }
 
   @keyframes caret {
@@ -817,13 +844,17 @@ const { sections } = site;
 </style>
 
 <script>
-  // Types and erases the headline's emphasis phrase in a loop. Screen readers get the
-  // first phrase from the hidden copy, and reduced-motion visitors see it without animation.
+  // Types and erases the headline's emphasis phrase, once through every phrase, and stops on the
+  // first one. The Pause animation button stops it sooner (WCAG 2.2.2: motion that starts on its
+  // own must stop within 5 seconds or have a control). Screen readers get the first phrase from
+  // the hidden copy, and reduced-motion visitors see it without animation or the button.
   const el = document.querySelector<HTMLElement>('.typed');
+  const pause = document.querySelector<HTMLButtonElement>('.hero__pause');
   const phrases: string[] = JSON.parse(el?.dataset.phrases ?? '[]');
 
-  if (el && phrases.length > 1 && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  if (el && pause && phrases.length > 1 && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const title = el.closest('h1')!;
+    let stopped = false;
     const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
     // Hold the headline at the height of its longest phrase so the page below doesn't jump.
@@ -842,23 +873,41 @@ const { sections } = site;
     document.fonts.ready.then(reserve);
     addEventListener('resize', reserve);
 
+    // Settle on the first phrase with no caret, and take the button away.
+    const stop = () => {
+      stopped = true;
+      el.textContent = phrases[0];
+      el.classList.remove('is-typing');
+      el.classList.add('is-done');
+      const hadFocus = document.activeElement === pause;
+      pause.hidden = true;
+      // Hiding the focused button would drop the focus; hand it to the next control instead.
+      if (hadFocus) document.querySelector<HTMLElement>('.hero__cta')?.focus();
+    };
+    pause.addEventListener('click', stop);
+    pause.hidden = false;
+
     (async () => {
-      for (let i = 0; ; i = (i + 1) % phrases.length) {
+      for (let i = 0; i < phrases.length; i++) {
         const text = phrases[i];
-        await wait(i === 0 && el.textContent === text ? 3000 : 2600);
+        await wait(i === 0 ? 3000 : 2600);
+        if (stopped) return;
         el.classList.add('is-typing');
         for (let n = text.length; n >= 0; n--) {
+          if (stopped) return;
           el.textContent = text.slice(0, n);
           await wait(35);
         }
         const next = phrases[(i + 1) % phrases.length];
         await wait(300);
         for (let n = 1; n <= next.length; n++) {
+          if (stopped) return;
           el.textContent = next.slice(0, n);
           await wait(70 + Math.random() * 60);
         }
         el.classList.remove('is-typing');
       }
+      if (!stopped) stop();
     })();
   }
 </script>
