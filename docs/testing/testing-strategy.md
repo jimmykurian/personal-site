@@ -23,7 +23,7 @@ Static checks sit underneath all of them: type-checking, ESLint, Stylelint, knip
 | --- | --- | --- | --- |
 | Unit | `website/tests/unit/` | Each component, layout, page and `src/lib/` module renders or behaves as intended, in isolation | Nothing: offline, with mocked collections |
 | Integration (Cucumber) | `website/tests/integration/` | The built `dist/`: routes, links, anchors, feeds, the sitemap, the content rules, assets served locally, the deploy config, the resume PDF | A production build, with the network for Goodreads and fonts |
-| End-to-end | `website/tests/e2e/` | What only a browser shows: scripts, menus, focus, layout, no console errors or horizontal scroll, and WCAG 2.1 A and AA with axe | The build, served with `astro preview`, and Chrome |
+| End-to-end | `website/tests/e2e/` | What only a browser shows: scripts, menus, focus, layout, no console errors or horizontal scroll, and WCAG 2.0, 2.1 and 2.2 A and AA with axe | The build, served with `astro preview`, and Chrome |
 | Lighthouse | `.config/lighthouserc.json` | Scores for `/`, `/writing/`, a post and `/reading/`, as the median of 3 runs | The build and Chrome |
 
 ### Unit tests
@@ -89,4 +89,4 @@ task infra:test         # OpenTofu module tests
 - [Security overview](../security/overview.md)
 - [Design guidelines](../design/design-guidelines.md)
 
-Last reviewed: 2026-10-21
+Last reviewed: 2026-10-23

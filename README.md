@@ -53,10 +53,10 @@ The size and complexity of the code: lines of code without blanks or comments ([
 | Metric | Website | Infrastructure | Total |
 | --- | --- | --- | --- |
 | Files | 24 | 8 | 32 |
-| Lines of code | 3,026 | 138 | 3,164 |
-| Functions | 175 | – | 175 |
-| Average complexity | 1.8 | – | 1.8 |
-| Max complexity | 8 | – | 8 |
+| Lines of code | 3,064 | 138 | 3,202 |
+| Functions | 176 | – | 176 |
+| Average complexity | 1.9 | – | 1.9 |
+| Max complexity | 9 | – | 9 |
 | Modules | – | 2 | 2 |
 | Resources | – | 3 | 3 |
 
@@ -65,6 +65,7 @@ The size and complexity of the code: lines of code without blanks or comments ([
 
 | Function | Where | Complexity |
 | --- | --- | --- |
+| async arrow function | `website/src/pages/index.astro:890` | 9 |
 | `installedPackages` | `website/scripts/check-licenses.mjs:96` | 8 |
 | `main` | `website/scripts/check-licenses.mjs:135` | 8 |
 | `load` | `website/src/lib/goodreads.ts:105` | 8 |
@@ -73,8 +74,7 @@ The size and complexity of the code: lines of code without blanks or comments ([
 | `fetchFeed` | `website/src/lib/goodreads.ts:36` | 7 |
 | `atom` | `website/scripts/check-licenses.mjs:42` | 6 |
 | `licenseOf` | `website/scripts/check-licenses.mjs:86` | 6 |
-| arrow function | `website/src/pages/index.astro:110` | 6 |
-| async arrow function | `website/src/pages/index.astro:845` | 6 |
+| arrow function | `website/src/pages/index.astro:112` | 6 |
 
 </details>
 
@@ -143,7 +143,7 @@ flowchart TB
 
 - **Small and static.** No client framework: a few inline scripts, each respecting `prefers-reduced-motion`. Add an island only when a feature needs one.
 - **Private by default.** Client names are anonymized, and the site and resume carry no home address, phone, personal email, clearance or patent application number. Tests check every published file for those patterns.
-- **Accessible and fast.** axe checks WCAG 2.1 A and AA on every page at desktop and phone sizes. Lighthouse fails the build below 0.95 for accessibility.
+- **Accessible and fast.** The goal is WCAG 2.2 AA ([docs/accessibility.md](docs/accessibility.md)): axe checks the 2.0, 2.1 and 2.2 A and AA rules on every page at desktop and phone sizes. Lighthouse fails the build below 0.95 for accessibility.
 - **Every check blocks.** Nothing only warns. A finding is fixed, or skipped inline with a reason.
 - **One source of truth.** Tool versions live only in `.mise.toml`, and commands only in `Taskfile.yml`. CI and the git hooks run the same tasks you run locally.
 - **Supply chain kept tight.** Actions are pinned to commit SHAs. Packages come only from registry.npmjs.org, with sha512 hashes. Renovate waits 7 days before taking a new version. gitleaks, CodeQL and secret scanning watch the code.

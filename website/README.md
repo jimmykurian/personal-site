@@ -114,13 +114,13 @@ CI runs the integration tests against the exact `dist/` it is about to deploy, a
 
 **End-to-end tests** live in `tests/e2e/` (`*.spec.ts`, configured in `playwright.config.ts`). Playwright serves `dist/` with `astro preview` and drives it in Google Chrome at a desktop size (1280×800) and a phone size (Pixel 7), checking what only a browser can:
 
-- the headline types through its phrases without changing height, and stays still with reduced motion
+- the headline types through its phrases without changing height, stops after one pass or when the Pause animation button is pressed, and stays still with reduced motion
 - the desktop nav and the phone menu, which closes after a link is followed
 - the skip link, hero links, Projects button and contact address
 - the reading list pages ten books at a time, and lists every book without JavaScript
 - the writing archive jumps to a month, and posts open and link back
 - missing URLs get the 404 page, and the resume PDF and feed download
-- every page loads with no console errors, failed requests, broken images or horizontal scroll, and with no WCAG 2.1 A or AA violations (axe)
+- every page loads with no console errors, failed requests, broken images or horizontal scroll, and with no WCAG 2.0, 2.1 or 2.2 A or AA violations (axe)
 
 ```sh
 pnpm build && pnpm resume && pnpm test:e2e         # against a local build
