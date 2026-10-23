@@ -31,6 +31,10 @@ concurrency:
 jobs:
   metrics:
     name: Code metrics
+    # A manual run can pick another branch, and checkout and create-pull-request would then
+    # measure that branch and base the PR on it. Skipping every ref but main keeps the metrics
+    # and their PR on main, with one check and no ref to pass to either action.
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
