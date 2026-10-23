@@ -6,9 +6,10 @@ name: Pull request assignee
 # Assigns each new pull request to whoever opened it, unless someone is already assigned.
 # Pull requests from other bots, such as Renovate, go to the repository owner. The repo's
 # own GitHub App opens the release PRs (Release Please) and the code-metrics PRs
-# (code-metrics.yml); those are assigned to its bot. Reviews are requested by
-# .github/CODEOWNERS, not here. Runs on pull_request, not pull_request_target: outside pull
-# requests aren't accepted.
+# (code-metrics.yml); those are assigned to its bot, using the App's own token: GITHUB_TOKEN
+# isn't allowed to assign another bot (403). If GitHub refuses the bot, they go to the owner.
+# Reviews are requested by .github/CODEOWNERS, not here. Runs on pull_request, not
+# pull_request_target: outside pull requests aren't accepted.
 on:
   pull_request:
     types: [opened, reopened]
@@ -29,25 +30,59 @@ jobs:
     permissions:
       pull-requests: write # adds the assignee
     steps:
-      - name: Assign the author, the App's bot for its own PRs, or the owner for another bot
+      - name: Decide whether the GitHub App opened this PR
+        id: who
         env:
-          GH_TOKEN: ${{ github.token }}
-          REPO: ${{ github.repository }}
-          NUMBER: ${{ github.event.pull_request.number }}
-          AUTHOR: ${{ github.event.pull_request.user.login }}
           AUTHOR_TYPE: ${{ github.event.pull_request.user.type }}
-          OWNER: ${{ github.repository_owner }}
-          ASSIGNEES: ${{ toJSON(github.event.pull_request.assignees) }}
           HEAD_REF: ${{ github.head_ref }}
         run: |
           app=false
           if [[ "$AUTHOR_TYPE" == "Bot" && ( "$HEAD_REF" == release-please--* || "$HEAD_REF" == chore/code-metrics ) ]]; then
             app=true
           fi
+          echo "app=$app" >> "$GITHUB_OUTPUT"
+
+      # The App assigns its own bot (see release-please.yml for the App).
+      - name: Create the app token
+        id: app-token
+        if: steps.who.outputs.app == 'true'
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          client-id: ${{ secrets.RELEASE_APP_CLIENT_ID }}
+          private-key: ${{ secrets.RELEASE_APP_PRIVATE_KEY }}
+          permission-issues: write
+          permission-pull-requests: write
+
+      - name: Assign the author, the App's bot for its own PRs, or the owner for another bot
+        env:
+          GH_TOKEN: ${{ steps.app-token.outputs.token || github.token }}
+          REPO: ${{ github.repository }}
+          NUMBER: ${{ github.event.pull_request.number }}
+          AUTHOR: ${{ github.event.pull_request.user.login }}
+          AUTHOR_TYPE: ${{ github.event.pull_request.user.type }}
+          OWNER: ${{ github.repository_owner }}
+          ASSIGNEES: ${{ toJSON(github.event.pull_request.assignees) }}
+          APP: ${{ steps.who.outputs.app }}
+        run: |
           if [[ "$(jq length <<< "$ASSIGNEES")" -gt 0 ]]; then
             echo "Already assigned; leaving it."
+            exit 0
+          fi
+          assignee="$AUTHOR"
+          if [[ "$AUTHOR_TYPE" == "Bot" && "$APP" != true ]]; then assignee="$OWNER"; fi
+          # GitHub drops an assignee it won't accept, or refuses the request; either way the
+          # App's PR then goes to the owner, so it's never left unassigned.
+          assigned=""
+          if ! assigned="$(gh api -X POST "repos/$REPO/issues/$NUMBER/assignees" -f "assignees[]=$assignee" --jq '.assignees[].login')"; then
+            echo "GitHub refused to assign $assignee"
+          fi
+          if ! grep -qxF "$assignee" <<< "$assigned"; then
+            if [[ "$APP" != true ]]; then
+              echo "::error::Couldn't assign $assignee"
+              exit 1
+            fi
+            echo "::warning::GitHub wouldn't assign $assignee; assigning $OWNER instead"
+            gh api -X POST "repos/$REPO/issues/$NUMBER/assignees" -f "assignees[]=$OWNER" --jq '.assignees[].login'
           else
-            assignee="$AUTHOR"
-            if [[ "$AUTHOR_TYPE" == "Bot" && "$app" != true ]]; then assignee="$OWNER"; fi
-            gh api -X POST "repos/$REPO/issues/$NUMBER/assignees" -f "assignees[]=$assignee" --jq '.assignees[].login'
+            echo "$assigned"
           fi

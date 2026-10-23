@@ -56,7 +56,7 @@ How the resources were created, and the OpenTofu modules that model them: [infra
 
 ## Secrets
 
-The deploy needs one secret, `AZURE_STATIC_WEB_APPS_API_TOKEN`, used only by the Deploy and Close PR preview jobs. Release Please and the Code metrics workflow sign in as a private GitHub App installed on this repository only, with the `RELEASE_APP_CLIENT_ID` and `RELEASE_APP_PRIVATE_KEY` secrets. Every other job runs with `contents: read` and the narrowest extra permission it needs.
+The deploy needs one secret, `AZURE_STATIC_WEB_APPS_API_TOKEN`, used only by the Deploy and Close PR preview jobs. Release Please, the Code metrics workflow and the assignee workflow (for the App's own PRs) sign in as a private GitHub App installed on this repository only, with the `RELEASE_APP_CLIENT_ID` and `RELEASE_APP_PRIVATE_KEY` secrets. Every other job runs with `contents: read` and the narrowest extra permission it needs.
 
 ## Releases
 
