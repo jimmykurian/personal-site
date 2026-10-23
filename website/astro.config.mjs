@@ -17,6 +17,25 @@ export default defineConfig({
   integrations: [mdx(), sitemap({ filter: (page) => !page.endsWith('/resume/') })],
   // Book covers for /reading/ are downloaded from Goodreads and optimized at build time.
   image: { domains: ['i.gr-assets.com'] },
+  // A Content-Security-Policy <meta> on every page, with hashes for the site's own scripts.
+  // Outside hosts are only the observability tools (docs/observability.md). Styles allow
+  // 'unsafe-inline' because Shiki writes inline styles in code blocks, which Astro's CSP
+  // can't hash.
+  security: {
+    csp: {
+      scriptDirective: { resources: ["'self'", 'https://static.cloudflareinsights.com'] },
+      styleDirective: { resources: ["'self'", "'unsafe-inline'"] },
+      directives: [
+        "default-src 'self'",
+        "connect-src 'self' https://cloudflareinsights.com https://*.ingest.us.sentry.io https://us.i.posthog.com",
+        "img-src 'self' data:",
+        "font-src 'self'",
+        "object-src 'none'",
+        "base-uri 'self'",
+        "form-action 'self'",
+      ],
+    },
+  },
   markdown: {
     shikiConfig: { theme: 'github-light' },
   },

@@ -23,6 +23,10 @@ overrides:
   # GHSA-hp3w-g68c-fv3c (sprintf-js): js-yaml 3 (via @lhci/utils) needs argparse 1 only for
   # its own command-line tool, never for the library @lhci/utils calls.
   'js-yaml@3>argparse': '-'
+  # GHSA-mrhx-c7xc-m3w5 (zod 3, no 3.x fix): chromium-bidi (via @lhci/cli > lighthouse >
+  # puppeteer-core) is loaded only when puppeteer is asked for WebDriver BiDi. Lighthouse
+  # drives Chrome over CDP, so puppeteer never imports it.
+  'puppeteer-core>chromium-bidi': '-'
 
 # Advisories with no patched release, in dev tools only. Remove each once a fix ships.
 auditConfig:
@@ -32,6 +36,7 @@ auditConfig:
 
 # Install scripts are off unless listed here. esbuild (via tsx, which runs the Cucumber
 # integration suite) gets its binary from its platform package, so its postinstall check
-# isn't needed.
+# isn't needed. core-js (via posthog-js) only prints a funding message after install.
 allowBuilds:
+  core-js: false
   esbuild: false

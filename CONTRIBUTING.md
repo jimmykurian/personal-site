@@ -378,6 +378,7 @@ These are deliberate; keep them unless I change them:
   address. The public resume has no home address, phone or personal email.
 - Posts are published here first, then syndicated with a canonical link back.
 - No comment system for now.
+- Observability stays cookieless, with no session replay, profiles or personal data, and only the three tools in [docs/observability.md](docs/observability.md). A new event goes through `track()` or `data-track`, with only what was clicked in its properties, and gets a row in that doc's event list. Any new outside host also needs the Content-Security-Policy in `website/astro.config.mjs` and the allowlist in `tests/integration/steps/assets.steps.ts` updated.
 
 ## Design rules
 

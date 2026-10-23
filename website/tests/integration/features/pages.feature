@@ -12,7 +12,7 @@ Feature: Built pages
 
   Scenario: Every route is built, with one page per published post and no drafts
     When I list the built pages
-    Then they are the home, 404, reading, resume and writing pages, plus one page per published post
+    Then they are the home, 404, privacy, reading, resume and writing pages, plus one page per published post
     And the draft template has no page
 
   Scenario: Every page is a complete, labelled HTML document

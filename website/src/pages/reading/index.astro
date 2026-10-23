@@ -123,6 +123,8 @@ const count = (n: number) => `${n} ${n === 1 ? 'book' : 'books'}`;
 </Base>
 
 <script>
+  import { track } from '../../lib/track';
+
   // Each list shows its first 10 books, then 10 more per click. Without JavaScript every
   // book stays listed.
   const STEP = 10;
@@ -147,6 +149,7 @@ const count = (n: number) => `${n} ${n === 1 ? 'book' : 'books'}`;
     button.addEventListener('click', () => {
       const next = rows[shown];
       shown += STEP;
+      track('reading_show_more');
       render();
       next?.querySelector('a')?.focus({ preventScroll: true });
     });

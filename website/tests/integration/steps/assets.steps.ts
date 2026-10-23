@@ -25,9 +25,52 @@ When("I collect the sources of every page's images, scripts, stylesheets and pre
   );
 });
 
-Then('none of them is on another host', function (this: SiteWorld) {
-  const external = this.recall<string[]>('sources').filter((url) => /^(https?:)?\/\//.test(url));
+/** The only other host a page may load a script from: Cloudflare Web Analytics' beacon. */
+const BEACON = 'https://static.cloudflareinsights.com/beacon.min.js';
+
+/** Where the observability tools send data (docs/observability.md). */
+const CONNECT = [
+  "'self'",
+  'https://cloudflareinsights.com',
+  'https://*.ingest.us.sentry.io',
+  'https://us.i.posthog.com',
+];
+
+Then("none of them is on another host, except Cloudflare's analytics beacon", function (this: SiteWorld) {
+  const external = this.recall<string[]>('sources').filter((url) => /^(https?:)?\/\//.test(url) && url !== BEACON);
   assert.deepEqual(external, []);
+});
+
+When("I read every page's Content-Security-Policy", function (this: SiteWorld) {
+  this.remember(
+    'policies',
+    pages().map(({ file }) => {
+      const meta = page(file).querySelector('meta[http-equiv="content-security-policy"]');
+      assert.ok(meta, `${file} has no Content-Security-Policy`);
+      const directives = new Map<string, string[]>();
+      for (const part of meta.getAttribute('content')!.split(';')) {
+        const [name, ...values] = part.trim().split(/\s+/);
+        if (name) directives.set(name, values);
+      }
+      return { file, directives };
+    }),
+  );
+});
+
+type Policy = { file: string; directives: Map<string, string[]> };
+
+Then("scripts may load only from the site and Cloudflare's analytics beacon", function (this: SiteWorld) {
+  for (const { file, directives } of this.recall<Policy[]>('policies')) {
+    const hosts = (directives.get('script-src') ?? []).filter((v) => !v.startsWith("'sha"));
+    assert.deepEqual(hosts, ["'self'", 'https://static.cloudflareinsights.com'], file);
+    assert.deepEqual(directives.get('default-src'), ["'self'"], file);
+  }
+});
+
+Then('connections may go only to the site, Cloudflare, Sentry and PostHog', function (this: SiteWorld) {
+  for (const { file, directives } of this.recall<Policy[]>('policies')) {
+    assert.deepEqual(directives.get('connect-src'), CONNECT, file);
+  }
 });
 
 When('I list the built font files', function (this: SiteWorld) {

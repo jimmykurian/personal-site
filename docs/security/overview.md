@@ -6,11 +6,11 @@ How the site, its source and its supply chain are protected. To report a vulnera
 
 ## Threat model
 
-The site is static: no server code, database, login, forms or cookies. What's left to protect:
+The site is static: no server code, database, login, forms or cookies. It loads three cookieless observability tools ([observability](../observability.md)). What's left to protect:
 
 | Asset | Threat | Main controls |
 | --- | --- | --- |
-| The live site | Script injected through build-time data (posts, JSON, the Goodreads feed) | Astro escapes text by default, content is schema-validated, integration tests check every published file |
+| The live site | Script injected through build-time data (posts, JSON, the Goodreads feed), or from a compromised outside script | Astro escapes text by default, content is schema-validated, integration tests check every published file, and a Content-Security-Policy allows scripts only from the site and Cloudflare's beacon |
 | Private data | A home address, phone number, personal email, clearance or patent application number reaching the site or the repo | `private/` is git-ignored, content rules are tested on every build |
 | The deploy | A leaked deploy token, or unreviewed code reaching production | One narrowly used secret, PR-only `main`, required checks, pinned actions |
 | The supply chain | A compromised or vulnerable npm package, action or tool | Lockfile rules, release-age delay, audits, OSV, dependency review, Dependabot |
@@ -29,7 +29,13 @@ The site is static: no server code, database, login, forms or cookies. What's le
   | `Permissions-Policy` | `camera=(), microphone=(), geolocation=()` |
 
   An integration test checks the config file ships with the build.
-- **No third-party requests.** Fonts and Goodreads covers are downloaded and optimized at build time. There are no analytics, embeds, trackers or cookies.
+- **Content-Security-Policy.** Astro writes a `<meta http-equiv="content-security-policy">` on every page (`security.csp` in `website/astro.config.mjs`):
+  - `script-src` allows only the site, with a hash for each of its own scripts, and Cloudflare's beacon (`https://static.cloudflareinsights.com`).
+  - `connect-src` allows only the site, Cloudflare, Sentry (`*.ingest.us.sentry.io`) and PostHog (`us.i.posthog.com`).
+  - `default-src`, `img-src`, `font-src`, `base-uri` and `form-action` stay on the site, and `object-src` is `'none'`.
+  - `style-src` allows `'unsafe-inline'`, because Shiki writes inline styles in code blocks, which Astro can't hash.
+  - An integration scenario checks the policy on every page, and the end-to-end suite fails on any CSP violation, since each one is a console error.
+- **Third-party requests: the observability tools only.** Fonts and Goodreads covers are downloaded and optimized at build time. The only outside hosts are Cloudflare Web Analytics, Sentry and PostHog, all cookieless, with no session replay, profiles or personal data, and only on builds of `main` ([observability](../observability.md)). There are no embeds, ad trackers or cookies. An integration test fails if a page loads anything else from another host.
 - **Build-time data is checked.** Every collection has a schema, so a bad field fails the build. Goodreads text is rendered as text, never as HTML.
 
 ## Private data

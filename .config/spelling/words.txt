@@ -6,6 +6,7 @@ alexrc
 ANAME
 Applebot
 artboards
+autocapture
 autonumber
 autorun
 azurestaticapps
@@ -15,9 +16,11 @@ boyter
 Brien
 brightgreen
 Bytespider
+cloudflareinsights
 cocomo
 commitlint
 commitlintrc
+cookieless
 cutover
 davidanson
 dbaeumer
@@ -65,7 +68,10 @@ nosniff
 NSEW
 nums
 Othamar
+pageleave
 pipx
+PostHog
+posthog
 requestfailed
 Riok
 Roundtable

@@ -27,10 +27,14 @@ export const dom = (html: string) => parse(html);
  * line, for snapshots: scoped-style attributes, generated image URLs and the generator tag.
  */
 export function normalize(html: string): string {
-  return html
-    .replace(/\s*data-astro-cid-[a-z0-9]+(="[^"]*")?/g, '')
-    .replace(/\/_image\/?\?[^"\s]+/g, '/_image?…')
-    .replace(/<meta name="generator"[^>]*>/g, '')
-    .replace(/>\s*</g, '>\n<')
-    .trim();
+  return (
+    html
+      .replace(/\s*data-astro-cid-[a-z0-9]+(="[^"]*")?/g, '')
+      .replace(/\/_image\/?\?[^"\s]+/g, '/_image?…')
+      .replace(/<meta name="generator"[^>]*>/g, '')
+      // A bundled <script> points at its source with an absolute path; keep it machine-independent.
+      .replace(/src="[^"]*?\/(src\/[^"?]+)\?astro[^"]*"/g, 'src="$1 (bundled script)"')
+      .replace(/>\s*</g, '>\n<')
+      .trim()
+  );
 }
