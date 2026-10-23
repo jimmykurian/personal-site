@@ -1,0 +1,114 @@
+# Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+# Author: Jimmy Kurian
+#
+# Code metrics: after a merge to main that changes the code, measures it (task metrics:readme:
+# lines of code with scc, function complexity with ESLint) and proposes the README's new
+# METRICS block in one pull request on chore/code-metrics, updated in place. The block has no
+# date, so nothing is proposed unless a number changed. The PR comes from the repo's GitHub
+# App, so its commit is Verified and it starts the required checks; pr-assign-author.yml
+# assigns it to the App's bot and requests the owner's review. It only changes the root
+# README, so it never makes a release.
+
+name: Code metrics
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "website/src/**"
+      - "website/scripts/**"
+      - "infrastructure/modules/**"
+      - ".mise.toml"
+      - ".github/workflows/code-metrics.yml"
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: code-metrics
+  cancel-in-progress: true
+
+jobs:
+  metrics:
+    name: Code metrics
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: jdx/mise-action@08ae2a091c038e1e05ec6f5115dc5c69d5a2a6b8 # v5.1.2
+        with:
+          install_args: node task aqua:boyter/scc
+
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+        with:
+          package_json_file: website/package.json
+          cache: true
+          cache_dependency_path: website/pnpm-lock.yaml
+
+      - run: pnpm --dir website install --frozen-lockfile
+
+      # Fails, rather than publish, if a file can't be parsed or nothing was measured.
+      - run: task metrics:readme
+
+      # The PR body follows .github/PULL_REQUEST_TEMPLATE.md, checked here as CI checks it.
+      - name: Write the pull request body
+        env:
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+          SHA: ${{ github.sha }}
+        run: |
+          {
+            echo '# Description'
+            echo
+            echo "Updates the code metrics in the README, measured on \`main\` at ${SHA:0:7} by the [Code metrics workflow]($RUN_URL)."
+            # The block between the markers starts and ends with a blank line.
+            sed -n '/<!-- METRICS:START -->/,/<!-- METRICS:END -->/p' README.md | sed '1d;$d'
+            cat <<'EOF'
+          Fixes # (none)
+
+          ## Type of change
+
+          - [x] Documentation only
+
+          ## How Has This Been Tested?
+
+          - [x] `task metrics:readme` measured the code on `main`; CI runs every check on this PR.
+
+          ## Checklist
+
+          - [x] The PR title follows Conventional Commits, with a scope where one fits
+          - [x] Commits are signed (Verified)
+          - [x] Nothing from `private/`, no `.env` file and no secret is included
+
+          ## Change in Action
+
+          N/A
+          EOF
+          } > "$RUNNER_TEMP/pr-body.md"
+          task lint:pr-template BODY_FILE="$RUNNER_TEMP/pr-body.md"
+
+      # A short-lived token from Jimmy's private GitHub App (see release-please.yml).
+      - name: Create the app token
+        id: app-token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          client-id: ${{ secrets.RELEASE_APP_CLIENT_ID }}
+          private-key: ${{ secrets.RELEASE_APP_PRIVATE_KEY }}
+          permission-contents: write
+          permission-pull-requests: write
+
+      # Opens or updates the PR if README.md changed; does nothing if it didn't.
+      - uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          sign-commits: true
+          add-paths: README.md
+          branch: chore/code-metrics
+          delete-branch: true
+          commit-message: "docs: update the code metrics"
+          title: "docs: update the code metrics"
+          body-path: ${{ runner.temp }}/pr-body.md

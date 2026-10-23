@@ -4,8 +4,9 @@
 name: Pull request assignee
 
 # Assigns each new pull request to whoever opened it, unless someone is already assigned.
-# Pull requests from other bots, such as Renovate, go to the repository owner. Release
-# Please's release PRs are assigned to its GitHub App's bot and request the owner's review.
+# Pull requests from other bots, such as Renovate, go to the repository owner. The repo's
+# own GitHub App opens the release PRs (Release Please) and the code-metrics PRs
+# (code-metrics.yml); those are assigned to its bot and request the owner's review.
 # Runs on pull_request, not pull_request_target: outside pull requests aren't accepted.
 on:
   pull_request:
@@ -27,7 +28,7 @@ jobs:
     permissions:
       pull-requests: write # adds the assignee and the reviewer
     steps:
-      - name: Assign the author, or the owner for a bot, and request a release PR's review
+      - name: Assign the author, or the owner for a bot, and request a review of the App's PRs
         env:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
@@ -38,15 +39,17 @@ jobs:
           ASSIGNEES: ${{ toJSON(github.event.pull_request.assignees) }}
           HEAD_REF: ${{ github.head_ref }}
         run: |
-          release=false
-          if [[ "$AUTHOR_TYPE" == "Bot" && "$HEAD_REF" == release-please--* ]]; then release=true; fi
+          app=false
+          if [[ "$AUTHOR_TYPE" == "Bot" && ( "$HEAD_REF" == release-please--* || "$HEAD_REF" == chore/code-metrics ) ]]; then
+            app=true
+          fi
           if [[ "$(jq length <<< "$ASSIGNEES")" -gt 0 ]]; then
             echo "Already assigned; leaving it."
           else
             assignee="$AUTHOR"
-            if [[ "$AUTHOR_TYPE" == "Bot" && "$release" != true ]]; then assignee="$OWNER"; fi
+            if [[ "$AUTHOR_TYPE" == "Bot" && "$app" != true ]]; then assignee="$OWNER"; fi
             gh api -X POST "repos/$REPO/issues/$NUMBER/assignees" -f "assignees[]=$assignee" --jq '.assignees[].login'
           fi
-          if [[ "$release" == true ]]; then
+          if [[ "$app" == true ]]; then
             gh api -X POST "repos/$REPO/pulls/$NUMBER/requested_reviewers" -f "reviewers[]=$OWNER" --jq '.requested_reviewers[].login'
           fi
