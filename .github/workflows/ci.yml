@@ -248,8 +248,17 @@ jobs:
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
         run: task test -- --reporter=default --reporter=json --outputFile.json=reports/unit.json
       # Builds website/dist/ and prints /resume/ to resume.pdf with the runner's preinstalled Chrome.
+      # Only builds of main (pushes, nightly and manual runs) get the observability settings:
+      # public repository variables, not secrets (docs/observability.md). PR previews, local
+      # builds and the test builds collect nothing.
       - id: build
         if: ${{ !cancelled() && steps.install.outcome == 'success' }}
+        env:
+          PUBLIC_CF_BEACON_TOKEN: ${{ github.ref == 'refs/heads/main' && vars.PUBLIC_CF_BEACON_TOKEN || '' }}
+          PUBLIC_SENTRY_DSN: ${{ github.ref == 'refs/heads/main' && vars.PUBLIC_SENTRY_DSN || '' }}
+          PUBLIC_SENTRY_RELEASE: ${{ github.ref == 'refs/heads/main' && github.sha || '' }}
+          PUBLIC_POSTHOG_KEY: ${{ github.ref == 'refs/heads/main' && vars.PUBLIC_POSTHOG_KEY || '' }}
+          PUBLIC_POSTHOG_HOST: ${{ github.ref == 'refs/heads/main' && vars.PUBLIC_POSTHOG_HOST || '' }}
         run: task build
       # Checks the built site that is about to be deployed: links, feeds, content rules, config.
       - id: integration

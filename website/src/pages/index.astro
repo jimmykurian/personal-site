@@ -308,7 +308,7 @@ const { sections } = site;
           <div class="credentials__col credentials__col--narrow">
             <h3 class="caps">Resume</h3>
             <p>{site.resumeNote}</p>
-            <a href="/resume.pdf" class="btn">Download PDF <Icon name="download" /></a>
+            <a href="/resume.pdf" class="btn" data-track="resume_pdf_download">Download PDF <Icon name="download" /></a>
           </div>
         </div>
       </div>
@@ -873,6 +873,8 @@ const { sections } = site;
 </style>
 
 <script>
+  import { track } from '../lib/track';
+
   // Types and erases the headline's emphasis phrase in a loop, until the pause button is
   // pressed (WCAG 2.2.2: motion that starts on its own and keeps going needs a way to stop it).
   // Pressing it again resumes. Screen readers get the first phrase from the hidden copy, and
@@ -927,6 +929,7 @@ const { sections } = site;
 
     toggle.addEventListener('click', () => {
       const pausing = !toggle.classList.contains('is-paused');
+      track(pausing ? 'headline_pause' : 'headline_play');
       run++;
       toggle.classList.toggle('is-paused', pausing);
       toggle.setAttribute('aria-label', pausing ? 'Play animation' : 'Pause animation');

@@ -1,0 +1,34 @@
+---
+/**
+ * @file Observability.astro
+ * @author Jimmy Kurian
+ * @copyright Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+ */
+// Cloudflare Web Analytics (page views and Core Web Vitals), Sentry (errors) and PostHog
+// (named events), all cookieless. The settings are public GitHub variables, passed to the
+// build on `main` only, so local, test and preview builds collect nothing. See
+// docs/observability.md.
+const cfToken = import.meta.env.PUBLIC_CF_BEACON_TOKEN;
+---
+
+{
+  cfToken && (
+    <script
+      is:inline
+      type="module"
+      src="https://static.cloudflareinsights.com/beacon.min.js"
+      data-cf-beacon={JSON.stringify({ token: cfToken })}
+    />
+  )
+}
+
+<script>
+  import { startObservability } from '../lib/observability';
+
+  startObservability({
+    PUBLIC_SENTRY_DSN: import.meta.env.PUBLIC_SENTRY_DSN,
+    PUBLIC_SENTRY_RELEASE: import.meta.env.PUBLIC_SENTRY_RELEASE,
+    PUBLIC_POSTHOG_KEY: import.meta.env.PUBLIC_POSTHOG_KEY,
+    PUBLIC_POSTHOG_HOST: import.meta.env.PUBLIC_POSTHOG_HOST,
+  });
+</script>
