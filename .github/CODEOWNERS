@@ -1,0 +1,7 @@
+# Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+# Author: Jimmy Kurian
+# Jimmy owns everything, so GitHub requests Jimmy's review on every pull request someone
+# else opens: Renovate, Dependabot, and the GitHub App's release and code-metrics PRs. The
+# ruleset doesn't require code-owner review: a sole maintainer can't approve their own PRs.
+
+* @jimmykurian

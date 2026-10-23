@@ -6,8 +6,9 @@ name: Pull request assignee
 # Assigns each new pull request to whoever opened it, unless someone is already assigned.
 # Pull requests from other bots, such as Renovate, go to the repository owner. The repo's
 # own GitHub App opens the release PRs (Release Please) and the code-metrics PRs
-# (code-metrics.yml); those are assigned to its bot and request the owner's review.
-# Runs on pull_request, not pull_request_target: outside pull requests aren't accepted.
+# (code-metrics.yml); those are assigned to its bot. Reviews are requested by
+# .github/CODEOWNERS, not here. Runs on pull_request, not pull_request_target: outside pull
+# requests aren't accepted.
 on:
   pull_request:
     types: [opened, reopened]
@@ -26,9 +27,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     permissions:
-      pull-requests: write # adds the assignee and the reviewer
+      pull-requests: write # adds the assignee
     steps:
-      - name: Assign the author, or the owner for a bot, and request a review of the App's PRs
+      - name: Assign the author, the App's bot for its own PRs, or the owner for another bot
         env:
           GH_TOKEN: ${{ github.token }}
           REPO: ${{ github.repository }}
@@ -49,7 +50,4 @@ jobs:
             assignee="$AUTHOR"
             if [[ "$AUTHOR_TYPE" == "Bot" && "$app" != true ]]; then assignee="$OWNER"; fi
             gh api -X POST "repos/$REPO/issues/$NUMBER/assignees" -f "assignees[]=$assignee" --jq '.assignees[].login'
-          fi
-          if [[ "$app" == true ]]; then
-            gh api -X POST "repos/$REPO/pulls/$NUMBER/requested_reviewers" -f "reviewers[]=$OWNER" --jq '.requested_reviewers[].login'
           fi
