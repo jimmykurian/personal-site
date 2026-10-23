@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/jimmykurian/personal-site/compare/website-v1.0.2...website-v1.1.0) (2026-10-23)
+
+
+### Features
+
+* add cookieless analytics, error tracking and event analytics ([#31](https://github.com/jimmykurian/personal-site/issues/31)) ([8082182](https://github.com/jimmykurian/personal-site/commit/808218219e4913f0533f10693872abdc7be5d9e1))
+
 ## [1.0.2](https://github.com/jimmykurian/personal-site/compare/website-v1.0.1...website-v1.0.2) (2026-10-23)
 
 
