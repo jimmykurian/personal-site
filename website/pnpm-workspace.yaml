@@ -32,6 +32,7 @@ auditConfig:
 
 # Install scripts are off unless listed here. esbuild (via tsx, which runs the Cucumber
 # integration suite) gets its binary from its platform package, so its postinstall check
-# isn't needed.
+# isn't needed. core-js (via posthog-js) only prints a funding message after install.
 allowBuilds:
+  core-js: false
   esbuild: false

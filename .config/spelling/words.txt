@@ -66,6 +66,8 @@ NSEW
 nums
 Othamar
 pipx
+PostHog
+posthog
 requestfailed
 Riok
 Roundtable
