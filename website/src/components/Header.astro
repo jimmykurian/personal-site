@@ -59,9 +59,10 @@ const links = [
   <div class="site-header__rule" aria-hidden="true"></div>
 </header>
 
-<script is:inline>
-  // Close the phone menu after following an in-page link.
-  document.querySelectorAll('.menu__link').forEach((a) =>
+<script>
+  // Close the phone menu after following an in-page link. A bundled script, not is:inline,
+  // so the Content-Security-Policy covers it.
+  document.querySelectorAll<HTMLElement>('.menu__link').forEach((a) =>
     a.addEventListener('click', () => a.closest('details')?.removeAttribute('open')),
   );
 </script>

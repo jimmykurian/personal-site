@@ -48,10 +48,6 @@ exports[`Header > shows the wordmark, the primary nav and the resume link 1`] = 
 <div class="site-header__rule" aria-hidden="true">
 </div>
 </header>
-<script>
-  // Close the phone menu after following an in-page link.
-  document.querySelectorAll('.menu__link').forEach((a) =>
-    a.addEventListener('click', () => a.closest('details')?.removeAttribute('open')),
-  );
+<script type="module" src="src/components/Header.astro (bundled script)">
 </script>"
 `;
