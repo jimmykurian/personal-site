@@ -11,9 +11,11 @@ autorun
 azurestaticapps
 bliki
 Bogard
+boyter
 Brien
 brightgreen
 Bytespider
+cocomo
 commitlint
 commitlintrc
 cutover
