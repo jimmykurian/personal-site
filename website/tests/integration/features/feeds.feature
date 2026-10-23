@@ -33,5 +33,5 @@ Feature: RSS feed and sitemap
 
   Scenario: The sitemap lists every public page on the www host
     When I collect the URLs in every sitemap
-    Then they are the home, reading and writing pages plus every published post, on the www host
+    Then they are the home, privacy, reading and writing pages plus every published post, on the www host
     # The resume print page and the 404 page are left out.

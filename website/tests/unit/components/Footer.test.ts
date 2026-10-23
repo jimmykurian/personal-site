@@ -30,7 +30,7 @@ describe('Footer', () => {
     expect(normalize(html)).toMatchSnapshot();
   });
 
-  it('links the RSS feed, Lichess and the source repository', async () => {
+  it('links the RSS feed, the privacy page, Lichess and the source repository', async () => {
     // Arrange (no props)
 
     // Act
@@ -39,7 +39,7 @@ describe('Footer', () => {
     // Assert
     const root = dom(html);
     const hrefs = root.querySelectorAll('a').map((a) => a.getAttribute('href'));
-    expect(hrefs).toEqual(['/rss.xml', site.links.lichess, site.repository]);
+    expect(hrefs).toEqual(['/rss.xml', '/privacy/', site.links.lichess, site.repository]);
     expect(root.querySelector('.site-footer__icon')!.getAttribute('aria-label')).toBe('Chess on Lichess');
     expect(root.querySelector('.site-footer__clock')!.text).toContain('Off the clock:');
     expect(root.querySelectorAll('a').at(-1)!.text).toBe('Source');

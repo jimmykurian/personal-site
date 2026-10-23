@@ -91,9 +91,9 @@ When('I collect the URLs in every sitemap', function (this: SiteWorld) {
 });
 
 Then(
-  'they are the home, reading and writing pages plus every published post, on the www host',
+  'they are the home, privacy, reading and writing pages plus every published post, on the www host',
   function (this: SiteWorld) {
-    const expected = ['/', '/reading/', '/writing/', ...publishedPostIds().map((id) => `/writing/${id}/`)]
+    const expected = ['/', '/privacy/', '/reading/', '/writing/', ...publishedPostIds().map((id) => `/writing/${id}/`)]
       .map((p) => SITE + p)
       .sort();
     assert.deepEqual(this.recall<string[]>('urls'), expected);

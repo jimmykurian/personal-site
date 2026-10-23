@@ -23,10 +23,10 @@ When('I list the built pages', function (this: SiteWorld) {
 });
 
 Then(
-  'they are the home, 404, reading, resume and writing pages, plus one page per published post',
+  'they are the home, 404, privacy, reading, resume and writing pages, plus one page per published post',
   function (this: SiteWorld) {
     const posts = publishedPostIds().map((id) => `/writing/${id}/`);
-    const expected = ['/', '/404.html', '/reading/', '/resume/', '/writing/', ...posts].sort();
+    const expected = ['/', '/404.html', '/privacy/', '/reading/', '/resume/', '/writing/', ...posts].sort();
     assert.deepEqual(this.recall<string[]>('urls'), expected);
   },
 );

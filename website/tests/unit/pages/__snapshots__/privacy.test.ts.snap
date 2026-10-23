@@ -1,0 +1,25 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`privacy page > names each tool, says there are no cookies, and gives the public contact address 1`] = `
+"<section class="wrap privacy" aria-labelledby="privacy-title">
+<div class="ledger ledger--bare">
+<div class="ledger__label">
+<p class="caps">Privacy</p>
+</div>
+<div class="ledger__body privacy__body">
+<h1 id="privacy-title" class="display privacy__title">No cookies, <em>no profiles</em>.</h1>
+<p>This site sets no cookies and stores nothing in your browser. It measures three things, each with a tool that runs without cookies:</p>
+<ul>
+<li>
+<strong>Visits and page speed</strong>, with<a href="https://www.cloudflare.com/web-analytics/" class="text-link">Cloudflare Web Analytics</a>: which pages are read, where visitors came from, and how fast pages load. It doesn't track anyone across sites.</li>
+<li>
+<strong>Errors</strong>, with <a href="https://sentry.io/" class="text-link">Sentry</a>: when a script on this site breaks, the error and the browser it happened in, so it can be fixed.</li>
+<li>
+<strong>A few clicks</strong>, with <a href="https://posthog.com/" class="text-link">PostHog</a>: downloading the resume, following a link to another site, writing an email, pausing the headline and showing more books. Visitors are counted with an anonymous daily hash, never a profile.</li>
+</ul>
+<p>None of them receives your name or email address, and nothing is sold or shared for advertising. A browser that blocks these tools still sees the whole site.</p>
+<p>Questions: <a href="mailto:hello@jimmykurian.me" class="text-link">hello@jimmykurian.me</a>.</p>
+</div>
+</div>
+</section>"
+`;
