@@ -114,7 +114,7 @@ CI runs the integration tests against the exact `dist/` it is about to deploy, a
 
 **End-to-end tests** live in `tests/e2e/` (`*.spec.ts`, configured in `playwright.config.ts`). Playwright serves `dist/` with `astro preview` and drives it in Google Chrome at a desktop size (1280×800) and a phone size (Pixel 7), checking what only a browser can:
 
-- the headline types through its phrases without changing height, stops after one pass or when the Pause animation button is pressed, and stays still with reduced motion
+- the headline types through its phrases in a loop without changing height, pauses and resumes from its button, and stays still with reduced motion
 - the desktop nav and the phone menu, which closes after a link is followed
 - the skip link, hero links, Projects button and contact address
 - the reading list pages ten books at a time, and lists every book without JavaScript

@@ -72,7 +72,7 @@ Every component has a unit test at the same path under `website/tests/unit/`.
 
 There are three animations, all small:
 
-- The home page headline types through its phrases once behind a blinking caret, then stops on the first phrase. It's held at the height of its longest phrase so the page doesn't jump, and a Pause animation button stops it sooner (see [Accessibility](../accessibility.md#the-home-page-headline)).
+- The home page headline types through its phrases in a loop behind a blinking caret, held at the height of its longest phrase so the page doesn't jump. A small pause symbol under it stops the loop and becomes a play symbol that resumes it (see [Accessibility](../accessibility.md#the-home-page-headline)).
 - The social icons in the home page hero fade their color on hover (0.15s).
 - Reading-list covers lift 4px on hover (0.2s).
 

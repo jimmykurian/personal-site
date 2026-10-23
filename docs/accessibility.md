@@ -17,14 +17,14 @@ The site is static HTML and CSS with a few small scripts. It has no forms, video
 | Area | Status |
 | --- | --- |
 | WCAG 2.0, 2.1 and 2.2 A and AA, automated | Passing: axe runs on every route at desktop and phone sizes, including the 2.2 rules such as target size (2.5.8), and fails the build on any violation |
-| Pause, Stop, Hide (2.2.2, Level A) | Met: the home page headline runs through its phrases once and stops, and a Pause animation button stops it sooner. End-to-end tests cover both |
+| Pause, Stop, Hide (2.2.2, Level A) | Met: the home page headline loops until its pause button is pressed, and resumes from a play button. End-to-end tests cover both |
 | Lighthouse accessibility | Passing: CI fails below 0.95 on `/`, `/writing/`, a post and `/reading/` |
 | Manual checks (screen reader, zoom, text spacing) | Done ad hoc, not recorded |
 
 ## How it's checked
 
 - **axe** (`website/tests/e2e/a11y.spec.ts`): the WCAG 2.0, 2.1 and 2.2 A and AA rules on every route, in Chrome at 1280×800 and as a Pixel 7. Any violation fails CI.
-- **End-to-end tests** (`website/tests/e2e/`): the skip link, the keyboard path through the navigation and the phone menu, the headline stopping after one pass or when paused, and staying still with reduced motion, and the reading list working without JavaScript.
+- **End-to-end tests** (`website/tests/e2e/`): the skip link, the keyboard path through the navigation and the phone menu, the headline looping until it's paused, pausing and resuming from its button, and staying still with reduced motion, and the reading list working without JavaScript.
 - **Lighthouse** (`.config/lighthouserc.json`): the accessibility score must be at least 0.95.
 - **ESLint** (`website/eslint.config.js`): `eslint-plugin-astro`'s `jsx-a11y-recommended` rules on the markup in every `.astro` file, for things like missing alt text and misused ARIA attributes.
 
@@ -35,9 +35,9 @@ Automated tools find only part of what WCAG covers. Focus order, meaningful alt 
 | Criterion | Target | Today |
 | --- | --- | --- |
 | [1.4.6 Contrast (Enhanced)](https://www.w3.org/WAI/WCAG22/Understanding/contrast-enhanced) | Body text and UI at least 7:1 | Met for `--ink` (18.6:1). The accent text, `--accent-small` (5.6:1), stays at AA by choice |
-| [2.3.3 Animation from Interactions](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions) | Every animation stops with `prefers-reduced-motion` | Met: the headline, the caret and the cover lift all respect it, and the Pause button doesn't appear |
+| [2.3.3 Animation from Interactions](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions) | Every animation stops with `prefers-reduced-motion` | Met: the headline, the caret and the cover lift all respect it, and the pause button doesn't appear |
 | [2.4.13 Focus Appearance](https://www.w3.org/WAI/WCAG22/Understanding/focus-appearance) | A visible, solid focus indicator with 3:1 contrast | Met: `:focus-visible` draws a 2px `--accent` outline (4.6:1 on white) with a 3px offset |
-| [2.5.5 Target Size (Enhanced)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-enhanced) | Controls at least 44×44px | Met for the navigation, the phone menu, the hero icons and the Pause animation button. Links inside sentences are exempt |
+| [2.5.5 Target Size (Enhanced)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-enhanced) | Controls at least 44×44px | Met for the navigation, the phone menu, the hero icons and the headline's pause button. Links inside sentences are exempt |
 
 ## Color contrast
 
@@ -56,10 +56,11 @@ The palette tokens are in `website/src/styles/global.css`. The ratios are on whi
 
 ## The home page headline
 
-The headline's emphasis phrase types and erases through every phrase in `site.headline.rotating`, once, then stops on the first phrase with the caret hidden (`website/src/pages/index.astro`). One pass takes about 20 seconds, longer than the 5 seconds WCAG 2.2.2 allows for motion that starts on its own. So while it moves, a **Pause animation** button under the headline stops it at once:
+The headline's emphasis phrase types and erases through the phrases in `site.headline.rotating`, in a loop behind a blinking caret (`website/src/pages/index.astro`). WCAG 2.2.2 lets motion that starts on its own keep going only if there's a way to stop it, so a small pause symbol (⏸) sits just under the headline:
 
-- The button is a real `<button>`, 44px tall and reachable by keyboard. It's `hidden` in the HTML, and the script shows it only when the animation starts, so it never appears without JavaScript or with reduced motion.
-- Pressing it settles the headline on the first phrase, hides the caret and removes the button. The focus moves to the Projects button next to it, so keyboard users don't lose their place.
+- It's a real `<button>` with a 44px target, reachable by keyboard, named "Pause animation" for screen readers. It's `hidden` in the HTML, and the script shows it only when the animation starts, so it never appears without JavaScript or with reduced motion.
+- Pressing it stops the loop on the first phrase and hides the caret. The symbol becomes a play symbol (▶), named "Play animation", and pressing that resumes the loop. The animation never ends unless someone presses it.
+- The focus stays on the button, so keyboard users can pause and resume in place.
 - Screen readers always read the first phrase, from a visually hidden copy. The moving text is `aria-hidden`.
 
 ## Rules for changes

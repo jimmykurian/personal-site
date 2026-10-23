@@ -53,7 +53,7 @@ The size and complexity of the code: lines of code without blanks or comments ([
 | Metric | Website | Infrastructure | Total |
 | --- | --- | --- | --- |
 | Files | 24 | 8 | 32 |
-| Lines of code | 3,064 | 138 | 3,202 |
+| Lines of code | 3,082 | 138 | 3,220 |
 | Functions | 176 | – | 176 |
 | Average complexity | 1.9 | – | 1.9 |
 | Max complexity | 9 | – | 9 |
@@ -65,7 +65,7 @@ The size and complexity of the code: lines of code without blanks or comments ([
 
 | Function | Where | Complexity |
 | --- | --- | --- |
-| async arrow function | `website/src/pages/index.astro:890` | 9 |
+| async arrow function | `website/src/pages/index.astro:906` | 9 |
 | `installedPackages` | `website/scripts/check-licenses.mjs:96` | 8 |
 | `main` | `website/scripts/check-licenses.mjs:135` | 8 |
 | `load` | `website/src/lib/goodreads.ts:105` | 8 |
@@ -74,7 +74,7 @@ The size and complexity of the code: lines of code without blanks or comments ([
 | `fetchFeed` | `website/src/lib/goodreads.ts:36` | 7 |
 | `atom` | `website/scripts/check-licenses.mjs:42` | 6 |
 | `licenseOf` | `website/scripts/check-licenses.mjs:86` | 6 |
-| arrow function | `website/src/pages/index.astro:112` | 6 |
+| arrow function | `website/src/pages/index.astro:120` | 6 |
 
 </details>
 
