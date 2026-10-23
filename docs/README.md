@@ -8,6 +8,7 @@ How jimmykurian.me is built, deployed, designed, secured and tested.
 
 | Section | Covers |
 | --- | --- |
+| [Accessibility](accessibility.md) | The WCAG 2.2 AA goal and the AAA criteria in scope, how it's checked, known gaps, and the rules for changes |
 | [Architecture](architecture/README.md) | C4 context and containers, the UML content model, and flow and sequence diagrams |
 | [Deployment](deployment/overview.md) | The CI pipeline, previews, production, the nightly rebuild, releases and rolling back |
 | [Design](design/design-guidelines.md) | The editorial direction, palette tokens, type, the ledger layout, components and motion |
@@ -37,4 +38,4 @@ These files at the root and in the subprojects cover the rest:
 
 Follow the [style guide](STYLE_GUIDE.md).
 
-Last reviewed: 2026-10-20
+Last reviewed: 2026-10-23

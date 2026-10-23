@@ -91,7 +91,8 @@ Nothing moves on scroll. With `prefers-reduced-motion: reduce`, the headline sho
 
 ## See also
 
+- [Accessibility](../accessibility.md)
 - [Architecture: content model](../architecture/content-model.md)
 - [Testing strategy](../testing/testing-strategy.md)
 
-Last reviewed: 2026-10-20
+Last reviewed: 2026-10-23
