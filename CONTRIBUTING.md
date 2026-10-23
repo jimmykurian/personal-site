@@ -229,6 +229,8 @@ Renovate (`.github/renovate.json`) handles version updates for the npm packages,
 
 Release Please (`.github/workflows/release-please.yml`) keeps a release PR open that bumps the version and `CHANGELOG.md` of `website/` and `infrastructure/` from the Conventional Commits since their last release. Merging it tags each package and publishes a GitHub Release. See [Releases](#releases).
 
+Code metrics (`.github/workflows/code-metrics.yml`) runs after a merge that changes `website/src/`, `website/scripts/` or `infrastructure/modules/`. `task metrics:readme` (`website/scripts/code-metrics.mjs`) counts the files and lines of code with [scc](https://github.com/boyter/scc), without blanks, comments, content or generated files, and the cyclomatic complexity of every function with ESLint's `complexity` rule on the website's ESLint config. It writes them between the `METRICS` markers in the README, and the workflow proposes the change in one pull request, `docs: update the code metrics` on `chore/code-metrics`, from the same GitHub App as Release Please. The PR is updated in place, and none opens unless a number changed. It's assigned to the App's bot and requests Jimmy's review. It fails, rather than publish, if a file can't be parsed or nothing was measured. `task metrics` prints the same table.
+
 ## Before you push
 
 The pre-push hook runs `task test` when `website/` changed and `task infra:test`

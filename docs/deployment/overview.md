@@ -56,11 +56,13 @@ How the resources were created, and the OpenTofu modules that model them: [infra
 
 ## Secrets
 
-The deploy needs one secret, `AZURE_STATIC_WEB_APPS_API_TOKEN`, used only by the Deploy and Close PR preview jobs. Release Please signs in as a private GitHub App installed on this repository only, with the `RELEASE_APP_CLIENT_ID` and `RELEASE_APP_PRIVATE_KEY` secrets. Every other job runs with `contents: read` and the narrowest extra permission it needs.
+The deploy needs one secret, `AZURE_STATIC_WEB_APPS_API_TOKEN`, used only by the Deploy and Close PR preview jobs. Release Please and the Code metrics workflow sign in as a private GitHub App installed on this repository only, with the `RELEASE_APP_CLIENT_ID` and `RELEASE_APP_PRIVATE_KEY` secrets. Every other job runs with `contents: read` and the narrowest extra permission it needs.
 
 ## Releases
 
 Release Please versions `website/` and `infrastructure/` from the Conventional Commits on `main`, and keeps one release PR open. Merging it tags each package and publishes a GitHub Release. A release deploys nothing: every merge to `main` already deploys. See [CONTRIBUTING.md, Releases](../../CONTRIBUTING.md#releases).
+
+After a merge that changes the code, the Code metrics workflow measures it and proposes the README's new metrics table in a pull request, through the same GitHub App. It deploys nothing either.
 
 ## When something goes wrong
 
@@ -80,4 +82,4 @@ Release Please versions `website/` and `infrastructure/` from the Conventional C
 - [Security overview](../security/overview.md)
 - [Testing strategy](../testing/testing-strategy.md)
 
-Last reviewed: 2026-10-21
+Last reviewed: 2026-10-23
