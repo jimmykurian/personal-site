@@ -53,8 +53,8 @@ The size and complexity of the code: lines of code without blanks or comments ([
 | Metric | Website | Infrastructure | Total |
 | --- | --- | --- | --- |
 | Files | 24 | 8 | 32 |
-| Lines of code | 3,013 | 138 | 3,151 |
-| Functions | 173 | – | 173 |
+| Lines of code | 3,026 | 138 | 3,164 |
+| Functions | 175 | – | 175 |
 | Average complexity | 1.8 | – | 1.8 |
 | Max complexity | 8 | – | 8 |
 | Modules | – | 2 | 2 |

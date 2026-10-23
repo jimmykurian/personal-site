@@ -57,10 +57,24 @@ export function collectComplexity(results, root) {
   return functions;
 }
 
-/** Module folders and `resource` blocks in the OpenTofu sources, given as { path, text }. */
+// A quoted string, a /* */ block comment, or a # or // line comment. Strings match first, so a
+// "/*" or "//" inside one (a glob, a URL) never starts a comment.
+const HCL_STRING_OR_COMMENT = /"(?:\\.|[^"\\\n])*"|\/\*[\s\S]*?\*\/|(?:#|\/\/)[^\n]*/g;
+
+/** HCL `text` with its comments removed, keeping strings and line breaks. */
+const stripComments = (text) =>
+  text.replace(HCL_STRING_OR_COMMENT, (match) => (match.startsWith('"') ? match : match.replace(/[^\n]/g, '')));
+
+/**
+ * Module folders and `resource` blocks in the OpenTofu sources, given as { path, text }. A
+ * commented-out block doesn't count.
+ */
 export function countInfrastructure(sources) {
   const modules = new Set(sources.map(({ path }) => dirname(path)));
-  const resources = sources.reduce((sum, { text }) => sum + (text.match(/^resource\s+"/gm) ?? []).length, 0);
+  const resources = sources.reduce(
+    (sum, { text }) => sum + (stripComments(text).match(/^resource\s+"/gm) ?? []).length,
+    0,
+  );
   return { modules: modules.size, resources };
 }
 

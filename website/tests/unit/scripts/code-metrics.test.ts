@@ -152,6 +152,38 @@ describe('countInfrastructure', () => {
     // Assert
     expect(result).toEqual({ modules: 2, resources: 3 });
   });
+
+  it.each([
+    ['a /* */ block comment', 'resource "x" "live" {}\n/*\nresource "x" "disabled" {}\n*/\n'],
+    ['a // line comment', 'resource "x" "live" {}\n// resource "x" "disabled" {}\n'],
+    ['a # comment after the block', 'resource "x" "live" {} # resource "x" "note"\n'],
+  ])('skips a resource inside %s', (_, text) => {
+    // Arrange
+    const sources = [{ path: 'infrastructure/modules/azure/a/main.tf', text }];
+
+    // Act
+    const result = countInfrastructure(sources);
+
+    // Assert
+    expect(result).toEqual({ modules: 1, resources: 1 });
+  });
+
+  it('keeps comment markers inside strings, so a glob or URL never hides the next resource', () => {
+    // Arrange
+    const text = [
+      'locals { glob = "assets/*", url = "https://example.com" }',
+      'resource "x" "one" {}',
+      'locals { pattern = "*/" }',
+      'resource "x" "two" {}',
+    ].join('\n');
+    const sources = [{ path: 'infrastructure/modules/azure/a/main.tf', text }];
+
+    // Act
+    const result = countInfrastructure(sources);
+
+    // Assert
+    expect(result).toEqual({ modules: 1, resources: 2 });
+  });
 });
 
 describe('summarize', () => {
