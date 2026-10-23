@@ -68,6 +68,16 @@ const { sections } = site;
         <span class="visually-hidden">{site.headline.emphasis}</span>{' '}
         <em class="typed" aria-hidden="true" data-phrases={JSON.stringify(site.headline.rotating)}>{site.headline.emphasis}</em>.
       </h1>
+      <!-- Pauses and resumes the headline (WCAG 2.2.2). Shown only while it can move. -->
+      <button type="button" class="hero__pause" aria-label="Pause animation" hidden>
+        <svg class="hero__pause-icon hero__pause-icon--pause" viewBox="0 0 12 12" aria-hidden="true" focusable="false">
+          <rect x="2" y="1" width="3" height="10" />
+          <rect x="7" y="1" width="3" height="10" />
+        </svg>
+        <svg class="hero__pause-icon hero__pause-icon--play" viewBox="0 0 12 12" aria-hidden="true" focusable="false">
+          <path d="M3 1l8 5-8 5z" />
+        </svg>
+      </button>
       <p class="hero__intro">{site.intro}</p>
       <div class="hero__actions">
         <a href="#projects" class="btn hero__cta">Projects <Icon name="arrow" /></a>
@@ -369,6 +379,52 @@ const { sections } = site;
 
   .typed.is-typing::after {
     animation: none;
+  }
+
+  .typed.is-paused::after {
+    display: none;
+  }
+
+  /* A small symbol with a 44px target; the play icon shows while paused. */
+  .hero__pause {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-start;
+    width: 44px;
+    height: 44px;
+
+    /* Line the symbol up with the headline's left edge, close under it. */
+    margin: -24px 0 -12px -15px;
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--ink);
+    cursor: pointer;
+    transition: color 0.15s ease;
+  }
+
+  .hero__pause[hidden] {
+    display: none;
+  }
+
+  .hero__pause:hover {
+    color: var(--accent);
+  }
+
+  .hero__pause-icon {
+    width: 14px;
+    height: 14px;
+    fill: currentcolor;
+  }
+
+  .hero__pause-icon--play,
+  .hero__pause.is-paused .hero__pause-icon--pause {
+    display: none;
+  }
+
+  .hero__pause.is-paused .hero__pause-icon--play {
+    display: block;
   }
 
   @keyframes caret {
@@ -817,14 +873,19 @@ const { sections } = site;
 </style>
 
 <script>
-  // Types and erases the headline's emphasis phrase in a loop. Screen readers get the
-  // first phrase from the hidden copy, and reduced-motion visitors see it without animation.
+  // Types and erases the headline's emphasis phrase in a loop, until the pause button is
+  // pressed (WCAG 2.2.2: motion that starts on its own and keeps going needs a way to stop it).
+  // Pressing it again resumes. Screen readers get the first phrase from the hidden copy, and
+  // reduced-motion visitors see it without animation or the button.
   const el = document.querySelector<HTMLElement>('.typed');
+  const toggle = document.querySelector<HTMLButtonElement>('.hero__pause');
   const phrases: string[] = JSON.parse(el?.dataset.phrases ?? '[]');
 
-  if (el && phrases.length > 1 && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  if (el && toggle && phrases.length > 1 && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const title = el.closest('h1')!;
     const wait = (ms: number) => new Promise((r) => setTimeout(r, ms));
+    // Each run of the loop has a number; pausing starts a new one, so the old run stops.
+    let run = 0;
 
     // Hold the headline at the height of its longest phrase so the page below doesn't jump.
     const reserve = () => {
@@ -842,23 +903,44 @@ const { sections } = site;
     document.fonts.ready.then(reserve);
     addEventListener('resize', reserve);
 
-    (async () => {
+    const loop = async (id: number) => {
       for (let i = 0; ; i = (i + 1) % phrases.length) {
         const text = phrases[i];
         await wait(i === 0 && el.textContent === text ? 3000 : 2600);
+        if (id !== run) return;
         el.classList.add('is-typing');
         for (let n = text.length; n >= 0; n--) {
+          if (id !== run) return;
           el.textContent = text.slice(0, n);
           await wait(35);
         }
         const next = phrases[(i + 1) % phrases.length];
         await wait(300);
         for (let n = 1; n <= next.length; n++) {
+          if (id !== run) return;
           el.textContent = next.slice(0, n);
           await wait(70 + Math.random() * 60);
         }
         el.classList.remove('is-typing');
       }
-    })();
+    };
+
+    toggle.addEventListener('click', () => {
+      const pausing = !toggle.classList.contains('is-paused');
+      run++;
+      toggle.classList.toggle('is-paused', pausing);
+      toggle.setAttribute('aria-label', pausing ? 'Play animation' : 'Pause animation');
+      el.classList.toggle('is-paused', pausing);
+      if (pausing) {
+        // Settle on the first phrase, the one screen readers hear.
+        el.classList.remove('is-typing');
+        el.textContent = phrases[0];
+      } else {
+        loop(run);
+      }
+    });
+
+    toggle.hidden = false;
+    loop(run);
   }
 </script>

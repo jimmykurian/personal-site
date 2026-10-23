@@ -72,11 +72,11 @@ Every component has a unit test at the same path under `website/tests/unit/`.
 
 There are three animations, all small:
 
-- The home page headline types through its phrases behind a blinking caret, held at the height of its longest phrase so the page doesn't jump.
+- The home page headline types through its phrases in a loop behind a blinking caret, held at the height of its longest phrase so the page doesn't jump. A small pause symbol under it stops the loop and becomes a play symbol that resumes it (see [Accessibility](../accessibility.md#the-home-page-headline)).
 - The social icons in the home page hero fade their color on hover (0.15s).
 - Reading-list covers lift 4px on hover (0.2s).
 
-Nothing moves on scroll. With `prefers-reduced-motion: reduce`, the headline shows its first phrase without the caret, and the covers don't move. Anything new that animates follows the same rule.
+Nothing moves on scroll. With `prefers-reduced-motion: reduce`, the headline shows its first phrase without the caret, and the covers don't move. Anything new that animates follows the same rule, and anything that starts on its own stops within 5 seconds or has a pause control.
 
 ## Images
 
@@ -91,7 +91,8 @@ Nothing moves on scroll. With `prefers-reduced-motion: reduce`, the headline sho
 
 ## See also
 
+- [Accessibility](../accessibility.md)
 - [Architecture: content model](../architecture/content-model.md)
 - [Testing strategy](../testing/testing-strategy.md)
 
-Last reviewed: 2026-10-20
+Last reviewed: 2026-10-23

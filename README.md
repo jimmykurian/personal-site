@@ -53,10 +53,10 @@ The size and complexity of the code: lines of code without blanks or comments ([
 | Metric | Website | Infrastructure | Total |
 | --- | --- | --- | --- |
 | Files | 24 | 8 | 32 |
-| Lines of code | 3,026 | 138 | 3,164 |
-| Functions | 175 | – | 175 |
-| Average complexity | 1.8 | – | 1.8 |
-| Max complexity | 8 | – | 8 |
+| Lines of code | 3,082 | 138 | 3,220 |
+| Functions | 176 | – | 176 |
+| Average complexity | 1.9 | – | 1.9 |
+| Max complexity | 9 | – | 9 |
 | Modules | – | 2 | 2 |
 | Resources | – | 3 | 3 |
 
@@ -65,6 +65,7 @@ The size and complexity of the code: lines of code without blanks or comments ([
 
 | Function | Where | Complexity |
 | --- | --- | --- |
+| async arrow function | `website/src/pages/index.astro:906` | 9 |
 | `installedPackages` | `website/scripts/check-licenses.mjs:96` | 8 |
 | `main` | `website/scripts/check-licenses.mjs:135` | 8 |
 | `load` | `website/src/lib/goodreads.ts:105` | 8 |
@@ -73,8 +74,7 @@ The size and complexity of the code: lines of code without blanks or comments ([
 | `fetchFeed` | `website/src/lib/goodreads.ts:36` | 7 |
 | `atom` | `website/scripts/check-licenses.mjs:42` | 6 |
 | `licenseOf` | `website/scripts/check-licenses.mjs:86` | 6 |
-| arrow function | `website/src/pages/index.astro:110` | 6 |
-| async arrow function | `website/src/pages/index.astro:845` | 6 |
+| arrow function | `website/src/pages/index.astro:120` | 6 |
 
 </details>
 
@@ -143,7 +143,7 @@ flowchart TB
 
 - **Small and static.** No client framework: a few inline scripts, each respecting `prefers-reduced-motion`. Add an island only when a feature needs one.
 - **Private by default.** Client names are anonymized, and the site and resume carry no home address, phone, personal email, clearance or patent application number. Tests check every published file for those patterns.
-- **Accessible and fast.** axe checks WCAG 2.1 A and AA on every page at desktop and phone sizes. Lighthouse fails the build below 0.95 for accessibility.
+- **Accessible and fast.** The goal is WCAG 2.2 AA ([docs/accessibility.md](docs/accessibility.md)): axe checks the 2.0, 2.1 and 2.2 A and AA rules on every page at desktop and phone sizes. Lighthouse fails the build below 0.95 for accessibility.
 - **Every check blocks.** Nothing only warns. A finding is fixed, or skipped inline with a reason.
 - **One source of truth.** Tool versions live only in `.mise.toml`, and commands only in `Taskfile.yml`. CI and the git hooks run the same tasks you run locally.
 - **Supply chain kept tight.** Actions are pinned to commit SHAs. Packages come only from registry.npmjs.org, with sha512 hashes. Renovate waits 7 days before taking a new version. gitleaks, CodeQL and secret scanning watch the code.
@@ -175,6 +175,7 @@ The devcontainer (`.devcontainer/`) does all of that on creation, for VS Code or
 ```text
 .github/workflows/       every check, the deploy and the PR check table (ci.yml); PR labels, assignee, title and template checks; releases; code metrics
 .github/labeler.yml      which paths get which pull request label
+.github/CODEOWNERS       Jimmy owns everything, so bot PRs request Jimmy's review
 badges branch            the README status badges, written by CI (never merged; not a working branch)
 .github/ISSUE_TEMPLATE/  bug, feature and subtask forms; PULL_REQUEST_TEMPLATE.md beside it
 .github/renovate.json    version updates (weekly, grouped)
@@ -191,7 +192,7 @@ badges branch            the README status badges, written by CI (never merged; 
 .mise.toml               tool versions
 .alexrc.yml              inclusive-language allow list (alex reads it only from the root)
 Taskfile.yml             every check, test and build step, by name
-docs/                    architecture, deployment, design, security and testing docs, and the docs style guide
+docs/                    accessibility, architecture, deployment, design, security and testing docs, and the docs style guide
 infrastructure/          OpenTofu modules and tests for the Azure resources (see infrastructure/README.md)
 website/                 the Astro site (see website/README.md)
 AGENTS.md                what coding agents need on every task

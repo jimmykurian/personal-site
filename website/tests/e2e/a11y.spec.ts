@@ -7,8 +7,8 @@
 import AxeBuilder from '@axe-core/playwright';
 import { expect, routes, test } from './fixtures';
 
-// WCAG 2.1 A and AA, the level the site aims for.
-const tags = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa'];
+// WCAG 2.0, 2.1 and 2.2 A and AA, the level the site aims for (docs/accessibility.md).
+const tags = ['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'wcag22aa'];
 
 test.describe('accessibility', () => {
   for (const route of routes) {

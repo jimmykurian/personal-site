@@ -35,6 +35,36 @@ test.describe('home page headline', () => {
     expect(after!.height).toBe(before!.height);
   });
 
+  test('keeps looping until the pause button is pressed', async ({ page }) => {
+    // Arrange
+    await page.clock.install();
+    await page.goto('/');
+
+    // Act (a pass through every phrase takes about 20 seconds)
+    await page.clock.runFor(60_000);
+
+    // Assert
+    await expect(page.getByRole('button', { name: 'Pause animation' })).toBeVisible();
+    await expect(page.locator('h1 .typed')).not.toHaveClass(/is-paused/);
+  });
+
+  test('the pause button stops it on the first phrase, and play resumes it', async ({ page }) => {
+    // Arrange
+    await page.goto('/');
+    const typed = page.locator('h1 .typed');
+    await expect(typed).toHaveText(site.headline.rotating[1], { timeout: 15_000 });
+
+    // Act
+    await page.getByRole('button', { name: 'Pause animation' }).click();
+
+    // Assert
+    await expect(typed).toHaveText(site.headline.rotating[0]);
+    await page.waitForTimeout(3_500);
+    await expect(typed).toHaveText(site.headline.rotating[0]);
+    await page.getByRole('button', { name: 'Play animation' }).click();
+    await expect(typed).toHaveText(site.headline.rotating[1], { timeout: 15_000 });
+  });
+
   test('stays still for visitors who prefer reduced motion', async ({ page }) => {
     // Arrange
     await page.emulateMedia({ reducedMotion: 'reduce' });
@@ -45,6 +75,7 @@ test.describe('home page headline', () => {
 
     // Assert
     await expect(page.locator('h1 .typed')).toHaveText(site.headline.emphasis);
+    await expect(page.getByRole('button', { name: 'Pause animation' })).toBeHidden();
   });
 
   test('reads as one sentence to screen readers', async ({ page }) => {
