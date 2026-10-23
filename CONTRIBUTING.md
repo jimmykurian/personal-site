@@ -108,6 +108,10 @@ Every change goes through a pull request; `main` doesn't take direct pushes:
   template (`task lint:pr-template`), labels the PR by the paths it changes
   (`.github/labeler.yml`), and assigns it to whoever opened it (the owner for
   a bot's PR, except a release PR; see [Releases](#releases)).
+- Copilot reviews the PRs Jimmy opens. `.github/CODEOWNERS` makes Jimmy the
+  owner of everything, so GitHub requests Jimmy's review on every PR Jimmy
+  didn't open: Renovate's, Dependabot's and the GitHub App's. Code-owner review
+  isn't required, because a sole maintainer can't approve their own PRs.
 - Merging needs the CI checks, CodeQL and a Copilot review to pass. The
   ruleset requires the **Title**, **Template**, **Repository**, **Website**,
   **Infrastructure** and **CodeQL** checks by name; a job skipped because its
@@ -229,7 +233,7 @@ Renovate (`.github/renovate.json`) handles version updates for the npm packages,
 
 Release Please (`.github/workflows/release-please.yml`) keeps a release PR open that bumps the version and `CHANGELOG.md` of `website/` and `infrastructure/` from the Conventional Commits since their last release. Merging it tags each package and publishes a GitHub Release. See [Releases](#releases).
 
-Code metrics (`.github/workflows/code-metrics.yml`) runs after a merge that changes `website/src/`, `website/scripts/` or `infrastructure/modules/`. `task metrics:readme` (`website/scripts/code-metrics.mjs`) counts the files and lines of code with [scc](https://github.com/boyter/scc), without blanks, comments, content or generated files, and the cyclomatic complexity of every function with ESLint's `complexity` rule on the website's ESLint config. It writes them between the `METRICS` markers in the README, and the workflow proposes the change in one pull request, `docs: update the code metrics` on `chore/code-metrics`, from the same GitHub App as Release Please. The PR is updated in place, and none opens unless a number changed. It's assigned to the App's bot and requests Jimmy's review. It fails, rather than publish, if a file can't be parsed or nothing was measured. `task metrics` prints the same table.
+Code metrics (`.github/workflows/code-metrics.yml`) runs after a merge that changes `website/src/`, `website/scripts/` or `infrastructure/modules/`. `task metrics:readme` (`website/scripts/code-metrics.mjs`) counts the files and lines of code with [scc](https://github.com/boyter/scc), without blanks, comments, content or generated files, and the cyclomatic complexity of every function with ESLint's `complexity` rule on the website's ESLint config. It writes them between the `METRICS` markers in the README, and the workflow proposes the change in one pull request, `docs: update the code metrics` on `chore/code-metrics`, from the same GitHub App as Release Please. The PR is updated in place, and none opens unless a number changed. It's assigned to the App's bot, and CODEOWNERS requests Jimmy's review. It fails, rather than publish, if a file can't be parsed or nothing was measured. `task metrics` prints the same table.
 
 ## Before you push
 
@@ -334,8 +338,9 @@ tests; they aren't deployed from there yet. Run `task infra:check` and
 `infrastructure/` separately, from the Conventional Commits on `main`:
 
 - After each merge it opens or updates one release PR, `chore: release main`,
-  from the App's bot. The PR is assigned to that bot and requests Jimmy's
-  review (`.github/workflows/pr-assign-author.yml`).
+  from the App's bot. The PR is assigned to that bot
+  (`.github/workflows/pr-assign-author.yml`), and CODEOWNERS requests Jimmy's
+  review.
   It bumps the version of each package that changed and adds the commits to
   that package's `CHANGELOG.md`. `website/` takes its version from
   `package.json`; `infrastructure/` from `version.txt`.

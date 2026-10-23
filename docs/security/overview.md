@@ -54,7 +54,7 @@ The site is static: no server code, database, login, forms or cookies. What's le
 
 - **`main` is protected by a ruleset:** changes arrive only through squash-merged pull requests, with signed commits and a linear history, and `main` can't be force-pushed or deleted.
 - **Required checks:** Title, Template, Repository, Website, Infrastructure and CodeQL. The code-scanning rule also blocks new high-severity CodeQL alerts.
-- **Reviews:** Copilot reviews every pull request.
+- **Reviews:** Copilot reviews the pull requests Jimmy opens. `.github/CODEOWNERS` requests Jimmy's review on every other one (Renovate, Dependabot and the GitHub App). Code-owner review isn't required: a sole maintainer can't approve their own pull requests.
 - **Signed commits:** every commit is SSH-signed and shows as Verified.
 - **The git hooks** refuse commits and pushes on `main`, and scan staged files for secrets before each commit.
 

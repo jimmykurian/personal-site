@@ -175,6 +175,7 @@ The devcontainer (`.devcontainer/`) does all of that on creation, for VS Code or
 ```text
 .github/workflows/       every check, the deploy and the PR check table (ci.yml); PR labels, assignee, title and template checks; releases; code metrics
 .github/labeler.yml      which paths get which pull request label
+.github/CODEOWNERS       Jimmy owns everything, so bot PRs request Jimmy's review
 badges branch            the README status badges, written by CI (never merged; not a working branch)
 .github/ISSUE_TEMPLATE/  bug, feature and subtask forms; PULL_REQUEST_TEMPLATE.md beside it
 .github/renovate.json    version updates (weekly, grouped)
