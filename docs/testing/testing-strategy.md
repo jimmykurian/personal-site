@@ -40,11 +40,11 @@ They're behavior specs, run by Cucumber: eight Gherkin features (pages, links, a
 
 ### End-to-end tests
 
-Playwright drives Google Chrome at 1280×800 and as a Pixel 7. A shared fixture fails any test on a console error, an uncaught exception or a failed request to the site itself. Locators are role-based (`getByRole`).
+Playwright drives Google Chrome at 1280×800 and as a Pixel 7. A shared fixture fails any test on a console error, an uncaught exception or a failed request to the site itself, so a Content-Security-Policy violation fails too. Another answers every request to the observability hosts itself, so tests never send data to Cloudflare, Sentry or PostHog. `observability.spec.ts` runs only on a build with the observability settings (`main` in CI): it checks that the page sets no cookies and stores nothing, and that a tracked click sends one event. Locators are role-based (`getByRole`).
 
 ### Lighthouse
 
-The build fails below 0.95 for accessibility, 0.9 for best practices and SEO, or 0.8 for performance, or above 0.1 cumulative layout shift. Performance is the loosest because CI runners are noisy. `/resume/` is left out: it's the PDF's print source and `noindex`.
+The build fails below 0.95 for accessibility, 0.9 for best practices and SEO, or 0.8 for performance, or above 0.1 cumulative layout shift. Performance is the loosest because CI runners are noisy. `/resume/` is left out: it's the PDF's print source and `noindex`. On `main`, Lighthouse loads the real observability scripts, so their cost is measured.
 
 ## Infrastructure
 

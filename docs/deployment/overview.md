@@ -62,6 +62,8 @@ The deploy needs one secret, `AZURE_STATIC_WEB_APPS_API_TOKEN`, used only by the
 
 Release Please versions `website/` and `infrastructure/` from the Conventional Commits on `main`, and keeps one release PR open. Merging it tags each package and publishes a GitHub Release. A release deploys nothing: every merge to `main` already deploys. See [CONTRIBUTING.md, Releases](../../CONTRIBUTING.md#releases).
 
+Builds of `main` (pushes, nightly and manual runs) also get the four public observability settings from GitHub repository variables, so only production loads Cloudflare Web Analytics, Sentry and PostHog. PR previews collect nothing. See [observability](../observability.md).
+
 After a merge that changes the code, the Code metrics workflow measures it and proposes the README's new metrics table in a pull request, through the same GitHub App. It deploys nothing either.
 
 ## When something goes wrong

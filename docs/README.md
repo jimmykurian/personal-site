@@ -11,6 +11,7 @@ How jimmykurian.me is built, deployed, designed, secured and tested.
 | [Accessibility](accessibility.md) | The WCAG 2.2 AA goal and the AAA criteria in scope, how it's checked, known gaps, and the rules for changes |
 | [Architecture](architecture/README.md) | C4 context and containers, the UML content model, and flow and sequence diagrams |
 | [Deployment](deployment/overview.md) | The CI pipeline, previews, production, the nightly rebuild, releases and rolling back |
+| [Observability](observability.md) | Cloudflare Web Analytics, Sentry and PostHog: what each measures, the events, the free-tier limits, the dashboards, and why not OpenTelemetry |
 | [Design](design/design-guidelines.md) | The editorial direction, palette tokens, type, the ledger layout, components and motion |
 | [Security](security/overview.md) | The site's defenses, the supply chain, repository controls, secrets and private data |
 | [Testing](testing/testing-strategy.md) | The unit, integration, end-to-end, Lighthouse and module test suites, and what each gates |

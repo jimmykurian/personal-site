@@ -40,9 +40,9 @@ Each badge is a check from the last CI run on `main` (`.github/workflows/ci.yml`
 
 ### Hosting Stack
 
-| Azure | GitHub Actions | Namecheap | Goodreads |
-| --- | --- | --- | --- |
-| [![Azure](https://img.shields.io/badge/%20-Static%20Web%20Apps%20%28Free%29-0078D4?style=flat-square&logo=icloud&logoColor=white&labelColor=555)](https://azure.microsoft.com/products/app-service/static) | [![GitHub Actions](https://img.shields.io/badge/%20-CI%20and%20deploy-2088FF?style=flat-square&logo=githubactions&logoColor=white&labelColor=555)](https://github.com/jimmykurian/personal-site/actions) | [![Namecheap](https://img.shields.io/badge/%20-DNS-DE3723?style=flat-square&logo=namecheap&logoColor=white&labelColor=555)](https://www.namecheap.com/) | [![Goodreads](https://img.shields.io/badge/%20-reading%20list%20%28RSS%29-372213?style=flat-square&logo=goodreads&logoColor=white&labelColor=555)](https://www.goodreads.com/) |
+| Azure | GitHub Actions | Namecheap | Goodreads | Cloudflare | Sentry | PostHog |
+| --- | --- | --- | --- | --- | --- | --- |
+| [![Azure](https://img.shields.io/badge/%20-Static%20Web%20Apps%20%28Free%29-0078D4?style=flat-square&logo=icloud&logoColor=white&labelColor=555)](https://azure.microsoft.com/products/app-service/static) | [![GitHub Actions](https://img.shields.io/badge/%20-CI%20and%20deploy-2088FF?style=flat-square&logo=githubactions&logoColor=white&labelColor=555)](https://github.com/jimmykurian/personal-site/actions) | [![Namecheap](https://img.shields.io/badge/%20-DNS-DE3723?style=flat-square&logo=namecheap&logoColor=white&labelColor=555)](https://www.namecheap.com/) | [![Goodreads](https://img.shields.io/badge/%20-reading%20list%20%28RSS%29-372213?style=flat-square&logo=goodreads&logoColor=white&labelColor=555)](https://www.goodreads.com/) | [![Cloudflare](https://img.shields.io/badge/%20-Web%20Analytics-F38020?style=flat-square&logo=cloudflare&logoColor=white&labelColor=555)](https://www.cloudflare.com/web-analytics/) | [![Sentry](https://img.shields.io/badge/%20-Errors-362D59?style=flat-square&logo=sentry&logoColor=white&labelColor=555)](https://sentry.io/) | [![PostHog](https://img.shields.io/badge/%20-Events%20%28cookieless%29-1D4AFF?style=flat-square&logo=posthog&logoColor=white&labelColor=555)](https://posthog.com/) |
 
 ## Code metrics
 
@@ -53,7 +53,7 @@ The size and complexity of the code: lines of code without blanks or comments ([
 | Metric | Website | Infrastructure | Total |
 | --- | --- | --- | --- |
 | Files | 24 | 8 | 32 |
-| Lines of code | 3,082 | 138 | 3,220 |
+| Lines of code | 3,089 | 138 | 3,227 |
 | Functions | 176 | – | 176 |
 | Average complexity | 1.9 | – | 1.9 |
 | Max complexity | 9 | – | 9 |
@@ -65,7 +65,7 @@ The size and complexity of the code: lines of code without blanks or comments ([
 
 | Function | Where | Complexity |
 | --- | --- | --- |
-| async arrow function | `website/src/pages/index.astro:906` | 9 |
+| async arrow function | `website/src/pages/index.astro:908` | 9 |
 | `installedPackages` | `website/scripts/check-licenses.mjs:96` | 8 |
 | `main` | `website/scripts/check-licenses.mjs:135` | 8 |
 | `load` | `website/src/lib/goodreads.ts:105` | 8 |
@@ -143,6 +143,7 @@ flowchart TB
 
 - **Small and static.** No client framework: a few inline scripts, each respecting `prefers-reduced-motion`. Add an island only when a feature needs one.
 - **Private by default.** Client names are anonymized, and the site and resume carry no home address, phone, personal email, clearance or patent application number. Tests check every published file for those patterns.
+- **Measured without cookies.** Cloudflare Web Analytics, Sentry and PostHog run cookieless, with no replay or profiles, and only in production. A Content-Security-Policy allows no other outside host ([docs/observability.md](docs/observability.md)).
 - **Accessible and fast.** The goal is WCAG 2.2 AA ([docs/accessibility.md](docs/accessibility.md)): axe checks the 2.0, 2.1 and 2.2 A and AA rules on every page at desktop and phone sizes. Lighthouse fails the build below 0.95 for accessibility.
 - **Every check blocks.** Nothing only warns. A finding is fixed, or skipped inline with a reason.
 - **One source of truth.** Tool versions live only in `.mise.toml`, and commands only in `Taskfile.yml`. CI and the git hooks run the same tasks you run locally.
@@ -192,7 +193,7 @@ badges branch            the README status badges, written by CI (never merged; 
 .mise.toml               tool versions
 .alexrc.yml              inclusive-language allow list (alex reads it only from the root)
 Taskfile.yml             every check, test and build step, by name
-docs/                    accessibility, architecture, deployment, design, security and testing docs, and the docs style guide
+docs/                    accessibility, architecture, deployment, design, observability, security and testing docs, and the docs style guide
 infrastructure/          OpenTofu modules and tests for the Azure resources (see infrastructure/README.md)
 website/                 the Astro site (see website/README.md)
 AGENTS.md                what coding agents need on every task
