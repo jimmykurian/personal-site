@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/jimmykurian/personal-site/compare/website-v1.1.0...website-v1.1.1) (2026-10-25)
+
+
+### Bug Fixes
+
+* **deps:** patch body-parser and fast-uri, and dedupe the lockfile ([#34](https://github.com/jimmykurian/personal-site/issues/34)) ([3fd6b78](https://github.com/jimmykurian/personal-site/commit/3fd6b788b9e1aca82b9707e153af095b8a8a2bc4))
+
 ## [1.1.0](https://github.com/jimmykurian/personal-site/compare/website-v1.0.2...website-v1.1.0) (2026-10-23)
 
 
