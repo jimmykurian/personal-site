@@ -15,6 +15,11 @@ overrides:
   'katex@<0.18.2': '^0.18.2'
   # GHSA-w5hq-g745-h8pq, via @lhci/cli (^8.3). uuid 11 keeps the require('uuid').v4 API.
   'uuid@<11.1.1': '^11.1.1'
+  # GHSA-27r3-jxmh-p828, via @lhci/cli > express, which pins 1.20.8.
+  'body-parser@<1.20.9': '^1.20.9'
+  # GHSA-333x-w4r6-6crp, GHSA-w74x-v6f9-j3xg, GHSA-wjr9-j795-jxcr and GHSA-xhq7-xmqj-769h, via
+  # ajv (eslint-plugin-tsdoc, commitlint and others).
+  'fast-uri@<3.1.9': '^3.1.9'
   # Unused dependencies with unpatched advisories, removed ('-') rather than patched.
   # GHSA-jmr9-qjv8-65gv and GHSA-7pqw-9j4j-h8q3: @puppeteer/browsers imports extract-zip only
   # to unpack a downloaded browser. Lighthouse (via @lhci/cli) uses the installed Chrome and
@@ -27,12 +32,6 @@ overrides:
   # puppeteer-core) is loaded only when puppeteer is asked for WebDriver BiDi. Lighthouse
   # drives Chrome over CDP, so puppeteer never imports it.
   'puppeteer-core>chromium-bidi': '-'
-
-# Advisories with no patched release, in dev tools only. Remove each once a fix ships.
-auditConfig:
-  ignoreGhsas:
-    # braces, via markdownlint-cli2's globbing. The patterns are this repo's own.
-    - GHSA-vfj7-8cjw-p6xm
 
 # Install scripts are off unless listed here. esbuild (via tsx, which runs the Cucumber
 # integration suite) gets its binary from its platform package, so its postinstall check

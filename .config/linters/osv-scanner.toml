@@ -1,13 +1,8 @@
 # Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
 # Author: Jimmy Kurian
 # OSV-Scanner (task lint:osv) checks website/pnpm-lock.yaml against the OSV database, which
-# includes advisories below pnpm audit's high level. Each ignored advisory needs a reason;
-# remove it once a fix ships. The same advisories are ignored for pnpm audit in
-# website/pnpm-workspace.yaml. extract-zip and sprintf-js are removed from the tree there
-# instead of ignored.
-
-# braces stack exhaustion on deeply nested patterns: no patched release for 3.x. It reaches
-# the repo through markdownlint-cli2's globbing, which only expands this repo's own patterns.
-[[IgnoredVulns]]
-id = "GHSA-vfj7-8cjw-p6xm"
-reason = "No patched release; markdownlint-cli2 expands only this repo's own glob patterns"
+# includes advisories below pnpm audit's high level. None is ignored today: advisories are
+# fixed with overrides in website/pnpm-workspace.yaml, or the unused package (extract-zip,
+# sprintf-js, chromium-bidi) is removed from the tree there. An advisory with no fix can be
+# ignored here with [[IgnoredVulns]] and a reason, and again for pnpm audit in
+# pnpm-workspace.yaml (auditConfig.ignoreGhsas); remove both once a fix ships.
