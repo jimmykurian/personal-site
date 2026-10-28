@@ -342,6 +342,14 @@ tasks:
     cmds:
       - node scripts/code-metrics.mjs --write
 
+  reading:save:
+    desc: Read the Goodreads shelves into src/content/books.json, failing if Goodreads can't be read (CI proposes it in a PR)
+    dir: website
+    env:
+      GOODREADS_STRICT: "true"
+    cmds:
+      - pnpm exec astro sync
+
   # The test tasks pass extra arguments through: `task test -- --reporter=json ...`.
 
   test:
