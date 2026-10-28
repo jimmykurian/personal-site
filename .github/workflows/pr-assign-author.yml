@@ -5,8 +5,8 @@ name: Pull request assignee
 
 # Assigns each new pull request to whoever opened it, unless someone is already assigned.
 # Pull requests from other bots, such as Renovate, go to the repository owner. The repo's
-# own GitHub App opens the release PRs (Release Please) and the code-metrics PRs
-# (code-metrics.yml); those are assigned to its bot, using the App's own token: GITHUB_TOKEN
+# own GitHub App opens the release PRs (Release Please), the code-metrics PRs
+# (code-metrics.yml) and the reading-list PRs (reading-list.yml); those are assigned to its bot, using the App's own token: GITHUB_TOKEN
 # isn't allowed to assign another bot (403). If GitHub refuses the bot, they go to the owner.
 # Reviews are requested by .github/CODEOWNERS, not here. Runs on pull_request, not
 # pull_request_target: outside pull requests aren't accepted.
@@ -37,7 +37,7 @@ jobs:
           HEAD_REF: ${{ github.head_ref }}
         run: |
           app=false
-          if [[ "$AUTHOR_TYPE" == "Bot" && ( "$HEAD_REF" == release-please--* || "$HEAD_REF" == chore/code-metrics ) ]]; then
+          if [[ "$AUTHOR_TYPE" == "Bot" && ( "$HEAD_REF" == release-please--* || "$HEAD_REF" == chore/code-metrics || "$HEAD_REF" == chore/reading-list ) ]]; then
             app=true
           fi
           echo "app=$app" >> "$GITHUB_OUTPUT"

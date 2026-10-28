@@ -4,7 +4,10 @@
  * @copyright Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
  */
 
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { mkdtempSync, readFileSync, rmSync, statSync, utimesSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { goodreadsLoader } from '../../../src/lib/goodreads';
 
 type Item = Partial<
@@ -68,25 +71,38 @@ function stubResponses(...responses: (() => Response | Promise<never>)[]) {
   return fetch;
 }
 
+// Each test saves its books in its own temporary folder.
+let dir: string;
+let saved: string;
+
 /** Runs a load with fake timers, so retry waits pass instantly. */
-async function loadWithTimers(shelves: string[], ctx: never) {
+async function loadWithTimers(shelves: string[], ctx: never, strict = false) {
   vi.useFakeTimers({ toFake: ['setTimeout'] });
-  const result = load(shelves, ctx);
+  const result = load(shelves, ctx, strict);
   result.catch(() => {});
   await vi.runAllTimersAsync();
   return result;
 }
 
-const load = (shelves: string[], ctx: never) => goodreadsLoader({ userId: '52431533', shelves }).load(ctx);
+const load = (shelves: string[], ctx: never, strict = false) =>
+  goodreadsLoader({ userId: '52431533', shelves, saved, strict }).load(ctx);
+
+const savedBooks = [{ id: 'favorites-5', data: { shelf: 'favorites', position: 0, title: 'Saved' } }];
 
 describe('goodreadsLoader', () => {
+  beforeEach(() => {
+    dir = mkdtempSync(join(tmpdir(), 'goodreads-'));
+    saved = join(dir, 'books.json');
+  });
+
   afterEach(() => {
     vi.useRealTimers();
+    rmSync(dir, { recursive: true, force: true });
   });
 
   it('is named for the build log', () => {
     // Arrange
-    const loader = goodreadsLoader({ userId: '1', shelves: [] });
+    const loader = goodreadsLoader({ userId: '1', shelves: [], saved: 'books.json' });
 
     // Act
     const { name } = loader;
@@ -351,5 +367,74 @@ describe('goodreadsLoader', () => {
     expect(store.clear).toHaveBeenCalledBefore(store.set);
     expect(parseData).toHaveBeenCalledWith(expect.objectContaining({ id: 'shelf-1' }));
     expect(store.set).toHaveBeenCalledTimes(1);
+  });
+
+  it('saves the schema-checked books after a full read', async () => {
+    // Arrange
+    stubGoodreads({ shelf: [[item({ book_id: '1' })]] });
+    const { entries, ctx } = context();
+
+    // Act
+    await load(['shelf'], ctx);
+
+    // Assert
+    expect(JSON.parse(readFileSync(saved, 'utf8'))).toEqual([...entries.values()]);
+  });
+
+  it("leaves the saved file alone when the books haven't changed", async () => {
+    // Arrange
+    stubGoodreads({ shelf: [[item({ book_id: '1' })]] });
+    await load(['shelf'], context().ctx);
+    utimesSync(saved, 0, 0);
+
+    // Act
+    await load(['shelf'], context().ctx);
+
+    // Assert
+    expect(statSync(saved).mtimeMs).toBe(0);
+  });
+
+  it("loads the saved books, with a warning, when Goodreads can't be read", async () => {
+    // Arrange
+    writeFileSync(saved, JSON.stringify(savedBooks));
+    stubGoodreads({}, 404);
+    const { entries, logger, ctx } = context();
+
+    // Act
+    await loadWithTimers(['favorites'], ctx);
+
+    // Assert
+    expect([...entries.values()]).toEqual(savedBooks);
+    expect(logger.warn).toHaveBeenCalledWith(
+      `Error: Goodreads favorites page 1: HTTP 404; using the 1 books saved in ${saved}`,
+    );
+    expect(JSON.parse(readFileSync(saved, 'utf8'))).toEqual(savedBooks);
+  });
+
+  it('fails instead of using the saved books when strict, as the refresh workflow is', async () => {
+    // Arrange
+    writeFileSync(saved, JSON.stringify(savedBooks));
+    stubGoodreads({}, 404);
+    const { store, ctx } = context();
+
+    // Act
+    const result = loadWithTimers(['favorites'], ctx, true);
+
+    // Assert
+    await expect(result).rejects.toThrow('Goodreads favorites page 1: HTTP 404');
+    expect(store.clear).not.toHaveBeenCalled();
+  });
+
+  it("fails when the saved books can't be read either", async () => {
+    // Arrange
+    saved = dir;
+    stubGoodreads({}, 404);
+    const { ctx } = context();
+
+    // Act
+    const result = loadWithTimers(['favorites'], ctx);
+
+    // Assert
+    await expect(result).rejects.toThrow('EISDIR');
   });
 });

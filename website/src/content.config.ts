@@ -111,6 +111,9 @@ const books = defineCollection({
   loader: goodreadsLoader({
     userId: site.goodreads.userId,
     shelves: ['currently-reading', 'favorites', 'software-engineering'],
+    // The last books read, used when Goodreads can't be. reading-list.yml refreshes it.
+    saved: 'src/content/books.json',
+    strict: process.env.GOODREADS_STRICT === 'true',
   }),
   schema: z.object({
     // A book on several shelves has one entry per shelf.

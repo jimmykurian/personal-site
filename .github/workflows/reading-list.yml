@@ -1,0 +1,110 @@
+# Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+# Author: Jimmy Kurian
+#
+# Reading list: daily, reads the Goodreads shelves (task reading:save) and proposes the saved
+# books in website/src/content/books.json in one pull request on chore/reading-list, updated
+# in place. Builds use that file when Goodreads can't be read, so a Goodreads outage never
+# blocks a deploy. This run is strict: it fails, rather than propose stale books, while
+# Goodreads is down, so a red run here is the sign to check the shelves. Nothing is proposed
+# unless a book changed. The PR comes from the repo's GitHub App, as in code-metrics.yml;
+# pr-assign-author.yml assigns it. Its commit is a chore, so it never makes a release.
+
+name: Reading list
+
+on:
+  # After the nightly CI rebuild (11:00 UTC), which reads the shelves itself.
+  schedule:
+    - cron: "30 11 * * *"
+  workflow_dispatch:
+
+permissions: {}
+
+concurrency:
+  group: reading-list
+  cancel-in-progress: true
+
+jobs:
+  save:
+    name: Save the reading list
+    # A manual run can pick another branch; skipping every ref but main keeps the PR on main
+    # (see code-metrics.yml).
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: jdx/mise-action@08ae2a091c038e1e05ec6f5115dc5c69d5a2a6b8 # v5.1.2
+        with:
+          install_args: node task
+
+      - uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
+        with:
+          package_json_file: website/package.json
+          cache: true
+          cache_dependency_path: website/pnpm-lock.yaml
+
+      - run: pnpm --dir website install --frozen-lockfile
+
+      # Fails if a shelf can't be read, and rewrites the file only if a book changed.
+      - run: task reading:save
+
+      # The PR body follows .github/PULL_REQUEST_TEMPLATE.md, checked here as CI checks it.
+      - name: Write the pull request body
+        env:
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          {
+            echo '# Description'
+            echo
+            echo "Updates the saved reading list from the Goodreads shelves, read by the [Reading list workflow]($RUN_URL). Builds use it only when Goodreads can't be read."
+            cat <<'EOF'
+
+          Fixes # (none)
+
+          ## Type of change
+
+          - [x] New or updated post or content
+
+          ## How Has This Been Tested?
+
+          - [x] `task reading:save` read every shelf; CI runs every check on this PR.
+
+          ## Checklist
+
+          - [x] The PR title follows Conventional Commits, with a scope where one fits
+          - [x] Commits are signed (Verified)
+          - [x] Nothing from `private/`, no `.env` file and no secret is included
+
+          ## Change in Action
+
+          N/A
+          EOF
+          } > "$RUNNER_TEMP/pr-body.md"
+          task lint:pr-template BODY_FILE="$RUNNER_TEMP/pr-body.md"
+
+      # A short-lived token from Jimmy's private GitHub App (see release-please.yml).
+      - name: Create the app token
+        id: app-token
+        uses: actions/create-github-app-token@64ab729a6294000f5aa4a4bc0b73d1f32bc45510 # v3.3.0
+        with:
+          client-id: ${{ secrets.RELEASE_APP_CLIENT_ID }}
+          private-key: ${{ secrets.RELEASE_APP_PRIVATE_KEY }}
+          permission-contents: write
+          permission-pull-requests: write
+
+      # Opens or updates the PR if books.json changed; does nothing if it didn't.
+      - uses: peter-evans/create-pull-request@5f6978faf089d4d20b00c7766989d076bb2fc7f1 # v8.1.1
+        with:
+          token: ${{ steps.app-token.outputs.token }}
+          sign-commits: true
+          add-paths: website/src/content/books.json
+          branch: chore/reading-list
+          delete-branch: true
+          commit-message: "chore(reading): update the saved reading list"
+          title: "chore(reading): update the saved reading list"
+          body-path: ${{ runner.temp }}/pr-body.md

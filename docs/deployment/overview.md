@@ -66,10 +66,12 @@ Builds of `main` (pushes, nightly and manual runs) also get the four public obse
 
 After a merge that changes the code, the Code metrics workflow measures it and proposes the README's new metrics table in a pull request, through the same GitHub App. It deploys nothing either.
 
+Daily at 11:30 UTC, the Reading list workflow reads the Goodreads shelves (`task reading:save`) and proposes any change to the saved books in `website/src/content/books.json` in a pull request on `chore/reading-list`, through the same GitHub App. Builds use that file only when Goodreads can't be read.
+
 ## When something goes wrong
 
 - **A check fails on `main`:** nothing deploys, and the last good deploy stays live. Fix it in a new PR.
-- **Goodreads is down:** the loader retries each feed page twice, then fails the build on purpose, so the site never ships an empty reading list. Re-run the workflow once Goodreads is back.
+- **Goodreads is down:** the loader retries each feed page twice, then builds `/reading/` from the books saved in `website/src/content/books.json`, with a warning in the build log, so deploys carry on and the list is never empty. The Reading list workflow fails while it lasts; check that the profile and shelves are still public.
 - **A bad change is live:** revert its squash commit in a PR (`git revert <sha>`). Merging the revert deploys the previous state. The Free plan has no deployment slots to swap.
 - **A preview is left behind:** close and reopen the PR, or delete the environment in the Azure portal. The Free plan allows three preview environments.
 - **The deploy token expires or leaks:** reset it in the Azure portal (Static Web App, Manage deployment token) and update the Actions secret. Jimmy does this step.

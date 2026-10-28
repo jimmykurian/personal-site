@@ -324,8 +324,10 @@ every job passes, the deploy uploads `website/dist/` to Azure Static Web Apps:
 | Nightly, 11:00 UTC | Rebuild so `/reading/` picks up Goodreads, then check external links |
 | Manual dispatch    | Rebuild on demand                              |
 
-If Goodreads can't be reached, the build fails and the last deploy stays live.
-Re-run the workflow once it's back.
+If Goodreads can't be read, the build uses the books saved in
+`website/src/content/books.json` and logs a warning. The Reading list workflow
+(`.github/workflows/reading-list.yml`) refreshes that file daily in a PR on
+`chore/reading-list`, and fails while Goodreads is down.
 
 `infrastructure/` holds OpenTofu modules for the Azure resources, with their
 tests; they aren't deployed from there yet. Run `task infra:check` and
