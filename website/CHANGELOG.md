@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.2.0](https://github.com/jimmykurian/personal-site/compare/website-v1.1.1...website-v1.2.0) (2026-10-28)
+
+
+### Features
+
+* **home:** add ci-parity to the projects ([#36](https://github.com/jimmykurian/personal-site/issues/36)) ([f468760](https://github.com/jimmykurian/personal-site/commit/f46876056ad8dba3162efc4a9b159e0c7642b2fd))
+
+
+### Bug Fixes
+
+* **reading:** build from the saved books when Goodreads can't be read ([#37](https://github.com/jimmykurian/personal-site/issues/37)) ([6ea846e](https://github.com/jimmykurian/personal-site/commit/6ea846e0610922e2ec76768954597673ecc93fe8))
+
 ## [1.1.1](https://github.com/jimmykurian/personal-site/compare/website-v1.1.0...website-v1.1.1) (2026-10-25)
 
 
