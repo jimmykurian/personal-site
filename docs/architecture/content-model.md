@@ -73,7 +73,7 @@ classDiagram
 
     class goodreadsLoader {
         <<loader: lib/goodreads.ts>>
-        +goodreadsLoader(userId, shelves) Loader
+        +goodreadsLoader(userId, shelves, saved, strict?) Loader
     }
     class postsLib {
         <<lib/posts.ts>>

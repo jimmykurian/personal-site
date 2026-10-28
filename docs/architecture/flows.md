@@ -91,12 +91,13 @@ sequenceDiagram
         CI->>GR: Retry, up to twice per page
     end
     alt A shelf still can't be read
-        CI--xSWA: Build fails, and the last deploy stays live
+        CI->>CI: Use the books saved in src/content/books.json, with a warning
     else Every shelf read
-        CI->>CI: Build, test, print resume.pdf
-        CI->>SWA: Upload dist/ to production
-        CI->>Web: Check the external links (lychee)
+        CI->>CI: Save the books to src/content/books.json
     end
+    CI->>CI: Build, test, print resume.pdf
+    CI->>SWA: Upload dist/ to production
+    CI->>Web: Check the external links (lychee)
 ```
 
 ## A visitor's request

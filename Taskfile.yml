@@ -195,7 +195,8 @@ tasks:
       - git ls-files -z '*.md' ':!:website/docs/**' ':!:infrastructure/docs/**' ':!:**/CHANGELOG.md' | xargs -0 {{.BIN}}/alex --quiet
       - git ls-files -z 'website/src/content/posts/*.mdx' 'website/src/content/posts/**/*.mdx' | xargs -0 {{.BIN}}/alex --quiet --mdx
       # The JSON files hold the site's own prose (experience, projects, writing, teaching, profile).
-      - git ls-files -z 'website/src/content/*.json' 'website/src/data/*.json' | xargs -0 {{.BIN}}/alex --quiet --text
+      # books.json holds Goodreads titles, not the site's prose.
+      - git ls-files -z 'website/src/content/*.json' ':!:website/src/content/books.json' 'website/src/data/*.json' | xargs -0 {{.BIN}}/alex --quiet --text
 
   lint:yaml:
     desc: Lint the YAML files (yamllint)

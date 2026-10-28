@@ -53,8 +53,8 @@ The size and complexity of the code: lines of code without blanks or comments ([
 | Metric | Website | Infrastructure | Total |
 | --- | --- | --- | --- |
 | Files | 29 | 8 | 37 |
-| Lines of code | 3,301 | 138 | 3,439 |
-| Functions | 195 | – | 195 |
+| Lines of code | 3,343 | 138 | 3,481 |
+| Functions | 198 | – | 198 |
 | Average complexity | 1.9 | – | 1.9 |
 | Max complexity | 9 | – | 9 |
 | Modules | – | 2 | 2 |
@@ -69,12 +69,12 @@ The size and complexity of the code: lines of code without blanks or comments ([
 | async arrow function | `website/src/pages/index.astro:908` | 9 |
 | `installedPackages` | `website/scripts/check-licenses.mjs:96` | 8 |
 | `main` | `website/scripts/check-licenses.mjs:135` | 8 |
-| `load` | `website/src/lib/goodreads.ts:105` | 8 |
+| `load` | `website/src/lib/goodreads.ts:161` | 8 |
 | `collectComplexity` | `website/scripts/code-metrics.mjs:38` | 7 |
-| `retryDelay` | `website/src/lib/goodreads.ts:28` | 7 |
-| `fetchFeed` | `website/src/lib/goodreads.ts:36` | 7 |
+| `retryDelay` | `website/src/lib/goodreads.ts:30` | 7 |
+| `fetchFeed` | `website/src/lib/goodreads.ts:38` | 7 |
+| `fetchBooks` | `website/src/lib/goodreads.ts:89` | 7 |
 | `startObservability` | `website/src/lib/observability.ts:96` | 7 |
-| `atom` | `website/scripts/check-licenses.mjs:42` | 6 |
 
 </details>
 
@@ -94,7 +94,7 @@ Coding agents start from the root [AGENTS.md](AGENTS.md), then read the subproje
 
 - **Content is data.** The pages render JSON collections and MDX posts, validated by the schemas in `website/src/content.config.ts`. A bad field fails the build instead of shipping.
 - **Built once, served static.** There's no server, database, login or cookie. `public/staticwebapp.config.json` sets the security headers, the 404 page and caching.
-- **External data comes in at build time.** `/reading/` is built from the Goodreads RSS feeds, covers and fonts are downloaded and optimized then, and the live site makes no third-party requests. A nightly rebuild picks up new books. Brief Goodreads errors are retried; if it's still down, the build fails and the last deploy stays live.
+- **External data comes in at build time.** `/reading/` is built from the Goodreads RSS feeds, covers and fonts are downloaded and optimized then, and the live site makes no third-party requests. A nightly rebuild picks up new books. Brief Goodreads errors are retried; if it's still down, the build uses the last books saved in the repo.
 - **The resume is a page.** `/resume/` renders from the same data as the site, and CI prints it to `/resume.pdf`, so the two never disagree.
 - **Infrastructure as code, in progress.** The Azure resources were created in the portal. `infrastructure/` models them as generic OpenTofu modules, tested against a mocked provider, ready to take over deploys later.
 
@@ -174,7 +174,7 @@ The devcontainer (`.devcontainer/`) does all of that on creation, for VS Code or
 ## Structure
 
 ```text
-.github/workflows/       every check, the deploy and the PR check table (ci.yml); PR labels, assignee, title and template checks; releases; code metrics
+.github/workflows/       every check, the deploy and the PR check table (ci.yml); PR labels, assignee, title and template checks; releases; code metrics; reading list
 .github/labeler.yml      which paths get which pull request label
 .github/CODEOWNERS       Jimmy owns everything, so bot PRs request Jimmy's review
 badges branch            the README status badges, written by CI (never merged; not a working branch)

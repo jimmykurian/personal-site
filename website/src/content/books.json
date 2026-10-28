@@ -1,0 +1,5527 @@
+[
+  {
+    "id": "currently-reading-24113",
+    "data": {
+      "shelf": "currently-reading",
+      "position": 2,
+      "title": "Gödel, Escher, Bach",
+      "subtitle": "An Eternal Golden Braid",
+      "author": "Douglas R. Hofstadter",
+      "rating": 0,
+      "toRead": false,
+      "readAt": null,
+      "addedAt": "2020-04-13T01:51:40.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1547125681l/24113._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/24113"
+    }
+  },
+  {
+    "id": "currently-reading-257102377",
+    "data": {
+      "shelf": "currently-reading",
+      "position": 0,
+      "title": "Grokking AI Applications",
+      "author": "Andrea De Mauro",
+      "rating": 0,
+      "toRead": false,
+      "readAt": null,
+      "addedAt": "2026-10-19T13:33:36.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1787068298l/257102377._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/257102377"
+    }
+  },
+  {
+    "id": "currently-reading-7047933",
+    "data": {
+      "shelf": "currently-reading",
+      "position": 1,
+      "title": "Common Sense Training",
+      "subtitle": "A Working Philosophy for Leaders",
+      "author": "Arthur S. Collins Jr.",
+      "rating": 0,
+      "toRead": false,
+      "readAt": null,
+      "addedAt": "2024-02-23T07:38:39.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1541870875l/7047933._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/7047933"
+    }
+  },
+  {
+    "id": "favorites-15622",
+    "data": {
+      "shelf": "favorites",
+      "position": 2,
+      "title": "Native Son",
+      "author": "Richard Wright",
+      "rating": 5,
+      "toRead": false,
+      "readAt": "2021-08-11T00:00:00.000Z",
+      "addedAt": "2023-09-16T17:44:09.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1627788308l/15622._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/15622"
+    }
+  },
+  {
+    "id": "favorites-15818554",
+    "data": {
+      "shelf": "favorites",
+      "position": 3,
+      "title": "Once An Eagle",
+      "author": "Anton Myrer",
+      "rating": 5,
+      "toRead": false,
+      "readAt": "2023-09-14T00:00:00.000Z",
+      "addedAt": "2023-09-16T17:39:27.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1356444712l/15818554.jpg",
+      "href": "https://www.goodreads.com/book/show/15818554"
+    }
+  },
+  {
+    "id": "favorites-1617",
+    "data": {
+      "shelf": "favorites",
+      "position": 9,
+      "title": "Night",
+      "author": "Elie Wiesel",
+      "rating": 5,
+      "toRead": false,
+      "readAt": null,
+      "addedAt": "2018-07-12T15:51:44.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1709507006l/1617._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/1617"
+    }
+  },
+  {
+    "id": "favorites-19802",
+    "data": {
+      "shelf": "favorites",
+      "position": 5,
+      "title": "A World Lit Only by Fire",
+      "subtitle": "The Medieval Mind and the Renaissance: Portrait of an Age",
+      "author": "William Manchester",
+      "rating": 5,
+      "toRead": false,
+      "readAt": null,
+      "addedAt": "2021-07-07T03:19:26.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1258846760l/19802.jpg",
+      "href": "https://www.goodreads.com/book/show/19802"
+    }
+  },
+  {
+    "id": "favorites-2767",
+    "data": {
+      "shelf": "favorites",
+      "position": 11,
+      "title": "A People’s History of the United States",
+      "subtitle": "1492 - Present",
+      "author": "Howard Zinn",
+      "rating": 5,
+      "toRead": false,
+      "readAt": null,
+      "addedAt": "2018-07-12T15:48:55.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1494279423l/2767._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/2767"
+    }
+  },
+  {
+    "id": "favorites-29981",
+    "data": {
+      "shelf": "favorites",
+      "position": 10,
+      "title": "The Island of Dr. Moreau",
+      "author": "H.G. Wells",
+      "rating": 5,
+      "toRead": false,
+      "readAt": null,
+      "addedAt": "2018-07-12T15:51:37.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1767304113l/29981._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/29981"
+    }
+  },
+  {
+    "id": "favorites-304079",
+    "data": {
+      "shelf": "favorites",
+      "position": 6,
+      "title": "The Essential Rumi",
+      "author": "Jalal ad-Din Muhammad ar-Rumi",
+      "rating": 5,
+      "toRead": false,
+      "readAt": "2019-02-13T00:00:00.000Z",
+      "addedAt": "2021-07-07T03:17:54.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1391414844l/304079.jpg",
+      "href": "https://www.goodreads.com/book/show/304079"
+    }
+  },
+  {
+    "id": "favorites-3735293",
+    "data": {
+      "shelf": "favorites",
+      "position": 4,
+      "title": "Clean Code",
+      "subtitle": "A Handbook of Agile Software Craftsmanship",
+      "author": "Robert C. Martin",
+      "rating": 5,
+      "toRead": false,
+      "readAt": "2022-10-11T00:00:00.000Z",
+      "addedAt": "2023-04-11T03:03:47.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1436202607l/3735293._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/3735293"
+    }
+  },
+  {
+    "id": "favorites-397483",
+    "data": {
+      "shelf": "favorites",
+      "position": 1,
+      "title": "The Devil in the White City",
+      "subtitle": "Murder, Magic, and Madness at the Fair That Changed America",
+      "author": "Erik Larson",
+      "rating": 5,
+      "toRead": false,
+      "readAt": "2022-11-08T00:00:00.000Z",
+      "addedAt": "2023-09-16T17:44:42.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1583433024l/397483.jpg",
+      "href": "https://www.goodreads.com/book/show/397483"
+    }
+  },
+  {
+    "id": "favorites-52036",
+    "data": {
+      "shelf": "favorites",
+      "position": 7,
+      "title": "Siddhartha",
+      "author": "Hermann Hesse",
+      "rating": 5,
+      "toRead": false,
+      "readAt": "2021-05-14T00:00:00.000Z",
+      "addedAt": "2021-05-17T19:48:22.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1629378189l/52036._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/52036"
+    }
+  },
+  {
+    "id": "favorites-629",
+    "data": {
+      "shelf": "favorites",
+      "position": 0,
+      "title": "Zen and the Art of Motorcycle Maintenance",
+      "subtitle": "An Inquiry Into Values",
+      "author": "Robert M. Pirsig",
+      "rating": 5,
+      "toRead": false,
+      "readAt": "2018-07-12T00:00:00.000Z",
+      "addedAt": "2023-10-26T03:55:33.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1410136019l/629.jpg",
+      "href": "https://www.goodreads.com/book/show/629"
+    }
+  },
+  {
+    "id": "favorites-916458",
+    "data": {
+      "shelf": "favorites",
+      "position": 8,
+      "title": "Small Unit Leadership",
+      "subtitle": "A Commonsense Approach",
+      "author": "Dandridge M. Malone",
+      "rating": 5,
+      "toRead": false,
+      "readAt": "2019-12-25T00:00:00.000Z",
+      "addedAt": "2020-01-02T03:08:23.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1347607911l/916458.jpg",
+      "href": "https://www.goodreads.com/book/show/916458"
+    }
+  },
+  {
+    "id": "software-engineering-100934901",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 121,
+      "title": "Industrial DevOps",
+      "subtitle": "Build Better Systems Faster",
+      "author": "Dr. Suzette Johnson",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-03-31T14:33:40.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1675612170l/100934901._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/100934901"
+    }
+  },
+  {
+    "id": "software-engineering-1011250",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 213,
+      "title": "Software Engineering Economics",
+      "author": "Barry Boehm",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-09-15T16:39:22.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1347498457l/1011250.jpg",
+      "href": "https://www.goodreads.com/book/show/1011250"
+    }
+  },
+  {
+    "id": "software-engineering-10174559",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 69,
+      "title": "Leadership, Teamwork, and Trust",
+      "subtitle": "Building a Competitive Software Capability",
+      "author": "Watts S. Humphrey",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-11-20T15:41:32.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348205290l/10174559.jpg",
+      "href": "https://www.goodreads.com/book/show/10174559"
+    }
+  },
+  {
+    "id": "software-engineering-10284614",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 196,
+      "title": "The Clean Coder",
+      "subtitle": "A Code of Conduct for Professional Programmers",
+      "author": "Robert C. Martin",
+      "rating": 4,
+      "toRead": false,
+      "readAt": "2023-06-30T00:00:00.000Z",
+      "addedAt": "2023-06-30T13:43:55.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1347470803l/10284614.jpg",
+      "href": "https://www.goodreads.com/book/show/10284614"
+    }
+  },
+  {
+    "id": "software-engineering-1033169",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 212,
+      "title": "Software Cost Estimation With Cocomo II",
+      "author": "Barry Boehm",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-09-15T16:39:47.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348607228l/1033169.jpg",
+      "href": "https://www.goodreads.com/book/show/1033169"
+    }
+  },
+  {
+    "id": "software-engineering-1035377",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 309,
+      "title": "Software Craftsmanship",
+      "subtitle": "The New Imperative",
+      "author": "Mike Hendrickson",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2021-01-19T16:08:33.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348067012l/1035377.jpg",
+      "href": "https://www.goodreads.com/book/show/1035377"
+    }
+  },
+  {
+    "id": "software-engineering-10361330",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 236,
+      "title": "HTML and CSS",
+      "subtitle": "Design and Build Websites",
+      "author": "Jon Duckett",
+      "rating": 4,
+      "toRead": false,
+      "readAt": null,
+      "addedAt": "2022-03-11T20:38:48.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348805097l/10361330.jpg",
+      "href": "https://www.goodreads.com/book/show/10361330"
+    }
+  },
+  {
+    "id": "software-engineering-104746",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 319,
+      "title": "The New Hacker's Dictionary",
+      "author": "Eric S. Raymond",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2018-06-27T15:20:31.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1347445182l/104746.jpg",
+      "href": "https://www.goodreads.com/book/show/104746"
+    }
+  },
+  {
+    "id": "software-engineering-1049896",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 108,
+      "title": "Writing Better Requirements",
+      "author": "Ian F. Alexander",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-07-22T20:17:23.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1372048835l/1049896.jpg",
+      "href": "https://www.goodreads.com/book/show/1049896"
+    }
+  },
+  {
+    "id": "software-engineering-10673823",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 216,
+      "title": "The Google Resume",
+      "subtitle": "How to Prepare for a Career and Land a Job at Apple, Microsoft, Google, or Any Top Tech Company",
+      "author": "Gayle Laakmann McDowell",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-07-17T22:57:35.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348714874l/10673823.jpg",
+      "href": "https://www.goodreads.com/book/show/10673823"
+    }
+  },
+  {
+    "id": "software-engineering-1069724",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 87,
+      "title": "Secure Coding in C And C++",
+      "author": "Robert C. Seacord",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-08-25T20:56:22.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348390884l/1069724.jpg",
+      "href": "https://www.goodreads.com/book/show/1069724"
+    }
+  },
+  {
+    "id": "software-engineering-10803540",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 241,
+      "title": "Algorithms",
+      "author": "Robert Sedgewick",
+      "rating": 4,
+      "toRead": false,
+      "readAt": null,
+      "addedAt": "2022-03-11T20:37:38.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348011905l/10803540.jpg",
+      "href": "https://www.goodreads.com/book/show/10803540"
+    }
+  },
+  {
+    "id": "software-engineering-108986",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 243,
+      "title": "Introduction to Algorithms",
+      "author": "Thomas H. Cormen",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-03-02T01:07:37.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1387741681l/108986.jpg",
+      "href": "https://www.goodreads.com/book/show/108986"
+    }
+  },
+  {
+    "id": "software-engineering-112243",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 328,
+      "title": "Concrete Mathematics",
+      "subtitle": "A Foundation for Computer Science",
+      "author": "Ronald Graham",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2016-03-11T04:40:18.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348780612l/112243.jpg",
+      "href": "https://www.goodreads.com/book/show/112243"
+    }
+  },
+  {
+    "id": "software-engineering-112246",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 246,
+      "title": "The Art of Computer Programming, Volume 2",
+      "subtitle": "Seminumerical Algorithms",
+      "author": "Donald Ervin Knuth",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-03-02T01:06:11.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1388266930l/112246.jpg",
+      "href": "https://www.goodreads.com/book/show/112246"
+    }
+  },
+  {
+    "id": "software-engineering-112247",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 247,
+      "title": "The Art of Computer Programming, Volume 1",
+      "subtitle": "Fundamental Algorithms",
+      "author": "Donald Ervin Knuth",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-03-02T01:05:52.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1388242904l/112247.jpg",
+      "href": "https://www.goodreads.com/book/show/112247"
+    }
+  },
+  {
+    "id": "software-engineering-11263022",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 280,
+      "title": "The Web Application Hacker's Handbook",
+      "subtitle": "Finding and Exploiting Security Flaws",
+      "author": "Dafydd Stuttard",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-01-13T18:13:40.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348539362l/11263022.jpg",
+      "href": "https://www.goodreads.com/book/show/11263022"
+    }
+  },
+  {
+    "id": "software-engineering-11277418",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 162,
+      "title": "Professional C++",
+      "author": "Marc Gregoire",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2024-07-31T08:37:21.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1347730587l/11277418.jpg",
+      "href": "https://www.goodreads.com/book/show/11277418"
+    }
+  },
+  {
+    "id": "software-engineering-1166491",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 11,
+      "title": "Toward Zero-Defect Programming",
+      "author": "Allan M. Stavely",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2026-06-02T16:10:23.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348430592l/1166491.jpg",
+      "href": "https://www.goodreads.com/book/show/1166491"
+    }
+  },
+  {
+    "id": "software-engineering-1215533",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 55,
+      "title": "Winning with Software",
+      "subtitle": "An Executive Strategy",
+      "author": "Watts S. Humphrey",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-11-20T15:56:28.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1388810190l/1215533.jpg",
+      "href": "https://www.goodreads.com/book/show/1215533"
+    }
+  },
+  {
+    "id": "software-engineering-121790285",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 176,
+      "title": "Software Engineering at Google",
+      "author": "Titus Winters",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2024-01-23T14:58:35.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1681629376l/121790285._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/121790285"
+    }
+  },
+  {
+    "id": "software-engineering-125003256",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 147,
+      "title": "Building an Event-Driven Data Mesh",
+      "subtitle": "Patterns for Designing & Building Event-Driven Architectures",
+      "author": "Adam Bellemare",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2024-09-02T18:26:02.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1680658254l/125003256._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/125003256"
+    }
+  },
+  {
+    "id": "software-engineering-125575561",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 73,
+      "title": "Modernizing Legacy Systems",
+      "subtitle": "Software Technologies, Engineering Processes, and Business Practices",
+      "author": "Robert C. Seacord",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-11-20T15:34:20.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1699391359l/125575561._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/125575561"
+    }
+  },
+  {
+    "id": "software-engineering-126132673",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 122,
+      "title": "Flow Engineering",
+      "subtitle": "From Value Stream Mapping to Effective Action",
+      "author": "Steve Pereira",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-03-31T14:32:43.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1710010860l/126132673.jpg",
+      "href": "https://www.goodreads.com/book/show/126132673"
+    }
+  },
+  {
+    "id": "software-engineering-12993069",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 78,
+      "title": "CERT Oracle Secure Coding Standard for Java, The",
+      "author": "Fred Long",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-11-20T15:21:08.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348081864l/12993069.jpg",
+      "href": "https://www.goodreads.com/book/show/12993069"
+    }
+  },
+  {
+    "id": "software-engineering-1317946",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 154,
+      "title": "Managing Humans",
+      "subtitle": "Biting and Humorous Tales of a Software Engineering Manager",
+      "author": "Michael Lopp",
+      "rating": 4,
+      "toRead": false,
+      "readAt": "2024-08-21T00:00:00.000Z",
+      "addedAt": "2024-08-21T19:06:22.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348842671l/1317946.jpg",
+      "href": "https://www.goodreads.com/book/show/1317946"
+    }
+  },
+  {
+    "id": "software-engineering-131946966",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 180,
+      "title": "Functional Design",
+      "subtitle": "Principles, Patterns, and Practices",
+      "author": "Robert C. Martin",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2023-10-25T20:21:16.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1688419087l/131946966.jpg",
+      "href": "https://www.goodreads.com/book/show/131946966"
+    }
+  },
+  {
+    "id": "software-engineering-13234063",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 153,
+      "title": "Code Simplicity",
+      "subtitle": "The Fundamentals of Software",
+      "author": "Max Kanat-Alexander",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2024-09-02T18:21:16.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1334061301l/13234063.jpg",
+      "href": "https://www.goodreads.com/book/show/13234063"
+    }
+  },
+  {
+    "id": "software-engineering-13234078",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 218,
+      "title": "Think Complexity",
+      "subtitle": "Complexity Science and Computational Modeling",
+      "author": "Allen B. Downey",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-06-29T21:05:56.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1344689688l/13234078.jpg",
+      "href": "https://www.goodreads.com/book/show/13234078"
+    }
+  },
+  {
+    "id": "software-engineering-13418158",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 238,
+      "title": "Learn Ruby the Hard Way",
+      "author": "Zed A. Shaw",
+      "rating": 5,
+      "toRead": false,
+      "readAt": null,
+      "addedAt": "2022-03-11T20:38:28.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1412773736l/13418158.jpg",
+      "href": "https://www.goodreads.com/book/show/13418158"
+    }
+  },
+  {
+    "id": "software-engineering-13589153",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 217,
+      "title": "How to Create a Mind",
+      "subtitle": "The Secret of Human Thought Revealed",
+      "author": "Ray Kurzweil",
+      "rating": 3,
+      "toRead": false,
+      "readAt": "2022-07-11T00:00:00.000Z",
+      "addedAt": "2022-07-12T02:36:05.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1355117137l/13589153.jpg",
+      "href": "https://www.goodreads.com/book/show/13589153"
+    }
+  },
+  {
+    "id": "software-engineering-13608106",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 324,
+      "title": "On Web Typography",
+      "author": "Jason Santa Maria",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2016-03-11T04:45:37.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1735952911l/13608106._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/13608106"
+    }
+  },
+  {
+    "id": "software-engineering-13629",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 332,
+      "title": "The Mythical Man-Month",
+      "subtitle": "Essays on Software Engineering",
+      "author": "Frederick P. Brooks Jr.",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2016-03-11T04:36:34.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348430512l/13629.jpg",
+      "href": "https://www.goodreads.com/book/show/13629"
+    }
+  },
+  {
+    "id": "software-engineering-148881412",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 16,
+      "title": "Database Systems",
+      "subtitle": "The Complete Book 2nd (second) edition",
+      "author": "Hector Garcia-Molina",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2026-04-14T16:53:23.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1699471882l/148881412.jpg",
+      "href": "https://www.goodreads.com/book/show/148881412"
+    }
+  },
+  {
+    "id": "software-engineering-14920800",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 13,
+      "title": "Cleanroom Software Engineering",
+      "subtitle": "A Reader",
+      "author": "Jesse H. Poore",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2026-06-02T16:10:07.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1461533479l/14920800.jpg",
+      "href": "https://www.goodreads.com/book/show/14920800"
+    }
+  },
+  {
+    "id": "software-engineering-154155",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 173,
+      "title": "Programming Perl",
+      "author": "Tom Christiansen",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2024-02-19T20:13:57.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1328835945l/154155.jpg",
+      "href": "https://www.goodreads.com/book/show/154155"
+    }
+  },
+  {
+    "id": "software-engineering-1563292",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 58,
+      "title": "PSP",
+      "subtitle": "A Self-improvement Process For Software Engineers",
+      "author": "Watts S. Humphrey",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-11-20T15:49:09.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348357090l/1563292.jpg",
+      "href": "https://www.goodreads.com/book/show/1563292"
+    }
+  },
+  {
+    "id": "software-engineering-1563293",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 60,
+      "title": "TSP",
+      "subtitle": "Leading a Development Team",
+      "author": "Watts S. Humphrey",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-11-20T15:48:22.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1389836766l/1563293.jpg",
+      "href": "https://www.goodreads.com/book/show/1563293"
+    }
+  },
+  {
+    "id": "software-engineering-15710583",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 159,
+      "title": "Is Parallel Programming Hard, And, If So, What Can You Do About It?",
+      "author": "Paul McKenney",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2024-07-31T08:40:20.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1511635197l/15710583._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/15710583"
+    }
+  },
+  {
+    "id": "software-engineering-157246604",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 77,
+      "title": "By Dawn M. Cappelli The CERT Guide to Insider Threats",
+      "subtitle": "How to Prevent, Detect, and Respond to Information Technology Cri (1st First Edition) [Hardcover]",
+      "author": "Unknown Author",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-11-20T15:21:23.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1699155163l/157246604._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/157246604"
+    }
+  },
+  {
+    "id": "software-engineering-15858151",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 76,
+      "title": "Model-Based Engineering with AADL",
+      "subtitle": "An Introduction to the SAE Architecture Analysis & Design Language",
+      "author": "Peter H. Feiler",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-11-20T15:27:26.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1355097999l/15858151.jpg",
+      "href": "https://www.goodreads.com/book/show/15858151"
+    }
+  },
+  {
+    "id": "software-engineering-15870849",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 33,
+      "title": "Pro .NET Performance",
+      "subtitle": "Optimize Your C# Applications",
+      "author": "Sasha Goldshtein",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2026-03-02T02:50:47.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1347500091l/15870849.jpg",
+      "href": "https://www.goodreads.com/book/show/15870849"
+    }
+  },
+  {
+    "id": "software-engineering-161376",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 107,
+      "title": "Scenarios, Stories, Use Cases",
+      "subtitle": "Through the Systems Development Life-Cycle",
+      "author": "Ian F. Alexander",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-07-22T20:20:25.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1347644604l/161376.jpg",
+      "href": "https://www.goodreads.com/book/show/161376"
+    }
+  },
+  {
+    "id": "software-engineering-16192710",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 242,
+      "title": "A Guide to the Project Management Body of Knowledge",
+      "author": "Project Management Institute",
+      "rating": 3,
+      "toRead": false,
+      "readAt": null,
+      "addedAt": "2022-03-11T20:37:26.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1356188101l/16192710.jpg",
+      "href": "https://www.goodreads.com/book/show/16192710"
+    }
+  },
+  {
+    "id": "software-engineering-16219704",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 237,
+      "title": "JavaScript and jQuery",
+      "subtitle": "Interactive Front-End Web Development",
+      "author": "Jon Duckett",
+      "rating": 4,
+      "toRead": false,
+      "readAt": null,
+      "addedAt": "2022-03-11T20:38:37.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1394412494l/16219704.jpg",
+      "href": "https://www.goodreads.com/book/show/16219704"
+    }
+  },
+  {
+    "id": "software-engineering-16253895",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 250,
+      "title": "Elements of Programming Interviews",
+      "subtitle": "The Insiders' Guide C++",
+      "author": "Adnan Aziz",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-02-22T22:33:20.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1404962769l/16253895.jpg",
+      "href": "https://www.goodreads.com/book/show/16253895"
+    }
+  },
+  {
+    "id": "software-engineering-162571465",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 5,
+      "title": "Model-Based Engineering with AADL",
+      "subtitle": "An Introduction to the SAE Architecture Analysis & Design Language",
+      "author": "Peter H. Feiler",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2026-08-18T22:06:50.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1697857253l/162571465._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/162571465"
+    }
+  },
+  {
+    "id": "software-engineering-16615928",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 71,
+      "title": "Introduction to Information Security",
+      "subtitle": "A Strategic-Based Approach",
+      "author": "Timothy Shimeall",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-11-20T15:37:05.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1386594870l/16615928.jpg",
+      "href": "https://www.goodreads.com/book/show/16615928"
+    }
+  },
+  {
+    "id": "software-engineering-169007",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 226,
+      "title": "The Emotion Machine",
+      "subtitle": "Commonsense Thinking, Artificial Intelligence, and the Future of the Human Mind",
+      "author": "Marvin Minsky",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-03-11T20:50:29.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1442625913l/169007.jpg",
+      "href": "https://www.goodreads.com/book/show/169007"
+    }
+  },
+  {
+    "id": "software-engineering-171662056",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 79,
+      "title": "Analytics Engineering with SQL and dbt",
+      "subtitle": "Building Meaningful Data Models at Scale",
+      "author": "Rui Machado",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-11-09T21:34:11.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1699626489l/171662056._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/171662056"
+    }
+  },
+  {
+    "id": "software-engineering-171671941",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 150,
+      "title": "Head First Software Architecture",
+      "subtitle": "A Learner's Guide to Architectural Thinking",
+      "author": "Raju Gandhi",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2024-09-02T18:24:19.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1697728094l/171671941._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/171671941"
+    }
+  },
+  {
+    "id": "software-engineering-171691901",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 181,
+      "title": "Tidy First?",
+      "subtitle": "A Personal Exercise in Empirical Software Design",
+      "author": "Kent Beck",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2023-10-25T14:17:31.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1688419801l/171691901.jpg",
+      "href": "https://www.goodreads.com/book/show/171691901"
+    }
+  },
+  {
+    "id": "software-engineering-171801109",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 187,
+      "title": "Clean Code Cookbook",
+      "subtitle": "Recipes to Improve the Design and Quality of your Code",
+      "author": "Maximiliano Contieri",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2023-10-24T17:33:55.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1688419748l/171801109.jpg",
+      "href": "https://www.goodreads.com/book/show/171801109"
+    }
+  },
+  {
+    "id": "software-engineering-17236175",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 323,
+      "title": "Just Enough Research",
+      "author": "Erika Hall",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2016-03-11T04:45:56.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1379351795l/17236175.jpg",
+      "href": "https://www.goodreads.com/book/show/17236175"
+    }
+  },
+  {
+    "id": "software-engineering-17255186",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 259,
+      "title": "The Phoenix Project",
+      "subtitle": "A Novel About IT, DevOps, and Helping Your Business Win",
+      "author": "Gene Kim",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-02-14T16:54:24.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1361113128l/17255186.jpg",
+      "href": "https://www.goodreads.com/book/show/17255186"
+    }
+  },
+  {
+    "id": "software-engineering-17346953",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 206,
+      "title": "Software Requirements",
+      "author": "Karl Wiegers",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2023-02-05T17:13:48.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1375925800l/17346953.jpg",
+      "href": "https://www.goodreads.com/book/show/17346953"
+    }
+  },
+  {
+    "id": "software-engineering-17350057",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 86,
+      "title": "Java Coding Guidelines",
+      "subtitle": "75 Recommendations for Reliable and Secure Programs: 75 Recommendations for Reliable and Secure Programs",
+      "author": "Fred Long",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-08-25T20:57:49.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1375059831l/17350057.jpg",
+      "href": "https://www.goodreads.com/book/show/17350057"
+    }
+  },
+  {
+    "id": "software-engineering-17374825",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 160,
+      "title": "Operating Systems",
+      "subtitle": "Three Easy Pieces",
+      "author": "Remzi H. Arpaci-Dusseau",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2024-07-31T08:39:47.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1360887934l/17374825.jpg",
+      "href": "https://www.goodreads.com/book/show/17374825"
+    }
+  },
+  {
+    "id": "software-engineering-1746425",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 14,
+      "title": "Masterminds of Programming",
+      "subtitle": "Conversations with the Creators of Major Programming Languages",
+      "author": "Federico Biancuzzi",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2026-04-14T16:54:08.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1328834764l/1746425.jpg",
+      "href": "https://www.goodreads.com/book/show/1746425"
+    }
+  },
+  {
+    "id": "software-engineering-178815107",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 157,
+      "title": "An Introduction to Statistical Learning",
+      "subtitle": "with Applications in Python",
+      "author": "Gareth James",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2024-07-31T08:41:42.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1687777554l/178815107.jpg",
+      "href": "https://www.goodreads.com/book/show/178815107"
+    }
+  },
+  {
+    "id": "software-engineering-179098",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 285,
+      "title": "Debugging the Development Process",
+      "subtitle": "Practical Strategies for Staying Focused, Hitting Ship Dates, and Building Solid Teams",
+      "author": "Steve Maguire",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2021-12-09T22:48:20.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1441171254l/179098._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/179098"
+    }
+  },
+  {
+    "id": "software-engineering-179133",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 320,
+      "title": "Domain-Driven Design",
+      "subtitle": "Tackling Complexity in the Heart of Software",
+      "author": "Eric Evans",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2018-06-27T15:19:36.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1287493789l/179133.jpg",
+      "href": "https://www.goodreads.com/book/show/179133"
+    }
+  },
+  {
+    "id": "software-engineering-18043011",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 191,
+      "title": "Clean Architecture",
+      "author": "Robert C. Martin",
+      "rating": 4,
+      "toRead": false,
+      "readAt": "2023-07-25T00:00:00.000Z",
+      "addedAt": "2023-07-25T20:25:36.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1471680093l/18043011._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/18043011"
+    }
+  },
+  {
+    "id": "software-engineering-18058001",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 111,
+      "title": "Systems Performance",
+      "subtitle": "Enterprise and the Cloud",
+      "author": "Brendan Gregg",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-06-12T02:19:01.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1372681832l/18058001.jpg",
+      "href": "https://www.goodreads.com/book/show/18058001"
+    }
+  },
+  {
+    "id": "software-engineering-18154",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 272,
+      "title": "The Cuckoo's Egg",
+      "subtitle": "Tracking a Spy Through the Maze of Computer Espionage",
+      "author": "Clifford Stoll",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-01-18T20:26:12.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1437836070l/18154._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/18154"
+    }
+  },
+  {
+    "id": "software-engineering-181704870",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 149,
+      "title": "Enabling Microservice Success",
+      "subtitle": "Managing Technical, Organizational, and Cultural Challenges",
+      "author": "Sarah Wells",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2024-09-02T18:24:47.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1688421570l/181704870.jpg",
+      "href": "https://www.goodreads.com/book/show/181704870"
+    }
+  },
+  {
+    "id": "software-engineering-18197267",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 325,
+      "title": "Don't Make Me Think, Revisited",
+      "subtitle": "A Common Sense Approach to Web Usability",
+      "author": "Steve Krug",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2016-03-11T04:45:16.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1711564661l/18197267._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/18197267"
+    }
+  },
+  {
+    "id": "software-engineering-182346447",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 148,
+      "title": "Serverless Development on AWS",
+      "subtitle": "Building Enterprise-Scale Serverless Solutions",
+      "author": "Sheen Brisals",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2024-09-02T18:25:15.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1695690217l/182346447._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/182346447"
+    }
+  },
+  {
+    "id": "software-engineering-18601498",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 317,
+      "title": "The Guide to the Product Management and Marketing Body of Knowledge",
+      "subtitle": "ProdBOK(R) Guide",
+      "author": "Greg Geracie",
+      "rating": 4,
+      "toRead": false,
+      "readAt": null,
+      "addedAt": "2018-06-27T15:32:00.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1382946568l/18601498.jpg",
+      "href": "https://www.goodreads.com/book/show/18601498"
+    }
+  },
+  {
+    "id": "software-engineering-1883066",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 56,
+      "title": "Architecture-Centric Software Project Management",
+      "subtitle": "A Practical Guide",
+      "author": "Daniel J. Paulish",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-11-20T15:55:36.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348110027l/1883066.jpg",
+      "href": "https://www.goodreads.com/book/show/1883066"
+    }
+  },
+  {
+    "id": "software-engineering-1887814",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 192,
+      "title": "Designing Object-Oriented Software",
+      "author": "Rebecca Wirfs-Brock",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2023-07-22T20:17:45.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348814490l/1887814.jpg",
+      "href": "https://www.goodreads.com/book/show/1887814"
+    }
+  },
+  {
+    "id": "software-engineering-18884613",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 262,
+      "title": "Software Systems Architecture",
+      "subtitle": "Working with Stakeholders Using Viewpoints and Perspectives",
+      "author": "Nick Rozanski",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-02-14T16:53:23.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1440775699l/18884613._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/18884613"
+    }
+  },
+  {
+    "id": "software-engineering-18894457",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 231,
+      "title": "The Unwritten Laws of Engineering",
+      "author": "W.J.  King",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-03-11T20:45:29.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1437121059l/18894457._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/18894457"
+    }
+  },
+  {
+    "id": "software-engineering-18904848",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 221,
+      "title": "Operation Desolation",
+      "subtitle": "A Short Story",
+      "author": "Mark E. Russinovich",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-03-11T20:59:51.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1385214418l/18904848.jpg",
+      "href": "https://www.goodreads.com/book/show/18904848"
+    }
+  },
+  {
+    "id": "software-engineering-191913",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 203,
+      "title": "Creating a Software Engineering Culture",
+      "author": "Karl Wiegers",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2023-02-05T17:16:41.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1386919438l/191913.jpg",
+      "href": "https://www.goodreads.com/book/show/191913"
+    }
+  },
+  {
+    "id": "software-engineering-1928543",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 204,
+      "title": "Practical Project Initiation",
+      "subtitle": "A Handbook with Tools",
+      "author": "Karl Wiegers",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2023-02-05T17:16:34.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1328828859l/1928543.jpg",
+      "href": "https://www.goodreads.com/book/show/1928543"
+    }
+  },
+  {
+    "id": "software-engineering-199324780",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 132,
+      "title": "Collaborative Software Design",
+      "subtitle": "How to Facilitate Domain Modeling Decisions",
+      "author": "Evelyn van Kelle",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2024-10-26T12:36:28.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1696804595l/199324780._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/199324780"
+    }
+  },
+  {
+    "id": "software-engineering-199551266",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 164,
+      "title": "Leading Effective Engineering Teams",
+      "subtitle": "Lessons for Individual Contributors and Managers from 10 Years at Google",
+      "author": "Addy Osmani",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2024-07-07T06:49:05.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1697132226l/199551266._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/199551266"
+    }
+  },
+  {
+    "id": "software-engineering-199683255",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 179,
+      "title": "Communication Patterns",
+      "subtitle": "A Guide for Developers and Architects",
+      "author": "Jacqui Read",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2023-11-02T17:01:10.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1697233482l/199683255._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/199683255"
+    }
+  },
+  {
+    "id": "software-engineering-199699997",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 174,
+      "title": "The Engineering Executive's Primer",
+      "subtitle": "Impactful Technical Leadership",
+      "author": "Will Larson",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2024-02-14T14:17:10.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1712592207l/199699997.jpg",
+      "href": "https://www.goodreads.com/book/show/199699997"
+    }
+  },
+  {
+    "id": "software-engineering-203203530",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 135,
+      "title": "Building a Cyber Risk Management Program",
+      "subtitle": "Evolving Security for the Digital Age",
+      "author": "Brian J. Allen",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2024-10-26T12:29:16.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1719778256l/203203530._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/203203530"
+    }
+  },
+  {
+    "id": "software-engineering-205977642",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 151,
+      "title": "Learning Systems Thinking",
+      "subtitle": "Essential Nonlinear Skills and Practices for Software Professionals",
+      "author": "Diana Montalion",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2024-09-02T18:22:56.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1718719368l/205977642._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/205977642"
+    }
+  },
+  {
+    "id": "software-engineering-20665102",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 296,
+      "title": "Guide to the Software Engineering Body of Knowledge (SWEBOK(R))",
+      "subtitle": "Version 3.0",
+      "author": "Pierre Bourque",
+      "rating": 3,
+      "toRead": false,
+      "readAt": "2025-07-31T00:00:00.000Z",
+      "addedAt": "2021-02-27T23:13:07.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1422647423l/20665102.jpg",
+      "href": "https://www.goodreads.com/book/show/20665102"
+    }
+  },
+  {
+    "id": "software-engineering-206991464",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 134,
+      "title": "Software Supply Chain Security",
+      "subtitle": "Securing the End-to-End Supply Chain for Software, Firmware, and Hardware",
+      "author": "Cassie Crossley",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2024-10-26T12:29:49.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1706919130l/206991464._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/206991464"
+    }
+  },
+  {
+    "id": "software-engineering-207100382",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 37,
+      "title": "The C4 model for visualising software architecture",
+      "author": "Simon  Brown",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2026-01-26T18:30:20.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1707006027l/207100382._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/207100382"
+    }
+  },
+  {
+    "id": "software-engineering-207664948",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 100,
+      "title": "Deciphering Data Architectures",
+      "subtitle": "Choosing Between a Modern Data Warehouse, Data Fabric, Data Lakehouse, and Data Mesh",
+      "author": "James Serra",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-08-23T21:25:57.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1707261070l/207664948._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/207664948"
+    }
+  },
+  {
+    "id": "software-engineering-210408850",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 97,
+      "title": "Hands-On Large Language Models",
+      "subtitle": "Language Understanding and Generation",
+      "author": "Jay Alammar",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-08-23T21:30:26.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1718922029l/210408850._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/210408850"
+    }
+  },
+  {
+    "id": "software-engineering-212162911",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 130,
+      "title": "Facilitating Software Architecture",
+      "subtitle": "Empowering Teams to Make Architectural Decisions",
+      "author": "Andrew Harmel-Law",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-01-21T13:24:46.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1718975573l/212162911._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/212162911"
+    }
+  },
+  {
+    "id": "software-engineering-212162912",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 101,
+      "title": "Fundamentals of Enterprise Architecture",
+      "subtitle": "Proven Frameworks for Effective Architecture Decisions",
+      "author": "Tanu McCabe",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-08-23T21:25:17.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1718975573l/212162912._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/212162912"
+    }
+  },
+  {
+    "id": "software-engineering-212162916",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 36,
+      "title": "Financial Data Engineering",
+      "subtitle": "Design and Build Data-Driven Financial Products",
+      "author": "Tamer Khraisha",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2026-02-12T04:22:58.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1718975574l/212162916._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/212162916"
+    }
+  },
+  {
+    "id": "software-engineering-213033260",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 123,
+      "title": "Unbundling the Enterprise",
+      "subtitle": "APIs, Optionality, and the Science of Happy Accidents",
+      "author": "Stephen  Fishman",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-03-31T14:32:30.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1719004363l/213033260._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/213033260"
+    }
+  },
+  {
+    "id": "software-engineering-214330235",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 131,
+      "title": "RAG-Driven Generative AI",
+      "subtitle": "Build custom retrieval augmented generation pipelines with LlamaIndex, Deep Lake, and Pinecone",
+      "author": "Denis Rothman",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-01-05T23:26:55.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1719026815l/214330235._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/214330235"
+    }
+  },
+  {
+    "id": "software-engineering-214984505",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 80,
+      "title": "Fundamentals of DevOps and Software Delivery",
+      "subtitle": "A Hands-On Guide to Deploying and Managing Software in Production",
+      "author": "Yevgeniy Brikman",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-11-09T00:23:59.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1718868283l/214984505._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/214984505"
+    }
+  },
+  {
+    "id": "software-engineering-2159127",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 307,
+      "title": "Specifying Systems",
+      "subtitle": "The TLA+ Language and Tools for Hardware and Software Engineers",
+      "author": "Leslie Lamport",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2021-01-19T19:22:49.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1347853481l/2159127.jpg",
+      "href": "https://www.goodreads.com/book/show/2159127"
+    }
+  },
+  {
+    "id": "software-engineering-216848047",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 1,
+      "title": "AI Engineering",
+      "subtitle": "Building Applications with Foundation Models",
+      "author": "Chip Huyen",
+      "rating": 3,
+      "toRead": false,
+      "readAt": "2026-10-17T00:00:00.000Z",
+      "addedAt": "2026-10-17T10:34:13.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1733340973l/216848047._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/216848047"
+    }
+  },
+  {
+    "id": "software-engineering-218150888",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 30,
+      "title": "LLMOps",
+      "subtitle": "Managing Large Language Models in Production",
+      "author": "Abi Aryan",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2026-03-12T03:33:38.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1725929630l/218150888._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/218150888"
+    }
+  },
+  {
+    "id": "software-engineering-218566850",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 88,
+      "title": "CERT® C Coding Standard, Second Edition, The",
+      "subtitle": "98 Rules for Developing Safe, Reliable, and Secure Systems",
+      "author": "Robert C. Seacord",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-08-25T20:55:51.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1725657149l/218566850._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/218566850"
+    }
+  },
+  {
+    "id": "software-engineering-219535271",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 85,
+      "title": "Beyond Cracking the Coding Interview",
+      "subtitle": "Pass Tough Coding Interviews, Get Noticed, and Negotiate Successfully",
+      "author": "Gayle Laakmann McDowell",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-08-26T18:37:50.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1727275035l/219535271._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/219535271"
+    }
+  },
+  {
+    "id": "software-engineering-220685821",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 113,
+      "title": "Cloud Application Architecture Patterns",
+      "subtitle": "Designing, Building, and Modernizing for the Cloud",
+      "author": "Kyle Brown",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-04-30T00:05:31.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1733955411l/220685821._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/220685821"
+    }
+  },
+  {
+    "id": "software-engineering-222450662",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 124,
+      "title": "Progressive Delivery",
+      "subtitle": "Build the Right Thing for the Right People at the Right Time",
+      "author": "James Governor",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-03-31T14:31:13.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1735613520l/222450662._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/222450662"
+    }
+  },
+  {
+    "id": "software-engineering-223911",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 38,
+      "title": "Documenting Software Architectures",
+      "subtitle": "Views and Beyond",
+      "author": "Felix Bachmann",
+      "rating": 4,
+      "toRead": false,
+      "readAt": "2025-12-16T00:00:00.000Z",
+      "addedAt": "2026-01-02T04:09:12.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1388324563l/223911.jpg",
+      "href": "https://www.goodreads.com/book/show/223911"
+    }
+  },
+  {
+    "id": "software-engineering-223971",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 74,
+      "title": "Evaluating Software Architectures",
+      "subtitle": "Methods and Case Studies",
+      "author": "Paul Clements",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-11-20T15:30:52.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1388453709l/223971.jpg",
+      "href": "https://www.goodreads.com/book/show/223971"
+    }
+  },
+  {
+    "id": "software-engineering-224110",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 105,
+      "title": "Software Architecture",
+      "subtitle": "Perspectives on an Emerging Discipline",
+      "author": "Mary    Shaw",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-08-10T14:56:24.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1388278236l/224110.jpg",
+      "href": "https://www.goodreads.com/book/show/224110"
+    }
+  },
+  {
+    "id": "software-engineering-22512931",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 128,
+      "title": "Building Microservices",
+      "subtitle": "Designing Fine-Grained Systems",
+      "author": "Sam Newman",
+      "rating": 4,
+      "toRead": false,
+      "readAt": "2025-03-24T00:00:00.000Z",
+      "addedAt": "2025-03-24T18:13:47.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1403186979l/22512931.jpg",
+      "href": "https://www.goodreads.com/book/show/22512931"
+    }
+  },
+  {
+    "id": "software-engineering-228438060",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 125,
+      "title": "Vibe Coding",
+      "subtitle": "Building Production-Grade Software With GenAI, Chat, Agents, and Beyond",
+      "author": "Gene Kim",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-03-31T14:30:41.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1749661374l/228438060._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/228438060"
+    }
+  },
+  {
+    "id": "software-engineering-22847284",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 83,
+      "title": "Grokking Algorithms An Illustrated Guide For Programmers and Other Curious People",
+      "author": "Aditya Y. Bhargava",
+      "rating": 4,
+      "toRead": false,
+      "readAt": "2025-09-29T00:00:00.000Z",
+      "addedAt": "2025-09-29T16:30:54.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1458747997l/22847284._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/22847284"
+    }
+  },
+  {
+    "id": "software-engineering-228537080",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 110,
+      "title": "Responsible Software Engineering",
+      "subtitle": "With Real-World Case Studies from Google",
+      "author": "Daniel J. Barrett",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-06-25T21:30:27.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1740795956l/228537080._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/228537080"
+    }
+  },
+  {
+    "id": "software-engineering-230529414",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 31,
+      "title": "Building Applications with AI Agents",
+      "subtitle": "Designing and Implementing Multiagent Systems",
+      "author": "Michael Albada",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2026-03-12T03:33:18.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1747701543l/230529414._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/230529414"
+    }
+  },
+  {
+    "id": "software-engineering-232301616",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 48,
+      "title": "The Product-Minded Engineer",
+      "subtitle": "Building Impactful Software for Your Users",
+      "author": "Drew Hoskins",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-11-28T20:14:16.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1747317899l/232301616._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/232301616"
+    }
+  },
+  {
+    "id": "software-engineering-23232941",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 302,
+      "title": "Soft Skills",
+      "subtitle": "The Software Developer's Life Manual",
+      "author": "John Sonmez",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2021-02-23T14:54:30.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1419180921l/23232941.jpg",
+      "href": "https://www.goodreads.com/book/show/23232941"
+    }
+  },
+  {
+    "id": "software-engineering-23233485",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 219,
+      "title": "Cracking the Tech Career",
+      "subtitle": "Insider Advice on Landing a Job at Google, Microsoft, Apple, or any Top Tech Company",
+      "author": "Gayle Laakmann McDowell",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-06-29T21:05:51.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1435849084l/23233485._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/23233485"
+    }
+  },
+  {
+    "id": "software-engineering-23363016",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 89,
+      "title": "DevOps",
+      "subtitle": "A Software Architect's Perspective",
+      "author": "Len Bass",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-08-25T20:55:30.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1415585514l/23363016.jpg",
+      "href": "https://www.goodreads.com/book/show/23363016"
+    }
+  },
+  {
+    "id": "software-engineering-23461397",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 92,
+      "title": "Principles of Cyber-Physical Systems",
+      "author": "Rajeev Alur",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-08-25T20:50:59.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1419182346l/23461397.jpg",
+      "href": "https://www.goodreads.com/book/show/23461397"
+    }
+  },
+  {
+    "id": "software-engineering-23498372",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 10,
+      "title": "From Mathematics to Generic Programming",
+      "author": "Alexander A. Stepanov",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2026-06-07T17:58:24.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1421708638l/23498372.jpg",
+      "href": "https://www.goodreads.com/book/show/23498372"
+    }
+  },
+  {
+    "id": "software-engineering-235662231",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 81,
+      "title": "Crafting Engineering Strategy",
+      "subtitle": "How Thoughtful Decisions Solve Complex Problems",
+      "author": "Will Larson",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-10-27T19:38:22.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1749226549l/235662231._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/235662231"
+    }
+  },
+  {
+    "id": "software-engineering-23627482",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 25,
+      "title": "Your Code As a Crime Scene",
+      "subtitle": "Use Forensic Techniques to Arrest Defects, Bottlenecks, and Bad Design in Your Programs",
+      "author": "Adam Tornhill",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2026-04-14T16:49:20.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1502137388l/23627482._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/23627482"
+    }
+  },
+  {
+    "id": "software-engineering-236746769",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 102,
+      "title": "Facilitating Software Architecture",
+      "subtitle": "Empowering Teams to Make Architectural Decisions",
+      "author": "Andrew Harmel-Law",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-08-23T21:25:02.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1750193335l/236746769._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/236746769"
+    }
+  },
+  {
+    "id": "software-engineering-238228145",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 28,
+      "title": "Engineering Leadership",
+      "subtitle": "The Hard Parts: Navigating Chaos to Build Teams That Deliver",
+      "author": "Juan Pablo Buriticá",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2026-03-16T16:22:21.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1752707104l/238228145._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/238228145"
+    }
+  },
+  {
+    "id": "software-engineering-238299724",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 43,
+      "title": "Domain-Driven Transformation",
+      "subtitle": "Modernize Legacy Systems and Mitigate Risk",
+      "author": "Carola Lilienthal",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-12-05T15:26:28.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1752709188l/238299724._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/238299724"
+    }
+  },
+  {
+    "id": "software-engineering-239941967",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 49,
+      "title": "Architecture for Flow",
+      "subtitle": "Adaptive Systems with Domain-Driven Design, Wardley Mapping, and Team Topologies (Addison-Wesley Signature Series (Vernon))",
+      "author": "Susanne  Kaiser",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-11-20T16:03:14.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1756814458l/239941967._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/239941967"
+    }
+  },
+  {
+    "id": "software-engineering-23995360",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 95,
+      "title": "Superforecasting",
+      "subtitle": "The Art and Science of Prediction",
+      "author": "Philip E. Tetlock",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-08-23T21:36:42.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1435684424l/23995360._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/23995360"
+    }
+  },
+  {
+    "id": "software-engineering-240383079",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 41,
+      "title": "Generative AI Design Patterns",
+      "subtitle": "Solutions to Common Challenges When Building GenAI Agents and Applications",
+      "author": "Valliappa Lakshmanan",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-12-18T15:03:18.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1755750567l/240383079._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/240383079"
+    }
+  },
+  {
+    "id": "software-engineering-242970564",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 44,
+      "title": "Output to Outcome",
+      "subtitle": "An Operating Model for the Age of AI",
+      "author": "Mik Kersten",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-12-02T17:14:38.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1760893716l/242970564._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/242970564"
+    }
+  },
+  {
+    "id": "software-engineering-243158030",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 82,
+      "title": "The AI Companion to Crafting Engineering Strategy",
+      "subtitle": "How Thoughtful Decisions Solve Complex Problems",
+      "author": "Will Larson",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-10-27T19:37:47.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1761333789l/243158030._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/243158030"
+    }
+  },
+  {
+    "id": "software-engineering-243585851",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 29,
+      "title": "Visualizing Generative AI",
+      "subtitle": "How AI Paints, Writes, and Assists",
+      "author": "Priyanka Vergadia",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2026-03-12T03:35:23.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1762301037l/243585851._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/243585851"
+    }
+  },
+  {
+    "id": "software-engineering-244104404",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 7,
+      "title": "Sutskever's List",
+      "subtitle": "Foundational ideas of modern AI",
+      "author": "Richard Heimann",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2026-07-14T04:35:43.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1763489757l/244104404._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/244104404"
+    }
+  },
+  {
+    "id": "software-engineering-245273",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 210,
+      "title": "Complex Adaptive Systems",
+      "subtitle": "An Introduction to Computational Models of Social Life",
+      "author": "John H.  Miller",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-12-29T15:51:06.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348622620l/245273.jpg",
+      "href": "https://www.goodreads.com/book/show/245273"
+    }
+  },
+  {
+    "id": "software-engineering-247275970",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 4,
+      "title": "The Agentic Enterprise",
+      "subtitle": "A Leader's Guide to Orchestrating, Governing, and Scaling AI Agent Systems",
+      "author": "Babak Hodjat",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2026-09-06T03:35:37.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1769740954l/247275970._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/247275970"
+    }
+  },
+  {
+    "id": "software-engineering-248337699",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 9,
+      "title": "Signals & Levers",
+      "subtitle": "Systems Thinking Tools to Unblock Software Delivery",
+      "author": "Elisabeth Hendrickson",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2026-07-05T20:11:33.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1771767841l/248337699._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/248337699"
+    }
+  },
+  {
+    "id": "software-engineering-25091671",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 294,
+      "title": "Software Architecture Patterns",
+      "author": "Mark   Richards",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2021-07-06T20:07:50.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1425736553l/25091671.jpg",
+      "href": "https://www.goodreads.com/book/show/25091671"
+    }
+  },
+  {
+    "id": "software-engineering-253061941",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 8,
+      "title": "Threat-Driven Software Development",
+      "subtitle": "Defending online services from modern threat actors",
+      "author": "Michael Howard",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2026-07-13T15:06:27.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1780558792l/253061941._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/253061941"
+    }
+  },
+  {
+    "id": "software-engineering-25707092",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 252,
+      "title": "Cracking the Coding Interview",
+      "subtitle": "189 Programming Questions and Solutions",
+      "author": "Gayle Laakmann McDowell",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-02-22T22:32:37.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1441834930l/25707092._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/25707092"
+    }
+  },
+  {
+    "id": "software-engineering-257102377",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 0,
+      "title": "Grokking AI Applications",
+      "author": "Andrea De Mauro",
+      "rating": 0,
+      "toRead": false,
+      "readAt": null,
+      "addedAt": "2026-10-19T13:33:36.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1787068298l/257102377._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/257102377"
+    }
+  },
+  {
+    "id": "software-engineering-26083308",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 281,
+      "title": "The DevOps Handbook",
+      "subtitle": "How to Create World-Class Agility, Reliability, and Security in Technology Organizations",
+      "author": "Gene Kim",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-01-13T18:12:30.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1473461230l/26083308._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/26083308"
+    }
+  },
+  {
+    "id": "software-engineering-262334",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 24,
+      "title": "Design and Evolution of C++, The",
+      "author": "Bjarne Stroustrup",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2026-04-14T16:49:38.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1385191088l/262334.jpg",
+      "href": "https://www.goodreads.com/book/show/262334"
+    }
+  },
+  {
+    "id": "software-engineering-26368796",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 91,
+      "title": "Cyber Security Engineering",
+      "subtitle": "A Practical Approach for Systems and Software Assurance (SEI Series in Software Engineering (Paperback))",
+      "author": "Nancy R. Mead",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-08-25T20:51:20.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1471280072l/26368796.jpg",
+      "href": "https://www.goodreads.com/book/show/26368796"
+    }
+  },
+  {
+    "id": "software-engineering-26518108",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 96,
+      "title": "How to Measure Anything in Cybersecurity Risk",
+      "author": "Douglas W. Hubbard",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-08-23T21:36:16.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1468229703l/26518108.jpg",
+      "href": "https://www.goodreads.com/book/show/26518108"
+    }
+  },
+  {
+    "id": "software-engineering-26544394",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 126,
+      "title": "Infrastructure as Code",
+      "subtitle": "Managing Servers in the Cloud",
+      "author": "Kief Morris",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-03-27T22:38:17.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1456414187l/26544394._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/26544394"
+    }
+  },
+  {
+    "id": "software-engineering-2696185",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 12,
+      "title": "Cleanroom Software Engineering",
+      "subtitle": "Technology and Process",
+      "author": "Stacy J. Prowell",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2026-06-02T16:10:20.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348249841l/2696185.jpg",
+      "href": "https://www.goodreads.com/book/show/2696185"
+    }
+  },
+  {
+    "id": "software-engineering-27283384",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 94,
+      "title": "Designing Software Architectures",
+      "subtitle": "A Practical Approach",
+      "author": "Humberto Cervantes",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-08-23T21:58:12.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1460911171l/27283384.jpg",
+      "href": "https://www.goodreads.com/book/show/27283384"
+    }
+  },
+  {
+    "id": "software-engineering-27310479",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 318,
+      "title": "How Not to Network a Nation",
+      "subtitle": "The Uneasy History of the Soviet Internet",
+      "author": "Benjamin Peters",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2018-06-27T15:20:55.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1460122629l/27310479.jpg",
+      "href": "https://www.goodreads.com/book/show/27310479"
+    }
+  },
+  {
+    "id": "software-engineering-27543",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 127,
+      "title": "Artificial Intelligence",
+      "subtitle": "A Modern Approach",
+      "author": "Stuart Russell",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-03-26T14:46:19.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1385600294l/27543.jpg",
+      "href": "https://www.goodreads.com/book/show/27543"
+    }
+  },
+  {
+    "id": "software-engineering-276079",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 327,
+      "title": "Hacker's Delight",
+      "author": "Henry S. Warren Jr.",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2016-03-11T04:40:36.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1385216522l/276079.jpg",
+      "href": "https://www.goodreads.com/book/show/276079"
+    }
+  },
+  {
+    "id": "software-engineering-27968891",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 40,
+      "title": "Site Reliability Engineering",
+      "subtitle": "How Google Runs Production Systems",
+      "author": "Betsy Beyer",
+      "rating": 5,
+      "toRead": false,
+      "readAt": "2025-12-31T00:00:00.000Z",
+      "addedAt": "2026-01-02T03:50:46.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1459115220l/27968891.jpg",
+      "href": "https://www.goodreads.com/book/show/27968891"
+    }
+  },
+  {
+    "id": "software-engineering-281818",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 193,
+      "title": "Where Wizards Stay Up Late",
+      "subtitle": "The Origins of the Internet",
+      "author": "Katie Hafner",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2023-07-16T01:30:16.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1405259838l/281818.jpg",
+      "href": "https://www.goodreads.com/book/show/281818"
+    }
+  },
+  {
+    "id": "software-engineering-29326350",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 195,
+      "title": "Elegant Objects",
+      "author": "Yegor Bugayenko",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2023-07-10T01:02:16.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1461533921l/29326350.jpg",
+      "href": "https://www.goodreads.com/book/show/29326350"
+    }
+  },
+  {
+    "id": "software-engineering-300093",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 19,
+      "title": "Algorithms + Data Structures = Programs",
+      "author": "Niklaus Wirth",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2026-04-14T16:51:56.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1387705045l/300093.jpg",
+      "href": "https://www.goodreads.com/book/show/300093"
+    }
+  },
+  {
+    "id": "software-engineering-30460867",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 208,
+      "title": "Beyond the Twelve-Factor App Exploring the DNA of Highly Scalable, Resilient Cloud Applications",
+      "author": "Kevin Hoffman",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2023-02-02T16:46:05.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1510984849l/30460867._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/30460867"
+    }
+  },
+  {
+    "id": "software-engineering-3067234",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 276,
+      "title": "The Algorithm Design Manual",
+      "author": "Steven S. Skiena",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-01-13T18:16:09.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1347393636l/3067234.jpg",
+      "href": "https://www.goodreads.com/book/show/3067234"
+    }
+  },
+  {
+    "id": "software-engineering-30816008",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 277,
+      "title": "Inclusive Design Patterns - Coding Accessibility Into Web Design",
+      "author": "Heydon Pickering",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-01-13T18:14:56.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1467273073l/30816008._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/30816008"
+    }
+  },
+  {
+    "id": "software-engineering-31139580",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 188,
+      "title": "Hit Refresh",
+      "subtitle": "The Quest to Rediscover Microsoft's Soul and Imagine a Better Future for Everyone",
+      "author": "Satya Nadella",
+      "rating": 4,
+      "toRead": false,
+      "readAt": "2023-10-19T00:00:00.000Z",
+      "addedAt": "2023-10-19T11:32:41.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1506565706l/31139580.jpg",
+      "href": "https://www.goodreads.com/book/show/31139580"
+    }
+  },
+  {
+    "id": "software-engineering-3193270",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 75,
+      "title": "Software Security Engineering",
+      "subtitle": "A Guide for Project Managers",
+      "author": "Julia H. Allen",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-11-20T15:30:33.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348981587l/3193270.jpg",
+      "href": "https://www.goodreads.com/book/show/3193270"
+    }
+  },
+  {
+    "id": "software-engineering-32171114",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 279,
+      "title": "CSS in Depth",
+      "author": "Keith J. Grant",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-01-13T18:13:57.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1474762284l/32171114._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/32171114"
+    }
+  },
+  {
+    "id": "software-engineering-324750",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 220,
+      "title": "High Output Management",
+      "author": "Andrew S. Grove",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-06-17T21:41:39.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1347800461l/324750.jpg",
+      "href": "https://www.goodreads.com/book/show/324750"
+    }
+  },
+  {
+    "id": "software-engineering-326790",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 225,
+      "title": "The Society of Mind",
+      "author": "Marvin Minsky",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-03-11T20:50:37.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348639169l/326790.jpg",
+      "href": "https://www.goodreads.com/book/show/326790"
+    }
+  },
+  {
+    "id": "software-engineering-3268675",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 322,
+      "title": "Security Engineering",
+      "subtitle": "A Guide to Building Dependable Distributed Systems",
+      "author": "Ross J. Anderson",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2018-06-27T15:17:19.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348874720l/3268675.jpg",
+      "href": "https://www.goodreads.com/book/show/3268675"
+    }
+  },
+  {
+    "id": "software-engineering-32919530",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 22,
+      "title": "A Mind at Play",
+      "subtitle": "How Claude Shannon Invented the Information Age",
+      "author": "Jimmy Soni",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2026-04-14T16:50:28.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1495386506l/32919530.jpg",
+      "href": "https://www.goodreads.com/book/show/32919530"
+    }
+  },
+  {
+    "id": "software-engineering-33369254",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 172,
+      "title": "The Manager's Path",
+      "subtitle": "A Guide for Tech Leaders Navigating Growth and Change",
+      "author": "Camille Fournier",
+      "rating": 3,
+      "toRead": false,
+      "readAt": "2024-02-27T00:00:00.000Z",
+      "addedAt": "2024-02-27T16:51:06.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1484107737l/33369254._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/33369254"
+    }
+  },
+  {
+    "id": "software-engineering-3356509",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 298,
+      "title": "The Complete Problem Solver, Second Edition",
+      "author": "John R. Hayes",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2021-02-25T20:31:34.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1267955296l/3356509.jpg",
+      "href": "https://www.goodreads.com/book/show/3356509"
+    }
+  },
+  {
+    "id": "software-engineering-337301",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 335,
+      "title": "AntiPatterns",
+      "subtitle": "Refactoring Software, Architectures, and Projects in Crisis",
+      "author": "William J. Brown",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2016-03-11T04:33:24.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348639672l/337301.jpg",
+      "href": "https://www.goodreads.com/book/show/337301"
+    }
+  },
+  {
+    "id": "software-engineering-338124",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 64,
+      "title": "Perspectives on Free and Open Source Software",
+      "author": "Joseph Feller",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-11-20T15:46:12.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1347701386l/338124.jpg",
+      "href": "https://www.goodreads.com/book/show/338124"
+    }
+  },
+  {
+    "id": "software-engineering-34416720",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 114,
+      "title": "A Seat at the Table",
+      "subtitle": "IT Leadership in the Age of Agility",
+      "author": "Mark  Schwartz",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-03-31T15:41:33.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1500766316l/34416720.jpg",
+      "href": "https://www.goodreads.com/book/show/34416720"
+    }
+  },
+  {
+    "id": "software-engineering-34695798",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 265,
+      "title": "Release It!",
+      "subtitle": "Design and Deploy Production-Ready Software",
+      "author": "Michael T. Nygard",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-02-14T16:52:15.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1490801157l/34695798._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/34695798"
+    }
+  },
+  {
+    "id": "software-engineering-34695800",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 254,
+      "title": "A Common-Sense Guide to Data Structures and Algorithms",
+      "subtitle": "Level Up Your Core Programming Skills",
+      "author": "Jay Wengrow",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-02-18T21:13:42.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1490789883l/34695800._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/34695800"
+    }
+  },
+  {
+    "id": "software-engineering-35558501",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 112,
+      "title": "Designing Data-Intensive Applications",
+      "subtitle": "The Big Ideas Behind Reliable, Scalable, and Maintainable Systems",
+      "author": "Martin Kleppmann",
+      "rating": 5,
+      "toRead": false,
+      "readAt": "2025-06-06T00:00:00.000Z",
+      "addedAt": "2025-06-06T12:23:38.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1498848586l/35558501._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/35558501"
+    }
+  },
+  {
+    "id": "software-engineering-35755822",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 271,
+      "title": "Building Evolutionary Architectures",
+      "subtitle": "Support Constant Change",
+      "author": "Neal Ford",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-02-14T16:43:41.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1507020307l/35755822._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/35755822"
+    }
+  },
+  {
+    "id": "software-engineering-36185052",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 239,
+      "title": "Learn Python the Hard Way",
+      "author": "Zed A. Shaw",
+      "rating": 4,
+      "toRead": false,
+      "readAt": null,
+      "addedAt": "2022-03-11T20:38:18.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1504603908l/36185052._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/36185052"
+    }
+  },
+  {
+    "id": "software-engineering-363999",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 245,
+      "title": "The Art of Computer Programming",
+      "subtitle": "Volume 3: Sorting and Searching",
+      "author": "Donald Ervin Knuth",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-03-02T01:06:39.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1388460762l/363999.jpg",
+      "href": "https://www.goodreads.com/book/show/363999"
+    }
+  },
+  {
+    "id": "software-engineering-3735293",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 200,
+      "title": "Clean Code",
+      "subtitle": "A Handbook of Agile Software Craftsmanship",
+      "author": "Robert C. Martin",
+      "rating": 5,
+      "toRead": false,
+      "readAt": "2022-10-11T00:00:00.000Z",
+      "addedAt": "2023-04-11T03:03:47.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1436202607l/3735293._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/3735293"
+    }
+  },
+  {
+    "id": "software-engineering-3828902",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 264,
+      "title": "Thinking In Systems",
+      "subtitle": "A Primer",
+      "author": "Donella H. Meadows",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-02-14T16:52:35.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1390169859l/3828902.jpg",
+      "href": "https://www.goodreads.com/book/show/3828902"
+    }
+  },
+  {
+    "id": "software-engineering-387190",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 21,
+      "title": "Test-Driven Development",
+      "subtitle": "By Example",
+      "author": "Kent Beck",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2026-04-14T16:51:05.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1372039943l/387190.jpg",
+      "href": "https://www.goodreads.com/book/show/387190"
+    }
+  },
+  {
+    "id": "software-engineering-38821039",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 228,
+      "title": "The Making of a Manager",
+      "subtitle": "What to Do When Everyone Looks to You",
+      "author": "Julie Zhuo",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-03-11T20:47:15.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1548809382l/38821039.jpg",
+      "href": "https://www.goodreads.com/book/show/38821039"
+    }
+  },
+  {
+    "id": "software-engineering-38900866",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 223,
+      "title": "It Doesn't Have to Be Crazy at Work",
+      "subtitle": "A Practical Guide to Sustainable Productivity Through Calm Company Culture and Effective Leadership",
+      "author": "Jason Fried",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-03-11T20:51:31.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1526057292l/38900866.jpg",
+      "href": "https://www.goodreads.com/book/show/38900866"
+    }
+  },
+  {
+    "id": "software-engineering-39074550",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 190,
+      "title": "Humble Pi",
+      "subtitle": "A Comedy of Maths Errors",
+      "author": "Matt    Parker",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2023-07-26T10:57:09.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1552885037l/39074550._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/39074550"
+    }
+  },
+  {
+    "id": "software-engineering-39080433",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 261,
+      "title": "Accelerate",
+      "subtitle": "The Science of Lean Software and DevOps: Building and Scaling High Performing Technology Organizations",
+      "author": "Nicole Forsgren",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-02-14T16:53:36.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1520501690l/39080433._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/39080433"
+    }
+  },
+  {
+    "id": "software-engineering-39088592",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 260,
+      "title": "The Model Thinker",
+      "subtitle": "What You Need to Know to Make Data Work for You",
+      "author": "Scott E. Page",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-02-14T16:54:09.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1538512393l/39088592._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/39088592"
+    }
+  },
+  {
+    "id": "software-engineering-39097419",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 115,
+      "title": "DevOps for the Modern Enterprise",
+      "subtitle": "Winning Practices to Transform Legacy IT Organizations",
+      "author": "Mirco Hering",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-03-31T15:40:03.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1520657316l/39097419._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/39097419"
+    }
+  },
+  {
+    "id": "software-engineering-39737929",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 140,
+      "title": "Learn Functional Programming with Elixir",
+      "subtitle": "New Foundations for a New World",
+      "author": "Ulisses Almeida",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2024-09-21T01:12:14.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1523040552l/39737929._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/39737929"
+    }
+  },
+  {
+    "id": "software-engineering-39859660",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 26,
+      "title": "The Computer Book",
+      "subtitle": "From the Abacus to Artificial Intelligence, 250 Milestones in the History of Computer Science",
+      "author": "Simson Garfinkel",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2026-04-14T16:49:03.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1529157674l/39859660._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/39859660"
+    }
+  },
+  {
+    "id": "software-engineering-39996759",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 291,
+      "title": "A Philosophy of Software Design",
+      "author": "John Ousterhout",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2021-08-04T18:21:14.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1531857377l/39996759._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/39996759"
+    }
+  },
+  {
+    "id": "software-engineering-40679042",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 116,
+      "title": "Project to Product",
+      "subtitle": "How to Survive and Thrive in the Age of Digital Disruption with the Flow Framework",
+      "author": "Mik Kersten",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-03-31T15:39:44.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1530412645l/40679042._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/40679042"
+    }
+  },
+  {
+    "id": "software-engineering-40681093",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 227,
+      "title": "When Will It Be Done?",
+      "subtitle": "Lean-Agile Forecasting to Answer Your Customers' Most Important Question",
+      "author": "Daniel S. Vacanti",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-03-11T20:48:46.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1530446065l/40681093._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/40681093"
+    }
+  },
+  {
+    "id": "software-engineering-4075172",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 57,
+      "title": "Human Aspects of Software Engineering",
+      "author": "James E. Tomayko",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-11-20T15:54:53.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1266499939l/4075172.jpg",
+      "href": "https://www.goodreads.com/book/show/4075172"
+    }
+  },
+  {
+    "id": "software-engineering-4099",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 331,
+      "title": "The Pragmatic Programmer",
+      "subtitle": "From Journeyman to Master",
+      "author": "Andy   Hunt",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2016-03-11T04:38:06.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1401432508l/4099.jpg",
+      "href": "https://www.goodreads.com/book/show/4099"
+    }
+  },
+  {
+    "id": "software-engineering-41738065",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 32,
+      "title": "Pro .NET Memory Management",
+      "subtitle": "For Better Code, Performance, and Scalability",
+      "author": "Konrad Kokosa",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2026-03-02T02:51:56.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1543306780l/41738065.jpg",
+      "href": "https://www.goodreads.com/book/show/41738065"
+    }
+  },
+  {
+    "id": "software-engineering-41793",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 175,
+      "title": "Hackers & Painters",
+      "subtitle": "Big Ideas from the Computer Age",
+      "author": "Paul    Graham",
+      "rating": 2,
+      "toRead": false,
+      "readAt": "2024-01-26T00:00:00.000Z",
+      "addedAt": "2024-01-27T00:17:05.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348562702l/41793.jpg",
+      "href": "https://www.goodreads.com/book/show/41793"
+    }
+  },
+  {
+    "id": "software-engineering-41998128",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 46,
+      "title": "Architects of Intelligence",
+      "subtitle": "The truth about AI from the people building it",
+      "author": "Martin Ford",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-12-02T15:04:15.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1537760364l/41998128._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/41998128"
+    }
+  },
+  {
+    "id": "software-engineering-42366166",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 136,
+      "title": "Practical Cloud Security",
+      "subtitle": "A Guide for Secure Design and Deployment",
+      "author": "Chris Dotson",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2024-10-26T12:28:47.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1552513652l/42366166.jpg",
+      "href": "https://www.goodreads.com/book/show/42366166"
+    }
+  },
+  {
+    "id": "software-engineering-42414767",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 141,
+      "title": "Technology Strategy Patterns",
+      "subtitle": "Architecture as Strategy",
+      "author": "Eben Hewitt",
+      "rating": 3,
+      "toRead": false,
+      "readAt": "2024-09-05T00:00:00.000Z",
+      "addedAt": "2024-09-05T13:51:51.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1540217980l/42414767._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/42414767"
+    }
+  },
+  {
+    "id": "software-engineering-42437862",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 109,
+      "title": "Business Analysis Agility",
+      "subtitle": "Delivering Value, Not Just Software",
+      "author": "James W. Robertson",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-07-22T20:16:57.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1540492759l/42437862._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/42437862"
+    }
+  },
+  {
+    "id": "software-engineering-42587193",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 308,
+      "title": "Practical TLA+",
+      "subtitle": "Planning Driven Development",
+      "author": "Hillel Wayne",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2021-01-19T19:22:00.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1540891879l/42587193._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/42587193"
+    }
+  },
+  {
+    "id": "software-engineering-42778944",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 93,
+      "title": "Managing Technical Debt",
+      "subtitle": "Reducing Friction in Software Development",
+      "author": "Philippe Kruchten",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-08-25T20:50:35.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1550661671l/42778944.jpg",
+      "href": "https://www.goodreads.com/book/show/42778944"
+    }
+  },
+  {
+    "id": "software-engineering-42832585",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 158,
+      "title": "Graph Algorithms",
+      "subtitle": "Practical Examples in Apache Spark & Neo4j",
+      "author": "Mark Needham",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2024-07-31T08:40:48.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1553103782l/42832585.jpg",
+      "href": "https://www.goodreads.com/book/show/42832585"
+    }
+  },
+  {
+    "id": "software-engineering-42970131",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 287,
+      "title": "A Programmer's Introduction to Mathematics",
+      "author": "Jeremy Kun",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2021-08-04T18:24:55.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1543373575l/42970131._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/42970131"
+    }
+  },
+  {
+    "id": "software-engineering-432853",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 229,
+      "title": "Biomimicry",
+      "subtitle": "Innovation Inspired by Nature",
+      "author": "Janine M. Benyus",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-03-11T20:46:17.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1347921717l/432853.jpg",
+      "href": "https://www.goodreads.com/book/show/432853"
+    }
+  },
+  {
+    "id": "software-engineering-434707",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 214,
+      "title": "Proofs and Refutations",
+      "subtitle": "The Logic of Mathematical Discovery",
+      "author": "Imre Lakatos",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-08-31T03:34:27.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1776607117l/434707._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/434707"
+    }
+  },
+  {
+    "id": "software-engineering-43713",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 166,
+      "title": "Structure and Interpretation of Computer Programs",
+      "author": "Harold Abelson",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2024-06-20T06:52:32.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1391032527l/43713.jpg",
+      "href": "https://www.goodreads.com/book/show/43713"
+    }
+  },
+  {
+    "id": "software-engineering-43999120",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 232,
+      "title": "Rebooting AI",
+      "subtitle": "Building Artificial Intelligence We Can Trust",
+      "author": "Gary F. Marcus",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-03-11T20:45:20.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1555590930l/43999120.jpg",
+      "href": "https://www.goodreads.com/book/show/43999120"
+    }
+  },
+  {
+    "id": "software-engineering-44135420",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 286,
+      "title": "Team Topologies",
+      "subtitle": "Organizing Business and Technology Teams for Fast Flow",
+      "author": "Matthew    Skelton",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2021-10-28T02:49:34.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1563409554l/44135420.jpg",
+      "href": "https://www.goodreads.com/book/show/44135420"
+    }
+  },
+  {
+    "id": "software-engineering-44144499",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 138,
+      "title": "Monolith to Microservices",
+      "subtitle": "Evolutionary Patterns to Transform Your Monolith",
+      "author": "Sam Newman",
+      "rating": 4,
+      "toRead": false,
+      "readAt": "2024-10-22T00:00:00.000Z",
+      "addedAt": "2024-10-22T09:27:07.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1566123566l/44144499.jpg",
+      "href": "https://www.goodreads.com/book/show/44144499"
+    }
+  },
+  {
+    "id": "software-engineering-44333183",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 258,
+      "title": "The Unicorn Project",
+      "author": "Gene Kim",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-02-14T16:54:56.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1566877586l/44333183.jpg",
+      "href": "https://www.goodreads.com/book/show/44333183"
+    }
+  },
+  {
+    "id": "software-engineering-44647144",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 6,
+      "title": "Database Internals",
+      "subtitle": "A deep-dive into how distributed data systems work",
+      "author": "Alex Petrov",
+      "rating": 4,
+      "toRead": false,
+      "readAt": "2026-07-19T00:00:00.000Z",
+      "addedAt": "2026-07-19T18:37:56.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1677429379l/44647144._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/44647144"
+    }
+  },
+  {
+    "id": "software-engineering-44882",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 326,
+      "title": "Code",
+      "subtitle": "The Hidden Language of Computer Hardware and Software",
+      "author": "Charles Petzold",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2016-03-11T04:44:12.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1709792682l/44882._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/44882"
+    }
+  },
+  {
+    "id": "software-engineering-44919",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 284,
+      "title": "Working Effectively with Legacy Code",
+      "author": "Michael C. Feathers",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-01-13T18:10:29.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348627451l/44919.jpg",
+      "href": "https://www.goodreads.com/book/show/44919"
+    }
+  },
+  {
+    "id": "software-engineering-44936",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 330,
+      "title": "Refactoring",
+      "subtitle": "Improving the Design of Existing Code",
+      "author": "Martin Fowler",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2016-03-11T04:39:10.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1386925632l/44936.jpg",
+      "href": "https://www.goodreads.com/book/show/44936"
+    }
+  },
+  {
+    "id": "software-engineering-45024007",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 45,
+      "title": "The Singularity Is Nearer",
+      "subtitle": "When We Merge with AI",
+      "author": "Ray Kurzweil",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-12-02T15:04:49.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1711721717l/45024007.jpg",
+      "href": "https://www.goodreads.com/book/show/45024007"
+    }
+  },
+  {
+    "id": "software-engineering-45159905",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 35,
+      "title": "Pro .NET Benchmarking",
+      "author": "Andrey Akinshin",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2026-03-02T02:50:07.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1555755357l/45159905.jpg",
+      "href": "https://www.goodreads.com/book/show/45159905"
+    }
+  },
+  {
+    "id": "software-engineering-45280021",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 189,
+      "title": "Clean Agile",
+      "subtitle": "Back to Basics",
+      "author": "Robert C. Martin",
+      "rating": 3,
+      "toRead": false,
+      "readAt": "2023-07-30T00:00:00.000Z",
+      "addedAt": "2023-08-02T01:47:26.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1568477691l/45280021._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/45280021"
+    }
+  },
+  {
+    "id": "software-engineering-45303387",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 301,
+      "title": "An Elegant Puzzle",
+      "subtitle": "Systems of Engineering Management",
+      "author": "Will Larson",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2021-02-25T14:15:18.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1556221385l/45303387._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/45303387"
+    }
+  },
+  {
+    "id": "software-engineering-45767533",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 297,
+      "title": "Resilient Management",
+      "author": "Lara   Hogan",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2021-02-27T23:09:45.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1557845913l/45767533._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/45767533"
+    }
+  },
+  {
+    "id": "software-engineering-46066277",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 314,
+      "title": "Your First Year in Code",
+      "author": "Isaac Lyman",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2019-07-26T15:58:24.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1559249024l/46066277._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/46066277"
+    }
+  },
+  {
+    "id": "software-engineering-4845",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 333,
+      "title": "Code Complete",
+      "subtitle": "A Practical Handbook of Software Construction",
+      "author": "Steve McConnell",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2016-03-11T04:36:06.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1396837641l/4845.jpg",
+      "href": "https://www.goodreads.com/book/show/4845"
+    }
+  },
+  {
+    "id": "software-engineering-48816586",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 155,
+      "title": "Software Engineering at Google",
+      "subtitle": "Lessons Learned from Programming Over Time",
+      "author": "Titus Winters",
+      "rating": 3,
+      "toRead": false,
+      "readAt": "2024-08-15T00:00:00.000Z",
+      "addedAt": "2024-08-15T18:00:04.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1576579607l/48816586.jpg",
+      "href": "https://www.goodreads.com/book/show/48816586"
+    }
+  },
+  {
+    "id": "software-engineering-48992298",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 137,
+      "title": "Web Application Security",
+      "subtitle": "Exploitation and Countermeasures for Modern Web Applications",
+      "author": "Andrew Hoffman",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2024-10-26T12:28:17.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1577255828l/48992298.jpg",
+      "href": "https://www.goodreads.com/book/show/48992298"
+    }
+  },
+  {
+    "id": "software-engineering-50083106",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 171,
+      "title": "The Art of Leadership",
+      "subtitle": "Small Things, Done Well",
+      "author": "Michael Lopp",
+      "rating": 3,
+      "toRead": false,
+      "readAt": "2024-05-15T00:00:00.000Z",
+      "addedAt": "2024-05-15T09:01:48.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1577255999l/50083106._SX318_SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/50083106"
+    }
+  },
+  {
+    "id": "software-engineering-50083115",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 98,
+      "title": "Architecture Patterns with Python",
+      "subtitle": "Enabling Test-Driven Development, Domain-Driven Design, and Event-Driven Microservices",
+      "author": "Harry Percival",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-08-23T21:28:15.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1576042152l/50083115.jpg",
+      "href": "https://www.goodreads.com/book/show/50083115"
+    }
+  },
+  {
+    "id": "software-engineering-50363684",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 293,
+      "title": "Become an Effective Software Engineering Manager",
+      "author": "James Stanier",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2021-07-28T21:44:53.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1578513196l/50363684._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/50363684"
+    }
+  },
+  {
+    "id": "software-engineering-50542111",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 84,
+      "title": "Grokking Artificial Intelligence Algorithms",
+      "author": "Rishal Hurbans",
+      "rating": 3,
+      "toRead": false,
+      "readAt": "2025-09-18T00:00:00.000Z",
+      "addedAt": "2025-09-18T12:58:47.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1596974554l/50542111._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/50542111"
+    }
+  },
+  {
+    "id": "software-engineering-50718908",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 278,
+      "title": "You Don't Know JS Yet",
+      "subtitle": "Get Started",
+      "author": "Kyle Simpson",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-01-13T18:14:35.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1580357376l/50718908._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/50718908"
+    }
+  },
+  {
+    "id": "software-engineering-50776459",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 292,
+      "title": "Shape Up",
+      "subtitle": "Stop Running in Circles and Ship Work that Matters",
+      "author": "Ryan Singer",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2021-07-28T21:45:24.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1569345815l/50776459._SX318_SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/50776459"
+    }
+  },
+  {
+    "id": "software-engineering-51163447",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 185,
+      "title": "Building Event-Driven Microservices",
+      "subtitle": "Leveraging Organizational Data at Scale",
+      "author": "Adam Bellemare",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2023-10-24T17:36:08.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1594007050l/51163447.jpg",
+      "href": "https://www.goodreads.com/book/show/51163447"
+    }
+  },
+  {
+    "id": "software-engineering-51541450",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 211,
+      "title": "Analogia",
+      "subtitle": "The Emergence of Technology Beyond Programmable Control",
+      "author": "George Dyson",
+      "rating": 2,
+      "toRead": false,
+      "readAt": "2022-10-06T00:00:00.000Z",
+      "addedAt": "2022-10-06T12:32:24.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1569894423l/51541450._SX318_SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/51541450"
+    }
+  },
+  {
+    "id": "software-engineering-515601",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 275,
+      "title": "The C Programming Language",
+      "author": "Brian W. Kernighan",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-01-13T18:16:32.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1391032531l/515601.jpg",
+      "href": "https://www.goodreads.com/book/show/515601"
+    }
+  },
+  {
+    "id": "software-engineering-51771839",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 143,
+      "title": "Flow Architectures",
+      "subtitle": "The Future of Streaming and Event-Driven Integration",
+      "author": "James Urquhart",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2024-09-02T18:28:43.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1610438764l/51771839.jpg",
+      "href": "https://www.goodreads.com/book/show/51771839"
+    }
+  },
+  {
+    "id": "software-engineering-51777615",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 230,
+      "title": "Critical Thinking",
+      "author": "Jonathan Haber",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-03-11T20:45:52.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1576626621l/51777615.jpg",
+      "href": "https://www.goodreads.com/book/show/51777615"
+    }
+  },
+  {
+    "id": "software-engineering-52084",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 304,
+      "title": "Programming Pearls",
+      "author": "Jon L. Bentley",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2021-02-23T14:52:25.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1385191091l/52084.jpg",
+      "href": "https://www.goodreads.com/book/show/52084"
+    }
+  },
+  {
+    "id": "software-engineering-52362720",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 289,
+      "title": "Building Secure and Reliable Systems",
+      "subtitle": "Best Practices for Designing, Implementing, and Maintaining Systems",
+      "author": "Heather  Adkins",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2021-08-04T18:24:06.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1583200803l/52362720.jpg",
+      "href": "https://www.goodreads.com/book/show/52362720"
+    }
+  },
+  {
+    "id": "software-engineering-52433561",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 274,
+      "title": "The AI Book",
+      "subtitle": "The Artificial Intelligence Handbook for Investors, Entrepreneurs and Fintech Visionaries",
+      "author": "Susanne Chishti",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-01-18T17:55:31.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1566884618l/52433561._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/52433561"
+    }
+  },
+  {
+    "id": "software-engineering-5257044",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 15,
+      "title": "Computer Graphics",
+      "subtitle": "Principles and Practice",
+      "author": "John F. Hughes",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2026-04-14T16:53:51.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1372044685l/5257044.jpg",
+      "href": "https://www.goodreads.com/book/show/5257044"
+    }
+  },
+  {
+    "id": "software-engineering-53094749",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 117,
+      "title": "Agile Conversations",
+      "subtitle": "Transform Your Conversations, Transform Your Culture",
+      "author": "Douglas Squirrel",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-03-31T14:37:28.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1585206398l/53094749._SX318_SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/53094749"
+    }
+  },
+  {
+    "id": "software-engineering-53345580",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 251,
+      "title": "De-Coding The Technical Interview Process",
+      "author": "Emma Bostian",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-02-22T22:32:53.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1588871057l/53345580._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/53345580"
+    }
+  },
+  {
+    "id": "software-engineering-53483751",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 3,
+      "title": "Refactoring at Scale",
+      "subtitle": "Regaining Control of Your Codebase",
+      "author": "Maude Lemaire",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2026-09-17T04:01:03.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1603143460l/53483751.jpg",
+      "href": "https://www.goodreads.com/book/show/53483751"
+    }
+  },
+  {
+    "id": "software-engineering-53547752",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 169,
+      "title": "The Software Architect Elevator",
+      "subtitle": "Redefining the Architect's Role in the Digital Enterprise",
+      "author": "Gregor Hohpe",
+      "rating": 3,
+      "toRead": false,
+      "readAt": "2024-05-31T00:00:00.000Z",
+      "addedAt": "2024-06-01T10:28:54.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1590647155l/53547752._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/53547752"
+    }
+  },
+  {
+    "id": "software-engineering-54109255",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 257,
+      "title": "System Design Interview – An insider's guide",
+      "author": "Alex Xu",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-02-18T21:11:40.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1592265780l/54109255._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/54109255"
+    }
+  },
+  {
+    "id": "software-engineering-54188007",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 62,
+      "title": "Ultra-Large-Scale Systems The Software Challenge of the Future",
+      "author": "Software Engineering Institute",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-11-20T15:47:30.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1592656615l/54188007._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/54188007"
+    }
+  },
+  {
+    "id": "software-engineering-54781022",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 311,
+      "title": "The Essentials of Modern Software Engineering",
+      "subtitle": "Free the Practices from the Method Prisons!",
+      "author": "Ivar Jacobson",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2020-09-25T18:54:52.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1596322357l/54781022._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/54781022"
+    }
+  },
+  {
+    "id": "software-engineering-5488784",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 66,
+      "title": "The CERT C Secure Coding Standard (SEI Series in Software Engineering (Paperback))",
+      "author": "Robert C. Seacord",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-11-20T15:43:13.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1347916408l/5488784.jpg",
+      "href": "https://www.goodreads.com/book/show/5488784"
+    }
+  },
+  {
+    "id": "software-engineering-548914",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 215,
+      "title": "The Little Schemer",
+      "author": "Daniel P. Friedman",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-08-31T03:34:12.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1347456079l/548914.jpg",
+      "href": "https://www.goodreads.com/book/show/548914"
+    }
+  },
+  {
+    "id": "software-engineering-55275019",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 255,
+      "title": "Machine Learning Design Patterns",
+      "subtitle": "Solutions to Common Challenges in Data Preparation, Model Building, and MLOps",
+      "author": "Valliappa Lakshmanan",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-02-18T21:13:17.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1599583594l/55275019.jpg",
+      "href": "https://www.goodreads.com/book/show/55275019"
+    }
+  },
+  {
+    "id": "software-engineering-55608536",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 249,
+      "title": "The Tech Resume Inside Out",
+      "author": "Gergely  Orosz",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-02-22T22:35:18.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1603114562l/55608536._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/55608536"
+    }
+  },
+  {
+    "id": "software-engineering-55700415",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 205,
+      "title": "The Thoughtless Design of Everyday Things",
+      "author": "Karl Wiegers",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2023-02-05T17:15:59.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1603551712l/55700415.jpg",
+      "href": "https://www.goodreads.com/book/show/55700415"
+    }
+  },
+  {
+    "id": "software-engineering-55759934",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 198,
+      "title": "Building Micro-Frontends",
+      "author": "Luca Mezzalira",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2023-06-22T20:21:12.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1603331203l/55759934.jpg",
+      "href": "https://www.goodreads.com/book/show/55759934"
+    }
+  },
+  {
+    "id": "software-engineering-55767844",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 256,
+      "title": "Cloud Native Go",
+      "subtitle": "Building Reliable Services in Unreliable Environments",
+      "author": "Matthew A. Titmus",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-02-18T21:11:58.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1603405142l/55767844.jpg",
+      "href": "https://www.goodreads.com/book/show/55767844"
+    }
+  },
+  {
+    "id": "software-engineering-55782292",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 52,
+      "title": "Strategic Monoliths and Microservices",
+      "subtitle": "Driving Innovation Using Purposeful Architecture",
+      "author": "Vaughn Vernon",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-11-20T16:01:56.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1639445475l/55782292._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/55782292"
+    }
+  },
+  {
+    "id": "software-engineering-55893833",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 54,
+      "title": "Continuous Architecture in Practice",
+      "subtitle": "Software Architecture in the Age of Agility and DevOps.",
+      "author": "Murat Erder",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-11-20T16:01:12.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1622055168l/55893833._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/55893833"
+    }
+  },
+  {
+    "id": "software-engineering-56344415",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 104,
+      "title": "Reinforcement Learning",
+      "subtitle": "Industrial Applications of Intelligent Agents",
+      "author": "Phil Winder",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-08-18T21:22:11.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1608443115l/56344415._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/56344415"
+    }
+  },
+  {
+    "id": "software-engineering-56481725",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 300,
+      "title": "Staff Engineer",
+      "subtitle": "Leadership Beyond the Management Track",
+      "author": "Will Larson",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2021-02-25T14:19:06.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1609348975l/56481725._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/56481725"
+    }
+  },
+  {
+    "id": "software-engineering-56631473",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 197,
+      "title": "Clean Craftsmanship",
+      "subtitle": "Disciplines, Standards, and Ethics",
+      "author": "Robert C. Martin",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2023-06-27T19:40:34.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1636153031l/56631473._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/56631473"
+    }
+  },
+  {
+    "id": "software-engineering-56642542",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 42,
+      "title": "Production Kubernetes",
+      "subtitle": "Building Successful Application Platforms",
+      "author": "Josh Rosso",
+      "rating": 3,
+      "toRead": false,
+      "readAt": "2025-12-07T00:00:00.000Z",
+      "addedAt": "2025-12-08T03:41:06.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1617076019l/56642542.jpg",
+      "href": "https://www.goodreads.com/book/show/56642542"
+    }
+  },
+  {
+    "id": "software-engineering-56977420",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 253,
+      "title": "Understanding Distributed Systems",
+      "subtitle": "What every developer should know about large distributed applications",
+      "author": "Roberto Vitillo",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-02-22T22:30:27.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1612684599l/56977420._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/56977420"
+    }
+  },
+  {
+    "id": "software-engineering-57196550",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 178,
+      "title": "The Programmer's Brain",
+      "author": "Felienne Hermans",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2023-11-11T23:39:41.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1616939566l/57196550._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/57196550"
+    }
+  },
+  {
+    "id": "software-engineering-57551831",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 144,
+      "title": "Practical Process Automation",
+      "subtitle": "Orchestration and Integration in Microservices and Cloud Native Architectures",
+      "author": "Bernd Ruecker",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2024-09-02T18:28:23.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1616929923l/57551831._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/57551831"
+    }
+  },
+  {
+    "id": "software-engineering-57573212",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 186,
+      "title": "Learning Domain-Driven Design",
+      "subtitle": "Aligning Software Architecture and Business Strategy",
+      "author": "Vlad Khononov",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2023-10-24T17:35:04.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1635258056l/57573212.jpg",
+      "href": "https://www.goodreads.com/book/show/57573212"
+    }
+  },
+  {
+    "id": "software-engineering-57671430",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 199,
+      "title": "Data Science on AWS",
+      "subtitle": "Implementing End-to-End, Continuous AI and Machine Learning Pipelines",
+      "author": "Chris Fregly",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2023-05-03T07:42:03.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1617922647l/57671430._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/57671430"
+    }
+  },
+  {
+    "id": "software-engineering-58128",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 283,
+      "title": "Head First Design Patterns",
+      "author": "Eric Freeman",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-01-13T18:10:47.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1408309444l/58128.jpg",
+      "href": "https://www.goodreads.com/book/show/58128"
+    }
+  },
+  {
+    "id": "software-engineering-58153482",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 139,
+      "title": "Software Architecture",
+      "subtitle": "The Hard Parts: Modern Trade-Off Analyses for Distributed Architectures",
+      "author": "Neal Ford",
+      "rating": 3,
+      "toRead": false,
+      "readAt": "2024-10-06T00:00:00.000Z",
+      "addedAt": "2024-10-07T17:47:59.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1629825122l/58153482.jpg",
+      "href": "https://www.goodreads.com/book/show/58153482"
+    }
+  },
+  {
+    "id": "software-engineering-58218464",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 182,
+      "title": "Learning Test-Driven Development",
+      "subtitle": "A Polyglot Guide to Writing Uncluttered Code",
+      "author": "Saleem Siddiqui",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2023-10-24T17:37:51.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1634159595l/58218464.jpg",
+      "href": "https://www.goodreads.com/book/show/58218464"
+    }
+  },
+  {
+    "id": "software-engineering-58230358",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 103,
+      "title": "Data Mesh",
+      "subtitle": "Delivering Data-Driven Value at Scale",
+      "author": "Zhamak Dehghani",
+      "rating": 4,
+      "toRead": false,
+      "readAt": "2025-08-22T00:00:00.000Z",
+      "addedAt": "2025-08-23T13:05:32.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1627326825l/58230358.jpg",
+      "href": "https://www.goodreads.com/book/show/58230358"
+    }
+  },
+  {
+    "id": "software-engineering-582857",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 202,
+      "title": "More About Software Requirements",
+      "subtitle": "Thorny Issues and Practical Advice",
+      "author": "Karl Wiegers",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2023-02-05T17:16:51.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1328828721l/582857.jpg",
+      "href": "https://www.goodreads.com/book/show/582857"
+    }
+  },
+  {
+    "id": "software-engineering-583277",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 161,
+      "title": "Distributed Systems",
+      "subtitle": "An Algorithmic Approach",
+      "author": "Sukumar Ghosh",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2024-07-31T08:39:07.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1388586791l/583277.jpg",
+      "href": "https://www.goodreads.com/book/show/583277"
+    }
+  },
+  {
+    "id": "software-engineering-58385794",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 53,
+      "title": "Domain Storytelling",
+      "subtitle": "A Collaborative, Visual, and Agile Way to Build Domain-Driven Software",
+      "author": "Henning Schwentner",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-11-20T16:01:33.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1632140222l/58385794._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/58385794"
+    }
+  },
+  {
+    "id": "software-engineering-58700808",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 177,
+      "title": "Good Code, Bad Code",
+      "subtitle": "Think like a software engineer",
+      "author": "Tom Long",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2023-11-11T23:39:44.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1631107184l/58700808._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/58700808"
+    }
+  },
+  {
+    "id": "software-engineering-58908392",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 146,
+      "title": "Mastering API Architecture",
+      "author": "James   Gough",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2024-09-02T18:26:55.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1630537058l/58908392._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/58908392"
+    }
+  },
+  {
+    "id": "software-engineering-59110512",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 99,
+      "title": "Security and Microservice Architecture on AWS",
+      "subtitle": "Architecting and Implementing a Secured, Scalable Solution",
+      "author": "Gaurav Raje",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-08-23T21:27:27.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1632862689l/59110512._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/59110512"
+    }
+  },
+  {
+    "id": "software-engineering-59891129",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 184,
+      "title": "Full Stack Testing",
+      "subtitle": "A Practical Guide for Delivering High Quality Software",
+      "author": "Gayathri Mohan",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2023-10-24T17:36:39.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1653946135l/59891129.jpg",
+      "href": "https://www.goodreads.com/book/show/59891129"
+    }
+  },
+  {
+    "id": "software-engineering-59907001",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 72,
+      "title": "Using Science In Cybersecurity",
+      "author": "Leigh Barnes Metcalf",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-11-20T15:35:45.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1640140834l/59907001._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/59907001"
+    }
+  },
+  {
+    "id": "software-engineering-60229084",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 165,
+      "title": "Grokking the System Design Interview",
+      "subtitle": "A step by step guide to master the system design interview",
+      "author": "Design Gurus",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2024-06-20T06:52:38.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1677851967l/60229084._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/60229084"
+    }
+  },
+  {
+    "id": "software-engineering-60563839",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 51,
+      "title": "Patterns for API Design",
+      "subtitle": "Simplifying Integration with Loosely Coupled Message Exchanges (Addison-Wesley Signature Series (Vernon))",
+      "author": "Olaf Zimmermann",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-11-20T16:02:16.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1666028466l/60563839.jpg",
+      "href": "https://www.goodreads.com/book/show/60563839"
+    }
+  },
+  {
+    "id": "software-engineering-60715378",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 156,
+      "title": "Designing Machine Learning Systems",
+      "subtitle": "An Iterative Process for Production-Ready Applications",
+      "author": "Chip Huyen",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2024-07-31T08:42:19.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1653945265l/60715378.jpg",
+      "href": "https://www.goodreads.com/book/show/60715378"
+    }
+  },
+  {
+    "id": "software-engineering-60872200",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 118,
+      "title": "Investments Unlimited",
+      "subtitle": "A Novel About DevOps, Security, Audit Compliance, and Thriving in the Digital Age",
+      "author": "Helen Beal",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-03-31T14:36:25.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1650808659l/60872200._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/60872200"
+    }
+  },
+  {
+    "id": "software-engineering-61046500",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 152,
+      "title": "Foundations of Scalable Systems",
+      "author": "Ian Gorton",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2024-09-02T18:22:05.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1651901789l/61046500.jpg",
+      "href": "https://www.goodreads.com/book/show/61046500"
+    }
+  },
+  {
+    "id": "software-engineering-61058107",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 129,
+      "title": "The Staff Engineer's Path",
+      "subtitle": "A Guide for Individual Contributors Navigating Growth and Change",
+      "author": "Tanya Reilly",
+      "rating": 3,
+      "toRead": false,
+      "readAt": "2024-04-25T00:00:00.000Z",
+      "addedAt": "2025-03-13T19:34:47.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1661205628l/61058107.jpg",
+      "href": "https://www.goodreads.com/book/show/61058107"
+    }
+  },
+  {
+    "id": "software-engineering-610830",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 312,
+      "title": "Inside the Machine",
+      "subtitle": "An Illustrated Introduction to Microprocessors and Computer Architecture",
+      "author": "Jon Stokes",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2019-08-26T18:18:26.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1328753443l/610830.jpg",
+      "href": "https://www.goodreads.com/book/show/610830"
+    }
+  },
+  {
+    "id": "software-engineering-61089520",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 20,
+      "title": "The Man from the Future",
+      "subtitle": "The Visionary Ideas of John von Neumann",
+      "author": "Ananyo Bhattacharya",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2026-04-14T16:51:28.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1654912718l/61089520.jpg",
+      "href": "https://www.goodreads.com/book/show/61089520"
+    }
+  },
+  {
+    "id": "software-engineering-61149944",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 18,
+      "title": "The UNIX-HATERS Handbook",
+      "subtitle": "Two of the most famous products of Berkeley are LSD and Unix. I don’t think that is a coincidence.",
+      "author": "Simson Garfinkel",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2026-04-14T16:52:26.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1653272420l/61149944._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/61149944"
+    }
+  },
+  {
+    "id": "software-engineering-61167316",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 119,
+      "title": "The Value Flywheel Effect",
+      "subtitle": "Power the Future and Accelerate Your Organization to the Modern Cloud",
+      "author": "David Anderson",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-03-31T14:35:57.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1653522827l/61167316._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/61167316"
+    }
+  },
+  {
+    "id": "software-engineering-61228513",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 183,
+      "title": "Software Architecture Metrics",
+      "author": "Christian Ciceri",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2023-10-24T17:37:03.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1654430933l/61228513.jpg",
+      "href": "https://www.goodreads.com/book/show/61228513"
+    }
+  },
+  {
+    "id": "software-engineering-61281844",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 50,
+      "title": "Serverless as a Game Changer",
+      "subtitle": "How to Get the Most Out of the Cloud (Addison-Wesley Signature Series (Vernon))",
+      "author": "Joseph Emison",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-11-20T16:02:37.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1666028933l/61281844.jpg",
+      "href": "https://www.goodreads.com/book/show/61281844"
+    }
+  },
+  {
+    "id": "software-engineering-6166611",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 315,
+      "title": "Real-World Functional Programming",
+      "subtitle": "With Examples in F# and C#",
+      "author": "Tomas Petricek",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2019-07-09T17:50:59.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1361784106l/6166611.jpg",
+      "href": "https://www.goodreads.com/book/show/6166611"
+    }
+  },
+  {
+    "id": "software-engineering-6232657",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 321,
+      "title": "A Mathematician's Lament",
+      "subtitle": "How School Cheats Us Out of Our Most Fascinating and Imaginative Art Form",
+      "author": "Paul  Lockhart",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2018-06-27T15:17:58.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1354903601l/6232657.jpg",
+      "href": "https://www.goodreads.com/book/show/6232657"
+    }
+  },
+  {
+    "id": "software-engineering-623957",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 65,
+      "title": "CMMI for Outsourcing",
+      "subtitle": "Guidelines for Software, Systems, and IT Acquisition",
+      "author": "Hubert F. Hofmann",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-11-20T15:45:40.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348645021l/623957.jpg",
+      "href": "https://www.goodreads.com/book/show/623957"
+    }
+  },
+  {
+    "id": "software-engineering-62803794",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 142,
+      "title": "Designing Distributed Systems",
+      "subtitle": "Patterns and Paradigms for Scalable, Reliable Services",
+      "author": "Brendan Burns",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2024-09-02T18:30:08.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1664256914l/62803794._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/62803794"
+    }
+  },
+  {
+    "id": "software-engineering-63234158",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 145,
+      "title": "RESTful Web API Patterns and Practices Cookbook",
+      "subtitle": "Connecting and Orchestrating Microservices and Distributed Data",
+      "author": "Mike Amundsen",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2024-09-02T18:27:22.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1667744374l/63234158._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/63234158"
+    }
+  },
+  {
+    "id": "software-engineering-64661326",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 106,
+      "title": "The Software Developer's Career Handbook",
+      "subtitle": "A Guide to Navigating the Unpredictable",
+      "author": "Michael Lopp",
+      "rating": 2,
+      "toRead": false,
+      "readAt": "2024-06-15T00:00:00.000Z",
+      "addedAt": "2025-07-24T18:06:40.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1670558737l/64661326._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/64661326"
+    }
+  },
+  {
+    "id": "software-engineering-6487349",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 2,
+      "title": "The Art of Unit Testing",
+      "subtitle": "With Examples in .NET",
+      "author": "Roy Osherove",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2026-10-09T15:37:52.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348818347l/6487349.jpg",
+      "href": "https://www.goodreads.com/book/show/6487349"
+    }
+  },
+  {
+    "id": "software-engineering-6518085",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 282,
+      "title": "Pro Git",
+      "author": "Scott Chacon",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-01-13T18:11:48.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1383771684l/6518085.jpg",
+      "href": "https://www.goodreads.com/book/show/6518085"
+    }
+  },
+  {
+    "id": "software-engineering-652873",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 61,
+      "title": "TSP",
+      "subtitle": "Coaching Development Teams",
+      "author": "Watts S. Humphrey",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-11-20T15:47:55.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1347481541l/652873.jpg",
+      "href": "https://www.goodreads.com/book/show/652873"
+    }
+  },
+  {
+    "id": "software-engineering-652884",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 170,
+      "title": "Objects, Components, and Frameworks With Uml",
+      "subtitle": "The Catalysis Approach",
+      "author": "Desmond Francis D'Souza",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2024-05-19T07:50:26.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1372041230l/652884.jpg",
+      "href": "https://www.goodreads.com/book/show/652884"
+    }
+  },
+  {
+    "id": "software-engineering-658332",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 209,
+      "title": "Free as in Freedom",
+      "subtitle": "Richard Stallman's Crusade for Free Software",
+      "author": "Sam  Williams",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2023-01-26T22:19:22.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1344675393l/658332.jpg",
+      "href": "https://www.goodreads.com/book/show/658332"
+    }
+  },
+  {
+    "id": "software-engineering-6597496",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 310,
+      "title": "Getting Real",
+      "subtitle": "The smarter, faster, easier way to build a successful Web application",
+      "author": "Jason Fried",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2021-01-13T18:02:26.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1347789368l/6597496.jpg",
+      "href": "https://www.goodreads.com/book/show/6597496"
+    }
+  },
+  {
+    "id": "software-engineering-6713575",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 163,
+      "title": "Coders at Work",
+      "subtitle": "Reflections on the Craft of Programming",
+      "author": "Peter Seibel",
+      "rating": 4,
+      "toRead": false,
+      "readAt": "2024-07-10T00:00:00.000Z",
+      "addedAt": "2024-07-10T07:59:03.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1349026758l/6713575.jpg",
+      "href": "https://www.goodreads.com/book/show/6713575"
+    }
+  },
+  {
+    "id": "software-engineering-6732019",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 224,
+      "title": "Rework",
+      "author": "Jason Fried",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-03-11T20:51:07.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1391275636l/6732019.jpg",
+      "href": "https://www.goodreads.com/book/show/6732019"
+    }
+  },
+  {
+    "id": "software-engineering-6748376",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 313,
+      "title": "High-Frequency Trading",
+      "subtitle": "A Practical Guide to Algorithmic Strategies and Trading Systems",
+      "author": "Irene Aldridge",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2019-07-26T16:00:29.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348051934l/6748376.jpg",
+      "href": "https://www.goodreads.com/book/show/6748376"
+    }
+  },
+  {
+    "id": "software-engineering-67825",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 303,
+      "title": "Peopleware",
+      "subtitle": "Productive Projects and Teams",
+      "author": "Tom DeMarco",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2021-02-23T14:53:43.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1386925395l/67825.jpg",
+      "href": "https://www.goodreads.com/book/show/67825"
+    }
+  },
+  {
+    "id": "software-engineering-67833",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 295,
+      "title": "Extreme Programming Explained",
+      "subtitle": "Embrace Change",
+      "author": "Kent Beck",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2021-06-22T21:22:40.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1386925310l/67833.jpg",
+      "href": "https://www.goodreads.com/book/show/67833"
+    }
+  },
+  {
+    "id": "software-engineering-70132",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 47,
+      "title": "Information Architecture for the World Wide Web",
+      "subtitle": "Designing Large-Scale Web Sites",
+      "author": "Peter Morville",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-11-28T20:40:25.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1328834902l/70132.jpg",
+      "href": "https://www.goodreads.com/book/show/70132"
+    }
+  },
+  {
+    "id": "software-engineering-70135",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 27,
+      "title": "Computer Architecture",
+      "subtitle": "A Quantitative Approach - 4th Edition",
+      "author": "John L. Hennessy",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2026-04-14T04:04:37.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1388277732l/70135.jpg",
+      "href": "https://www.goodreads.com/book/show/70135"
+    }
+  },
+  {
+    "id": "software-engineering-70143",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 39,
+      "title": "Software Architecture in Practice",
+      "author": "Len Bass",
+      "rating": 4,
+      "toRead": false,
+      "readAt": "2025-12-01T00:00:00.000Z",
+      "addedAt": "2026-01-02T04:08:22.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1386924609l/70143.jpg",
+      "href": "https://www.goodreads.com/book/show/70143"
+    }
+  },
+  {
+    "id": "software-engineering-70156",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 269,
+      "title": "Patterns of Enterprise Application Architecture",
+      "author": "Martin Fowler",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-02-14T16:48:57.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1440294142l/70156._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/70156"
+    }
+  },
+  {
+    "id": "software-engineering-703102",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 23,
+      "title": "Compilers",
+      "subtitle": "Principles, Techniques, and Tools",
+      "author": "Alfred V. Aho",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2026-04-14T16:50:05.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1387666736l/703102.jpg",
+      "href": "https://www.goodreads.com/book/show/703102"
+    }
+  },
+  {
+    "id": "software-engineering-70766793",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 207,
+      "title": "Software Requirements Essentials",
+      "subtitle": "Core Practices for Successful Business Analysis",
+      "author": "Karl Wiegers",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2023-02-05T17:11:53.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1678750358l/70766793.jpg",
+      "href": "https://www.goodreads.com/book/show/70766793"
+    }
+  },
+  {
+    "id": "software-engineering-7079825",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 67,
+      "title": "People CMM",
+      "subtitle": "A Framework for Human Capital Management",
+      "author": "Bill Curtis",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-11-20T15:42:46.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348073849l/7079825.jpg",
+      "href": "https://www.goodreads.com/book/show/7079825"
+    }
+  },
+  {
+    "id": "software-engineering-7147817",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 316,
+      "title": "After the Software Wars",
+      "author": "Keith Cary Curtis",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2019-05-22T20:15:52.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1347636746l/7147817.jpg",
+      "href": "https://www.goodreads.com/book/show/7147817"
+    }
+  },
+  {
+    "id": "software-engineering-7191875",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 70,
+      "title": "CMMI for Services",
+      "subtitle": "Guidelines for Superior Service",
+      "author": "Eileen C. Forrester",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-11-20T15:40:54.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348421270l/7191875.jpg",
+      "href": "https://www.goodreads.com/book/show/7191875"
+    }
+  },
+  {
+    "id": "software-engineering-722412",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 194,
+      "title": "The Dream Machine",
+      "subtitle": "J.C.R. Licklider and the Revolution That Made Computing Personal",
+      "author": "M. Mitchell Waldrop",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2023-07-16T01:29:18.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1309212000l/722412.jpg",
+      "href": "https://www.goodreads.com/book/show/722412"
+    }
+  },
+  {
+    "id": "software-engineering-77265795",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 120,
+      "title": "Beyond Agile Auditing",
+      "subtitle": "Three Core Components to Revolutionize Your Internal Audit Practices",
+      "author": "Clarissa Lucas",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-03-31T14:35:29.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1673667617l/77265795._SY475_.jpg",
+      "href": "https://www.goodreads.com/book/show/77265795"
+    }
+  },
+  {
+    "id": "software-engineering-7805715",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 68,
+      "title": "Reflections on Management",
+      "subtitle": "How to Manage Your Software Projects, Your Teams, Your Boss, and Yourself",
+      "author": "Watts S. Humphrey",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-11-20T15:42:29.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1347572046l/7805715.jpg",
+      "href": "https://www.goodreads.com/book/show/7805715"
+    }
+  },
+  {
+    "id": "software-engineering-796465",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 299,
+      "title": "Cognition in Practice",
+      "subtitle": "Mind, Mathematics and Culture in Everyday Life (Learning in Doing)",
+      "author": "Jean Lave",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2021-02-25T20:31:02.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348670239l/796465.jpg",
+      "href": "https://www.goodreads.com/book/show/796465"
+    }
+  },
+  {
+    "id": "software-engineering-79735443",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 133,
+      "title": "Zero Trust Networks",
+      "subtitle": "Building Secure Systems in Untrusted Networks",
+      "author": "Razi Rais",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2024-10-26T12:30:15.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1688422926l/79735443.jpg",
+      "href": "https://www.goodreads.com/book/show/79735443"
+    }
+  },
+  {
+    "id": "software-engineering-79773",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 267,
+      "title": "Pattern-Oriented Software Architecture Volume 4",
+      "subtitle": "A Pattern Language for Distributed Computing",
+      "author": "Frank Buschmann",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-02-14T16:51:15.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1388933642l/79773.jpg",
+      "href": "https://www.goodreads.com/book/show/79773"
+    }
+  },
+  {
+    "id": "software-engineering-8235713",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 59,
+      "title": "Estimating Software-intensive Systems",
+      "subtitle": "Projects, Products, And Processes",
+      "author": "Richard D. Stutzke",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-11-20T15:48:41.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1347876518l/8235713.jpg",
+      "href": "https://www.goodreads.com/book/show/8235713"
+    }
+  },
+  {
+    "id": "software-engineering-829182",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 240,
+      "title": "Computer Systems",
+      "subtitle": "A Programmer's Perspective",
+      "author": "Randal E. Bryant",
+      "rating": 5,
+      "toRead": false,
+      "readAt": null,
+      "addedAt": "2022-03-11T20:37:49.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1387708094l/829182.jpg",
+      "href": "https://www.goodreads.com/book/show/829182"
+    }
+  },
+  {
+    "id": "software-engineering-83518",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 233,
+      "title": "The Singularity is Near",
+      "subtitle": "When Humans Transcend Biology",
+      "author": "Ray Kurzweil",
+      "rating": 3,
+      "toRead": false,
+      "readAt": "2021-12-23T00:00:00.000Z",
+      "addedAt": "2022-03-11T20:42:56.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348757857l/83518.jpg",
+      "href": "https://www.goodreads.com/book/show/83518"
+    }
+  },
+  {
+    "id": "software-engineering-83533",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 235,
+      "title": "The Age of Spiritual Machines",
+      "author": "Ray Kurzweil",
+      "rating": 5,
+      "toRead": false,
+      "readAt": "2019-08-26T00:00:00.000Z",
+      "addedAt": "2022-03-11T20:39:32.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1309284708l/83533.jpg",
+      "href": "https://www.goodreads.com/book/show/83533"
+    }
+  },
+  {
+    "id": "software-engineering-83653",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 234,
+      "title": "The Age of Intelligent Machines",
+      "author": "Ray Kurzweil",
+      "rating": 4,
+      "toRead": false,
+      "readAt": "2011-01-01T00:00:00.000Z",
+      "addedAt": "2022-03-11T20:42:29.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1387710046l/83653.jpg",
+      "href": "https://www.goodreads.com/book/show/83653"
+    }
+  },
+  {
+    "id": "software-engineering-83792",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 290,
+      "title": "Facts and Fallacies of Software Engineering",
+      "author": "Paul Becker",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2021-08-04T18:22:28.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348683999l/83792.jpg",
+      "href": "https://www.goodreads.com/book/show/83792"
+    }
+  },
+  {
+    "id": "software-engineering-8391024",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 34,
+      "title": "Pro .NET 4 Parallel Programming in C#",
+      "author": "Adam   Freeman",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2026-03-02T02:50:12.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1328764077l/8391024.jpg",
+      "href": "https://www.goodreads.com/book/show/8391024"
+    }
+  },
+  {
+    "id": "software-engineering-83940",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 273,
+      "title": "An Introduction to Formal Languages and Automata",
+      "subtitle": ".",
+      "author": "Peter Linz",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-01-18T20:20:59.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348773768l/83940.jpg",
+      "href": "https://www.goodreads.com/book/show/83940"
+    }
+  },
+  {
+    "id": "software-engineering-846008",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 201,
+      "title": "Peer Reviews in Software",
+      "subtitle": "A Practical Guide",
+      "author": "Karl Wiegers",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2023-02-05T17:17:19.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1372039174l/846008.jpg",
+      "href": "https://www.goodreads.com/book/show/846008"
+    }
+  },
+  {
+    "id": "software-engineering-84985",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 244,
+      "title": "Agile Software Development, Principles, Patterns, and Practices",
+      "author": "Robert C. Martin",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-03-02T01:07:01.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348196056l/84985.jpg",
+      "href": "https://www.goodreads.com/book/show/84985"
+    }
+  },
+  {
+    "id": "software-engineering-85009",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 334,
+      "title": "Design Patterns",
+      "subtitle": "Elements of Reusable Object-Oriented Software",
+      "author": "Erich Gamma",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2016-03-11T04:35:46.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348027904l/85009.jpg",
+      "href": "https://www.goodreads.com/book/show/85009"
+    }
+  },
+  {
+    "id": "software-engineering-85012",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 268,
+      "title": "Enterprise Integration Patterns",
+      "subtitle": "Designing, Building, and Deploying Messaging Solutions (Addison-Wesley Signature Series (Fowler))",
+      "author": "Gregor Hohpe",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-02-14T16:49:53.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1347390905l/85012.jpg",
+      "href": "https://www.goodreads.com/book/show/85012"
+    }
+  },
+  {
+    "id": "software-engineering-85030",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 270,
+      "title": "Pattern-Oriented Software Architecture Volume 2",
+      "subtitle": "Patterns for Concurrent and Networked Objects",
+      "author": "Douglas C. Schmidt",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-02-14T16:48:31.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348611783l/85030.jpg",
+      "href": "https://www.goodreads.com/book/show/85030"
+    }
+  },
+  {
+    "id": "software-engineering-86365",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 167,
+      "title": "Higher-Order Perl",
+      "subtitle": "Transforming Programs with Programs",
+      "author": "Mark Jason Dominus",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2024-06-20T06:52:25.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1355112165l/86365.jpg",
+      "href": "https://www.goodreads.com/book/show/86365"
+    }
+  },
+  {
+    "id": "software-engineering-8686650",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 266,
+      "title": "Continuous delivery",
+      "author": "Jez Humble",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-02-14T16:51:35.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1347640457l/8686650.jpg",
+      "href": "https://www.goodreads.com/book/show/8686650"
+    }
+  },
+  {
+    "id": "software-engineering-9005772",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 263,
+      "title": "Just Enough Software Architecture",
+      "subtitle": "A Risk-Driven Approach",
+      "author": "George H. Fairbanks",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-02-14T16:52:49.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348791713l/9005772.jpg",
+      "href": "https://www.goodreads.com/book/show/9005772"
+    }
+  },
+  {
+    "id": "software-engineering-93891",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 305,
+      "title": "Software Estimation",
+      "subtitle": "Demystifying the Black Art",
+      "author": "Steve McConnell",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2021-02-20T15:31:17.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1396830924l/93891.jpg",
+      "href": "https://www.goodreads.com/book/show/93891"
+    }
+  },
+  {
+    "id": "software-engineering-93892",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 222,
+      "title": "Rapid Development",
+      "subtitle": "Taming Wild Software Schedules",
+      "author": "Steve McConnell",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-03-11T20:51:50.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1328757702l/93892.jpg",
+      "href": "https://www.goodreads.com/book/show/93892"
+    }
+  },
+  {
+    "id": "software-engineering-939498",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 168,
+      "title": "Smalltalk 80",
+      "subtitle": "The Language",
+      "author": "Adele Goldberg",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2024-06-20T06:52:20.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1348600577l/939498.jpg",
+      "href": "https://www.goodreads.com/book/show/939498"
+    }
+  },
+  {
+    "id": "software-engineering-9410434",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 329,
+      "title": "The Art of Computer Programming, Volumes 1-4A Boxed Set",
+      "author": "Donald Ervin Knuth",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2016-03-11T04:39:58.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1347464918l/9410434.jpg",
+      "href": "https://www.goodreads.com/book/show/9410434"
+    }
+  },
+  {
+    "id": "software-engineering-94934926",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 63,
+      "title": "A Process Research Framework",
+      "author": "Eileen Forrester",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-11-20T15:46:41.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1697657668l/94934926._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/94934926"
+    }
+  },
+  {
+    "id": "software-engineering-95059225",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 17,
+      "title": "Handbook of Requirements and Business Analysis",
+      "author": "Bertrand Meyer",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2026-04-14T16:52:51.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1678868712l/95059225._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/95059225"
+    }
+  },
+  {
+    "id": "software-engineering-964709",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 288,
+      "title": "The New Turing Omnibus",
+      "subtitle": "66 Excursions In Computer Science",
+      "author": "A.K. Dewdney",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2021-08-04T18:24:27.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1179858808l/964709._SX318_.jpg",
+      "href": "https://www.goodreads.com/book/show/964709"
+    }
+  },
+  {
+    "id": "software-engineering-9715023",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 248,
+      "title": "Algorithms For Interviews",
+      "subtitle": "A Problem Solving Approach",
+      "author": "Adnan Aziz",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2022-02-22T22:37:56.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1347821318l/9715023.jpg",
+      "href": "https://www.goodreads.com/book/show/9715023"
+    }
+  },
+  {
+    "id": "software-engineering-9767619",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 90,
+      "title": "CERT Resilience Management Model",
+      "subtitle": "A Maturity Model for Managing Operational Resilience",
+      "author": "Richard A. Caralli",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2025-08-25T20:51:48.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1347728344l/9767619.jpg",
+      "href": "https://www.goodreads.com/book/show/9767619"
+    }
+  },
+  {
+    "id": "software-engineering-980280",
+    "data": {
+      "shelf": "software-engineering",
+      "position": 306,
+      "title": "Sketching User Experiences",
+      "subtitle": " Getting the Design Right and the Right Design",
+      "author": "Bill Buxton",
+      "rating": 0,
+      "toRead": true,
+      "readAt": null,
+      "addedAt": "2021-02-19T17:34:47.000Z",
+      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1347329018l/980280.jpg",
+      "href": "https://www.goodreads.com/book/show/980280"
+    }
+  }
+]

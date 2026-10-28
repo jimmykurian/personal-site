@@ -4,14 +4,16 @@
  * @remarks
  * Goodreads closed its API in 2020, but each shelf of a public profile still has an RSS
  * feed. This loader reads those feeds at build time; the nightly CI build keeps it fresh.
- * If Goodreads is unreachable the build fails on purpose, so the last deploy stays live
- * instead of shipping an empty reading list.
+ * Each successful read is saved to `src/content/books.json`, and a daily workflow proposes
+ * that file in a pull request. If Goodreads can't be read, the build uses the saved books,
+ * so a Goodreads outage never blocks a deploy or ships an empty reading list.
  *
  * @packageDocumentation
  * @file goodreads.ts
  * @author Jimmy Kurian
  * @copyright Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
  */
+import { readFile, writeFile } from 'node:fs/promises';
 import type { AstroIntegrationLogger } from 'astro';
 import type { Loader } from 'astro/loaders';
 
@@ -82,53 +84,100 @@ async function fetchShelf(userId: string, shelf: string, logger: AstroIntegratio
   return items;
 }
 
+type Book = { id: string; data: Record<string, unknown> };
+
+async function fetchBooks(userId: string, shelves: string[], logger: AstroIntegrationLogger) {
+  const books: Book[] = [];
+  for (const shelf of shelves) {
+    const items = await fetchShelf(userId, shelf, logger);
+    logger.info(`${shelf}: ${items.length} books`);
+    for (const [position, item] of items.entries()) {
+      const id = `${shelf}-${field(item, 'book_id')}`;
+      const cover = field(item, 'book_large_image_url');
+      books.push({
+        id,
+        data: {
+          shelf,
+          position,
+          ...splitTitle(field(item, 'title')),
+          author: field(item, 'author_name'),
+          rating: Number(field(item, 'user_rating')) || 0,
+          toRead: field(item, 'user_shelves').split(/,\s*/).includes('to-read'),
+          readAt: field(item, 'user_read_at') || null,
+          addedAt: field(item, 'user_date_added'),
+          cover: cover && !cover.includes('nophoto') ? cover : undefined,
+          href: `https://www.goodreads.com/book/show/${field(item, 'book_id')}`,
+        },
+      });
+    }
+  }
+  return books;
+}
+
+/** The saved books, or undefined if there's no saved file. */
+async function readSaved(saved: string): Promise<Book[] | undefined> {
+  try {
+    return JSON.parse(await readFile(saved, 'utf8')) as Book[];
+  } catch (error) {
+    if ((error as NodeJS.ErrnoException).code === 'ENOENT') return undefined;
+    throw error;
+  }
+}
+
 /**
  * An Astro content loader with one entry per book per shelf, read from the shelves' RSS feeds.
  *
  * @remarks
- * Each feed page is retried twice on a brief 5xx, rate limit or network error. If a shelf
- * still can't be read, loading throws, which fails the build and leaves the store unchanged.
+ * Each feed page is retried twice on a brief 5xx, rate limit or network error. After a full
+ * read, the schema-checked books are written to `saved`. If a shelf still can't be read, the
+ * books in `saved` are loaded instead, with a warning. Loading throws, which fails the build
+ * and leaves the store unchanged, only when there's no saved file or `strict` is set.
  *
- * @param options - `userId` is the public Goodreads profile; `shelves` are the shelf names to read.
+ * @param options - `userId` is the public Goodreads profile; `shelves` are the shelf names to
+ * read; `saved` is the JSON file holding the last books read; `strict` turns off the fallback,
+ * for the workflow that refreshes `saved`.
  * @returns The loader, named `goodreads`.
  *
  * @example
  * ```ts
  * const books = defineCollection({
- *   loader: goodreadsLoader({ userId: '52431533', shelves: ['favorites'] }),
+ *   loader: goodreadsLoader({ userId: '52431533', shelves: ['favorites'], saved: 'src/content/books.json' }),
  * });
  * ```
  */
-export function goodreadsLoader({ userId, shelves }: { userId: string; shelves: string[] }): Loader {
+export function goodreadsLoader({
+  userId,
+  shelves,
+  saved,
+  strict = false,
+}: {
+  userId: string;
+  shelves: string[];
+  saved: string;
+  strict?: boolean;
+}): Loader {
   return {
     name: 'goodreads',
     load: async ({ store, logger, parseData }) => {
-      const books = [];
-      for (const shelf of shelves) {
-        const items = await fetchShelf(userId, shelf, logger);
-        logger.info(`${shelf}: ${items.length} books`);
-        for (const [position, item] of items.entries()) {
-          const id = `${shelf}-${field(item, 'book_id')}`;
-          const cover = field(item, 'book_large_image_url');
-          books.push({
-            id,
-            data: {
-              shelf,
-              position,
-              ...splitTitle(field(item, 'title')),
-              author: field(item, 'author_name'),
-              rating: Number(field(item, 'user_rating')) || 0,
-              toRead: field(item, 'user_shelves').split(/,\s*/).includes('to-read'),
-              readAt: field(item, 'user_read_at') || null,
-              addedAt: field(item, 'user_date_added'),
-              cover: cover && !cover.includes('nophoto') ? cover : undefined,
-              href: `https://www.goodreads.com/book/show/${field(item, 'book_id')}`,
-            },
-          });
-        }
+      let books: Book[];
+      let fresh = true;
+      try {
+        books = await fetchBooks(userId, shelves, logger);
+      } catch (error) {
+        const kept = strict ? undefined : await readSaved(saved);
+        if (!kept) throw error;
+        logger.warn(`${String(error)}; using the ${kept.length} books saved in ${saved}`);
+        books = kept;
+        fresh = false;
       }
+      const parsed = [];
+      for (const { id, data } of books) parsed.push({ id, data: await parseData({ id, data }) });
       store.clear();
-      for (const { id, data } of books) store.set({ id, data: await parseData({ id, data }) });
+      for (const book of parsed) store.set(book);
+      if (fresh) {
+        const json = `${JSON.stringify(parsed, null, 2)}\n`;
+        if ((await readFile(saved, 'utf8').catch(() => '')) !== json) await writeFile(saved, json);
+      }
     },
   };
 }

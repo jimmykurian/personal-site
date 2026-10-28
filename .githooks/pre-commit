@@ -18,10 +18,11 @@ if [[ "$(git symbolic-ref --short -q HEAD)" == "main" ]]; then
   exit 1
 fi
 
-# Sets FILES to the staged (added, copied, modified or renamed) files matching a regex.
+# Sets FILES to the staged (added, copied, modified or renamed) files matching a regex,
+# leaving out any that match the optional second regex.
 stage() {
   FILES=()
-  while IFS= read -r file; do FILES+=("$file"); done < <(git diff --cached --name-only --diff-filter=ACMR | grep -E "$1" || true)
+  while IFS= read -r file; do FILES+=("$file"); done < <(git diff --cached --name-only --diff-filter=ACMR | grep -E "$1" | grep -vE "${2:-^$}" || true)
   [[ ${#FILES[@]} -gt 0 ]]
 }
 
@@ -93,7 +94,8 @@ fi
 if stage '^website/src/content/posts/.*\.mdx$'; then
   check "inclusive language" "$BIN/alex" "$BIN/alex" --quiet --mdx "${FILES[@]}"
 fi
-if stage '^website/src/(content|data)/[^/]*\.json$'; then
+# books.json holds Goodreads titles, not the site's prose.
+if stage '^website/src/(content|data)/[^/]*\.json$' '^website/src/content/books\.json$'; then
   check "inclusive language" "$BIN/alex" "$BIN/alex" --quiet --text "${FILES[@]}"
 fi
 if stage '^website/.*\.(ts|js|mjs|json|css|md|yml|yaml)$'; then
