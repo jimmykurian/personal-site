@@ -83,6 +83,12 @@
     "detail": "Member"
   },
   {
+    "id": "aaai",
+    "group": "community",
+    "title": "Association for the Advancement of Artificial Intelligence (AAAI)",
+    "detail": "Member"
+  },
+  {
     "id": "pmi",
     "group": "community",
     "title": "Project Management Institute (PMI)",
