@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/jimmykurian/personal-site/compare/website-v1.2.0...website-v1.3.0) (2026-10-29)
+
+
+### Features
+
+* **home:** add the AAAI membership and the ci-parity docs domain ([#39](https://github.com/jimmykurian/personal-site/issues/39)) ([3e073f2](https://github.com/jimmykurian/personal-site/commit/3e073f2dd7de278e83896051ef6a78a4c928a4f8))
+
 ## [1.2.0](https://github.com/jimmykurian/personal-site/compare/website-v1.1.1...website-v1.2.0) (2026-10-28)
 
 
