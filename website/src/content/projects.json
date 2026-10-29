@@ -36,7 +36,7 @@
     "kicker": "Open source · Go",
     "title": "ci-parity, a linter for GitHub Actions workflows",
     "summary": "Checks that CI runs build, test, lint and deploy commands through the repository's task runner instead of calling tools inline. A per-workflow baseline that only shrinks lets a repo migrate one workflow at a time.",
-    "link": { "href": "https://jimmykurian.github.io/ci-parity/", "label": "jimmykurian.github.io/ci-parity" }
+    "link": { "href": "https://ci-parity.is-a.dev/", "label": "ci-parity.is-a.dev" }
   },
   {
     "id": "cs-agent",
