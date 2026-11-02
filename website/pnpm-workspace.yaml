@@ -21,11 +21,19 @@ overrides:
   # ajv (eslint-plugin-tsdoc, commitlint and others).
   'fast-uri@<3.1.9': '^3.1.9'
   # GHSA-3g3m-2fjr-6pw4 (glob) and GHSA-g3hv-75wg-m249 (minimatch), fixed only in glob 14 and
-  # minimatch 11. glob 13 (v8r) and 10 (@npmcli/map-workspaces, via alex), and minimatch 9 and
-  # 10 (eslint, typescript-eslint, typedoc, v8r), all use the named exports these keep. The
-  # older ones the callback APIs need are ignored in .config/linters/osv-scanner.toml.
+  # minimatch 11. glob 13 (v8r) and 10 (@npmcli/map-workspaces, via alex) use the named promise
+  # API glob 14 keeps, and glob 14 itself requires minimatch 11. minimatch moves to 11 only for
+  # the consumers below, which call minimatch() or Minimatch#match(). TypeDoc stays on 10: it
+  # calls Minimatch#matchOne(), which minimatch 11 made private. glob 7 and 8 stay on minimatch
+  # 3 and 5, since they call it as a function. Those are ignored in
+  # .config/linters/osv-scanner.toml.
   'glob@>=9 <14.0.2': '^14.0.2'
-  'minimatch@>=9 <11.0.1': '^11.0.1'
+  'eslint>minimatch': '^11.0.1'
+  '@eslint/config-array>minimatch': '^11.0.1'
+  '@typescript-eslint/typescript-estree>minimatch': '^11.0.1'
+  'eslint-plugin-jsx-a11y-x>minimatch': '^11.0.1'
+  'v8r>minimatch': '^11.0.1'
+  '@npmcli/map-workspaces>minimatch': '^11.0.1'
   # Unused dependencies with unpatched advisories, removed ('-') rather than patched.
   # GHSA-jmr9-qjv8-65gv and GHSA-7pqw-9j4j-h8q3: @puppeteer/browsers imports extract-zip only
   # to unpack a downloaded browser. Lighthouse (via @lhci/cli) uses the installed Chrome and
