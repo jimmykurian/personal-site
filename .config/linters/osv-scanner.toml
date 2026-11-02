@@ -1,8 +1,39 @@
 # Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
 # Author: Jimmy Kurian
 # OSV-Scanner (task lint:osv) checks website/pnpm-lock.yaml against the OSV database, which
-# includes advisories below pnpm audit's high level. None is ignored today: advisories are
-# fixed with overrides in website/pnpm-workspace.yaml, or the unused package (extract-zip,
-# sprintf-js, chromium-bidi) is removed from the tree there. An advisory with no fix can be
-# ignored here with [[IgnoredVulns]] and a reason, and again for pnpm audit in
-# pnpm-workspace.yaml (auditConfig.ignoreGhsas); remove both once a fix ships.
+# includes advisories below pnpm audit's high level. Advisories are fixed with overrides in
+# website/pnpm-workspace.yaml, or the unused package (extract-zip, sprintf-js, chromium-bidi) is
+# removed from the tree there. An advisory with no usable fix is ignored here with a reason: with
+# [[IgnoredVulns]] for every version, or [[PackageOverrides]] for one exact version (below). If
+# it is high or critical, ignore it for pnpm audit too, in pnpm-workspace.yaml
+# (auditConfig.ignoreGhsas). Remove each ignore once a usable fix ships.
+
+# GHSA-g3hv-75wg-m249 (minimatch DoS from crafted patterns) is fixed only in minimatch 11, which
+# is ESM-first and has no callable default export. minimatch 3.1.5 (via @lhci/cli >
+# chrome-launcher > rimraf 3 > glob 7) and 5.1.9 (via alex > unified-engine 10 > glob 8) are
+# called as functions by globs that only have callback APIs, so neither can take the fix. Both
+# run only in dev tools on patterns this repo writes: rimraf's temporary Chrome profile path,
+# and alex's file arguments. Pinned to these exact versions so any other one is scanned again.
+[[PackageOverrides]]
+name = "minimatch"
+version = "3.1.5"
+ecosystem = "npm"
+vulnerability.ignore = true
+reason = "GHSA-g3hv-75wg-m249: no fix callable by glob 7 (rimraf 3, via @lhci/cli); patterns are our own"
+
+[[PackageOverrides]]
+name = "minimatch"
+version = "5.1.9"
+ecosystem = "npm"
+vulnerability.ignore = true
+reason = "GHSA-g3hv-75wg-m249: no fix callable by glob 8 (unified-engine 10, via alex); patterns are our own"
+
+# minimatch 10.2.6 is left only for TypeDoc (task docs), which calls Minimatch#matchOne(), made
+# private in minimatch 11. The only patterns it matches are the entry points in
+# website/typedoc.json.
+[[PackageOverrides]]
+name = "minimatch"
+version = "10.2.6"
+ecosystem = "npm"
+vulnerability.ignore = true
+reason = "GHSA-g3hv-75wg-m249: TypeDoc needs Minimatch#matchOne, private in 11; patterns are our own typedoc.json entry points"
