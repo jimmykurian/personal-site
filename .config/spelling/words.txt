@@ -59,6 +59,7 @@ martinfowler
 martinothamar
 MediatR
 mermaidchart
+minimatch
 Namecheap
 nameof
 networkidle
@@ -71,7 +72,6 @@ Othamar
 pageleave
 pipx
 PostHog
-posthog
 requestfailed
 Riok
 Roundtable
