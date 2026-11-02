@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1](https://github.com/jimmykurian/personal-site/compare/website-v1.3.0...website-v1.3.1) (2026-11-02)
+
+
+### Bug Fixes
+
+* **deps:** patch glob and minimatch for GHSA-3g3m-2fjr-6pw4 and GHSA-g3hv-75wg-m249 ([#41](https://github.com/jimmykurian/personal-site/issues/41)) ([6168547](https://github.com/jimmykurian/personal-site/commit/6168547aed9c91cf1756fe7c9a5c030a8efd54df))
+
 ## [1.3.0](https://github.com/jimmykurian/personal-site/compare/website-v1.2.0...website-v1.3.0) (2026-10-29)
 
 
