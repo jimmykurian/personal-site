@@ -176,7 +176,7 @@ const roles = [
           {
             projects.map(({ data }) => (
               <li>
-                <strong>{data.title}</strong> ({data.kicker.replace(' · ', ', ')}): {data.summary}
+                <strong>{data.title}</strong> ({data.kicker.replaceAll(' · ', ', ')}): {data.summary}
                 {data.link && ` (${host(data.link.href)})`}
               </li>
             ))
