@@ -39,6 +39,14 @@
     "link": { "href": "https://ci-parity.is-a.dev/", "label": "ci-parity.is-a.dev" }
   },
   {
+    "id": "tenantguard",
+    "logo": "tenantguard",
+    "kicker": "Open source · .NET",
+    "title": "TenantGuard, tenant isolation checks for EF Core",
+    "summary": "Proves a multi-tenant EF Core model leaks nothing between tenants. Roslyn analyzers flag risky queries at build time, startup validation fails the host when a tenant entity lacks a query filter, a SaveChanges guard blocks cross-tenant writes, and a test kit checks isolation per tenant.",
+    "link": { "href": "https://tenantguard.is-cool.dev/", "label": "tenantguard.is-cool.dev" }
+  },
+  {
     "id": "cs-agent",
     "hidden": true,
     "kicker": "Client delivery · Medical technology",
