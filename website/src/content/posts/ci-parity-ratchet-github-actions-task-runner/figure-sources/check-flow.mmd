@@ -1,0 +1,24 @@
+%% Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+%% Author: Jimmy Kurian
+flowchart TD
+    wf["Workflows and<br/>composite actions"]
+    rf["Taskfile, Makefile,<br/>justfile or mise"]
+    cfg[".ci-parity.yml"]
+    bl[".ci-parity-baseline.json"]
+    wf --> parse["Parse the YAML, keeping positions,<br/>then each run: script as bash,<br/>wrappers peeled"]
+    rf --> tasks["Read the tasks:<br/>names, commands,<br/>internal or not"]
+    parse --> rules["Rules P001 to P005"]
+    tasks --> rules
+    cfg --> rules
+    rules --> ratchet["Apply the baseline:<br/>tolerate, lock, P004 on a rise"]
+    bl --> ratchet
+    ratchet --> out["Report as text, github,<br/>JSON or SARIF"]
+    out --> term["Terminal"]
+    out --> ann["Pull request<br/>annotations"]
+    out --> cs["Code scanning"]
+    classDef files fill:#ffffff,stroke:#111314,color:#111314
+    classDef core fill:#f5ece7,stroke:#a36752,color:#111314
+    classDef sink fill:#b4cdc2,stroke:#111314,color:#111314
+    class wf,rf,cfg,bl files
+    class rules,ratchet core
+    class term,ann,cs sink
