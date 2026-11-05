@@ -42,6 +42,7 @@ Take a workflow that calls pnpm directly, next to a Taskfile that already wraps 
 
 ```yaml
 # .github/workflows/ci.yml
+on: [pull_request]
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -88,6 +89,26 @@ Message wording is fixed, because people grep for these strings; changing one is
 
 The hard part of any linter is turning it on in a repository that already has findings. A gate that fails on any inline step can't be switched on in a workflow with forty of them, so it waits for a cleanup that never gets scheduled. ci-parity's answer is a baseline file with one number per workflow: how many inline-tool findings that workflow may still have.
 
+Take a different repository, whose only workflow has three inline steps and calls no unknown or internal tasks:
+
+```yaml
+# .github/workflows/web.yml
+on: [pull_request]
+jobs:
+  web:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install
+        run: pnpm install --frozen-lockfile
+      - name: Build
+        run: pnpm build
+      - name: Test
+        run: pnpm test
+```
+
+Write the baseline:
+
 ```text
 $ ci-parity baseline
 wrote .ci-parity-baseline.json: 1 workflow, 3 inline-tool findings
@@ -97,7 +118,7 @@ wrote .ci-parity-baseline.json: 1 workflow, 3 inline-tool findings
 {
   "version": 1,
   "workflows": {
-    ".github/workflows/ci.yml": 3
+    ".github/workflows/web.yml": 3
   }
 }
 ```
@@ -109,21 +130,21 @@ Replace an inline step with a task and `check` notices the drop:
 ```text
 $ ci-parity check
 ratchet
-  .github/workflows/ci.yml  baseline 3   now 2   run `ci-parity baseline` to lock in
+  .github/workflows/web.yml  baseline 3   now 2   run `ci-parity baseline` to lock in
 
 0 errors, 0 warnings, 2 tolerated, 0 allowed
 ```
 
-Run `ci-parity baseline` again and the allowance shrinks for good. Add an inline step instead and the workflow fails with a P004 regression, and the new step is reported as an error:
+Run `ci-parity baseline` again and the allowance shrinks for good. Add an inline step at the end instead and the workflow fails with a P004 regression, and the new step is reported as an error:
 
 ```text
 $ ci-parity check
-.github/workflows/ci.yml
-  1:1     P004 regression    .github/workflows/ci.yml has 3 inline-tool findings, baseline allows 2
-  11:14   P001 inline-tool   step "Deploy" in job "web" runs 'pnpm deploy' directly
+.github/workflows/web.yml
+  1:1     P004 regression    .github/workflows/web.yml has 3 inline-tool findings, baseline allows 2
+  15:14   P001 inline-tool   step "Deploy" in job "web" runs 'pnpm deploy' directly
 
 ratchet
-  .github/workflows/ci.yml  baseline 2   now 3   REGRESSION
+  .github/workflows/web.yml  baseline 2   now 3   REGRESSION
 
 2 errors, 0 warnings, 2 tolerated, 0 allowed
 ```
@@ -198,7 +219,7 @@ jobs:
       - uses: jimmykurian/ci-parity@v1
 ```
 
-Each finding becomes an annotation on the workflow line that caused it, and the job fails on errors. `@v1` follows the newest 1.x release; pin a tag or a commit SHA if you'd prefer it didn't move. With `format: sarif` and an upload step, the findings appear as code scanning alerts in the Security tab, each linked to its rule's page, and allowed findings are uploaded as suppressions. The CLI installs with `go install`, through mise, from the release archives or as a pre-commit hook, and prints text, GitHub annotations, JSON or SARIF.
+Each finding becomes an annotation on the workflow line that caused it, and the job fails on errors. With no `version` input, the action runs the release named by an exact tag such as `@v1.0.0`; any other ref, `@v1` or a commit SHA included, downloads the latest release, which could be a later major version. To pin the binary, use an exact tag, or pin the commit SHA and set `version: v1.0.0` alongside it. With `format: sarif` and an upload step, the findings appear as code scanning alerts in the Security tab, each linked to its rule's page, and allowed findings are uploaded as suppressions. The CLI installs with `go install`, through mise, from the release archives or as a pre-commit hook, and prints text, GitHub annotations, JSON or SARIF.
 
 Configuration is a `.ci-parity.yml` that names the runner, plus the tool list and allow entries where a repository needs them:
 
