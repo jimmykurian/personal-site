@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.4.0](https://github.com/jimmykurian/personal-site/compare/website-v1.3.1...website-v1.4.0) (2026-11-05)
+
+
+### Features
+
+* **home:** add TenantGuard to the projects ([#43](https://github.com/jimmykurian/personal-site/issues/43)) ([bdc3c85](https://github.com/jimmykurian/personal-site/commit/bdc3c855f9bd2b53ab6266e234ff357ac8dafa58))
+* **writing:** add the ci-parity ratchet post ([#45](https://github.com/jimmykurian/personal-site/issues/45)) ([0e342f4](https://github.com/jimmykurian/personal-site/commit/0e342f40e86f1b00f413ac567de74b4e1fd1664b))
+
 ## [1.3.1](https://github.com/jimmykurian/personal-site/compare/website-v1.3.0...website-v1.3.1) (2026-11-02)
 
 
