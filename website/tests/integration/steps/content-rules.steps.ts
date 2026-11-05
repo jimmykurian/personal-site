@@ -34,7 +34,10 @@ Then('none of them matches any content rule in tests\\/support\\/rules.ts', func
 
 When('I collect every email address in the published pages and feeds', function (this: SiteWorld) {
   const published = textFiles().filter((f) => f.endsWith('.html') || f.endsWith('.xml'));
-  const addresses = new Set(published.flatMap((f) => read(f).match(/[\w.+-]+@[\w-]+\.[\w.]+/g) ?? []));
+  // A real address ends in a letter TLD, so a version pin like mdbook@0.4.52 isn't one.
+  const addresses = new Set(
+    published.flatMap((f) => read(f).match(/[\w.+-]+@[\w-]+(?:\.[\w-]+)*\.[a-z]{2,}\b/gi) ?? []),
+  );
   // Image and asset names like logo@2x.png look like addresses; they aren't.
   this.remember(
     'addresses',
