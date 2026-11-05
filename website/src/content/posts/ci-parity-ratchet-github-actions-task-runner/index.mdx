@@ -1,0 +1,247 @@
+---
+title: "A ratchet for CI drift: keeping GitHub Actions and your task runner in step"
+description: "Workflows drift from the task runner one inline step at a time. ci-parity is an open-source linter and GitHub Action that reads both sides without running anything and keeps a per-workflow baseline that can only shrink."
+pubDate: 2026-11-04
+tags: ["GitHub Actions", "CI", "Task runners", "Go", "Open source"]
+draft: false
+---
+
+{/* Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE. Author: Jimmy Kurian. */}
+
+If a repository has a Taskfile, then `task test` is the definition of how to test it, and CI is supposed to run the same thing. In practice the two drift apart. A step calls `pnpm test` directly because that was quicker when the workflow was written; months later someone adds a flag to the `test` task, local runs pick it up, and CI keeps running the old command. Another workflow calls `task lint:all` long after the task was renamed, and nothing notices until that workflow next runs, perhaps on a release. None of this is dramatic on its own. The sum of it is that "it passes locally" stops predicting "it passes in CI", and predicting that was the whole point of having a task runner.
+
+The tool in this post started as a script in a side project of mine, where every command runs through a Taskfile and a coding agent does a lot of the typing. The agent's instructions tell it to run `task ci` before it calls a change done, and it does. That check is only worth something if CI calls the same tasks. The moment a workflow step runs a tool inline with its own flags, a green `task ci` tells you less than it appears to, and the difference shows up as a failed pull request after the agent has already reported success.
+
+So I rebuilt the script from an empty repository as [ci-parity](https://github.com/jimmykurian/ci-parity), a linter and GitHub Action that checks workflows against the runner and refuses to let the drift grow. It reads Taskfile, make, just and mise files. The license is Apache-2.0, and the action is on the [GitHub Marketplace](https://github.com/marketplace/actions/ci-parity).
+
+## Where the drift comes from
+
+Two files describe how to run the project, the runner's file and the workflow, and there are three ways for them to disagree.
+
+The first is a step that calls a tool directly. `run: pnpm test` works today and keeps working after the task changes, so CI ends up running something different from what `task test` runs on a laptop, and nobody is told. In a repository that has settled on one runner, a `make` call in a workflow is the same mistake wearing a different coat: it goes around the runner the project chose.
+
+The second is a step that calls a task that doesn't exist. The task was renamed or removed, the step fails the next time the workflow runs, and that may be on a release.
+
+The third is a step that calls a task meant to stay internal (`internal: true` in a Taskfile, a private recipe in just, a hidden task in mise). A workflow that calls one has coupled CI to a detail the task's author expected to be free to change.
+
+Those are rules P001, P002 and P003. There are two more. P004 is the ratchet, which has its own section below. P005 is a warning for whatever the tool can't analyze: a PowerShell step, a script it can't parse, a command name built from a variable.
+
+## Three ways to keep them in line
+
+| Approach | How | What it costs |
+| --- | --- | --- |
+| Convention | A rule in CONTRIBUTING and in code review | Nothing checks it, so it drifts the moment review misses a step |
+| Generation | Produce the workflows from the runner's definitions | Workflows become generated files: hand edits are lost, and anything the generator doesn't model is out of reach |
+| Enforcement | Keep hand-written workflows and lint them against the runner | Workflows stay ordinary YAML; the linter has to read both sides accurately |
+
+Generation has been tried for Taskfile. task2ci produced workflows from Taskfile annotations and failed CI when the generated file drifted; it was archived in June 2026, and it never checked a workflow someone had written by hand. ci-parity is the third row. The rest of this post is about what "accurately" turned out to take, and about the ratchet that lets a repository with years of inline steps turn the check on today.
+
+## What a check reports
+
+Take a workflow that calls pnpm directly, next to a Taskfile that already wraps those commands:
+
+```yaml
+# .github/workflows/ci.yml
+on: [pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install
+        run: pnpm install --frozen-lockfile
+      - name: Test
+        run: pnpm test
+      - name: Lint
+        run: task lint
+```
+
+```yaml
+# Taskfile.yml
+version: "3"
+
+tasks:
+  install:
+    cmds:
+      - pnpm install --frozen-lockfile
+  test:
+    cmds:
+      - pnpm test
+```
+
+```text
+$ ci-parity check
+.github/workflows/ci.yml
+  9:14    P001 inline-tool   step "Install" in job "test" runs 'pnpm install --frozen-lockfile' directly; already available as 'task install'
+  11:14   P001 inline-tool   step "Test" in job "test" runs 'pnpm test' directly; already available as 'task test'
+  13:19   P002 unknown-task  'task lint' is not defined in Taskfile.yml (closest: test)
+
+3 errors, 0 warnings, 0 tolerated, 0 allowed
+```
+
+Two inline tools, each paired with the task that already runs the same command, and one task that doesn't exist, with the closest name offered. `ci-parity fix` rewrites the first two steps to `task install` and `task test` and leaves everything else in the file alone, down to the quotes and comments. The third needs a person, because no tool can know whether `lint` was a typo for `test` or a task that hasn't been written yet.
+
+The "already available as" part took more care than I expected. A task is suggested only when it runs exactly the step's command. It can't have dependencies or extra commands, it can't call another task, it has to run in the step's working directory, and every word of the inline command has to be literal. The reason for all that is `fix`, which rewrites steps to their suggestions; a suggestion that runs more than the step would turn a format check into the whole CI run. That happened once, when an early version matched a `cargo fmt --all -- --check` step in just's own repository to `just ci`. Package runners are looked through on both sides, so `npx eslint .` matches a task that runs `eslint .`, because that is how most repositories call their tools. A step like `pnpm test $EXTRA_ARGS` gets no suggestion at all, since the task wouldn't pass the arguments.
+
+Message wording is fixed, because people grep for these strings; changing one is a breaking change. Each runner's own vocabulary is used, so with make the suggestion reads `make lint`, and a private just recipe is reported as `'release' is private`.
+
+## The ratchet
+
+The hard part of any linter is turning it on in a repository that already has findings. A gate that fails on any inline step can't be switched on in a workflow with forty of them, so it waits for a cleanup that never gets scheduled. ci-parity's answer is a baseline file with one number per workflow: how many inline-tool findings that workflow may still have.
+
+Take a different repository, whose only workflow has three inline steps and calls no unknown or internal tasks:
+
+```yaml
+# .github/workflows/web.yml
+on: [pull_request]
+jobs:
+  web:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install
+        run: pnpm install --frozen-lockfile
+      - name: Build
+        run: pnpm build
+      - name: Test
+        run: pnpm test
+```
+
+Write the baseline:
+
+```text
+$ ci-parity baseline
+wrote .ci-parity-baseline.json: 1 workflow, 3 inline-tool findings
+```
+
+```json
+{
+  "version": 1,
+  "workflows": {
+    ".github/workflows/web.yml": 3
+  }
+}
+```
+
+Commit that file and `check` passes, with the three findings reported as tolerated. From there the rules are short. A workflow with a count above zero tolerates that many inline-tool findings and fails on any more. A workflow at zero, or one missing from the file, is locked, and any inline tool fails it. `ci-parity baseline` refuses to raise a count unless you pass `--allow-regression`. Only P001 is counted; an unknown or internal task is always an error, because there is no sense in tolerating a step that can't run.
+
+Replace an inline step with a task and `check` notices the drop:
+
+```text
+$ ci-parity check
+ratchet
+  .github/workflows/web.yml  baseline 3   now 2   run `ci-parity baseline` to lock in
+
+0 errors, 0 warnings, 2 tolerated, 0 allowed
+```
+
+Run `ci-parity baseline` again and the allowance shrinks for good. Add an inline step at the end instead and the workflow fails with a P004 regression, and the new step is reported as an error:
+
+```text
+$ ci-parity check
+.github/workflows/web.yml
+  1:1     P004 regression    .github/workflows/web.yml has 3 inline-tool findings, baseline allows 2
+  15:14   P001 inline-tool   step "Deploy" in job "web" runs 'pnpm deploy' directly
+
+ratchet
+  .github/workflows/web.yml  baseline 2   now 3   REGRESSION
+
+2 errors, 0 warnings, 2 tolerated, 0 allowed
+```
+
+![Flowchart of a ci-parity check with a baseline file. The check counts each workflow's inline-tool findings and asks whether the workflow has a baseline count above zero. If not, the workflow is locked: any finding fails it with a P004 regression, and no findings means it passes. If it does, the current count is compared with the baseline: higher fails with P004, equal passes with the findings shown as tolerated, and lower passes and prints a ratchet table suggesting ci-parity baseline, which writes the lower count and locks it in.](./ratchet-flowchart.svg)
+
+> *Figure 1: What a check does with a baseline. Every path either passes or fails with a P004 regression, and the only way a count moves is down, through `ci-parity baseline`, which refuses to write a higher one.*
+
+The effect is that a repository can adopt the check on day one without fixing anything first, and every pull request that touches a workflow becomes a chance to lower a count. Nobody has to schedule the cleanup; it happens one workflow at a time, and it can't be undone by accident. `check --strict` ignores the baseline, which is how you see what's left, and the Action has a `strict: true` input for a scheduled job that tracks it.
+
+### Why a count and not a list
+
+The obvious design is a list of tolerated findings, each with a fingerprint, so that a new inline step is named exactly. I chose a count per workflow instead.
+
+A count survives a reformat, a renamed step or a moved line, and the file stays small enough to read in a diff. A list of fingerprints changes whenever a step is reformatted, which means churn in every pull request that touches a workflow, in a file format that would have to break to improve. The baseline format is part of ci-parity's compatibility contract, so churn there is expensive.
+
+The cost is precise: with a count of N, the first N findings in file order are the tolerated ones, so a new inline step added above older ones moves the boundary, and the reported error can land on an older step. What keeps that honest is that the P004 finding always reports the rise itself, with the current and baseline counts, and the P001 errors list every step over the count. Nothing new goes unreported; the line pointed at may just be an older one. The FAQ has an entry for that question, which tells you it comes up.
+
+Fingerprints do exist in ci-parity, in the SARIF output, where code scanning needs a finding to keep its identity when the lines above it move. They make sense there, where nobody reads the file, and much less sense in a file people commit and review.
+
+## Reading both sides without running anything
+
+The tool only ever reads files. A check never executes `task`, `make`, `just` or `mise`, and it never runs anything in a `run:` step. The results then depend on the files alone, so the same repository gives the same output on a laptop and on a runner, and a pull request from a fork can't turn a check into code execution. Reading statically is also what makes it fast: a generated repository with 50 workflows and 1,200 steps checks in well under a second, and CI fails if it ever crosses one second on any OS.
+
+Reading accurately starts with positions. Each workflow is decoded with yaml.v3 into a node tree, so every value keeps its line and column. Positions inside a folded `run: >` block are mapped back to the source line they came from, and `${{ }}` expressions are swapped for placeholders before shell parsing and mapped back afterwards, so an annotation lands on the right character even when there is an expression earlier on the line.
+
+Each `run:` script is then parsed as bash with mvdan/sh, which gives a real syntax tree (a regular expression over lines would miss most of what follows). Calls inside `if`, `for`, pipelines, `&&` lists, subshells and functions are all walked. Transparent wrappers such as `sudo` and `env` are peeled, and each wrapper's value-taking flags are known, so the command in `sudo -u root pnpm test` is `pnpm test`, with `root` understood as the value of `-u`. A command whose name comes from a variable can't be checked, and the tool says so. Steps in any shell other than bash and sh get a P005 warning and are skipped, which includes every Windows job that doesn't set `shell: bash`, since those default to PowerShell.
+
+The runner side gets the same treatment: Taskfile YAML with its includes and namespaces, Makefiles with included files and pattern rules, justfiles, and mise's `mise.toml` together with file tasks under `mise-tasks/`, each read by its own parser behind one interface. Anything that would need evaluation stays unevaluated. A Taskfile include whose path holds a template is treated as a missing include, which is an error unless the include is marked optional; the tool never guesses at what the tasks behind it might be.
+
+![Flowchart of a ci-parity check, top to bottom. Four files at the top: workflows and composite actions, the runner's Taskfile, Makefile, justfile or mise files, .ci-parity.yml, and .ci-parity-baseline.json. The workflows are parsed with positions kept and each run script is parsed as bash with wrappers peeled; the runner's files are read for task names, commands and whether a task is internal. Both feed rules P001 to P005, along with the config file. The baseline file feeds the next step, which applies the baseline: tolerate, lock, or a P004 on a rise. The result is reported as text, github, JSON or SARIF, and goes to a terminal, pull request annotations or code scanning.](./check-flow.svg)
+
+> *Figure 2: A check, from files to findings. Nothing at the top is executed. The rules and the ratchet see only parsed steps and parsed tasks, which is why each file format, shell and runner is an adapter that can be swapped without touching them.*
+
+That last point is the shape of the code. Rules and use cases depend on interfaces only, and each file format, shell, runner and output format is an adapter behind one, so a new runner is a new adapter and nothing in the rules changes. The binary has three dependencies: yaml.v3, mvdan/sh and BurntSushi/toml for the mise config.
+
+## Finding out where it was wrong before 1.0
+
+A linter earns trust by being right, so before calling it 1.0 I ran it on ten public repositories, each pinned at a commit, and read every finding by hand: task, goreleaser and arduino-cli for Taskfile; prometheus, traefik and GitHub's own cli for make; the just repository and oxc for just; mise and hk for mise. Each finding went into one of three buckets. A false positive means the tool is wrong about the repository, and every one of those is a bug. Noise means the finding is correct by the rules but nobody would move that command into a task: a `python3 -c` one-liner, `cargo install --locked mdbook@0.4.52`, a `go version` check, a `docker pull`. A true positive is a project command run inline, such as `cargo test` or `pnpm build`.
+
+At v0.8.0 the tool reported 312 errors across the ten repositories. Thirty-two were false positives, just over 10%, and they clustered. All nine unknown-task findings were wrong, caused by make pattern rules, mise file tasks and the values of task's own flags, and 23 of arduino-cli's 39 inline-tool findings were calls to task through `go tool`, which the tool didn't recognize as calling task. Another 78 findings, a quarter, were noise. Every cause became an issue, and the criteria for 1.0 asked for a re-run with no false positives.
+
+| | v0.8.0 | v0.10.0 |
+| --- | ---: | ---: |
+| Errors reported | 312 | 226 |
+| False positives | 32 (10.3%) | 0 |
+| Noise | 78 (25%) | 25 (11%) |
+| True positives | 202 (65%) | 201 (89%) |
+| Suggestions that run exactly the step | 5 of 18 | 5 of 5 |
+
+The false positives were bugs and got fixed as bugs; the noise needed a decision. Version checks, tool installs pinned to a version, sign-in commands and inline scripts aren't drift, and none of them belongs in a task, but dropping them silently would hide real commands from the report. So they are allowed by default, with a built-in reason, and shown as allowed; `builtin_allow: false` turns them back into errors. Unpinned installs such as `npm i -g corepack` stay flagged on purpose, because an unpinned install in CI is the kind of command a task should be pinning.
+
+The re-run at v0.10.0, on the same commits, found no false positives and cut the noise from a quarter of errors to about a tenth, and every one of the five suggestions left named a task that runs only that command. That re-run is what 1.0 meant.
+
+Ten repositories is a small sample, and all ten are well-kept open-source projects with mature runner files. A company monorepo will have shapes the trial didn't see. The trial is a task in the repository, `task trial`, with the commits pinned, so the next run after a bug report is cheap and shows only what ci-parity changed.
+
+## Running it
+
+In a workflow it's a checkout and one step:
+
+```yaml
+name: ci-parity
+on: [pull_request]
+
+jobs:
+  ci-parity:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v7
+      - uses: jimmykurian/ci-parity@v1
+```
+
+Each finding becomes an annotation on the workflow line that caused it, and the job fails on errors. With no `version` input, the action runs the release named by an exact tag such as `@v1.0.0`; any other ref, `@v1` or a commit SHA included, downloads the latest release, which could be a later major version. To pin the binary, use an exact tag, or pin the commit SHA and set `version: v1.0.0` alongside it. With `format: sarif` and an upload step, the findings appear as code scanning alerts in the Security tab, each linked to its rule's page, and allowed findings are uploaded as suppressions. The CLI installs with `go install`, through mise, from the release archives or as a pre-commit hook, and prints text, GitHub annotations, JSON or SARIF.
+
+Configuration is a `.ci-parity.yml` that names the runner, plus the tool list and allow entries where a repository needs them:
+
+```yaml
+runner: just
+allow:
+  - match: "docker push *"
+    reason: "images publish only from CI"
+```
+
+A single step can be allowed in place, with the reason on the line: `run: docker push ghcr.io/acme/app:dev # ci-parity: allow images publish only from CI`. An allow comment without a reason is itself a warning, because an allowance nobody can explain is drift with a note attached.
+
+## What it doesn't do
+
+It reads bash and sh and nothing else, so PowerShell and cmd steps are skipped with a warning. It flags only the tools on its list, which covers the usual build, test, lint, infrastructure and quality tools and can be extended per repository; anything else is ignored. It doesn't evaluate runner files, so a Taskfile feature that needs task itself to resolve is reported as unresolved, and it doesn't generate workflows or run anything. Two ideas are on the list but not planned: reading `task --list-all --json` when task happens to be installed, and a companion action for calling a task through a `uses:` step.
+
+## How it was built
+
+ci-parity was built from a short spec and a phased plan, and the repository holds itself to the rule it checks. Every `run:` step in its workflows calls `task`, its own baseline has been locked at zero since the first CI workflow, and CI runs actionlint, zizmor and ci-parity on its own workflows. Golden fixtures, a miniature repository per case with the expected output in every format, meant every field-trial fix was reviewable as a text diff.
+
+The field trial is the part I'd point to. Building the tool was the easy half; knowing where it was wrong, with numbers and a repeatable run, is what made it something I'd put in another team's CI.
+
+The ratchet travels, too. Any check you'd like to add to an existing codebase, a lint rule or a coverage floor, say, can be introduced as a count that only goes down. A gate waits for a quarter with slack in it; a ratchet starts today and lets the ordinary flow of pull requests do the cleanup. And if you run ci-parity on a monorepo and it's wrong, the trial is set up for that: add the repository and its commit to `test/trial/repos.yml`, and the next run shows only what changed.
+
+Source, docs and the full rule reference: [github.com/jimmykurian/ci-parity](https://github.com/jimmykurian/ci-parity) and [ci-parity.is-a.dev](https://ci-parity.is-a.dev/).

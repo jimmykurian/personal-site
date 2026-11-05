@@ -1,0 +1,19 @@
+%% Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
+%% Author: Jimmy Kurian
+flowchart TD
+    start["ci-parity check,<br/>with a baseline file"] --> count["Count each workflow's<br/>inline-tool findings"]
+    count --> inbase{"Baseline count<br/>above 0?"}
+    inbase -- "no: locked at 0" --> anyf{"Any inline-tool<br/>findings?"}
+    anyf -- "no" --> pass(["Passes"])
+    anyf -- "yes" --> fail(["Fails: P004 regression,<br/>new P001s are errors"])
+    inbase -- "yes" --> cmp{"Current count<br/>against the baseline"}
+    cmp -- "higher" --> fail
+    cmp -- "equal" --> tol(["Passes, findings<br/>shown as tolerated"])
+    cmp -- "lower" --> lower(["Passes, and the ratchet table<br/>says to run ci-parity baseline"])
+    lower --> lock["ci-parity baseline<br/>writes the lower count"]
+    classDef decision fill:#f5ece7,stroke:#a36752,color:#111314
+    classDef fail fill:#ffffff,stroke:#a36752,color:#111314,stroke-dasharray:4 3
+    classDef pass fill:#b4cdc2,stroke:#111314,color:#111314
+    class inbase,anyf,cmp decision
+    class fail fail
+    class pass,tol,lower,lock pass

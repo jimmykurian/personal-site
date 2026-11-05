@@ -34,6 +34,7 @@ frontmatter
 Giscus
 gitmessage
 goodreads
+goreleaser
 gpgsign
 gstatic
 gsub
@@ -45,6 +46,7 @@ ihdr
 infoq
 jimmybogard
 jimmykurian
+justfiles
 knip
 Kurian
 lhci
@@ -54,11 +56,13 @@ lighthouseci
 lighthouserc
 linearizability
 Lugasi
+Makefiles
 mapperly
 martinfowler
 martinothamar
 MediatR
 mermaidchart
+mvdan
 Namecheap
 nameof
 networkidle
@@ -76,10 +80,12 @@ requestfailed
 Riok
 Roundtable
 Sanzo
+SARIF
 Shiki
 signingkey
 stackoverflow
 staticwebapp
+subshells
 Taskfile
 tflint
 tftest

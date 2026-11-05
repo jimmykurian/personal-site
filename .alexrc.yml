@@ -20,6 +20,10 @@ allow:
   - black
   - white
   - color
+  # Running code: a linter that never executes a workflow step (the ci-parity post).
+  - executes
+  - executed
+  - execution
   # Ordinary words the profanity list marks "in some cases": "no period" (commit rules),
   # "joint operations" (a military award), "in good faith" (SECURITY.md), "laid out" (a
   # post), and The American Legion and a church food pantry (community entries).
