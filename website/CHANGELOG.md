@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.1](https://github.com/jimmykurian/personal-site/compare/website-v1.4.0...website-v1.4.1) (2026-11-08)
+
+
+### Bug Fixes
+
+* **deps:** patch TypeDoc onto minimatch 11 for GHSA-g3hv-75wg-m249 ([#46](https://github.com/jimmykurian/personal-site/issues/46)) ([8fd08f9](https://github.com/jimmykurian/personal-site/commit/8fd08f9b89071de247005ee2f43bacbd8725caca))
+
 ## [1.4.0](https://github.com/jimmykurian/personal-site/compare/website-v1.3.1...website-v1.4.0) (2026-11-05)
 
 
