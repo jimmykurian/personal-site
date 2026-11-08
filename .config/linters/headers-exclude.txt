@@ -21,6 +21,8 @@ pnpm-lock\.yaml$
 ^infrastructure/docs/
 (^|/)CHANGELOG\.md$
 ^infrastructure/version\.txt$
+# pnpm patches are diffs of a dependency's own files, made by pnpm patch-commit.
+^website/patches/.*\.patch$
 # Images, fonts and PDFs.
 \.(svg|png|jpe?g|webp|ico|pdf|woff2?)$
 # Copied into the body of every new pull request.

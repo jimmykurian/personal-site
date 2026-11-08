@@ -1,0 +1,20 @@
+diff --git a/dist/node-utils.js b/dist/node-utils.js
+index 96a483d44c9ca066a5128dc40abcffdb8a3aee4b..bd6cdb9084b6475ce7e7faf94ef7d4799cb01df0 100644
+--- a/dist/node-utils.js
++++ b/dist/node-utils.js
+@@ -325,12 +325,9 @@ function glob(pattern, root, options = {}) {
+       if (childPath[childPath.length - 1] === "node_modules" && !shouldIncludeNodeModules) {
+         return false;
+       }
+-      return mini.set.some((row) => mini.matchOne(
+-        childPath,
+-        row,
+-        /* partial */
+-        true
+-      ));
++      // minimatch 11 made matchOne private. match(path, true) runs the same partial match
++      // over every row, but inverts the result for a negated pattern, which matchOne doesn't.
++      return mini.match(childPath.join("/"), true) !== mini.negate;
+     },
+     matchDirectories: options.includeDirectories,
+     followSymlinks: options.followSymlinks
