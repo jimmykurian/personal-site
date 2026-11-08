@@ -27,13 +27,3 @@ version = "5.1.9"
 ecosystem = "npm"
 vulnerability.ignore = true
 reason = "GHSA-g3hv-75wg-m249: no fix callable by glob 8 (unified-engine 10, via alex); patterns are our own"
-
-# minimatch 10.2.6 is left only for TypeDoc (task docs), which calls Minimatch#matchOne(), made
-# private in minimatch 11. The only patterns it matches are the entry points in
-# website/typedoc.json.
-[[PackageOverrides]]
-name = "minimatch"
-version = "10.2.6"
-ecosystem = "npm"
-vulnerability.ignore = true
-reason = "GHSA-g3hv-75wg-m249: TypeDoc needs Minimatch#matchOne, private in 11; patterns are our own typedoc.json entry points"

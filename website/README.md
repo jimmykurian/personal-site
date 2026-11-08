@@ -164,6 +164,7 @@ playwright.config.ts     Playwright: Chrome, preview server, projects
 vitest.config.ts         Vitest on Astro's Vite config, with coverage thresholds
 package.json             scripts and dependencies; pnpm is pinned by packageManager
 pnpm-workspace.yaml      dependency overrides and audit exceptions, each with a reason
+patches/                 local pnpm patches to dependencies, listed in pnpm-workspace.yaml
 AGENTS.md                rules for coding agents working in website/
 private/                 full resume original (git-ignored, never published)
 ```
