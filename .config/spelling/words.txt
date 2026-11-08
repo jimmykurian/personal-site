@@ -62,7 +62,6 @@ martinfowler
 martinothamar
 MediatR
 mermaidchart
-minimatch
 mvdan
 Namecheap
 nameof
