@@ -8,7 +8,7 @@
     "schedule:weekly"
   ],
   "enabledManagers": ["npm", "github-actions", "terraform", "mise"],
-  "dependencyDashboard": true,
+  "dependencyDashboard": { "enabled": true },
   "prConcurrentLimit": 3,
   "prHourlyLimit": 2,
   "rangeStrategy": "bump",
