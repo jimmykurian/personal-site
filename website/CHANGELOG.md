@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.2](https://github.com/jimmykurian/personal-site/compare/website-v1.4.1...website-v1.4.2) (2026-11-12)
+
+
+### Bug Fixes
+
+* **content:** point the ISE Developer Blog links at Frontier Engineering ([#48](https://github.com/jimmykurian/personal-site/issues/48)) ([497b2b9](https://github.com/jimmykurian/personal-site/commit/497b2b94b856f32a9881bd807fcb06f0877afba4))
+
 ## [1.4.1](https://github.com/jimmykurian/personal-site/compare/website-v1.4.0...website-v1.4.1) (2026-11-08)
 
 
