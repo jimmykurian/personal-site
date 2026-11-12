@@ -12,26 +12,26 @@
     "id": "agents-md-and-skills",
     "kind": "article",
     "title": "Coordinating AI-Assisted Development with AGENTS.md and Skills",
-    "venue": "Microsoft ISE Developer Blog, with D. Hillis",
+    "venue": "Microsoft Frontier Engineering Blog, with D. Hillis",
     "year": 2026,
-    "href": "https://devblogs.microsoft.com/ise/ai-assisted-development-agents-skills-copilot-cli/",
+    "href": "https://devblogs.microsoft.com/frontier-engineering/ai-assisted-development-agents-skills-copilot-cli/",
     "featured": true
   },
   {
     "id": "testcontainers",
     "kind": "article",
     "title": "Integration Testing with Testcontainers",
-    "venue": "Microsoft ISE Developer Blog",
+    "venue": "Microsoft Frontier Engineering Blog",
     "year": 2025,
-    "href": "https://devblogs.microsoft.com/ise/testing-with-testcontainers/"
+    "href": "https://devblogs.microsoft.com/frontier-engineering/testing-with-testcontainers/"
   },
   {
     "id": "dockerizing-uv",
     "kind": "article",
     "title": "Dockerizing UV",
-    "venue": "Microsoft ISE Developer Blog",
+    "venue": "Microsoft Frontier Engineering Blog",
     "year": 2025,
-    "href": "https://devblogs.microsoft.com/ise/dockerizing-uv/"
+    "href": "https://devblogs.microsoft.com/frontier-engineering/dockerizing-uv/"
   },
   {
     "id": "consensus-driven-analysis",

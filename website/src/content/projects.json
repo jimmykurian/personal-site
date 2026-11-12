@@ -5,7 +5,7 @@
     "kicker": "Standards · Microsoft Frontier Company",
     "title": "AI-assisted development standards",
     "summary": "AGENTS.md conventions and reusable GitHub Copilot skills, adopted team-wide and rolled out through guild sessions. Repetitive coding tasks down about 70%.",
-    "link": { "href": "https://devblogs.microsoft.com/ise/", "label": "Read the write-up" }
+    "link": { "href": "https://devblogs.microsoft.com/frontier-engineering/", "label": "Read the write-up" }
   },
   {
     "id": "caira",
