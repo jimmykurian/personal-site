@@ -20,6 +20,8 @@ overrides:
   # GHSA-333x-w4r6-6crp, GHSA-w74x-v6f9-j3xg, GHSA-wjr9-j795-jxcr and GHSA-xhq7-xmqj-769h, via
   # ajv (eslint-plugin-tsdoc, commitlint and others).
   'fast-uri@<3.1.9': '^3.1.9'
+  # GHSA-474x-hrwr-fgx4, via @astrojs/rss (^5.5.7), which the lockfile had resolved to 5.11.2.
+  'fast-xml-parser@<5.12.0': '^5.12.0'
   # GHSA-3g3m-2fjr-6pw4 (glob) and GHSA-g3hv-75wg-m249 (minimatch), fixed only in glob 14 and
   # minimatch 11. glob 13 (v8r) and 10 (@npmcli/map-workspaces, via alex) use the named promise
   # API glob 14 keeps, and glob 14 itself requires minimatch 11. minimatch moves to 11 only for
