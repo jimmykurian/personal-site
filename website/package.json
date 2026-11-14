@@ -30,7 +30,7 @@
     "posthog-js": "^1.438.16"
   },
   "engines": {
-    "node": ">=22.22.0"
+    "node": ">=22.23.4"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
