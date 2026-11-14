@@ -34,6 +34,10 @@ jobs:
 
       - name: Resolve and dedupe the lockfile
         working-directory: website
+        # Skips releases under eight days old, which the local package feed doesn't carry yet,
+        # so the result also installs there.
+        env:
+          pnpm_config_minimum_release_age: 11520
         run: |
           # Lock Astro at 7.4.7, the first release with both fixes, then restore the caret range.
           sed -i 's|"astro": "^7.4.7"|"astro": "7.4.7"|' package.json
