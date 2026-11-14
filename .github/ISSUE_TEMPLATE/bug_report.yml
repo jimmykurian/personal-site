@@ -115,7 +115,7 @@ body:
         - Device and OS: [e.g., iPhone 16, iOS 26; macOS 26]
         - Window width: [e.g., 390px, 1280px]
         - Light or dark mode
-        - Node version (local build issues): [e.g., 22.22]
+        - Node version (local build issues): [e.g., 22.23]
     validations:
       required: false
 
