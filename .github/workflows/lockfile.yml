@@ -35,6 +35,10 @@ jobs:
       - name: Resolve and dedupe the lockfile
         working-directory: website
         run: |
+          # Lock Astro at 7.4.7, the first release with both fixes, then restore the caret range.
+          sed -i 's|"astro": "^7.4.7"|"astro": "7.4.7"|' package.json
+          pnpm install --lockfile-only --registry https://registry.npmjs.org/
+          sed -i 's|"astro": "7.4.7"|"astro": "^7.4.7"|' package.json
           pnpm install --lockfile-only --registry https://registry.npmjs.org/
           pnpm dedupe --registry https://registry.npmjs.org/
           pnpm why astro basic-ftp --depth 1
