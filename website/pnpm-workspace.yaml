@@ -6,7 +6,9 @@
 # dependency that pulls it in requires the fix itself.
 overrides:
   tmp: '^0.2.7' # GHSA-ph9p-34f9-6g65, via @lhci/cli > inquirer > external-editor
-  basic-ftp: '^6.2.3' # GHSA-c475-qrg2-pj4r, via @lhci/cli > proxy-agent > get-uri
+  # GHSA-c475-qrg2-pj4r, GHSA-5pm8-86m8-9m6r and GHSA-2w5v-vj22-jp27, via
+  # @lhci/cli > proxy-agent > get-uri.
+  basic-ftp: '^6.2.6'
   # GHSA-r7fv-28h4-cvq7, via markdownlint-cli2, which pins 15.0.1.
   markdown-it: '^15.0.2'
   # GHSA-r4xh-jqrq-34v2, via markdownlint-cli2, which pins 1.8.0; the rest already use 1.9.
