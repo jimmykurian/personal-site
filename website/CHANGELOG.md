@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.3](https://github.com/jimmykurian/personal-site/compare/website-v1.4.2...website-v1.4.3) (2026-11-14)
+
+
+### Bug Fixes
+
+* **deps:** bump Astro to 7.4.7 and basic-ftp to 6.2.6 for open advisories ([#52](https://github.com/jimmykurian/personal-site/issues/52)) ([28de372](https://github.com/jimmykurian/personal-site/commit/28de37284aaeaddff36fa9592d05645723b71061))
+
 ## [1.4.2](https://github.com/jimmykurian/personal-site/compare/website-v1.4.1...website-v1.4.2) (2026-11-12)
 
 
