@@ -52,3 +52,5 @@ jobs:
           name: pnpm-lock
           path: website/pnpm-lock.yaml
           retention-days: 1
+
+# re-run for the astro2tsx packageExtensions entry
