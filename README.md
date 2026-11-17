@@ -53,9 +53,9 @@ The size and complexity of the code: lines of code without blanks or comments ([
 | Metric | Website | Infrastructure | Total |
 | --- | --- | --- | --- |
 | Files | 29 | 8 | 37 |
-| Lines of code | 3,343 | 138 | 3,481 |
-| Functions | 198 | – | 198 |
-| Average complexity | 1.9 | – | 1.9 |
+| Lines of code | 3,444 | 138 | 3,582 |
+| Functions | 212 | – | 212 |
+| Average complexity | 2.0 | – | 2.0 |
 | Max complexity | 9 | – | 9 |
 | Modules | – | 2 | 2 |
 | Resources | – | 3 | 3 |
@@ -69,12 +69,12 @@ The size and complexity of the code: lines of code without blanks or comments ([
 | async arrow function | `website/src/pages/index.astro:908` | 9 |
 | `installedPackages` | `website/scripts/check-licenses.mjs:96` | 8 |
 | `main` | `website/scripts/check-licenses.mjs:135` | 8 |
-| `load` | `website/src/lib/goodreads.ts:161` | 8 |
+| `readDate` | `website/src/lib/goodreads.ts:166` | 8 |
 | `collectComplexity` | `website/scripts/code-metrics.mjs:38` | 7 |
-| `retryDelay` | `website/src/lib/goodreads.ts:30` | 7 |
-| `fetchFeed` | `website/src/lib/goodreads.ts:38` | 7 |
-| `fetchBooks` | `website/src/lib/goodreads.ts:89` | 7 |
-| `startObservability` | `website/src/lib/observability.ts:96` | 7 |
+| `retryDelay` | `website/src/lib/goodreads.ts:31` | 7 |
+| `fetchFeed` | `website/src/lib/goodreads.ts:39` | 7 |
+| `parseWidget` | `website/src/lib/goodreads.ts:116` | 7 |
+| `load` | `website/src/lib/goodreads.ts:295` | 7 |
 
 </details>
 
