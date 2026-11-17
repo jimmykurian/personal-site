@@ -33,6 +33,7 @@ jobs:
     timeout-minutes: 15
     permissions:
       contents: read
+      pull-requests: read # to find this workflow's open pull request
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -53,11 +54,15 @@ jobs:
       # A refresh dates each new or newly finished book the day it first sees it. This run starts
       # from main, so while an earlier run's pull request is still open it would date those books
       # again. The loader takes their dates from that pull request's copy of the file instead.
+      # Only an open pull request counts: a merged or closed one can leave its branch behind.
       - name: Fetch the saved books of the open pull request, if there is one
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
-          branch="$(git ls-remote --heads origin chore/reading-list)"
-          if [ -n "$branch" ]; then
-            git fetch --depth 1 origin chore/reading-list
+          commit="$(gh pr list --repo "$GITHUB_REPOSITORY" --state open --base main --head chore/reading-list \
+            --json headRefOid,isCrossRepository --jq '[.[] | select(.isCrossRepository | not)][0].headRefOid // empty')"
+          if [ -n "$commit" ]; then
+            git fetch --depth 1 origin "$commit"
             git show FETCH_HEAD:website/src/content/books.json > "$RUNNER_TEMP/pending-books.json"
             echo "GOODREADS_PENDING=$RUNNER_TEMP/pending-books.json" >> "$GITHUB_ENV"
           fi
