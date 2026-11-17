@@ -67,8 +67,8 @@ The tests use `tofu test` with a mocked `azurerm` provider, so nothing plans or 
 | --- | --- | --- |
 | `git push` (pre-push hook) | The unit tests if `website/` changed, the module tests if `infrastructure/` changed | The push |
 | Pull request (CI) | Every suite for the parts that changed, then a preview deploy if `website/` changed | The merge (required checks) |
-| `main` (CI) | Every suite again | The production deploy |
-| Nightly (CI) | Every suite, then the external link check | That night's deploy |
+| `main` (CI) | Every suite again, then the live site check after the deploy | The production deploy |
+| Nightly (CI) | Every suite, then the live site check and the external link check | That night's deploy |
 
 A failing suite never deploys anything, and the last good deploy stays live. The PR check table shows each suite's result with the coverage and test counts, and the README badges show them for `main`.
 
@@ -89,4 +89,4 @@ task infra:test         # OpenTofu module tests
 - [Security overview](../security/overview.md)
 - [Design guidelines](../design/design-guidelines.md)
 
-Last reviewed: 2026-10-23
+Last reviewed: 2026-11-17

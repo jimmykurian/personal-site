@@ -25,8 +25,8 @@ Jimmy Kurian's personal site: a portfolio, resume and blog at <https://www.jimmy
 
 ## Hosting
 
-- Azure Static Web Apps (Free plan), app `jimmykurian-me` in resource group `rg-personal-site`, in Jimmy's personal Azure subscription ("Azure subscription 1", personal directory), default host `yellow-flower-092ce0d0f.3.azurestaticapps.net`. Never use another tenant.
-- GitHub Actions builds the site and uploads `website/dist`. Each PR gets a preview environment. The workflow also rebuilds nightly and then checks external links.
+- Azure Static Web Apps (Free plan), app `jimmykurian-me` in resource group `rg-personal-site`, in Jimmy's personal pay-as-you-go Azure subscription ("Jimmy Personal Site", personal directory), default host `yellow-flower-092ce0d0f.3.azurestaticapps.net`. Never use another tenant.
+- GitHub Actions builds the site and uploads `website/dist`. Each PR gets a preview environment. After each production deploy the workflow requests the live site (`task test:live`). It also rebuilds nightly and then checks external links.
 - DNS stays at Namecheap. `www` is the canonical host.
 
 ## More detail
