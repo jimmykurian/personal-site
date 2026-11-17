@@ -542,6 +542,48 @@ describe('goodreadsLoader', () => {
       expect(entries.get('shelf-2')!.data).toMatchObject({ toRead: false, readAt: null, addedAt: earlier });
     });
 
+    it('keeps a book only the unmerged refresh has when the full widget no longer lists it', async () => {
+      // Arrange
+      const earlier = '2026-11-10T12:00:00.000Z';
+      save(book('shelf', 'old', 0));
+      const pending = join(dir, 'pending.json');
+      writeFileSync(
+        pending,
+        JSON.stringify([
+          book('shelf', 'p2', 1, { addedAt: earlier, rating: 4 }),
+          book('shelf', 'p1', 0, { addedAt: earlier }),
+          book('shelf', 'old', 2),
+          book('other', 'p3', 0),
+        ]),
+      );
+      stubGoodreads({ shelf: Array.from({ length: 100 }, (_, i) => entry({ id: String(i + 1) })) });
+      const { entries, ctx } = context();
+
+      // Act
+      await refresh(['shelf'], ctx, pending);
+
+      // Assert
+      expect(entries.size).toBe(103);
+      expect(entries.get('shelf-p1')!.data).toMatchObject({ position: 100, addedAt: earlier });
+      expect(entries.get('shelf-p2')!.data).toMatchObject({ position: 101, addedAt: earlier, rating: 4 });
+      expect(entries.get('shelf-old')!.data.position).toBe(102);
+    });
+
+    it('drops a book only the unmerged refresh has once it leaves a shelf listed in full', async () => {
+      // Arrange
+      save(book('shelf', '1', 0));
+      const pending = join(dir, 'pending.json');
+      writeFileSync(pending, JSON.stringify([book('shelf', 'gone', 0), book('shelf', '1', 1)]));
+      stubGoodreads({ shelf: [entry({ id: '1' })] });
+      const { entries, ctx } = context();
+
+      // Act
+      await refresh(['shelf'], ctx, pending);
+
+      // Assert
+      expect([...entries.keys()]).toEqual(['shelf-1']);
+    });
+
     it('keeps what an unmerged refresh saw of a book the full widget no longer lists', async () => {
       // Arrange
       const earlier = '2026-11-10T12:00:00.000Z';

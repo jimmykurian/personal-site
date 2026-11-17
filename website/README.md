@@ -80,10 +80,10 @@ The Reading list workflow (`.github/workflows/reading-list.yml`) keeps the file 
 
 The widget lists a shelf's 100 most recently added books, with the title, author, cover, rating and shelves of each, so the merge works like this:
 
-- A new book goes first on its shelf, dated the day the workflow first saw it. While the workflow's pull request stays open, later runs keep that date (and a first-seen read date), read from the pull request's copy of the file (`GOODREADS_PENDING`). A book that has left the widget's 100 since that run keeps what the run saw of it.
+- A new book goes first on its shelf, dated the day the workflow first saw it. While the workflow's pull request stays open, later runs keep that date (and a first-seen read date), read from the pull request's copy of the file (`GOODREADS_PENDING`). A book that has left the widget's 100 since that run keeps what the run saw of it, and stays in the file if that run added it.
 - A saved book keeps its own fields and takes the widget's rating and to-read mark. It's dated as read the day its to-read mark goes.
 - A shelf with fewer than 100 books is listed in full, so a book that left it is removed from the file.
-- A shelf with 100 or more may be cut short, so nothing is removed from it. A skipped book counts toward the 100. Delete such a book from the file by hand.
+- A shelf with 100 or more may be cut short, so nothing is removed from it. A skipped book counts toward the 100. Delete such a book from the file by hand, after merging the workflow's pull request if one is open: its copy of the file would bring the book back.
 - A change to a book that isn't among its shelf's 100 newest goes unseen. Change its rating, `toRead` or `readAt` in the file by hand.
 - The widget has no read dates. Add `readAt` by hand to a book that arrived already read, or it sorts after the dated ones.
 - A book without a cover is skipped, with a warning in the run's log: the widget shows a book's id only in its cover's address.

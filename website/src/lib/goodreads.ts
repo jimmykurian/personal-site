@@ -178,7 +178,8 @@ function readDate(listed: Listed, saved: Data | undefined, earlier: Data | undef
  * to-read mark goes. `pending` holds the books of an earlier, unmerged refresh: its dates
  * are kept, so they record the first day a change was seen, and a saved book the widget no
  * longer lists keeps the rating, to-read mark and read date it has there. When the widget is
- * the `whole` shelf, saved books it lacks are dropped. Otherwise nothing is dropped.
+ * the `whole` shelf, saved books it lacks are dropped. Otherwise nothing is dropped, and the
+ * books only `pending` has stay too, as recorded, after the new books.
  */
 function mergeShelf(
   shelf: string,
@@ -218,7 +219,14 @@ function mergeShelf(
       const readAt = book ? readDate(book, data, earlier, now) : (data.readAt ?? earlier.readAt);
       return { id, data: { ...data, rating: rating ?? data.rating, toRead, readAt } };
     });
-  return [...added, ...kept].map(({ id, data }, position) => ({ id, data: { ...data, position } }));
+  // Books an unmerged refresh added that a cut-short widget has since stopped listing.
+  const unlisted = whole
+    ? []
+    : [...pending]
+        .filter(([id, data]) => data.shelf === shelf && !known.has(id) && !seen.has(id))
+        .sort(([, a], [, b]) => Number(a.position) - Number(b.position))
+        .map(([id, data]) => ({ id, data }));
+  return [...added, ...unlisted, ...kept].map(({ id, data }, position) => ({ id, data: { ...data, position } }));
 }
 
 async function refreshBooks(
