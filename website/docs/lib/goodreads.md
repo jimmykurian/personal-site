@@ -24,7 +24,7 @@ the file, and the workflow proposes the change in a pull request.
 function goodreadsLoader(options): Loader;
 ```
 
-Defined in: [src/lib/goodreads.ts:244](https://github.com/jimmykurian/personal-site/blob/main/website/src/lib/goodreads.ts#L244)
+Defined in: [src/lib/goodreads.ts:258](https://github.com/jimmykurian/personal-site/blob/main/website/src/lib/goodreads.ts#L258)
 
 An Astro content loader with one entry per book per shelf, read from the saved books.
 
@@ -32,11 +32,12 @@ An Astro content loader with one entry per book per shelf, read from the saved b
 
 | Parameter | Type | Description |
 | ------ | ------ | ------ |
-| `options` | \{ `userId`: `string`; `shelves`: `string`[]; `saved`: `string`; `refresh?`: `boolean`; \} | `userId` is the public Goodreads profile; `shelves` are the shelf names to refresh; `saved` is the JSON file holding the books; `refresh` reads Goodreads first, for the workflow that keeps `saved` up to date. |
+| `options` | \{ `userId`: `string`; `shelves`: `string`[]; `saved`: `string`; `refresh?`: `boolean`; `pending?`: `string`; \} | `userId` is the public Goodreads profile; `shelves` are the shelf names to refresh; `saved` is the JSON file holding the books; `refresh` reads Goodreads first, for the workflow that keeps `saved` up to date; `pending` is a copy of `saved` from that workflow's open pull request, if there is one, whose first-seen dates a refresh keeps. |
 | `options.userId` | `string` | - |
 | `options.shelves` | `string`[] | - |
 | `options.saved` | `string` | - |
 | `options.refresh?` | `boolean` | - |
+| `options.pending?` | `string` | - |
 
 #### Returns
 

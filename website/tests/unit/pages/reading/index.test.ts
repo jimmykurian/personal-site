@@ -20,6 +20,7 @@ vi.mock('astro:content', async (importOriginal) => ({
 const cover = (id: string) => `https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/${id}.jpg`;
 
 const books = [
+  book('later', { shelf: 'currently-reading', position: 1, title: 'Picked Up Earlier' }),
   book('now', { shelf: 'currently-reading', title: 'In Hand', subtitle: 'A Subtitle', cover: cover('now') }),
   book('fav-b', { shelf: 'favorites', position: 1, title: 'Second Favorite', cover: cover('fav-b') }),
   book('fav-a', { shelf: 'favorites', position: 0, title: 'First Favorite' }),
@@ -49,6 +50,17 @@ describe('reading page', () => {
     expect(root.querySelector('.page-hero__rss')!.getAttribute('href')).toBe(site.links.goodreads);
     expect(root.querySelector('.page-hero__intro a')!.text).toBe('See the full list on Goodreads');
     expect(root.querySelector('.nav__link[aria-current="page"]')!.getAttribute('href')).toBe('/reading/');
+  });
+
+  it('shows the books in hand in shelf order, whatever order the collection has them in', async () => {
+    // Arrange (fixture books, with the second book in hand listed first)
+
+    // Act
+    const root = await renderPage();
+
+    // Assert
+    const titles = root.querySelectorAll('#current .list-title').map((a) => a.text.trim());
+    expect(titles).toEqual(['In Hand', 'Picked Up Earlier']);
   });
 
   it('shows the books in hand with cover, subtitle and author', async () => {

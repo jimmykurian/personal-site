@@ -105,13 +105,15 @@ function parseEntry(entry: string): Listed | string {
 }
 
 /**
- * The books in a widget script, newest first.
+ * The books in a widget script, newest first, and whether they're the whole shelf.
  *
  * @remarks
  * The script holds the widget's HTML in one string, `widget_code`. A book's id appears only
- * in its cover's address, so a book without a cover is skipped, with a warning.
+ * in its cover's address, so a book without a cover is skipped, with a warning. A skipped
+ * book still counts toward {@link WIDGET_LIMIT}: a widget with that many entries may be cut
+ * short, however many of them could be read.
  */
-function parseWidget(script: string, shelf: string, logger: AstroIntegrationLogger): Listed[] {
+function parseWidget(script: string, shelf: string, logger: AstroIntegrationLogger) {
   const code = /var widget_code = '((?:[^'\\]|\\.)*)'/.exec(script)?.[1];
   if (code === undefined) throw new Error(`Goodreads ${shelf}: the widget holds no book list`);
   const html = code.replace(/\\(.)/g, (_, c: string) => (c === 'n' ? '\n' : c));
@@ -120,7 +122,8 @@ function parseWidget(script: string, shelf: string, logger: AstroIntegrationLogg
   if (listed !== shelf) throw new Error(`Goodreads ${shelf}: the widget lists ${listed || 'no shelf'}`);
 
   const books: Listed[] = [];
-  for (const entry of html.split(/<div class="gr_custom_each_container_/).slice(1)) {
+  const entries = html.split(/<div class="gr_custom_each_container_/).slice(1);
+  for (const entry of entries) {
     const book = parseEntry(entry);
     if (typeof book === 'string') {
       logger.warn(`${shelf}: skipped "${book}", which has no cover to take its book id from`);
@@ -128,7 +131,7 @@ function parseWidget(script: string, shelf: string, logger: AstroIntegrationLogg
       books.push(book);
     }
   }
-  return books;
+  return { books, whole: entries.length < WIDGET_LIMIT };
 }
 
 async function fetchShelf(userId: string, shelf: string, widgetId: number, logger: AstroIntegrationLogger) {
@@ -156,10 +159,16 @@ async function fetchShelf(userId: string, shelf: string, widgetId: number, logge
  * @remarks
  * New books go first, newest first, dated now; the saved books follow in their saved order.
  * A saved book takes the widget's rating and to-read mark, and is dated as read the day its
- * to-read mark goes. A widget with fewer than {@link WIDGET_LIMIT} books is the whole shelf,
- * so saved books it lacks are dropped. A full widget may be cut short, so nothing is dropped.
+ * to-read mark goes. Either date comes from `pending` instead when an earlier, unmerged
+ * refresh already set it, so it records the first day the change was seen. When the widget
+ * is the `whole` shelf, saved books it lacks are dropped. Otherwise nothing is dropped.
  */
-function mergeShelf(shelf: string, savedBooks: Book[], listed: Listed[], now: string): Book[] {
+function mergeShelf(
+  shelf: string,
+  savedBooks: Book[],
+  { books: listed, whole }: { books: Listed[]; whole: boolean },
+  { now, pending }: { now: string; pending: Map<string, Book['data']> },
+): Book[] {
   const known = new Map(savedBooks.map((book) => [book.id, book]));
   const seen = new Map<string, Listed>();
   const added: Book[] = [];
@@ -176,13 +185,12 @@ function mergeShelf(shelf: string, savedBooks: Book[], listed: Listed[], now: st
         rating: book.rating ?? 0,
         toRead: book.toRead,
         readAt: null,
-        addedAt: now,
+        addedAt: pending.get(id)?.addedAt ?? now,
         cover: book.cover,
         href: `https://www.goodreads.com/book/show/${book.bookId}`,
       },
     });
   }
-  const whole = listed.length < WIDGET_LIMIT;
   const kept = savedBooks
     .filter(({ id }) => !whole || seen.has(id))
     .map(({ id, data }) => {
@@ -195,16 +203,21 @@ function mergeShelf(shelf: string, savedBooks: Book[], listed: Listed[], now: st
           ...data,
           rating: book.rating ?? data.rating,
           toRead: book.toRead,
-          readAt: finished ? now : data.readAt,
+          readAt: finished ? (pending.get(id)?.readAt ?? now) : data.readAt,
         },
       };
     });
   return [...added, ...kept].map(({ id, data }, position) => ({ id, data: { ...data, position } }));
 }
 
-async function refreshBooks(userId: string, shelves: string[], savedBooks: Book[], logger: AstroIntegrationLogger) {
+async function refreshBooks(
+  { userId, shelves }: { userId: string; shelves: string[] },
+  savedBooks: Book[],
+  pendingBooks: Book[],
+  logger: AstroIntegrationLogger,
+) {
   const now = new Date();
-  const stamp = now.toISOString();
+  const dates = { now: now.toISOString(), pending: new Map(pendingBooks.map(({ id, data }) => [id, data])) };
   // A widget id nobody has asked for before, so Goodreads answers with the shelf as it is now.
   const firstWidgetId = Math.floor(now.getTime() / 1000);
   const books: Book[] = [];
@@ -212,8 +225,8 @@ async function refreshBooks(userId: string, shelves: string[], savedBooks: Book[
     const listed = await fetchShelf(userId, shelf, firstWidgetId + index, logger);
     const onShelf = savedBooks.filter(({ data }) => data.shelf === shelf);
     onShelf.sort((a, b) => Number(a.data.position) - Number(b.data.position));
-    const merged = mergeShelf(shelf, onShelf, listed, stamp);
-    logger.info(`${shelf}: ${listed.length} books read, ${merged.length} saved`);
+    const merged = mergeShelf(shelf, onShelf, listed, dates);
+    logger.info(`${shelf}: ${listed.books.length} books read, ${merged.length} saved`);
     books.push(...merged);
   }
   return books;
@@ -231,7 +244,8 @@ async function refreshBooks(userId: string, shelves: string[], savedBooks: Book[
  *
  * @param options - `userId` is the public Goodreads profile; `shelves` are the shelf names to
  * refresh; `saved` is the JSON file holding the books; `refresh` reads Goodreads first, for
- * the workflow that keeps `saved` up to date.
+ * the workflow that keeps `saved` up to date; `pending` is a copy of `saved` from that
+ * workflow's open pull request, if there is one, whose first-seen dates a refresh keeps.
  * @returns The loader, named `goodreads`.
  *
  * @example
@@ -246,18 +260,23 @@ export function goodreadsLoader({
   shelves,
   saved,
   refresh = false,
+  pending,
 }: {
   userId: string;
   shelves: string[];
   saved: string;
   refresh?: boolean;
+  pending?: string;
 }): Loader {
   return {
     name: 'goodreads',
     load: async ({ store, logger, parseData }) => {
       const before = await readFile(saved, 'utf8');
       let books = JSON.parse(before) as Book[];
-      if (refresh) books = await refreshBooks(userId, shelves, books, logger);
+      if (refresh) {
+        const pendingBooks = pending ? (JSON.parse(await readFile(pending, 'utf8')) as Book[]) : [];
+        books = await refreshBooks({ userId, shelves }, books, pendingBooks, logger);
+      }
       const parsed = [];
       for (const { id, data } of books) parsed.push({ id, data: await parseData({ id, data }) });
       store.clear();

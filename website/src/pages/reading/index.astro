@@ -15,15 +15,17 @@ import site from '../../data/site.json';
 type Book = CollectionEntry<'books'>;
 
 const books = await getCollection('books');
-const current = books.filter((b) => b.data.shelf === 'currently-reading');
+// Shelves in their own order: the newest book first. The collection's order is the file's.
+const inShelfOrder = (name: string) =>
+  books.filter((b) => b.data.shelf === name).sort((a, b) => a.data.position - b.data.position);
+const current = inShelfOrder('currently-reading');
 
 // Newest first; books without a finish date sort by when they were added, at the end.
 const newest = (a: Book, b: Book) =>
   Number(Boolean(b.data.readAt)) - Number(Boolean(a.data.readAt)) ||
   (b.data.readAt ?? b.data.addedAt).getTime() - (a.data.readAt ?? a.data.addedAt).getTime();
 
-// Favorites keep the shelf's own order, as on the Goodreads profile.
-const favorites = books.filter((b) => b.data.shelf === 'favorites').sort((a, b) => a.data.position - b.data.position);
+const favorites = inShelfOrder('favorites');
 
 // The software-engineering shelf mixes finished books with ones still to read.
 const shelf = (name: string) => books.filter((b) => b.data.shelf === name);

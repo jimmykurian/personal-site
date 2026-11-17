@@ -50,6 +50,18 @@ jobs:
 
       - run: pnpm --dir website install --frozen-lockfile
 
+      # A refresh dates each new or newly finished book the day it first sees it. This run starts
+      # from main, so while an earlier run's pull request is still open it would date those books
+      # again. The loader takes their dates from that pull request's copy of the file instead.
+      - name: Fetch the saved books of the open pull request, if there is one
+        run: |
+          branch="$(git ls-remote --heads origin chore/reading-list)"
+          if [ -n "$branch" ]; then
+            git fetch --depth 1 origin chore/reading-list
+            git show FETCH_HEAD:website/src/content/books.json > "$RUNNER_TEMP/pending-books.json"
+            echo "GOODREADS_PENDING=$RUNNER_TEMP/pending-books.json" >> "$GITHUB_ENV"
+          fi
+
       # Fails if a shelf can't be read, and rewrites the file only if a book changed.
       - run: task reading:save
 

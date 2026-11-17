@@ -114,6 +114,8 @@ const books = defineCollection({
     // Every build reads this file. reading-list.yml refreshes it from Goodreads.
     saved: 'src/content/books.json',
     refresh: process.env.GOODREADS_REFRESH === 'true',
+    // The same file as it stands in that workflow's open pull request, if there is one.
+    pending: process.env.GOODREADS_PENDING || undefined,
   }),
   schema: z.object({
     // A book on several shelves has one entry per shelf.

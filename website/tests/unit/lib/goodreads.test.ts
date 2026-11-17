@@ -92,17 +92,17 @@ let saved: string;
 
 const NOW = '2026-11-17T12:00:00.000Z';
 
-const load = (shelves: string[], ctx: never, refresh = false) =>
-  goodreadsLoader({ userId: '52431533', shelves, saved, refresh }).load(ctx);
+const load = (shelves: string[], ctx: never, refresh = false, pending?: string) =>
+  goodreadsLoader({ userId: '52431533', shelves, saved, refresh, pending }).load(ctx);
 
 // The loader reads the saved file before it calls Goodreads, and fake timers don't wait for
 // that read. Real setImmediate does.
 const tick = () => new Promise((resolve) => setImmediate(resolve));
 
 /** Refreshes with fake timers, so retry waits pass instantly and new books are dated NOW. */
-async function refresh(shelves: string[], ctx: never) {
+async function refresh(shelves: string[], ctx: never, pending?: string) {
   let settled = false;
-  const result = load(shelves, ctx, true);
+  const result = load(shelves, ctx, true, pending);
   result.catch(() => {}).finally(() => (settled = true));
   while (!settled) {
     await tick();
@@ -469,6 +469,67 @@ describe('goodreadsLoader', () => {
       // Assert
       expect(entries.size).toBe(101);
       expect(entries.get('shelf-old')!.data.position).toBe(100);
+    });
+
+    it('drops nothing when the widget is full, even if one of its books was skipped', async () => {
+      // Arrange
+      save(book('shelf', 'old', 0));
+      const noCover = entry({ title: 'No Cover', cover: 'https://s.gr-assets.com/assets/nophoto/book/111x148.png' });
+      stubGoodreads({ shelf: [noCover, ...Array.from({ length: 99 }, (_, i) => entry({ id: String(i + 1) }))] });
+      const { entries, ctx } = context();
+
+      // Act
+      await refresh(['shelf'], ctx);
+
+      // Assert
+      expect(entries.size).toBe(100);
+      expect(entries.has('shelf-old')).toBe(true);
+    });
+
+    it('keeps the dates an unmerged refresh already gave a new or newly read book', async () => {
+      // Arrange
+      const earlier = '2026-11-10T12:00:00.000Z';
+      save(book('shelf', '1', 0, { toRead: true }), book('shelf', '2', 1, { toRead: true }));
+      const pending = join(dir, 'pending.json');
+      writeFileSync(
+        pending,
+        JSON.stringify([
+          book('shelf', '1', 1, { readAt: earlier }),
+          book('shelf', '3', 0, { addedAt: earlier }),
+          book('shelf', '2', 2, { toRead: true }),
+        ]),
+      );
+      stubGoodreads({
+        shelf: [
+          entry({ id: '4' }),
+          entry({ id: '3' }),
+          entry({ id: '2', tags: 'shelf' }),
+          entry({ id: '1', tags: 'shelf' }),
+        ],
+      });
+      const { entries, ctx } = context();
+
+      // Act
+      await refresh(['shelf'], ctx, pending);
+
+      // Assert
+      expect(entries.get('shelf-1')!.data.readAt).toBe(earlier);
+      expect(entries.get('shelf-2')!.data.readAt).toBe(NOW);
+      expect(entries.get('shelf-3')!.data.addedAt).toBe(earlier);
+      expect(entries.get('shelf-4')!.data.addedAt).toBe(NOW);
+    });
+
+    it("fails when the pending books are named but can't be read", async () => {
+      // Arrange
+      save();
+      stubGoodreads({});
+      const { ctx } = context();
+
+      // Act
+      const result = refresh(['shelf'], ctx, join(dir, 'missing.json'));
+
+      // Assert
+      await expect(result).rejects.toThrow('ENOENT');
     });
 
     it('saves the schema-checked books in id order', async () => {
