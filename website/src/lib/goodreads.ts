@@ -79,8 +79,6 @@ type Listed = {
   cover: string;
 };
 
-const text = (html: string) => decode(html.replace(/<[^>]+>/g, '').trim());
-
 /** The first group `pattern` captures in `html`, or an empty string. */
 const capture = (pattern: RegExp, html: string) => pattern.exec(html)?.[1] ?? '';
 
@@ -90,11 +88,14 @@ function parseEntry(entry: string): Listed | string {
   const cover = capture(/<img alt="[^"]*" border="0" src="([^"]*)"/, entry);
   const bookId = capture(/\/books\/\d+[a-z]\/(\d+)\./, cover);
   if (!bookId) return title;
-  const tags = text(capture(/tagged:([\s\S]*?)<\/div>/, entry)).split(/,\s*|\s+and\s+/);
+  // The author and the tags are read as plain text, up to the next tag.
+  const tags = capture(/tagged:([^<]*)/, entry)
+    .trim()
+    .split(/,\s*|\s+and\s+/);
   return {
     bookId,
     title,
-    author: text(capture(/<div class="gr_custom_author_[^>]*>\s*by([\s\S]*?)<\/div>/, entry)),
+    author: decode(capture(/<div class="gr_custom_author_[^>]*>\s*by\s*(?:<a [^>]*>)?([^<]*)/, entry).trim()),
     // A part-filled star is the book's average rating, shown when Jimmy hasn't rated it.
     rating: /star_\d+pct/.test(entry) ? undefined : entry.split('star_active').length - 1,
     toRead: tags.includes('to-read'),
