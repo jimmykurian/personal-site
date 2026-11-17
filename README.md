@@ -94,7 +94,7 @@ Coding agents start from the root [AGENTS.md](AGENTS.md), then read the subproje
 
 - **Content is data.** The pages render JSON collections and MDX posts, validated by the schemas in `website/src/content.config.ts`. A bad field fails the build instead of shipping.
 - **Built once, served static.** There's no server, database, login or cookie. `public/staticwebapp.config.json` sets the security headers, the 404 page and caching.
-- **External data comes in at build time.** `/reading/` is built from the Goodreads RSS feeds, covers and fonts are downloaded and optimized then, and the live site makes no third-party requests. A nightly rebuild picks up new books. Brief Goodreads errors are retried; if it's still down, the build uses the last books saved in the repo.
+- **External data comes in at build time.** `/reading/` is built from the books saved in the repo, covers and fonts are downloaded and optimized then, and the live site makes no third-party requests. A daily workflow merges the Goodreads shelves into the saved books and proposes the change in a pull request, so a Goodreads outage never touches a build.
 - **The resume is a page.** `/resume/` renders from the same data as the site, and CI prints it to `/resume.pdf`, so the two never disagree.
 - **Infrastructure as code, in progress.** The Azure resources were created in the portal. `infrastructure/` models them as generic OpenTofu modules, tested against a mocked provider, ready to take over deploys later.
 
@@ -117,7 +117,7 @@ flowchart TB
     end
 
     subgraph inputs["Fetched at build time"]
-        goodreads["Goodreads shelf RSS"]
+        goodreads["Goodreads book covers"]
         fonts["Google Fonts"]
     end
 

@@ -60,7 +60,7 @@ classDiagram
         +ResumeRole resume?
     }
     class books {
-        <<collection: Goodreads RSS>>
+        <<collection: books.json>>
         +string shelf
         +int position
         +string title
@@ -73,7 +73,7 @@ classDiagram
 
     class goodreadsLoader {
         <<loader: lib/goodreads.ts>>
-        +goodreadsLoader(userId, shelves, saved, strict?) Loader
+        +goodreadsLoader(userId, shelves, saved, refresh?) Loader
     }
     class postsLib {
         <<lib/posts.ts>>
@@ -115,4 +115,4 @@ classDiagram
 - [Design guidelines](../design/design-guidelines.md)
 - [TypeDoc API docs](../../website/docs/README.md)
 
-Last reviewed: 2026-10-20
+Last reviewed: 2026-11-17

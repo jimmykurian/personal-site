@@ -344,10 +344,10 @@ tasks:
       - node scripts/code-metrics.mjs --write
 
   reading:save:
-    desc: Read the Goodreads shelves into src/content/books.json, failing if Goodreads can't be read (CI proposes it in a PR)
+    desc: Merge the Goodreads shelves into src/content/books.json, failing if Goodreads can't be read (CI proposes it in a PR)
     dir: website
     env:
-      GOODREADS_STRICT: "true"
+      GOODREADS_REFRESH: "true"
     cmds:
       - pnpm exec astro sync
 

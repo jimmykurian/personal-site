@@ -1,18 +1,18 @@
 # Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
 # Author: Jimmy Kurian
 #
-# Reading list: daily, reads the Goodreads shelves (task reading:save) and proposes the saved
-# books in website/src/content/books.json in one pull request on chore/reading-list, updated
-# in place. Builds use that file when Goodreads can't be read, so a Goodreads outage never
-# blocks a deploy. This run is strict: it fails, rather than propose stale books, while
-# Goodreads is down, so a red run here is the sign to check the shelves. Nothing is proposed
-# unless a book changed. The PR comes from the repo's GitHub App, as in code-metrics.yml;
+# Reading list: daily, reads the Goodreads shelf widgets (task reading:save), merges them into
+# the saved books in website/src/content/books.json and proposes the change in one pull request
+# on chore/reading-list, updated in place. Every build reads /reading/ from that file and never
+# calls Goodreads, so a Goodreads outage never blocks a deploy. This run fails, rather than
+# propose stale books, while Goodreads can't be read, so a red run here is the sign to check
+# the shelves. Nothing is proposed unless a book changed. The PR comes from the repo's GitHub App, as in code-metrics.yml;
 # pr-assign-author.yml assigns it. Its commit is a chore, so it never makes a release.
 
 name: Reading list
 
 on:
-  # After the nightly CI rebuild (11:00 UTC), which reads the shelves itself.
+  # After the nightly CI rebuild (11:00 UTC).
   schedule:
     - cron: "30 11 * * *"
   workflow_dispatch:
@@ -33,6 +33,7 @@ jobs:
     timeout-minutes: 15
     permissions:
       contents: read
+      pull-requests: read # to find this workflow's open pull request
     steps:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
@@ -50,6 +51,22 @@ jobs:
 
       - run: pnpm --dir website install --frozen-lockfile
 
+      # A refresh dates each new or newly finished book the day it first sees it. This run starts
+      # from main, so while an earlier run's pull request is still open it would date those books
+      # again. The loader takes their dates from that pull request's copy of the file instead.
+      # Only an open pull request counts: a merged or closed one can leave its branch behind.
+      - name: Fetch the saved books of the open pull request, if there is one
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          commit="$(gh pr list --repo "$GITHUB_REPOSITORY" --state open --base main --head chore/reading-list \
+            --json headRefOid,isCrossRepository --jq '[.[] | select(.isCrossRepository | not)][0].headRefOid // empty')"
+          if [ -n "$commit" ]; then
+            git fetch --depth 1 origin "$commit"
+            git show FETCH_HEAD:website/src/content/books.json > "$RUNNER_TEMP/pending-books.json"
+            echo "GOODREADS_PENDING=$RUNNER_TEMP/pending-books.json" >> "$GITHUB_ENV"
+          fi
+
       # Fails if a shelf can't be read, and rewrites the file only if a book changed.
       - run: task reading:save
 
@@ -61,7 +78,7 @@ jobs:
           {
             echo '# Description'
             echo
-            echo "Updates the saved reading list from the Goodreads shelves, read by the [Reading list workflow]($RUN_URL). Builds use it only when Goodreads can't be read."
+            echo "Updates the saved reading list from the Goodreads shelves, read by the [Reading list workflow]($RUN_URL). The site shows these books once this is merged."
             cat <<'EOF'
 
           Fixes # (none)

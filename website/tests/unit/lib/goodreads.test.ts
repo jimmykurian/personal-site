@@ -10,44 +10,59 @@ import { join } from 'node:path';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { goodreadsLoader } from '../../../src/lib/goodreads';
 
-type Item = Partial<
-  Record<
-    | 'book_id'
-    | 'title'
-    | 'author_name'
-    | 'user_rating'
-    | 'user_shelves'
-    | 'user_read_at'
-    | 'user_date_added'
-    | 'book_large_image_url',
-    string
-  >
->;
+type Listed = {
+  id?: string;
+  title?: string;
+  author?: string;
+  stars?: number;
+  average?: boolean;
+  tags?: string;
+  cover?: string;
+};
 
-// One <item> as Goodreads writes it: some fields wrapped in CDATA, some entity-encoded.
-const item = (fields: Item) =>
-  `<item>${Object.entries({
-    book_id: '1',
-    title: 'A Book',
-    author_name: 'An Author',
-    user_rating: '0',
-    user_shelves: '',
-    user_read_at: '',
-    user_date_added: 'Sat, 01 Feb 2026 10:00:00 -0800',
-    book_large_image_url: '',
-    ...fields,
-  })
-    .map(([tag, value]) => `<${tag}><![CDATA[${value}]]></${tag}>`)
-    .join('\n')}</item>`;
+const COVERS = 'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books';
+const star = (kind: string) => `<img src="https://s.gr-assets.com/images/layout/gr_flat_red_star_${kind}.png" />`;
 
-const feed = (...items: string[]) => `<?xml version="1.0"?><rss><channel>${items.join('')}</channel></rss>`;
+// One book as the widget writes it. Its book id appears only in the cover's address.
+const entry = ({
+  id = '1',
+  title = 'A Book',
+  author = 'An Author',
+  stars = 0,
+  average = false,
+  tags,
+  cover,
+}: Listed) => `
+  <div class="gr_custom_each_container_9">
+    <div class="gr_custom_book_container_9">
+      <a title="${title}" rel="nofollow" href="https://www.goodreads.com/review/show/77"><img alt="${title}" border="0" src="${cover ?? `${COVERS}/1541870875l/${id}._SX98_.jpg`}" /></a>
+    </div>
+    <div class="gr_custom_rating_9">
+      <span class=" staticStars notranslate">${star('active').repeat(stars)}${average ? star('25pct') : ''}${star('inactive')}</span>
+    </div>
+    <div class="gr_custom_author_9">
+      by <a rel="nofollow" href="https://www.goodreads.com/author/show/3">${author}</a>
+    </div>
+    ${tags === undefined ? '' : `<div class="gr_custom_tags_9">\n tagged:\n ${tags}\n </div>`}
+  </div>`;
 
-/** Serves `pages[shelf][n - 1]` for page n, then empty feeds. */
-function stubGoodreads(pages: Record<string, string[][]>, status = 200) {
+// The script Goodreads serves: the widget's HTML, escaped into one JavaScript string.
+const widget = (shelf: string, ...entries: string[]) => {
+  const html = `<h2><a rel="nofollow" href="https://www.goodreads.com/review/list/52431533-jimmy?shelf=${shelf}&amp;utm_medium=api">Jimmy&#39;s books</a></h2>${entries.join('')}`;
+  const code = html
+    .replace(/\\/g, '\\\\')
+    .replace(/<\//g, '<\\/')
+    .replace(/\n/g, '\\n')
+    .replace(/"/g, '\\"')
+    .replace(/'/g, "\\'");
+  return `  var widget_code = '${code}'\n  var widget_div = document.getElementById('gr_custom_widget_9')\n`;
+};
+
+/** Serves each shelf's entries as its widget. */
+function stubGoodreads(shelves: Record<string, string[]>, status = 200) {
   const fetch = vi.fn(async (url: string | URL) => {
-    const { searchParams } = new URL(url);
-    const items = pages[searchParams.get('shelf')!]?.[Number(searchParams.get('page')) - 1] ?? [];
-    return new Response(feed(...items), { status });
+    const shelf = new URL(url).searchParams.get('shelf')!;
+    return new Response(widget(shelf, ...(shelves[shelf] ?? [])), { status });
   });
   vi.stubGlobal('fetch', fetch);
   return fetch;
@@ -75,24 +90,56 @@ function stubResponses(...responses: (() => Response | Promise<never>)[]) {
 let dir: string;
 let saved: string;
 
-/** Runs a load with fake timers, so retry waits pass instantly. */
-async function loadWithTimers(shelves: string[], ctx: never, strict = false) {
-  vi.useFakeTimers({ toFake: ['setTimeout'] });
-  const result = load(shelves, ctx, strict);
-  result.catch(() => {});
-  await vi.runAllTimersAsync();
+const NOW = '2026-11-17T12:00:00.000Z';
+
+const load = (shelves: string[], ctx: never, refresh = false, pending?: string) =>
+  goodreadsLoader({ userId: '52431533', shelves, saved, refresh, pending }).load(ctx);
+
+// The loader reads the saved file before it calls Goodreads, and fake timers don't wait for
+// that read. Real setImmediate does.
+const tick = () => new Promise((resolve) => setImmediate(resolve));
+
+/** Refreshes with fake timers, so retry waits pass instantly and new books are dated NOW. */
+async function refresh(shelves: string[], ctx: never, pending?: string) {
+  let settled = false;
+  const result = load(shelves, ctx, true, pending);
+  result.catch(() => {}).finally(() => (settled = true));
+  while (!settled) {
+    await tick();
+    await vi.runAllTimersAsync();
+  }
   return result;
 }
 
-const load = (shelves: string[], ctx: never, strict = false) =>
-  goodreadsLoader({ userId: '52431533', shelves, saved, strict }).load(ctx);
+/** Waits for the loader's first request, from which the retry waits are timed. */
+async function firstRequest(fetch: { mock: { calls: unknown[] } }) {
+  while (fetch.mock.calls.length === 0) await tick();
+}
 
-const savedBooks = [{ id: 'favorites-5', data: { shelf: 'favorites', position: 0, title: 'Saved' } }];
+const book = (shelf: string, id: string, position: number, data: Record<string, unknown> = {}) => ({
+  id: `${shelf}-${id}`,
+  data: {
+    shelf,
+    position,
+    title: `Book ${id}`,
+    author: 'An Author',
+    rating: 0,
+    toRead: false,
+    readAt: null,
+    addedAt: '2020-01-01T00:00:00.000Z',
+    href: `https://www.goodreads.com/book/show/${id}`,
+    ...data,
+  },
+});
+
+const save = (...books: unknown[]) => writeFileSync(saved, `${JSON.stringify(books, null, 2)}\n`);
+const savedNow = () => JSON.parse(readFileSync(saved, 'utf8')) as ReturnType<typeof book>[];
 
 describe('goodreadsLoader', () => {
   beforeEach(() => {
     dir = mkdtempSync(join(tmpdir(), 'goodreads-'));
     saved = join(dir, 'books.json');
+    vi.useFakeTimers({ toFake: ['setTimeout', 'Date'], now: new Date(NOW) });
   });
 
   afterEach(() => {
@@ -111,330 +158,662 @@ describe('goodreadsLoader', () => {
     expect(name).toBe('goodreads');
   });
 
-  it('turns each feed item into a book entry', async () => {
-    // Arrange
-    stubGoodreads({
-      favorites: [
-        [
-          item({
-            book_id: '42',
+  describe('in a build', () => {
+    it('loads the saved books without calling Goodreads', async () => {
+      // Arrange
+      const books = [book('favorites', '5', 0), book('favorites', '6', 1)];
+      save(...books);
+      const fetch = stubGoodreads({});
+      const { entries, ctx } = context();
+
+      // Act
+      await load(['favorites'], ctx);
+
+      // Assert
+      expect([...entries.values()]).toEqual(books);
+      expect(fetch).not.toHaveBeenCalled();
+    });
+
+    it('replaces the store contents with schema-checked entries', async () => {
+      // Arrange
+      save(book('shelf', '1', 0));
+      const { store, parseData, ctx } = context();
+
+      // Act
+      await load(['shelf'], ctx);
+
+      // Assert
+      expect(store.clear).toHaveBeenCalledBefore(store.set);
+      expect(parseData).toHaveBeenCalledWith(expect.objectContaining({ id: 'shelf-1' }));
+      expect(store.set).toHaveBeenCalledTimes(1);
+    });
+
+    it('leaves the saved file alone', async () => {
+      // Arrange
+      writeFileSync(saved, JSON.stringify([book('shelf', '1', 0)]));
+      utimesSync(saved, 0, 0);
+
+      // Act
+      await load(['shelf'], context().ctx);
+
+      // Assert
+      expect(statSync(saved).mtimeMs).toBe(0);
+    });
+
+    it('fails when there are no saved books, without touching the store', async () => {
+      // Arrange
+      const { store, ctx } = context();
+
+      // Act
+      const result = load(['favorites'], ctx);
+
+      // Assert
+      await expect(result).rejects.toThrow('ENOENT');
+      expect(store.clear).not.toHaveBeenCalled();
+    });
+  });
+
+  describe('on a refresh', () => {
+    it('turns each new widget book into a book entry, dated now', async () => {
+      // Arrange
+      save();
+      stubGoodreads({
+        favorites: [
+          entry({
+            id: '42',
             title: 'Accelerate: The Science of Lean Software and DevOps (IT Revolution, #1)',
-            author_name: 'Nicole Forsgren',
-            user_rating: '5',
-            user_shelves: 'favorites, software-engineering',
-            user_read_at: 'Mon, 05 Jan 2026 00:00:00 -0800',
-            book_large_image_url: 'https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/42l.jpg',
+            author: 'Nicole Forsgren',
+            stars: 5,
+            tags: 'software-engineering and favorites',
           }),
-          item({
-            book_id: '7',
-            title: 'Team Topologies',
-            user_shelves: 'to-read',
-            book_large_image_url: 'https://s.gr-assets.com/assets/nophoto/book/111x148.png',
+          entry({ id: '7', title: 'Team Topologies', tags: 'to-read, favorites and software-engineering' }),
+        ],
+      });
+      const { entries, ctx } = context();
+
+      // Act
+      await refresh(['favorites'], ctx);
+
+      // Assert
+      expect([...entries.values()]).toMatchSnapshot();
+    });
+
+    it('decodes entities and splits the subtitle from the title', async () => {
+      // Arrange
+      save();
+      stubGoodreads({
+        shelf: [
+          entry({
+            title: 'Code &amp; Craft: Notes &#8212; Volume&#x2019;s One: Part Two',
+            author: 'O&#39;Brien &amp; S&oslash;n',
           }),
         ],
-      ],
+      });
+      const { entries, ctx } = context();
+
+      // Act
+      await refresh(['shelf'], ctx);
+
+      // Assert
+      const { data } = entries.get('shelf-1')!;
+      expect(data.title).toBe('Code & Craft');
+      expect(data.subtitle).toBe('Notes — Volume’s One: Part Two');
+      expect(data.author).toBe("O'Brien & S&oslash;n");
     });
-    const { entries, ctx } = context();
 
-    // Act
-    await load(['favorites'], ctx);
+    it('leaves the subtitle undefined when the title has none', async () => {
+      // Arrange
+      save();
+      stubGoodreads({ shelf: [entry({ title: 'Refactoring (2nd Edition)' })] });
+      const { entries, ctx } = context();
 
-    // Assert
-    expect([...entries.values()]).toMatchSnapshot();
-  });
+      // Act
+      await refresh(['shelf'], ctx);
 
-  it('decodes entities and splits the subtitle from the title', async () => {
-    // Arrange
-    stubGoodreads({
-      shelf: [
-        [item({ title: 'Code &amp; Craft: Notes &#8212; Volume&#x2019;s One: Part Two', author_name: 'O&apos;Brien' })],
-      ],
+      // Assert
+      expect(entries.get('shelf-1')!.data).toMatchObject({ title: 'Refactoring', subtitle: undefined });
     });
-    const { entries, ctx } = context();
 
-    // Act
-    await load(['shelf'], ctx);
+    it.each([
+      ['._SX98_.jpg', '.jpg'],
+      ['._SY475_.jpg', '.jpg'],
+      ['._SX318_SY475_.jpg', '.jpg'],
+      ['.jpg', '.jpg'],
+    ])('saves the full-size cover for one ending %s', async (suffix, expected) => {
+      // Arrange
+      save();
+      stubGoodreads({ shelf: [entry({ cover: `${COVERS}/1541870875l/1${suffix}` })] });
+      const { entries, ctx } = context();
 
-    // Assert
-    const { data } = entries.get('shelf-1')!;
-    expect(data.title).toBe('Code & Craft');
-    expect(data.subtitle).toBe('Notes — Volume’s One: Part Two');
-    expect(data.author).toBe("O'Brien");
-  });
+      // Act
+      await refresh(['shelf'], ctx);
 
-  it('leaves the subtitle undefined when the title has none', async () => {
-    // Arrange
-    stubGoodreads({ shelf: [[item({ title: 'Refactoring (2nd Edition)' })]] });
-    const { entries, ctx } = context();
-
-    // Act
-    await load(['shelf'], ctx);
-
-    // Assert
-    expect(entries.get('shelf-1')!.data).toMatchObject({ title: 'Refactoring', subtitle: undefined });
-  });
-
-  it('reads every page until an empty one, and keeps feed order as the position', async () => {
-    // Arrange
-    const fetch = stubGoodreads({
-      shelf: [[item({ book_id: '1' }), item({ book_id: '2' })], [item({ book_id: '3' })]],
+      // Assert
+      expect(entries.get('shelf-1')!.data.cover).toBe(`${COVERS}/1541870875l/1${expected}`);
     });
-    const { entries, logger, ctx } = context();
 
-    // Act
-    await load(['shelf'], ctx);
+    it('skips a book without a cover, which carries the book id, with a warning', async () => {
+      // Arrange
+      save();
+      stubGoodreads({
+        shelf: [
+          entry({ title: 'No Cover', cover: 'https://s.gr-assets.com/assets/nophoto/book/111x148.png' }),
+          entry({ id: '2' }),
+        ],
+      });
+      const { entries, logger, ctx } = context();
 
-    // Assert
-    expect(fetch).toHaveBeenCalledTimes(3);
-    expect(fetch.mock.calls[0][0]).toBe('https://www.goodreads.com/review/list_rss/52431533?shelf=shelf&page=1');
-    expect([...entries.values()].map((e) => [e.id, e.data.position])).toEqual([
-      ['shelf-1', 0],
-      ['shelf-2', 1],
-      ['shelf-3', 2],
-    ]);
-    expect(logger.info).toHaveBeenCalledWith('shelf: 3 books');
-  });
+      // Act
+      await refresh(['shelf'], ctx);
 
-  it('stops after 20 pages', async () => {
-    // Arrange
-    const fetch = stubGoodreads({ shelf: Array.from({ length: 25 }, (_, i) => [item({ book_id: String(i) })]) });
-    const { entries, ctx } = context();
+      // Assert
+      expect([...entries.keys()]).toEqual(['shelf-2']);
+      expect(logger.warn).toHaveBeenCalledWith(
+        'shelf: skipped "No Cover", which has no cover to take its book id from',
+      );
+    });
 
-    // Act
-    await load(['shelf'], ctx);
+    it('reads what it can of an entry with parts missing', async () => {
+      // Arrange
+      save();
+      const bare = (inner: string) => `<div class="gr_custom_each_container_9">${inner}</div>`;
+      stubGoodreads({
+        shelf: [bare(`<img alt="" border="0" src="${COVERS}/1541870875l/5.jpg" />`), bare('<p>&nbsp;</p>')],
+      });
+      const { entries, logger, ctx } = context();
 
-    // Assert
-    expect(fetch).toHaveBeenCalledTimes(20);
-    expect(entries.size).toBe(20);
-  });
+      // Act
+      await refresh(['shelf'], ctx);
 
-  it('keeps one entry per shelf for a book on several shelves', async () => {
-    // Arrange
-    stubGoodreads({ favorites: [[item({ book_id: '9' })]], 'software-engineering': [[item({ book_id: '9' })]] });
-    const { entries, ctx } = context();
+      // Assert
+      expect([...entries.keys()]).toEqual(['shelf-5']);
+      expect(entries.get('shelf-5')!.data).toMatchObject({ title: '', author: '', rating: 0, toRead: false });
+      expect(logger.warn).toHaveBeenCalledWith('shelf: skipped "", which has no cover to take its book id from');
+    });
 
-    // Act
-    await load(['favorites', 'software-engineering'], ctx);
+    it('asks for the 100 newest books of each shelf, each under its own fresh widget id', async () => {
+      // Arrange
+      save();
+      const fetch = stubGoodreads({});
+      const { logger, ctx } = context();
 
-    // Assert
-    expect([...entries.keys()]).toEqual(['favorites-9', 'software-engineering-9']);
-  });
+      // Act
+      await refresh(['favorites', 'software-engineering'], ctx);
 
-  it('identifies itself to Goodreads', async () => {
-    // Arrange
-    const fetch = stubGoodreads({});
-    const { ctx } = context();
+      // Assert
+      const first = Math.floor(new Date(NOW).getTime() / 1000);
+      expect(fetch.mock.calls.map(([url]) => url)).toEqual([
+        `https://www.goodreads.com/review/custom_widget/52431533?shelf=favorites&num_books=100&sort=date_added&order=d&show_author=1&show_cover=1&show_rating=1&show_tags=1&show_title=1&widget_id=${first}`,
+        `https://www.goodreads.com/review/custom_widget/52431533?shelf=software-engineering&num_books=100&sort=date_added&order=d&show_author=1&show_cover=1&show_rating=1&show_tags=1&show_title=1&widget_id=${first + 1}`,
+      ]);
+      expect(logger.info).toHaveBeenCalledWith('favorites: 0 books read, 0 saved');
+    });
 
-    // Act
-    await load(['shelf'], ctx);
+    it('identifies itself to Goodreads', async () => {
+      // Arrange
+      save();
+      const fetch = stubGoodreads({});
+      const { ctx } = context();
 
-    // Assert
-    expect(fetch).toHaveBeenCalledWith(expect.any(String), { headers: { 'User-Agent': 'jimmykurian.me build' } });
-  });
+      // Act
+      await refresh(['shelf'], ctx);
 
-  it('fails the build when Goodreads keeps erroring after two retries, without touching the store', async () => {
-    // Arrange
-    const fetch = stubGoodreads({}, 503);
-    const { store, logger, ctx } = context();
+      // Assert
+      expect(fetch).toHaveBeenCalledWith(expect.any(String), { headers: { 'User-Agent': 'jimmykurian.me build' } });
+    });
 
-    // Act
-    const result = loadWithTimers(['favorites'], ctx);
+    it('keeps one entry per shelf for a book on several shelves', async () => {
+      // Arrange
+      save();
+      stubGoodreads({ favorites: [entry({ id: '9' })], 'software-engineering': [entry({ id: '9' })] });
+      const { entries, ctx } = context();
 
-    // Assert
-    await expect(result).rejects.toThrow('Goodreads favorites page 1: HTTP 503');
-    expect(fetch).toHaveBeenCalledTimes(3);
-    expect(logger.warn).toHaveBeenCalledWith('Goodreads favorites page 1: HTTP 503, retrying (1 of 2)');
-    expect(store.clear).not.toHaveBeenCalled();
-  });
+      // Act
+      await refresh(['favorites', 'software-engineering'], ctx);
 
-  it('retries a brief 5xx and loads the shelf once Goodreads answers', async () => {
-    // Arrange
-    const ok = () => new Response(feed(item({ book_id: '7' })));
-    const fetch = stubResponses(
-      () => new Response('', { status: 502 }),
-      ok,
-      () => new Response(feed()),
-    );
-    const { entries, ctx } = context();
+      // Assert
+      expect([...entries.keys()]).toEqual(['favorites-9', 'software-engineering-9']);
+    });
 
-    // Act
-    await loadWithTimers(['favorites'], ctx);
+    it('puts new books first, then the saved books in their saved order', async () => {
+      // Arrange
+      save(book('shelf', '3', 1), book('shelf', '2', 0));
+      stubGoodreads({ shelf: [entry({ id: '5' }), entry({ id: '3' }), entry({ id: '4' }), entry({ id: '2' })] });
+      const { entries, ctx } = context();
 
-    // Assert
-    expect(fetch).toHaveBeenCalledTimes(3);
-    expect([...entries.keys()]).toEqual(['favorites-7']);
-  });
+      // Act
+      await refresh(['shelf'], ctx);
 
-  it('retries a network error', async () => {
-    // Arrange
-    const fetch = stubResponses(
-      () => Promise.reject(new TypeError('fetch failed')),
-      () => new Response(feed()),
-    );
-    const { logger, ctx } = context();
+      // Assert
+      expect([...entries.values()].map((e) => [e.id, e.data.position, e.data.addedAt])).toEqual([
+        ['shelf-5', 0, NOW],
+        ['shelf-4', 1, NOW],
+        ['shelf-2', 2, '2020-01-01T00:00:00.000Z'],
+        ['shelf-3', 3, '2020-01-01T00:00:00.000Z'],
+      ]);
+    });
 
-    // Act
-    await loadWithTimers(['favorites'], ctx);
+    it("keeps a saved book's own fields, and takes the widget's rating and to-read mark", async () => {
+      // Arrange
+      save(
+        book('shelf', '1', 0, { title: 'Saved Title', readAt: '2021-05-05T00:00:00.000Z', rating: 3, toRead: true }),
+      );
+      stubGoodreads({ shelf: [entry({ id: '1', title: 'Widget Title', stars: 4, tags: 'shelf' })] });
+      const { entries, ctx } = context();
 
-    // Assert
-    expect(fetch).toHaveBeenCalledTimes(2);
-    expect(logger.warn).toHaveBeenCalledWith('Goodreads favorites page 1: TypeError: fetch failed, retrying (1 of 2)');
-  });
+      // Act
+      await refresh(['shelf'], ctx);
 
-  it('fails on a network error that outlasts the retries', async () => {
-    // Arrange
-    const fetch = stubResponses(() => Promise.reject(new TypeError('fetch failed')));
-    const { ctx } = context();
+      // Assert
+      expect(entries.get('shelf-1')!.data).toMatchObject({
+        title: 'Saved Title',
+        readAt: '2021-05-05T00:00:00.000Z',
+        rating: 4,
+        toRead: false,
+      });
+    });
 
-    // Act
-    const result = loadWithTimers(['favorites'], ctx);
+    it('dates a saved book as read on the day its to-read mark goes', async () => {
+      // Arrange
+      save(book('shelf', '1', 0, { toRead: true }), book('shelf', '2', 1, { toRead: true }));
+      stubGoodreads({ shelf: [entry({ id: '1', tags: 'shelf' }), entry({ id: '2', tags: 'to-read and shelf' })] });
+      const { entries, ctx } = context();
 
-    // Assert
-    await expect(result).rejects.toThrow('fetch failed');
-    expect(fetch).toHaveBeenCalledTimes(3);
-  });
+      // Act
+      await refresh(['shelf'], ctx);
 
-  it("doesn't retry an error that won't go away, such as a 404", async () => {
-    // Arrange
-    const fetch = stubGoodreads({}, 404);
-    const { logger, ctx } = context();
+      // Assert
+      expect(entries.get('shelf-1')!.data).toMatchObject({ toRead: false, readAt: NOW });
+      expect(entries.get('shelf-2')!.data).toMatchObject({ toRead: true, readAt: null });
+    });
 
-    // Act
-    const result = loadWithTimers(['favorites'], ctx);
+    it("reads a part-filled star as the book's average: no rating, and a saved one is cleared", async () => {
+      // Arrange
+      save(book('shelf', '1', 0, { rating: 2 }));
+      stubGoodreads({
+        shelf: [entry({ id: '1', stars: 3, average: true }), entry({ id: '2', stars: 3, average: true })],
+      });
+      const { entries, ctx } = context();
 
-    // Assert
-    await expect(result).rejects.toThrow('Goodreads favorites page 1: HTTP 404');
-    expect(fetch).toHaveBeenCalledTimes(1);
-    expect(logger.warn).not.toHaveBeenCalled();
-  });
+      // Act
+      await refresh(['shelf'], ctx);
 
-  it('waits 0.3s, then 0.6s, between retries', async () => {
-    // Arrange
-    vi.useFakeTimers({ toFake: ['setTimeout'] });
-    const fetch = stubGoodreads({}, 500);
-    const { ctx } = context();
+      // Assert
+      expect(entries.get('shelf-1')!.data.rating).toBe(0);
+      expect(entries.get('shelf-2')!.data.rating).toBe(0);
+    });
 
-    // Act
-    const result = load(['favorites'], ctx);
-    result.catch(() => {});
-    await vi.advanceTimersByTimeAsync(299);
-    const beforeFirstWait = fetch.mock.calls.length;
-    await vi.advanceTimersByTimeAsync(1);
-    const afterFirstWait = fetch.mock.calls.length;
-    await vi.advanceTimersByTimeAsync(599);
-    const beforeSecondWait = fetch.mock.calls.length;
-    await vi.advanceTimersByTimeAsync(1);
+    it('drops saved books that left a shelf the widget lists in full', async () => {
+      // Arrange
+      save(book('shelf', '1', 0), book('shelf', '2', 1), book('other', '1', 0));
+      stubGoodreads({ shelf: [entry({ id: '2' })] });
+      const { entries, ctx } = context();
 
-    // Assert
-    expect([beforeFirstWait, afterFirstWait, beforeSecondWait, fetch.mock.calls.length]).toEqual([1, 2, 2, 3]);
-    await expect(result).rejects.toThrow('HTTP 500');
-  });
+      // Act
+      await refresh(['shelf'], ctx);
 
-  it("waits as long as a 503 or 429's Retry-After says, up to 10s", async () => {
-    // Arrange
-    vi.useFakeTimers({ toFake: ['setTimeout'] });
-    const fetch = stubResponses(
-      () => new Response('', { status: 429, headers: { 'Retry-After': '2' } }),
-      () => new Response('', { status: 503, headers: { 'Retry-After': '3600' } }),
-      () => new Response(feed()),
-    );
-    const { ctx } = context();
+      // Assert
+      expect([...entries.keys()]).toEqual(['shelf-2']);
+      expect(entries.get('shelf-2')!.data.position).toBe(0);
+    });
 
-    // Act
-    const result = load(['favorites'], ctx);
-    await vi.advanceTimersByTimeAsync(1999);
-    const beforeRetryAfter = fetch.mock.calls.length;
-    await vi.advanceTimersByTimeAsync(1);
-    const afterRetryAfter = fetch.mock.calls.length;
-    await vi.advanceTimersByTimeAsync(9999);
-    const beforeCap = fetch.mock.calls.length;
-    await vi.advanceTimersByTimeAsync(1);
-    await result;
+    it('drops nothing from a shelf that fills the widget, which may be cut short', async () => {
+      // Arrange
+      save(book('shelf', 'old', 0));
+      stubGoodreads({ shelf: Array.from({ length: 100 }, (_, i) => entry({ id: String(i + 1) })) });
+      const { entries, ctx } = context();
 
-    // Assert
-    expect([beforeRetryAfter, afterRetryAfter, beforeCap, fetch.mock.calls.length]).toEqual([1, 2, 2, 3]);
-  });
+      // Act
+      await refresh(['shelf'], ctx);
 
-  it('replaces the store contents with schema-checked entries', async () => {
-    // Arrange
-    stubGoodreads({ shelf: [[item({ book_id: '1' })]] });
-    const { store, parseData, ctx } = context();
+      // Assert
+      expect(entries.size).toBe(101);
+      expect(entries.get('shelf-old')!.data.position).toBe(100);
+    });
 
-    // Act
-    await load(['shelf'], ctx);
+    it('drops nothing when the widget is full, even if one of its books was skipped', async () => {
+      // Arrange
+      save(book('shelf', 'old', 0));
+      const noCover = entry({ title: 'No Cover', cover: 'https://s.gr-assets.com/assets/nophoto/book/111x148.png' });
+      stubGoodreads({ shelf: [noCover, ...Array.from({ length: 99 }, (_, i) => entry({ id: String(i + 1) }))] });
+      const { entries, ctx } = context();
 
-    // Assert
-    expect(store.clear).toHaveBeenCalledBefore(store.set);
-    expect(parseData).toHaveBeenCalledWith(expect.objectContaining({ id: 'shelf-1' }));
-    expect(store.set).toHaveBeenCalledTimes(1);
-  });
+      // Act
+      await refresh(['shelf'], ctx);
 
-  it('saves the schema-checked books after a full read', async () => {
-    // Arrange
-    stubGoodreads({ shelf: [[item({ book_id: '1' })]] });
-    const { entries, ctx } = context();
+      // Assert
+      expect(entries.size).toBe(100);
+      expect(entries.has('shelf-old')).toBe(true);
+    });
 
-    // Act
-    await load(['shelf'], ctx);
+    it('keeps the dates an unmerged refresh already gave a new or newly read book', async () => {
+      // Arrange
+      const earlier = '2026-11-10T12:00:00.000Z';
+      save(book('shelf', '1', 0, { toRead: true }), book('shelf', '2', 1, { toRead: true }));
+      const pending = join(dir, 'pending.json');
+      writeFileSync(
+        pending,
+        JSON.stringify([
+          book('shelf', '1', 1, { readAt: earlier }),
+          book('shelf', '3', 0, { addedAt: earlier }),
+          book('shelf', '2', 2, { toRead: true }),
+        ]),
+      );
+      stubGoodreads({
+        shelf: [
+          entry({ id: '4' }),
+          entry({ id: '3' }),
+          entry({ id: '2', tags: 'shelf' }),
+          entry({ id: '1', tags: 'shelf' }),
+        ],
+      });
+      const { entries, ctx } = context();
 
-    // Assert
-    expect(JSON.parse(readFileSync(saved, 'utf8'))).toEqual([...entries.values()]);
-  });
+      // Act
+      await refresh(['shelf'], ctx, pending);
 
-  it("leaves the saved file alone when the books haven't changed", async () => {
-    // Arrange
-    stubGoodreads({ shelf: [[item({ book_id: '1' })]] });
-    await load(['shelf'], context().ctx);
-    utimesSync(saved, 0, 0);
+      // Assert
+      expect(entries.get('shelf-1')!.data.readAt).toBe(earlier);
+      expect(entries.get('shelf-2')!.data.readAt).toBe(NOW);
+      expect(entries.get('shelf-3')!.data.addedAt).toBe(earlier);
+      expect(entries.get('shelf-4')!.data.addedAt).toBe(NOW);
+    });
 
-    // Act
-    await load(['shelf'], context().ctx);
+    it('dates a book as read when it was to-read in the unmerged refresh that added it', async () => {
+      // Arrange
+      const earlier = '2026-11-10T12:00:00.000Z';
+      save();
+      const pending = join(dir, 'pending.json');
+      writeFileSync(
+        pending,
+        JSON.stringify([
+          book('shelf', '1', 0, { toRead: true, addedAt: earlier }),
+          book('shelf', '2', 1, { addedAt: earlier }),
+        ]),
+      );
+      stubGoodreads({ shelf: [entry({ id: '1', tags: 'shelf' }), entry({ id: '2', tags: 'shelf' })] });
+      const { entries, ctx } = context();
 
-    // Assert
-    expect(statSync(saved).mtimeMs).toBe(0);
-  });
+      // Act
+      await refresh(['shelf'], ctx, pending);
 
-  it("loads the saved books, with a warning, when Goodreads can't be read", async () => {
-    // Arrange
-    writeFileSync(saved, JSON.stringify(savedBooks));
-    stubGoodreads({}, 404);
-    const { entries, logger, ctx } = context();
+      // Assert
+      expect(entries.get('shelf-1')!.data).toMatchObject({ toRead: false, readAt: NOW, addedAt: earlier });
+      expect(entries.get('shelf-2')!.data).toMatchObject({ toRead: false, readAt: null, addedAt: earlier });
+    });
 
-    // Act
-    await loadWithTimers(['favorites'], ctx);
+    it('keeps a book only the unmerged refresh has when the full widget no longer lists it', async () => {
+      // Arrange
+      const earlier = '2026-11-10T12:00:00.000Z';
+      save(book('shelf', 'old', 0));
+      const pending = join(dir, 'pending.json');
+      writeFileSync(
+        pending,
+        JSON.stringify([
+          book('shelf', 'p2', 1, { addedAt: earlier, rating: 4 }),
+          book('shelf', 'p1', 0, { addedAt: earlier }),
+          book('shelf', 'old', 2),
+          book('other', 'p3', 0),
+        ]),
+      );
+      stubGoodreads({ shelf: Array.from({ length: 100 }, (_, i) => entry({ id: String(i + 1) })) });
+      const { entries, ctx } = context();
 
-    // Assert
-    expect([...entries.values()]).toEqual(savedBooks);
-    expect(logger.warn).toHaveBeenCalledWith(
-      `Error: Goodreads favorites page 1: HTTP 404; using the 1 books saved in ${saved}`,
-    );
-    expect(JSON.parse(readFileSync(saved, 'utf8'))).toEqual(savedBooks);
-  });
+      // Act
+      await refresh(['shelf'], ctx, pending);
 
-  it('fails instead of using the saved books when strict, as the refresh workflow is', async () => {
-    // Arrange
-    writeFileSync(saved, JSON.stringify(savedBooks));
-    stubGoodreads({}, 404);
-    const { store, ctx } = context();
+      // Assert
+      expect(entries.size).toBe(103);
+      expect(entries.get('shelf-p1')!.data).toMatchObject({ position: 100, addedAt: earlier });
+      expect(entries.get('shelf-p2')!.data).toMatchObject({ position: 101, addedAt: earlier, rating: 4 });
+      expect(entries.get('shelf-old')!.data.position).toBe(102);
+    });
 
-    // Act
-    const result = loadWithTimers(['favorites'], ctx, true);
+    it('drops a book only the unmerged refresh has once it leaves a shelf listed in full', async () => {
+      // Arrange
+      save(book('shelf', '1', 0));
+      const pending = join(dir, 'pending.json');
+      writeFileSync(pending, JSON.stringify([book('shelf', 'gone', 0), book('shelf', '1', 1)]));
+      stubGoodreads({ shelf: [entry({ id: '1' })] });
+      const { entries, ctx } = context();
 
-    // Assert
-    await expect(result).rejects.toThrow('Goodreads favorites page 1: HTTP 404');
-    expect(store.clear).not.toHaveBeenCalled();
-  });
+      // Act
+      await refresh(['shelf'], ctx, pending);
 
-  it("fails when the saved books can't be read either", async () => {
-    // Arrange
-    saved = dir;
-    stubGoodreads({}, 404);
-    const { ctx } = context();
+      // Assert
+      expect([...entries.keys()]).toEqual(['shelf-1']);
+    });
 
-    // Act
-    const result = loadWithTimers(['favorites'], ctx);
+    it('keeps what an unmerged refresh saw of a book the full widget no longer lists', async () => {
+      // Arrange
+      const earlier = '2026-11-10T12:00:00.000Z';
+      save(
+        book('shelf', 'a', 0, { toRead: true }),
+        book('shelf', 'b', 1, { toRead: true, readAt: '2021-05-05T00:00:00.000Z' }),
+        book('shelf', 'c', 2, { toRead: true }),
+      );
+      const pending = join(dir, 'pending.json');
+      writeFileSync(
+        pending,
+        JSON.stringify([
+          book('shelf', 'a', 0, { rating: 4, readAt: earlier }),
+          book('shelf', 'b', 1, { rating: 5, readAt: earlier }),
+        ]),
+      );
+      stubGoodreads({ shelf: Array.from({ length: 100 }, (_, i) => entry({ id: String(i + 1) })) });
+      const { entries, ctx } = context();
 
-    // Assert
-    await expect(result).rejects.toThrow('EISDIR');
+      // Act
+      await refresh(['shelf'], ctx, pending);
+
+      // Assert
+      expect(entries.get('shelf-a')!.data).toMatchObject({ toRead: false, rating: 4, readAt: earlier });
+      expect(entries.get('shelf-b')!.data).toMatchObject({
+        toRead: false,
+        rating: 5,
+        readAt: '2021-05-05T00:00:00.000Z',
+      });
+      expect(entries.get('shelf-c')!.data).toMatchObject({ toRead: true, rating: 0, readAt: null });
+    });
+
+    it("fails when the pending books are named but can't be read", async () => {
+      // Arrange
+      save();
+      stubGoodreads({});
+      const { ctx } = context();
+
+      // Act
+      const result = refresh(['shelf'], ctx, join(dir, 'missing.json'));
+
+      // Assert
+      await expect(result).rejects.toThrow('ENOENT');
+    });
+
+    it('saves the schema-checked books in id order', async () => {
+      // Arrange
+      save(book('shelf', '2', 0));
+      stubGoodreads({ shelf: [entry({ id: '3' }), entry({ id: '1' }), entry({ id: '2' })] });
+      const { entries, ctx } = context();
+
+      // Act
+      await refresh(['shelf'], ctx);
+
+      // Assert
+      expect(savedNow().map(({ id }) => id)).toEqual(['shelf-1', 'shelf-2', 'shelf-3']);
+      expect(savedNow()).toEqual(expect.arrayContaining(JSON.parse(JSON.stringify([...entries.values()]))));
+    });
+
+    it("leaves the saved file alone when the books haven't changed", async () => {
+      // Arrange
+      save(book('shelf', '1', 0), book('shelf', '2', 1));
+      utimesSync(saved, 0, 0);
+      stubGoodreads({ shelf: [entry({ id: '2' }), entry({ id: '1' })] });
+
+      // Act
+      await refresh(['shelf'], context().ctx);
+
+      // Assert
+      expect(statSync(saved).mtimeMs).toBe(0);
+    });
+
+    it('fails when the answer holds no book list, without touching the store or the file', async () => {
+      // Arrange
+      save(book('favorites', '1', 0));
+      utimesSync(saved, 0, 0);
+      stubResponses(() => new Response('<html>Sign in</html>'));
+      const { store, ctx } = context();
+
+      // Act
+      const result = refresh(['favorites'], ctx);
+
+      // Assert
+      await expect(result).rejects.toThrow('Goodreads favorites: the widget holds no book list');
+      expect(store.clear).not.toHaveBeenCalled();
+      expect(statSync(saved).mtimeMs).toBe(0);
+    });
+
+    it.each([
+      ['another shelf', widget('currently-reading', entry({})), 'the widget lists currently-reading'],
+      ['no shelf', "var widget_code = '<h2>Books<\\/h2>'", 'the widget lists no shelf'],
+    ])('fails when the widget lists %s, as a cached one can', async (_, script, message) => {
+      // Arrange
+      save(book('favorites', '1', 0));
+      stubResponses(() => new Response(script));
+      const { ctx } = context();
+
+      // Act
+      const result = refresh(['favorites'], ctx);
+
+      // Assert
+      await expect(result).rejects.toThrow(`Goodreads favorites: ${message}`);
+    });
+
+    it('fails when Goodreads keeps erroring after two retries', async () => {
+      // Arrange
+      save();
+      const fetch = stubGoodreads({}, 503);
+      const { store, logger, ctx } = context();
+
+      // Act
+      const result = refresh(['favorites'], ctx);
+
+      // Assert
+      await expect(result).rejects.toThrow('Goodreads favorites: HTTP 503');
+      expect(fetch).toHaveBeenCalledTimes(3);
+      expect(logger.warn).toHaveBeenCalledWith('Goodreads favorites: HTTP 503, retrying (1 of 2)');
+      expect(store.clear).not.toHaveBeenCalled();
+    });
+
+    it('retries a brief 5xx and merges the shelf once Goodreads answers', async () => {
+      // Arrange
+      save();
+      const fetch = stubResponses(
+        () => new Response('', { status: 502 }),
+        () => new Response(widget('favorites', entry({ id: '7' }))),
+      );
+      const { entries, ctx } = context();
+
+      // Act
+      await refresh(['favorites'], ctx);
+
+      // Assert
+      expect(fetch).toHaveBeenCalledTimes(2);
+      expect([...entries.keys()]).toEqual(['favorites-7']);
+    });
+
+    it('retries a network error', async () => {
+      // Arrange
+      save();
+      const fetch = stubResponses(
+        () => Promise.reject(new TypeError('fetch failed')),
+        () => new Response(widget('favorites')),
+      );
+      const { logger, ctx } = context();
+
+      // Act
+      await refresh(['favorites'], ctx);
+
+      // Assert
+      expect(fetch).toHaveBeenCalledTimes(2);
+      expect(logger.warn).toHaveBeenCalledWith('Goodreads favorites: TypeError: fetch failed, retrying (1 of 2)');
+    });
+
+    it('fails on a network error that outlasts the retries', async () => {
+      // Arrange
+      save();
+      const fetch = stubResponses(() => Promise.reject(new TypeError('fetch failed')));
+      const { ctx } = context();
+
+      // Act
+      const result = refresh(['favorites'], ctx);
+
+      // Assert
+      await expect(result).rejects.toThrow('fetch failed');
+      expect(fetch).toHaveBeenCalledTimes(3);
+    });
+
+    it("doesn't retry an error that won't go away, such as a 404", async () => {
+      // Arrange
+      save();
+      const fetch = stubGoodreads({}, 404);
+      const { logger, ctx } = context();
+
+      // Act
+      const result = refresh(['favorites'], ctx);
+
+      // Assert
+      await expect(result).rejects.toThrow('Goodreads favorites: HTTP 404');
+      expect(fetch).toHaveBeenCalledTimes(1);
+      expect(logger.warn).not.toHaveBeenCalled();
+    });
+
+    it('waits 0.3s, then 0.6s, between retries', async () => {
+      // Arrange
+      save();
+      const fetch = stubGoodreads({}, 500);
+      const { ctx } = context();
+
+      // Act
+      const result = load(['favorites'], ctx, true);
+      result.catch(() => {});
+      await firstRequest(fetch);
+      await vi.advanceTimersByTimeAsync(299);
+      const beforeFirstWait = fetch.mock.calls.length;
+      await vi.advanceTimersByTimeAsync(1);
+      const afterFirstWait = fetch.mock.calls.length;
+      await vi.advanceTimersByTimeAsync(599);
+      const beforeSecondWait = fetch.mock.calls.length;
+      await vi.advanceTimersByTimeAsync(1);
+
+      // Assert
+      expect([beforeFirstWait, afterFirstWait, beforeSecondWait, fetch.mock.calls.length]).toEqual([1, 2, 2, 3]);
+      await expect(result).rejects.toThrow('HTTP 500');
+    });
+
+    it("waits as long as a 503 or 429's Retry-After says, up to 10s", async () => {
+      // Arrange
+      save();
+      const fetch = stubResponses(
+        () => new Response('', { status: 429, headers: { 'Retry-After': '2' } }),
+        () => new Response('', { status: 503, headers: { 'Retry-After': '3600' } }),
+        () => new Response(widget('favorites')),
+      );
+      const { ctx } = context();
+
+      // Act
+      const result = load(['favorites'], ctx, true);
+      await firstRequest(fetch);
+      await vi.advanceTimersByTimeAsync(1999);
+      const beforeRetryAfter = fetch.mock.calls.length;
+      await vi.advanceTimersByTimeAsync(1);
+      const afterRetryAfter = fetch.mock.calls.length;
+      await vi.advanceTimersByTimeAsync(9999);
+      const beforeCap = fetch.mock.calls.length;
+      await vi.advanceTimersByTimeAsync(1);
+      await result;
+
+      // Assert
+      expect([beforeRetryAfter, afterRetryAfter, beforeCap, fetch.mock.calls.length]).toEqual([1, 2, 2, 3]);
+    });
   });
 });

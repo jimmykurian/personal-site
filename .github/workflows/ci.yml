@@ -21,8 +21,8 @@ on:
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches: [main]
-  # Nightly rebuild so /reading/ picks up Goodreads changes (11:00 UTC, early morning in Chicago).
-  # The nightly run also checks the external links.
+  # Nightly rebuild (11:00 UTC, early morning in Chicago), which also checks the live site and
+  # the external links.
   schedule:
     - cron: '0 11 * * *'
   workflow_dispatch:

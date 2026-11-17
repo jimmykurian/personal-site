@@ -9,7 +9,7 @@ How the site is built and deployed, how a change reaches production, the nightly
 ```mermaid
 flowchart TD
     content["src/content/*.json, posts/*.mdx<br/>src/data/site.json<br/>(typed schemas)"]
-    goodreads["Goodreads shelf RSS<br/>(fetched at build)"]
+    goodreads["Goodreads book covers<br/>(downloaded at build)"]
     fonts["Google Fonts<br/>(downloaded at build)"]
     unit["Unit tests on src/"]
     build["astro build<br/>(static output)"]
@@ -81,24 +81,41 @@ sequenceDiagram
     autonumber
     participant Cron as Schedule (11:00 UTC)
     participant CI as GitHub Actions (CI)
-    participant GR as Goodreads RSS
     participant SWA as Azure Static Web Apps
     participant Web as External sites
 
     Cron->>CI: schedule
-    CI->>GR: Fetch each shelf's feed pages (goodreadsLoader)
-    alt 5xx, rate limit or network error
-        CI->>GR: Retry, up to twice per page
-    end
-    alt A shelf still can't be read
-        CI->>CI: Use the books saved in src/content/books.json, with a warning
-    else Every shelf read
-        CI->>CI: Save the books to src/content/books.json
-    end
-    CI->>CI: Build, test, print resume.pdf
+    CI->>CI: Build from the repo (books from src/content/books.json), test, print resume.pdf
     CI->>SWA: Upload dist/ to production
     CI->>SWA: Request the home page and one asset (task test:live)
     CI->>Web: Check the external links (lychee)
+```
+
+## Reading list refresh
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant Cron as Schedule (11:30 UTC)
+    participant RL as GitHub Actions (Reading list)
+    participant GR as Goodreads shelf widgets
+    participant Repo as GitHub repository
+
+    Cron->>RL: schedule
+    loop Each shelf
+        RL->>GR: Request the 100 newest books (goodreadsLoader, refresh)
+        alt 5xx, rate limit or network error
+            RL->>GR: Retry, up to twice
+        end
+    end
+    alt A shelf can't be read
+        RL->>RL: Fail the run, books.json unchanged
+    else Every shelf read
+        RL->>RL: Merge into src/content/books.json
+        opt A book changed
+            RL->>Repo: Open or update the pull request on chore/reading-list
+        end
+    end
 ```
 
 ## A visitor's request

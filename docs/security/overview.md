@@ -10,7 +10,7 @@ The site is static: no server code, database, login, forms or cookies. It loads 
 
 | Asset | Threat | Main controls |
 | --- | --- | --- |
-| The live site | Script injected through build-time data (posts, JSON, the Goodreads feed), or from a compromised outside script | Astro escapes text by default, content is schema-validated, integration tests check every published file, and a Content-Security-Policy allows scripts only from the site and Cloudflare's beacon |
+| The live site | Script injected through build-time data (posts, JSON, the Goodreads shelves), or from a compromised outside script | Astro escapes text by default, content is schema-validated, integration tests check every published file, and a Content-Security-Policy allows scripts only from the site and Cloudflare's beacon |
 | Private data | A home address, phone number, personal email, clearance or patent application number reaching the site or the repo | `private/` is git-ignored, content rules are tested on every build |
 | The deploy | A leaked deploy token, or unreviewed code reaching production | One narrowly used secret, PR-only `main`, required checks, pinned actions |
 | The supply chain | A compromised or vulnerable npm package, action or tool | Lockfile rules, release-age delay, audits, OSV, dependency review, Dependabot |
@@ -102,4 +102,4 @@ The site runs in a personal Azure subscription, never a work tenant. DNS is at N
 - [CONTRIBUTING.md, Quality checks](../../CONTRIBUTING.md#quality-checks): every check and its config
 - [Deployment overview](../deployment/overview.md)
 
-Last reviewed: 2026-10-23
+Last reviewed: 2026-11-17

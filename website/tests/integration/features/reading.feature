@@ -1,12 +1,12 @@
 # Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
 # Author: Jimmy Kurian
 
-# Built from the live Goodreads feeds, so these check the page's shape, not specific books.
+# Built from the saved Goodreads shelves, which change daily, so these check the page's shape, not specific books.
 @reading
-Feature: Reading page from the live Goodreads shelves
+Feature: Reading page from the saved Goodreads shelves
   So that visitors see what I'm reading and recommend
   As the site's author
-  I want /reading/ filled from my Goodreads shelves at build time
+  I want /reading/ filled from my saved Goodreads shelves at build time
 
   Background:
     Given the production build of the site

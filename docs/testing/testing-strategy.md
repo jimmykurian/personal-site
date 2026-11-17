@@ -22,7 +22,7 @@ Static checks sit underneath all of them: type-checking, ESLint, Stylelint, knip
 | Suite | Where | Tests | Needs |
 | --- | --- | --- | --- |
 | Unit | `website/tests/unit/` | Each component, layout, page and `src/lib/` module renders or behaves as intended, in isolation | Nothing: offline, with mocked collections |
-| Integration (Cucumber) | `website/tests/integration/` | The built `dist/`: routes, links, anchors, feeds, the sitemap, the content rules, assets served locally, the deploy config, the resume PDF | A production build, with the network for Goodreads and fonts |
+| Integration (Cucumber) | `website/tests/integration/` | The built `dist/`: routes, links, anchors, feeds, the sitemap, the content rules, assets served locally, the deploy config, the resume PDF | A production build, with the network for Goodreads covers and fonts |
 | End-to-end | `website/tests/e2e/` | What only a browser shows: scripts, menus, focus, layout, no console errors or horizontal scroll, and WCAG 2.0, 2.1 and 2.2 A and AA with axe | The build, served with `astro preview`, and Chrome |
 | Lighthouse | `.config/lighthouserc.json` | Scores for `/`, `/writing/`, a post and `/reading/`, as the median of 3 runs | The build and Chrome |
 
@@ -36,7 +36,7 @@ Static checks sit underneath all of them: type-checking, ESLint, Stylelint, knip
 
 ### Integration tests
 
-They're behavior specs, run by Cucumber: eight Gherkin features (pages, links, assets, content rules, the hosting config and robots.txt, feeds, reading and the resume PDF) describe what the published site must do in plain sentences, and TypeScript step definitions check it. A hook builds the whole production site once, with the real content and the live Goodreads shelves, and every scenario reads the output. In CI they run against the exact `dist/` that's about to be deployed, and the check table counts passed scenarios. When a change affects what gets published (a new page, file, header or rule), it gets a scenario here.
+They're behavior specs, run by Cucumber: eight Gherkin features (pages, links, assets, content rules, the hosting config and robots.txt, feeds, reading and the resume PDF) describe what the published site must do in plain sentences, and TypeScript step definitions check it. A hook builds the whole production site once, with the real content and the saved Goodreads shelves, and every scenario reads the output. In CI they run against the exact `dist/` that's about to be deployed, and the check table counts passed scenarios. When a change affects what gets published (a new page, file, header or rule), it gets a scenario here.
 
 ### End-to-end tests
 

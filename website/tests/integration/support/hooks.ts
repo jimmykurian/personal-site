@@ -35,8 +35,8 @@ export const chrome = [
   '/usr/bin/chromium-browser',
 ].find((p) => p && existsSync(p));
 
-// Builds the production site once for every scenario, the way CI does: real content, the live
-// Goodreads shelves and downloaded fonts. Set INTEGRATION_DIST to the parent of an existing
+// Builds the production site once for every scenario, the way CI does: real content, the saved
+// Goodreads shelves and downloaded covers and fonts. Set INTEGRATION_DIST to the parent of an existing
 // dist/ (e.g. `.` after `pnpm build`) to test that build instead.
 BeforeAll({ timeout: 300_000 }, async function () {
   if (process.env.INTEGRATION_DIST) {

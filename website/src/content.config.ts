@@ -111,14 +111,16 @@ const books = defineCollection({
   loader: goodreadsLoader({
     userId: site.goodreads.userId,
     shelves: ['currently-reading', 'favorites', 'software-engineering'],
-    // The last books read, used when Goodreads can't be. reading-list.yml refreshes it.
+    // Every build reads this file. reading-list.yml refreshes it from Goodreads.
     saved: 'src/content/books.json',
-    strict: process.env.GOODREADS_STRICT === 'true',
+    refresh: process.env.GOODREADS_REFRESH === 'true',
+    // The same file as it stands in that workflow's open pull request, if there is one.
+    pending: process.env.GOODREADS_PENDING || undefined,
   }),
   schema: z.object({
     // A book on several shelves has one entry per shelf.
     shelf: z.string(),
-    // Order within the shelf's feed.
+    // Order within the shelf, newest first.
     position: z.number().int(),
     title: z.string(),
     subtitle: z.string().optional(),
@@ -138,6 +140,6 @@ const books = defineCollection({
  *
  * - `posts`: the blog posts, MDX in `src/content/posts/`
  * - `experience`, `projects`, `writing` and `teaching`: the JSON files in `src/content/`
- * - `books`: the Goodreads shelves, read at build time by {@link goodreadsLoader}
+ * - `books`: the Goodreads shelves saved in `src/content/books.json`, loaded by {@link goodreadsLoader}
  */
 export const collections = { posts, experience, projects, writing, teaching, books };
