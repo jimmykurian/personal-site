@@ -30,7 +30,7 @@ flowchart LR
 | Deploy | When Repository and Website pass, and Infrastructure passes or is skipped | Downloads the built `dist/` artifact and uploads it |
 | Check table | Pull requests, pass or fail | Posts one comment with every check's result, the coverage and test counts |
 | Badges | `main`, pass or fail | Writes the README status badges to the `badges` branch |
-| Live site | After a production deploy (`main`, nightly and manual) | Requests the home page and one of its `/_astro/` files from the live site (`task test:live`) and fails unless both answer 200 |
+| Live site | After a production deploy (`main`, nightly and manual) | Requests the home page and one of its `/_astro/` files from the live site (`task test:live`) and fails unless both answer 200 and arrive in full |
 | External links | Nightly and manual | Checks the external links in the build with lychee |
 | Close PR preview | A PR closes | Removes that PR's preview environment |
 

@@ -215,7 +215,7 @@ After `task build`, three more run against `dist/`, and one against the live sit
 
 - `task test:e2e` includes the axe checks on every page.
 - `task lighthouse` fails below 0.95 for accessibility, 0.9 for SEO and best practices, or 0.8 for performance (the median of 3 runs; CI runners are noisy), or above 0.1 layout shift. `/resume/` is left out: it's the print source for the PDF, noindexed, with small contact links.
-- `task test:live` requests the home page and one of its `/_astro/` files from the live site and fails unless both answer 200. CI runs it after every production deploy, because a deploy can pass while the host serves nothing. Set `SITE_URL` to check another host, such as a preview.
+- `task test:live` requests the home page and one of its `/_astro/` files from the live site and fails unless both answer 200 and arrive in full. CI runs it after every production deploy, because a deploy can pass while the host serves nothing. Set `SITE_URL` to check another host, such as a preview.
 - `task lint:links` checks the external links with lychee (`.config/linters/lychee.toml`). CI runs it nightly, after the deploy, so another site's outage doesn't block a push.
 
 Prettier skips `.astro` and `.mdx` files: whitespace between inline elements renders in Astro templates, and Prettier's MDX support is MDX 1.

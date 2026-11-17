@@ -389,9 +389,11 @@ tasks:
           status=0
           fail() { echo "test:live: $1"; status=1; }
           # curl retries timeouts and 5xx answers, never a 404: a site that answers 404 is down.
-          fetch() { curl --silent --show-error --location --max-time 20 --retry 3 --retry-delay 5 --output "$2" --write-out '%{http_code}' "$1" || true; }
+          # It prints the status once the headers arrive, so a transfer that fails afterwards
+          # still prints 200. Its exit code joins the result, which then no longer equals 200.
+          fetch() { curl --silent --show-error --location --max-time 20 --retry 3 --retry-delay 5 --output "$2" --write-out '%{http_code}' "$1" || echo " (curl exit $?)"; }
           code="$(fetch "$site/" "$page")"
-          if [ "$code" != 200 ]; then fail "$site/ answered $code, expected 200"; fi
+          if [ "$code" != 200 ]; then fail "$site/ answered $code, expected a complete 200"; fi
           # The home page names its fingerprinted scripts and styles, so fetch the first one too:
           # a host that only serves its error page fails here even if the home page is cached.
           asset="$(grep -o -E '/_astro/[A-Za-z0-9._@-]+\.(js|css)' "$page" | sort -u | sed -n 1p)"
@@ -399,7 +401,7 @@ tasks:
             fail "$site/ names no /_astro/ script or stylesheet"
           else
             code="$(fetch "$site$asset" /dev/null)"
-            if [ "$code" != 200 ]; then fail "$site$asset answered $code, expected 200"; fi
+            if [ "$code" != 200 ]; then fail "$site$asset answered $code, expected a complete 200"; fi
           fi
           rm -f "$page"
           if [ "$status" = 0 ]; then echo "test:live: $site/ and $asset answered 200"; fi
