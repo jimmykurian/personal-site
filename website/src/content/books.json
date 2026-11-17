@@ -3,7 +3,7 @@
     "id": "currently-reading-24113",
     "data": {
       "shelf": "currently-reading",
-      "position": 2,
+      "position": 1,
       "title": "Gödel, Escher, Bach",
       "subtitle": "An Eternal Golden Braid",
       "author": "Douglas R. Hofstadter",
@@ -16,25 +16,10 @@
     }
   },
   {
-    "id": "currently-reading-257102377",
-    "data": {
-      "shelf": "currently-reading",
-      "position": 0,
-      "title": "Grokking AI Applications",
-      "author": "Andrea De Mauro",
-      "rating": 0,
-      "toRead": false,
-      "readAt": null,
-      "addedAt": "2026-10-19T13:33:36.000Z",
-      "cover": "https://i.gr-assets.com/images/S/compressed.photo.goodreads.com/books/1787068298l/257102377._SX318_.jpg",
-      "href": "https://www.goodreads.com/book/show/257102377"
-    }
-  },
-  {
     "id": "currently-reading-7047933",
     "data": {
       "shelf": "currently-reading",
-      "position": 1,
+      "position": 0,
       "title": "Common Sense Training",
       "subtitle": "A Working Philosophy for Leaders",
       "author": "Arthur S. Collins Jr.",
