@@ -1,18 +1,18 @@
 # Copyright (c) 2026 Jimmy Kurian. All rights reserved. See LICENSE.
 # Author: Jimmy Kurian
 #
-# Reading list: daily, reads the Goodreads shelves (task reading:save) and proposes the saved
-# books in website/src/content/books.json in one pull request on chore/reading-list, updated
-# in place. Builds use that file when Goodreads can't be read, so a Goodreads outage never
-# blocks a deploy. This run is strict: it fails, rather than propose stale books, while
-# Goodreads is down, so a red run here is the sign to check the shelves. Nothing is proposed
-# unless a book changed. The PR comes from the repo's GitHub App, as in code-metrics.yml;
+# Reading list: daily, reads the Goodreads shelf widgets (task reading:save), merges them into
+# the saved books in website/src/content/books.json and proposes the change in one pull request
+# on chore/reading-list, updated in place. Every build reads /reading/ from that file and never
+# calls Goodreads, so a Goodreads outage never blocks a deploy. This run fails, rather than
+# propose stale books, while Goodreads can't be read, so a red run here is the sign to check
+# the shelves. Nothing is proposed unless a book changed. The PR comes from the repo's GitHub App, as in code-metrics.yml;
 # pr-assign-author.yml assigns it. Its commit is a chore, so it never makes a release.
 
 name: Reading list
 
 on:
-  # After the nightly CI rebuild (11:00 UTC), which reads the shelves itself.
+  # After the nightly CI rebuild (11:00 UTC).
   schedule:
     - cron: "30 11 * * *"
   workflow_dispatch:
@@ -61,7 +61,7 @@ jobs:
           {
             echo '# Description'
             echo
-            echo "Updates the saved reading list from the Goodreads shelves, read by the [Reading list workflow]($RUN_URL). Builds use it only when Goodreads can't be read."
+            echo "Updates the saved reading list from the Goodreads shelves, read by the [Reading list workflow]($RUN_URL). The site shows these books once this is merged."
             cat <<'EOF'
 
           Fixes # (none)

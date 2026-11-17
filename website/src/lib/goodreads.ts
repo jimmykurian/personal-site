@@ -2,11 +2,11 @@
  * The content loader behind `/reading/`.
  *
  * @remarks
- * Goodreads closed its API in 2020, but each shelf of a public profile still has an RSS
- * feed. This loader reads those feeds at build time; the nightly CI build keeps it fresh.
- * Each successful read is saved to `src/content/books.json`, and a daily workflow proposes
- * that file in a pull request. If Goodreads can't be read, the build uses the saved books,
- * so a Goodreads outage never blocks a deploy or ships an empty reading list.
+ * Goodreads closed its API in 2020 and retired its shelf RSS feeds in 2026. The shelf widget
+ * is still public: a script that lists a shelf's 100 most recently added books.
+ * So the books live in `src/content/books.json`, and every build reads only that file. A
+ * daily workflow sets `refresh`: the loader then reads each shelf's widget, merges it into
+ * the file, and the workflow proposes the change in a pull request.
  *
  * @packageDocumentation
  * @file goodreads.ts
@@ -17,7 +17,8 @@ import { readFile, writeFile } from 'node:fs/promises';
 import type { AstroIntegrationLogger } from 'astro';
 import type { Loader } from 'astro/loaders';
 
-const PAGE_LIMIT = 20; // 100 books per page
+// The most books a widget lists. A shelf that fills it may hold more.
+const WIDGET_LIMIT = 100;
 
 // Goodreads now and then answers with a brief 5xx. Retry those, rate limits and network
 // errors twice (0.3s, then 0.6s, or the server's Retry-After up to 10s) before failing.
@@ -60,82 +61,176 @@ const decode = (s: string) =>
       : (entities[e] ?? m),
   );
 
-const field = (item: string, tag: string) => {
-  const m = item.match(new RegExp(`<${tag}>\\s*(?:<!\\[CDATA\\[)?([\\s\\S]*?)(?:\\]\\]>)?\\s*</${tag}>`));
-  return m ? decode(m[1].trim()) : '';
-};
-
 // "Title: Subtitle (Series, #2)" becomes { title, subtitle } without the series.
 const splitTitle = (raw: string) => {
   const [title, ...rest] = raw.replace(/\s*\([^()]*\)$/, '').split(': ');
   return { title, subtitle: rest.join(': ') || undefined };
 };
 
-async function fetchShelf(userId: string, shelf: string, logger: AstroIntegrationLogger) {
-  const items: string[] = [];
-  for (let page = 1; page <= PAGE_LIMIT; page++) {
-    const url = `https://www.goodreads.com/review/list_rss/${userId}?shelf=${shelf}&page=${page}`;
-    const res = await fetchFeed(url, `Goodreads ${shelf} page ${page}`, logger);
-    if (!res.ok) throw new Error(`Goodreads ${shelf} page ${page}: HTTP ${res.status}`);
-    const batch = (await res.text()).match(/<item>[\s\S]*?<\/item>/g) ?? [];
-    if (batch.length === 0) break;
-    items.push(...batch);
-  }
-  return items;
-}
-
 type Book = { id: string; data: Record<string, unknown> };
 
-async function fetchBooks(userId: string, shelves: string[], logger: AstroIntegrationLogger) {
-  const books: Book[] = [];
-  for (const shelf of shelves) {
-    const items = await fetchShelf(userId, shelf, logger);
-    logger.info(`${shelf}: ${items.length} books`);
-    for (const [position, item] of items.entries()) {
-      const id = `${shelf}-${field(item, 'book_id')}`;
-      const cover = field(item, 'book_large_image_url');
-      books.push({
-        id,
-        data: {
-          shelf,
-          position,
-          ...splitTitle(field(item, 'title')),
-          author: field(item, 'author_name'),
-          rating: Number(field(item, 'user_rating')) || 0,
-          toRead: field(item, 'user_shelves').split(/,\s*/).includes('to-read'),
-          readAt: field(item, 'user_read_at') || null,
-          addedAt: field(item, 'user_date_added'),
-          cover: cover && !cover.includes('nophoto') ? cover : undefined,
-          href: `https://www.goodreads.com/book/show/${field(item, 'book_id')}`,
-        },
-      });
+/** What a widget says about one book. `rating` is undefined when it shows no rating of Jimmy's. */
+type Listed = {
+  bookId: string;
+  title: string;
+  author: string;
+  rating: number | undefined;
+  toRead: boolean;
+  cover: string;
+};
+
+const text = (html: string) => decode(html.replace(/<[^>]+>/g, '').trim());
+
+/** The first group `pattern` captures in `html`, or an empty string. */
+const capture = (pattern: RegExp, html: string) => pattern.exec(html)?.[1] ?? '';
+
+/** One widget entry as a book, or its title alone when it has no cover to take the id from. */
+function parseEntry(entry: string): Listed | string {
+  const title = decode(capture(/<a title="([^"]*)"/, entry));
+  const cover = capture(/<img alt="[^"]*" border="0" src="([^"]*)"/, entry);
+  const bookId = capture(/\/books\/\d+[a-z]\/(\d+)\./, cover);
+  if (!bookId) return title;
+  const tags = text(capture(/tagged:([\s\S]*?)<\/div>/, entry)).split(/,\s*|\s+and\s+/);
+  return {
+    bookId,
+    title,
+    author: text(capture(/<div class="gr_custom_author_[^>]*>\s*by([\s\S]*?)<\/div>/, entry)),
+    // A part-filled star is the book's average rating, shown when Jimmy hasn't rated it.
+    rating: /star_\d+pct/.test(entry) ? undefined : entry.split('star_active').length - 1,
+    toRead: tags.includes('to-read'),
+    // Without the size suffix (._SX98_), the address is the full-size cover.
+    cover: cover.replace(/\._S[XY]\d+(?:_S[XY]\d+)?_(?=\.\w+$)/, ''),
+  };
+}
+
+/**
+ * The books in a widget script, newest first.
+ *
+ * @remarks
+ * The script holds the widget's HTML in one string, `widget_code`. A book's id appears only
+ * in its cover's address, so a book without a cover is skipped, with a warning.
+ */
+function parseWidget(script: string, shelf: string, logger: AstroIntegrationLogger): Listed[] {
+  const code = /var widget_code = '((?:[^'\\]|\\.)*)'/.exec(script)?.[1];
+  if (code === undefined) throw new Error(`Goodreads ${shelf}: the widget holds no book list`);
+  const html = code.replace(/\\(.)/g, (_, c: string) => (c === 'n' ? '\n' : c));
+  // Goodreads caches a widget by its id, so check that this list is the shelf asked for.
+  const listed = capture(/\/review\/list\/[^"]*?[?&;]shelf=([^"&]*)/, html);
+  if (listed !== shelf) throw new Error(`Goodreads ${shelf}: the widget lists ${listed || 'no shelf'}`);
+
+  const books: Listed[] = [];
+  for (const entry of html.split(/<div class="gr_custom_each_container_/).slice(1)) {
+    const book = parseEntry(entry);
+    if (typeof book === 'string') {
+      logger.warn(`${shelf}: skipped "${book}", which has no cover to take its book id from`);
+    } else {
+      books.push(book);
     }
   }
   return books;
 }
 
-/** The saved books, or undefined if there's no saved file. */
-async function readSaved(saved: string): Promise<Book[] | undefined> {
-  try {
-    return JSON.parse(await readFile(saved, 'utf8')) as Book[];
-  } catch (error) {
-    if ((error as NodeJS.ErrnoException).code === 'ENOENT') return undefined;
-    throw error;
-  }
+async function fetchShelf(userId: string, shelf: string, widgetId: number, logger: AstroIntegrationLogger) {
+  const query = new URLSearchParams({
+    shelf,
+    num_books: String(WIDGET_LIMIT),
+    sort: 'date_added',
+    order: 'd',
+    show_author: '1',
+    show_cover: '1',
+    show_rating: '1',
+    show_tags: '1',
+    show_title: '1',
+    widget_id: String(widgetId),
+  });
+  const url = `https://www.goodreads.com/review/custom_widget/${userId}?${query}`;
+  const res = await fetchFeed(url, `Goodreads ${shelf}`, logger);
+  if (!res.ok) throw new Error(`Goodreads ${shelf}: HTTP ${res.status}`);
+  return parseWidget(await res.text(), shelf, logger);
 }
 
 /**
- * An Astro content loader with one entry per book per shelf, read from the shelves' RSS feeds.
+ * One shelf's saved books, brought up to date with its widget.
  *
  * @remarks
- * Each feed page is retried twice on a brief 5xx, rate limit or network error. After a full
- * read, the schema-checked books are written to `saved`. If a shelf still can't be read, the
- * books in `saved` are loaded instead, with a warning. Loading throws, which fails the build
- * and leaves the store unchanged, only when there's no saved file or `strict` is set.
+ * New books go first, newest first, dated now; the saved books follow in their saved order.
+ * A saved book takes the widget's rating and to-read mark, and is dated as read the day its
+ * to-read mark goes. A widget with fewer than {@link WIDGET_LIMIT} books is the whole shelf,
+ * so saved books it lacks are dropped. A full widget may be cut short, so nothing is dropped.
+ */
+function mergeShelf(shelf: string, savedBooks: Book[], listed: Listed[], now: string): Book[] {
+  const known = new Map(savedBooks.map((book) => [book.id, book]));
+  const seen = new Map<string, Listed>();
+  const added: Book[] = [];
+  for (const book of listed) {
+    const id = `${shelf}-${book.bookId}`;
+    seen.set(id, book);
+    if (known.has(id)) continue;
+    added.push({
+      id,
+      data: {
+        shelf,
+        ...splitTitle(book.title),
+        author: book.author,
+        rating: book.rating ?? 0,
+        toRead: book.toRead,
+        readAt: null,
+        addedAt: now,
+        cover: book.cover,
+        href: `https://www.goodreads.com/book/show/${book.bookId}`,
+      },
+    });
+  }
+  const whole = listed.length < WIDGET_LIMIT;
+  const kept = savedBooks
+    .filter(({ id }) => !whole || seen.has(id))
+    .map(({ id, data }) => {
+      const book = seen.get(id);
+      if (!book) return { id, data };
+      const finished = data.toRead === true && !book.toRead && !data.readAt;
+      return {
+        id,
+        data: {
+          ...data,
+          rating: book.rating ?? data.rating,
+          toRead: book.toRead,
+          readAt: finished ? now : data.readAt,
+        },
+      };
+    });
+  return [...added, ...kept].map(({ id, data }, position) => ({ id, data: { ...data, position } }));
+}
+
+async function refreshBooks(userId: string, shelves: string[], savedBooks: Book[], logger: AstroIntegrationLogger) {
+  const now = new Date();
+  const stamp = now.toISOString();
+  // A widget id nobody has asked for before, so Goodreads answers with the shelf as it is now.
+  const firstWidgetId = Math.floor(now.getTime() / 1000);
+  const books: Book[] = [];
+  for (const [index, shelf] of shelves.entries()) {
+    const listed = await fetchShelf(userId, shelf, firstWidgetId + index, logger);
+    const onShelf = savedBooks.filter(({ data }) => data.shelf === shelf);
+    onShelf.sort((a, b) => Number(a.data.position) - Number(b.data.position));
+    const merged = mergeShelf(shelf, onShelf, listed, stamp);
+    logger.info(`${shelf}: ${listed.length} books read, ${merged.length} saved`);
+    books.push(...merged);
+  }
+  return books;
+}
+
+/**
+ * An Astro content loader with one entry per book per shelf, read from the saved books.
+ *
+ * @remarks
+ * A build loads the books in `saved` and never calls Goodreads. With `refresh`, the loader
+ * first reads each shelf's widget (retried twice on a brief 5xx, rate limit or network
+ * error), merges it into the saved books and writes the schema-checked result back to
+ * `saved`, if it changed. Loading throws, which fails the run and leaves the store and the
+ * file unchanged, when `saved` can't be read or, with `refresh`, a shelf can't be.
  *
  * @param options - `userId` is the public Goodreads profile; `shelves` are the shelf names to
- * read; `saved` is the JSON file holding the last books read; `strict` turns off the fallback,
- * for the workflow that refreshes `saved`.
+ * refresh; `saved` is the JSON file holding the books; `refresh` reads Goodreads first, for
+ * the workflow that keeps `saved` up to date.
  * @returns The loader, named `goodreads`.
  *
  * @example
@@ -149,34 +244,28 @@ export function goodreadsLoader({
   userId,
   shelves,
   saved,
-  strict = false,
+  refresh = false,
 }: {
   userId: string;
   shelves: string[];
   saved: string;
-  strict?: boolean;
+  refresh?: boolean;
 }): Loader {
   return {
     name: 'goodreads',
     load: async ({ store, logger, parseData }) => {
-      let books: Book[];
-      let fresh = true;
-      try {
-        books = await fetchBooks(userId, shelves, logger);
-      } catch (error) {
-        const kept = strict ? undefined : await readSaved(saved);
-        if (!kept) throw error;
-        logger.warn(`${String(error)}; using the ${kept.length} books saved in ${saved}`);
-        books = kept;
-        fresh = false;
-      }
+      const before = await readFile(saved, 'utf8');
+      let books = JSON.parse(before) as Book[];
+      if (refresh) books = await refreshBooks(userId, shelves, books, logger);
       const parsed = [];
       for (const { id, data } of books) parsed.push({ id, data: await parseData({ id, data }) });
       store.clear();
       for (const book of parsed) store.set(book);
-      if (fresh) {
+      if (refresh) {
+        // In id order, so a refresh changes only the lines of the books that changed.
+        parsed.sort((a, b) => (a.id < b.id ? -1 : 1));
         const json = `${JSON.stringify(parsed, null, 2)}\n`;
-        if ((await readFile(saved, 'utf8').catch(() => '')) !== json) await writeFile(saved, json);
+        if (json !== before) await writeFile(saved, json);
       }
     },
   };

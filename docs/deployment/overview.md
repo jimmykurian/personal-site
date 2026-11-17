@@ -42,7 +42,7 @@ The build is never repeated for the deploy: the Website job uploads `website/dis
 | --- | --- |
 | Pull request to `main` that changes `website/` | A preview environment with its own URL, commented on the PR and removed when the PR closes |
 | Push to `main` (a merged PR) | Production at <https://www.jimmykurian.me>, whatever changed |
-| Nightly, 11:00 UTC | A rebuild, so `/reading/` picks up Goodreads changes, then the live site check and the external link check |
+| Nightly, 11:00 UTC | A rebuild, then the live site check and the external link check |
 | Manual (`workflow_dispatch`) | A rebuild on demand, plus the live site check and the link check |
 
 `main` takes changes only through squash-merged pull requests, and the ruleset requires the Title, Template, Repository, Website, Infrastructure and CodeQL checks. A job skipped because its files didn't change counts as passed. See [CONTRIBUTING.md, Workflow](../../CONTRIBUTING.md#workflow).
@@ -68,12 +68,12 @@ Builds of `main` (pushes, nightly and manual runs) also get the four public obse
 
 After a merge that changes the code, the Code metrics workflow measures it and proposes the README's new metrics table in a pull request, through the same GitHub App. It deploys nothing either.
 
-Daily at 11:30 UTC, the Reading list workflow reads the Goodreads shelves (`task reading:save`) and proposes any change to the saved books in `website/src/content/books.json` in a pull request on `chore/reading-list`, through the same GitHub App. Builds use that file only when Goodreads can't be read.
+Daily at 11:30 UTC, the Reading list workflow reads the Goodreads shelf widgets (`task reading:save`), merges them into the saved books in `website/src/content/books.json` and proposes any change in a pull request on `chore/reading-list`, through the same GitHub App. Every build reads `/reading/` from that file, so a new book reaches the site when that pull request is merged.
 
 ## When something goes wrong
 
 - **A check fails on `main`:** nothing deploys, and the last good deploy stays live. Fix it in a new PR.
-- **Goodreads is down:** the loader retries each feed page twice, then builds `/reading/` from the books saved in `website/src/content/books.json`, with a warning in the build log, so deploys carry on and the list is never empty. The Reading list workflow fails while it lasts; check that the profile and shelves are still public.
+- **Goodreads is down:** builds don't call Goodreads, so deploys carry on with the books saved in `website/src/content/books.json`. The Reading list workflow fails while it lasts; check that the profile and shelves are still public. It also failed daily from 2026-10-29, when Goodreads retired the shelf RSS feeds it read then, until it moved to the shelf widgets.
 - **A bad change is live:** revert its squash commit in a PR (`git revert <sha>`). Merging the revert deploys the previous state. The Free plan has no deployment slots to swap.
 - **A preview is left behind:** close and reopen the PR, or delete the environment in the Azure portal. The Free plan allows three preview environments.
 - **Every page answers 404, and deploys still pass:** the Azure subscription is probably inactive. Azure then serves only the site's 404 page, while the app still reports `Ready` and uploads still succeed, so a redeploy changes nothing. The Live site job fails when this happens, and the Sentry [uptime monitor](../observability.md#uptime) opens an issue within minutes. Check the subscription's status in the Azure portal (Subscriptions) and upgrade or reactivate it there; the site comes back within a minute, with no redeploy. This happened on 2026-11-17, when the subscription's 30-day free trial ended. Jimmy does this step.

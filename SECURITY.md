@@ -43,7 +43,7 @@ rather stay anonymous.
 ### In scope
 
 - Content served from `www.jimmykurian.me` or `jimmykurian.me`
-- Injection through build-time data (blog posts, the Goodreads feed, JSON
+- Injection through build-time data (blog posts, the Goodreads shelves, JSON
   content) that ends up as script on the site
 - Leaks of anything that should stay private (see below)
 - Weaknesses in the GitHub Actions workflow, such as a way to expose the deploy

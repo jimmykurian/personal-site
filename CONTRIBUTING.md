@@ -64,7 +64,7 @@ pnpm dev        # http://localhost:4321
 Other commands, run from `website/`:
 
 ```sh
-pnpm build         # static output in dist/ (fetches the Goodreads feeds)
+pnpm build         # static output in dist/ (downloads the book covers and fonts)
 pnpm preview       # serve dist/ locally
 pnpm resume        # print /resume/ to dist/resume.pdf (after a build)
 pnpm check        # type-check .astro and .ts files (astro check)
@@ -291,7 +291,7 @@ the same path (`src/components/Header.astro` → `tests/unit/components/Header.t
   `tests/support/dist.ts`. Tag a scenario `@chrome` when it needs a local Chrome; it's
   skipped without one.
 - The suite fails on an undefined or pending step (`strict`). It needs the network, since
-  the build reads Goodreads and downloads the fonts.
+  the build downloads the Goodreads covers and the fonts.
 
 When a change affects what gets published (a new page, file, header or rule), add a
 scenario there, reusing an existing step where one fits.
@@ -322,13 +322,14 @@ every job passes, the deploy uploads `website/dist/` to Azure Static Web Apps:
 | ------------------ | ---------------------------------------------- |
 | Push to `main`     | Production deploy, then the live site check    |
 | Pull request       | Preview environment, closed when the PR closes |
-| Nightly, 11:00 UTC | Rebuild so `/reading/` picks up Goodreads, then check the live site and external links |
+| Nightly, 11:00 UTC | Rebuild, then check the live site and external links |
 | Manual dispatch    | Rebuild on demand, with the same two checks    |
 
-If Goodreads can't be read, the build uses the books saved in
-`website/src/content/books.json` and logs a warning. The Reading list workflow
-(`.github/workflows/reading-list.yml`) refreshes that file daily in a PR on
-`chore/reading-list`, and fails while Goodreads is down.
+`/reading/` is built from the books saved in `website/src/content/books.json`;
+no build calls Goodreads. The Reading list workflow
+(`.github/workflows/reading-list.yml`) merges the Goodreads shelves into that
+file daily in a PR on `chore/reading-list`, and fails while Goodreads can't be
+read. A new book reaches the site when that PR is merged.
 
 `infrastructure/` holds OpenTofu modules for the Azure resources, with their
 tests; they aren't deployed from there yet. Run `task infra:check` and

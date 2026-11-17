@@ -10,7 +10,7 @@ Set up the tools from the repo root first (`mise install`, `task install`; see [
 
 ```sh
 pnpm dev               # http://localhost:4321
-pnpm build             # static output in dist/ (fetches the Goodreads feeds)
+pnpm build             # static output in dist/ (downloads the book covers and fonts)
 pnpm preview           # serve dist/ locally
 pnpm resume            # print /resume/ to dist/resume.pdf (after a build)
 pnpm check             # type-check .astro and .ts files (astro check)
@@ -74,7 +74,21 @@ Resume-only detail (month dates, locations, bullets, ranks, course codes) sits i
 
 ### The reading list
 
-`/reading/` comes from Goodreads. Goodreads has no public API any more, so `src/lib/goodreads.ts` reads the RSS feeds for the `currently-reading`, `favorites` and `software-engineering` shelves (listed in `src/content.config.ts`) of the profile in `site.json` (`goodreads.userId`) at build time, and covers are downloaded and optimized then. The workflow rebuilds every night at 11:00 UTC, so a finished book shows up by the next morning; run the workflow by hand to update sooner. The profile must stay public. Goodreads sometimes answers with a brief 5xx, so each feed request is retried twice (after 0.3s and 0.6s, or the server's `Retry-After`, up to 10s) on a 5xx, 408, 429 or network error. Each full read is saved to `src/content/books.json`. If Goodreads still can't be read, the build uses that file and logs a warning, so a Goodreads outage never blocks a deploy or ships an empty list. The Reading list workflow (`.github/workflows/reading-list.yml`) runs `task reading:save` daily and proposes any change to the file in a pull request on `chore/reading-list`. That run is strict: it fails while Goodreads is down, so a red run means the shelves need checking.
+`/reading/` comes from Goodreads, by way of `src/content/books.json`. Goodreads closed its API in 2020 and retired its shelf RSS feeds in 2026, so the books are saved in that file, and every build reads only the file (`src/lib/goodreads.ts`); covers are downloaded and optimized at build time.
+
+The Reading list workflow (`.github/workflows/reading-list.yml`) keeps the file up to date. Daily, it runs `task reading:save`, which reads the public widget of the `currently-reading`, `favorites` and `software-engineering` shelves (listed in `src/content.config.ts`) of the profile in `site.json` (`goodreads.userId`), merges it into the file, and proposes any change in a pull request on `chore/reading-list`. A new book reaches the site when that pull request is merged. The profile must stay public.
+
+The widget lists a shelf's 100 most recently added books, with the title, author, cover, rating and shelves of each, so the merge works like this:
+
+- A new book goes first on its shelf, dated the day the workflow first saw it.
+- A saved book keeps its own fields and takes the widget's rating and to-read mark. It's dated as read the day its to-read mark goes.
+- A shelf with fewer than 100 books is listed in full, so a book that left it is removed from the file.
+- A shelf with 100 or more may be cut short, so nothing is removed from it. Delete such a book from the file by hand.
+- The widget has no read dates. Add `readAt` by hand to a book that arrived already read, or it sorts after the dated ones.
+- A book without a cover is skipped, with a warning in the run's log: the widget shows a book's id only in its cover's address.
+- More than 100 books added to one shelf between two runs would be cut short. Add the rest by hand.
+
+Each widget request is retried twice (after 0.3s and 0.6s, or the server's `Retry-After`, up to 10s) on a 5xx, 408, 429 or network error. The run fails if a shelf still can't be read, or if the answer isn't that shelf's list, so a red run means the shelves need checking. Builds carry on from the saved file meanwhile.
 
 ## Tests
 
@@ -94,7 +108,7 @@ pnpm vitest run -u     # accept intended changes to snapshots
 - Snapshots (`__snapshots__/`) cover stable markup: icons, header, footer, ledger, post list, book rows, the 404 page, the RSS feed and parsed Goodreads entries. Review a snapshot diff like any other change.
 - Shared helpers and fixtures are in `tests/support/`.
 
-**Integration tests** live in `tests/integration/`, written in Gherkin: each `features/*.feature` file is one area, with scenarios that read as plain sentences, and `steps/*.steps.ts` holds the step definitions. They build the whole production site once (real content, the live Goodreads shelves, downloaded fonts) into a temporary folder, then check the output:
+**Integration tests** live in `tests/integration/`, written in Gherkin: each `features/*.feature` file is one area, with scenarios that read as plain sentences, and `steps/*.steps.ts` holds the step definitions. They build the whole production site once (real content, the saved Goodreads shelves, downloaded covers and fonts) into a temporary folder, then check the output:
 
 - every route is built, one page per published post and no drafts, each with a title, one `h1`, a description and a www canonical URL (the 404 and resume pages are `noindex` instead)
 - every internal link, image, script and `#anchor` resolves to something in the build, and every page with the footer links the source repository
