@@ -27,6 +27,20 @@ flowchart LR
     browser -- "named event, sendBeacon" --> posthog
 ```
 
+## Uptime
+
+The three tools above run in a visitor's browser, so none of them notices when the site itself stops answering. A Sentry uptime monitor covers that from outside:
+
+| Setting | Value |
+| --- | --- |
+| Monitor | `Uptime check for www.jimmykurian.me`, in the `jimmykurian-me` project, environment `production` |
+| Request | `GET https://www.jimmykurian.me/` every minute, with a 5-second timeout |
+| Passes | Any 2xx status |
+| Opens an issue | After 3 failed checks in a row, about 3 minutes of downtime |
+| Resolves | After 1 successful check |
+
+The issue goes through the project's "Send a notification for high priority issues" alert, which emails Jimmy. The monitor was added after the 2026-11-17 outage, when every page answered 404 for about 14 hours and the first signal was a visitor's JavaScript error. It requests only the home page and collects nothing about visitors. CI also requests the live site after each production deploy; see [Deployment overview](deployment/overview.md#when-something-goes-wrong).
+
 ## How it's wired
 
 | Piece | File | Does |
@@ -64,7 +78,7 @@ To add one, put `data-track="event_name"` on the element or call `track('event_n
 ## Dashboards
 
 - **Cloudflare:** dash.cloudflare.com → Analytics → Web analytics → `www.jimmykurian.me`.
-- **Sentry:** `jimmy-kurian-personal-site.sentry.io` → Issues, project `jimmykurian-me`. Sentry emails new high-priority issues.
+- **Sentry:** `jimmy-kurian-personal-site.sentry.io` → Issues, project `jimmykurian-me`. Sentry emails new high-priority issues. The uptime monitor is under Monitors → Uptime.
 - **PostHog:** us.posthog.com → project `jimmykurian.me` → Activity, or Product analytics for trends. **Cookieless tracking** must stay on under Settings → Web analytics, or PostHog discards every cookieless event.
 
 ## Why not OpenTelemetry
@@ -77,4 +91,4 @@ OpenTelemetry's own docs call browser instrumentation experimental and mostly un
 - [Testing strategy](testing/testing-strategy.md)
 - [Deployment overview](deployment/overview.md)
 
-Last reviewed: 2026-10-23
+Last reviewed: 2026-11-17
