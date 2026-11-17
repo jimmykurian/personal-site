@@ -69,12 +69,12 @@ const splitTitle = (raw: string) => {
 
 type Book = { id: string; data: Record<string, unknown> };
 
-/** What a widget says about one book. `rating` is undefined when it shows no rating of Jimmy's. */
+/** What a widget says about one book. `rating` is 0 when it shows no rating of Jimmy's. */
 type Listed = {
   bookId: string;
   title: string;
   author: string;
-  rating: number | undefined;
+  rating: number;
   toRead: boolean;
   cover: string;
 };
@@ -97,7 +97,7 @@ function parseEntry(entry: string): Listed | string {
     title,
     author: decode(capture(/<div class="gr_custom_author_[^>]*>\s*by\s*(?:<a [^>]*>)?([^<]*)/, entry).trim()),
     // A part-filled star is the book's average rating, shown when Jimmy hasn't rated it.
-    rating: /star_\d+pct/.test(entry) ? undefined : entry.split('star_active').length - 1,
+    rating: /star_\d+pct/.test(entry) ? 0 : entry.split('star_active').length - 1,
     toRead: tags.includes('to-read'),
     // Without the size suffix (._SX98_), the address is the full-size cover.
     cover: cover.replace(/\._S[XY]\d+(?:_S[XY]\d+)?_(?=\.\w+$)/, ''),
@@ -201,7 +201,7 @@ function mergeShelf(
         shelf,
         ...splitTitle(book.title),
         author: book.author,
-        rating: book.rating ?? 0,
+        rating: book.rating,
         toRead: book.toRead,
         readAt: readDate(book, undefined, earlier, now),
         addedAt: earlier?.addedAt ?? now,
@@ -217,7 +217,7 @@ function mergeShelf(
       const earlier = pending.get(id) ?? data;
       const { rating, toRead } = book ?? earlier;
       const readAt = book ? readDate(book, data, earlier, now) : (data.readAt ?? earlier.readAt);
-      return { id, data: { ...data, rating: rating ?? data.rating, toRead, readAt } };
+      return { id, data: { ...data, rating, toRead, readAt } };
     });
   // Books an unmerged refresh added that a cut-short widget has since stopped listing.
   const unlisted = whole

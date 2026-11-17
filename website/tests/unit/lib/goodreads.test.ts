@@ -427,7 +427,7 @@ describe('goodreadsLoader', () => {
       expect(entries.get('shelf-2')!.data).toMatchObject({ toRead: true, readAt: null });
     });
 
-    it("reads a part-filled star as the book's average, not a rating", async () => {
+    it("reads a part-filled star as the book's average: no rating, and a saved one is cleared", async () => {
       // Arrange
       save(book('shelf', '1', 0, { rating: 2 }));
       stubGoodreads({
@@ -439,7 +439,7 @@ describe('goodreadsLoader', () => {
       await refresh(['shelf'], ctx);
 
       // Assert
-      expect(entries.get('shelf-1')!.data.rating).toBe(2);
+      expect(entries.get('shelf-1')!.data.rating).toBe(0);
       expect(entries.get('shelf-2')!.data.rating).toBe(0);
     });
 
