@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.4](https://github.com/jimmykurian/personal-site/compare/website-v1.4.3...website-v1.4.4) (2026-11-17)
+
+
+### Bug Fixes
+
+* **reading:** read the Goodreads shelf widgets, which replace the retired RSS feeds ([#55](https://github.com/jimmykurian/personal-site/issues/55)) ([d1eb869](https://github.com/jimmykurian/personal-site/commit/d1eb869f90ee5bd926a6eb668c725797dd89e9b7))
+
 ## [1.4.3](https://github.com/jimmykurian/personal-site/compare/website-v1.4.2...website-v1.4.3) (2026-11-14)
 
 
