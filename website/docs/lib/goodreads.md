@@ -24,7 +24,7 @@ the file, and the workflow proposes the change in a pull request.
 function goodreadsLoader(options): Loader;
 ```
 
-Defined in: [src/lib/goodreads.ts:258](https://github.com/jimmykurian/personal-site/blob/main/website/src/lib/goodreads.ts#L258)
+Defined in: [src/lib/goodreads.ts:272](https://github.com/jimmykurian/personal-site/blob/main/website/src/lib/goodreads.ts#L272)
 
 An Astro content loader with one entry per book per shelf, read from the saved books.
 

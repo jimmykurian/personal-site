@@ -153,21 +153,38 @@ async function fetchShelf(userId: string, shelf: string, widgetId: number, logge
   return parseWidget(await res.text(), shelf, logger);
 }
 
+type Data = Book['data'];
+
+/**
+ * When a listed book was read, as far as the refreshes can tell.
+ *
+ * @remarks
+ * `saved` is the book in the saved file and `earlier` is its last recorded state: the open
+ * pull request's copy if it has the book, or else `saved`. A date already recorded stays.
+ * A book whose to-read mark has gone since `earlier` is dated now.
+ */
+function readDate(listed: Listed, saved: Data | undefined, earlier: Data | undefined, now: string) {
+  const recorded = saved?.readAt ?? earlier?.readAt;
+  if (recorded) return recorded;
+  return earlier?.toRead === true && !listed.toRead ? now : null;
+}
+
 /**
  * One shelf's saved books, brought up to date with its widget.
  *
  * @remarks
  * New books go first, newest first, dated now; the saved books follow in their saved order.
  * A saved book takes the widget's rating and to-read mark, and is dated as read the day its
- * to-read mark goes. Either date comes from `pending` instead when an earlier, unmerged
- * refresh already set it, so it records the first day the change was seen. When the widget
- * is the `whole` shelf, saved books it lacks are dropped. Otherwise nothing is dropped.
+ * to-read mark goes. `pending` holds the books of an earlier, unmerged refresh: its dates
+ * are kept, so they record the first day a change was seen, and a saved book the widget no
+ * longer lists keeps the rating, to-read mark and read date it has there. When the widget is
+ * the `whole` shelf, saved books it lacks are dropped. Otherwise nothing is dropped.
  */
 function mergeShelf(
   shelf: string,
   savedBooks: Book[],
   { books: listed, whole }: { books: Listed[]; whole: boolean },
-  { now, pending }: { now: string; pending: Map<string, Book['data']> },
+  { now, pending }: { now: string; pending: Map<string, Data> },
 ): Book[] {
   const known = new Map(savedBooks.map((book) => [book.id, book]));
   const seen = new Map<string, Listed>();
@@ -176,6 +193,7 @@ function mergeShelf(
     const id = `${shelf}-${book.bookId}`;
     seen.set(id, book);
     if (known.has(id)) continue;
+    const earlier = pending.get(id);
     added.push({
       id,
       data: {
@@ -184,8 +202,8 @@ function mergeShelf(
         author: book.author,
         rating: book.rating ?? 0,
         toRead: book.toRead,
-        readAt: null,
-        addedAt: pending.get(id)?.addedAt ?? now,
+        readAt: readDate(book, undefined, earlier, now),
+        addedAt: earlier?.addedAt ?? now,
         cover: book.cover,
         href: `https://www.goodreads.com/book/show/${book.bookId}`,
       },
@@ -195,17 +213,10 @@ function mergeShelf(
     .filter(({ id }) => !whole || seen.has(id))
     .map(({ id, data }) => {
       const book = seen.get(id);
-      if (!book) return { id, data };
-      const finished = data.toRead === true && !book.toRead && !data.readAt;
-      return {
-        id,
-        data: {
-          ...data,
-          rating: book.rating ?? data.rating,
-          toRead: book.toRead,
-          readAt: finished ? (pending.get(id)?.readAt ?? now) : data.readAt,
-        },
-      };
+      const earlier = pending.get(id) ?? data;
+      const { rating, toRead } = book ?? earlier;
+      const readAt = book ? readDate(book, data, earlier, now) : (data.readAt ?? earlier.readAt);
+      return { id, data: { ...data, rating: rating ?? data.rating, toRead, readAt } };
     });
   return [...added, ...kept].map(({ id, data }, position) => ({ id, data: { ...data, position } }));
 }
@@ -217,7 +228,10 @@ async function refreshBooks(
   logger: AstroIntegrationLogger,
 ) {
   const now = new Date();
-  const dates = { now: now.toISOString(), pending: new Map(pendingBooks.map(({ id, data }) => [id, data])) };
+  const dates = {
+    now: now.toISOString(),
+    pending: new Map(pendingBooks.map(({ id, data }): [string, Data] => [id, data])),
+  };
   // A widget id nobody has asked for before, so Goodreads answers with the shelf as it is now.
   const firstWidgetId = Math.floor(now.getTime() / 1000);
   const books: Book[] = [];

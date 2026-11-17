@@ -519,6 +519,61 @@ describe('goodreadsLoader', () => {
       expect(entries.get('shelf-4')!.data.addedAt).toBe(NOW);
     });
 
+    it('dates a book as read when it was to-read in the unmerged refresh that added it', async () => {
+      // Arrange
+      const earlier = '2026-11-10T12:00:00.000Z';
+      save();
+      const pending = join(dir, 'pending.json');
+      writeFileSync(
+        pending,
+        JSON.stringify([
+          book('shelf', '1', 0, { toRead: true, addedAt: earlier }),
+          book('shelf', '2', 1, { addedAt: earlier }),
+        ]),
+      );
+      stubGoodreads({ shelf: [entry({ id: '1', tags: 'shelf' }), entry({ id: '2', tags: 'shelf' })] });
+      const { entries, ctx } = context();
+
+      // Act
+      await refresh(['shelf'], ctx, pending);
+
+      // Assert
+      expect(entries.get('shelf-1')!.data).toMatchObject({ toRead: false, readAt: NOW, addedAt: earlier });
+      expect(entries.get('shelf-2')!.data).toMatchObject({ toRead: false, readAt: null, addedAt: earlier });
+    });
+
+    it('keeps what an unmerged refresh saw of a book the full widget no longer lists', async () => {
+      // Arrange
+      const earlier = '2026-11-10T12:00:00.000Z';
+      save(
+        book('shelf', 'a', 0, { toRead: true }),
+        book('shelf', 'b', 1, { toRead: true, readAt: '2021-05-05T00:00:00.000Z' }),
+        book('shelf', 'c', 2, { toRead: true }),
+      );
+      const pending = join(dir, 'pending.json');
+      writeFileSync(
+        pending,
+        JSON.stringify([
+          book('shelf', 'a', 0, { rating: 4, readAt: earlier }),
+          book('shelf', 'b', 1, { rating: 5, readAt: earlier }),
+        ]),
+      );
+      stubGoodreads({ shelf: Array.from({ length: 100 }, (_, i) => entry({ id: String(i + 1) })) });
+      const { entries, ctx } = context();
+
+      // Act
+      await refresh(['shelf'], ctx, pending);
+
+      // Assert
+      expect(entries.get('shelf-a')!.data).toMatchObject({ toRead: false, rating: 4, readAt: earlier });
+      expect(entries.get('shelf-b')!.data).toMatchObject({
+        toRead: false,
+        rating: 5,
+        readAt: '2021-05-05T00:00:00.000Z',
+      });
+      expect(entries.get('shelf-c')!.data).toMatchObject({ toRead: true, rating: 0, readAt: null });
+    });
+
     it("fails when the pending books are named but can't be read", async () => {
       // Arrange
       save();
