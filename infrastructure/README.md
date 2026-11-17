@@ -15,7 +15,9 @@ agents in [AGENTS.md](AGENTS.md).
 | Static Web App | `jimmykurian-me` (Free plan) | `modules/azure/static-web-app` |
 | Custom domains | `www.jimmykurian.me` (CNAME), `jimmykurian.me` (TXT) | `modules/azure/static-web-app` |
 
-Everything lives in the personal Azure subscription ("Azure subscription 1").
+Everything lives in the personal pay-as-you-go Azure subscription ("Jimmy Personal
+Site"). Its $5 monthly budget, `personal-site-monthly`, emails Jimmy at 80% of
+actual spend and when the forecast passes 100%.
 
 The provider is `azurerm` from the OpenTofu registry
 (`registry.opentofu.org/hashicorp/azurerm`). OpenTofu builds and signs it, and

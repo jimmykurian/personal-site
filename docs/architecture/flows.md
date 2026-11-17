@@ -97,6 +97,7 @@ sequenceDiagram
     end
     CI->>CI: Build, test, print resume.pdf
     CI->>SWA: Upload dist/ to production
+    CI->>SWA: Request the home page and one asset (task test:live)
     CI->>Web: Check the external links (lychee)
 ```
 
@@ -129,4 +130,4 @@ sequenceDiagram
 - [Deployment overview](../deployment/overview.md)
 - [Testing strategy](../testing/testing-strategy.md)
 
-Last reviewed: 2026-10-23
+Last reviewed: 2026-11-17

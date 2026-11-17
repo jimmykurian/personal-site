@@ -52,6 +52,13 @@ overrides:
   # drives Chrome over CDP, so puppeteer never imports it.
   'puppeteer-core>chromium-bidi': '-'
 
+# High or critical advisories with no usable fix, ignored for pnpm audit (task lint:audit). Each
+# has its reason in .config/linters/osv-scanner.toml, which ignores it for OSV-Scanner too.
+# Remove each once a fix ships.
+auditConfig:
+  ignoreGhsas:
+    - GHSA-fc5q-39xc-vjpf # picomatch, no fixed release yet
+
 # Dependencies a package uses but doesn't declare.
 # @astrojs/astro2tsx (via @astrojs/check) declares @emnapi/core but not the @emnapi/runtime its
 # @napi-rs/wasm-runtime needs as a peer. pnpm then picks the 2.0.0-beta.2 that rolldown's WASM

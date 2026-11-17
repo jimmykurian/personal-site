@@ -211,10 +211,11 @@ gh ssh-key add ~/.ssh/id_ed25519.pub --type signing --title "<machine> signing"
 
 **Infrastructure** (`task infra:check`): `infra:fmt`, `infra:validate`, `infra:tflint`, `infra:checkov` and `infra:pins`, then `infra:test` for the module tests. `infra:docs:check` fails if the terraform-docs pages in `infrastructure/docs/` are out of date; `task infra:docs` regenerates them.
 
-After `task build`, three more run against `dist/`:
+After `task build`, three more run against `dist/`, and one against the live site:
 
 - `task test:e2e` includes the axe checks on every page.
 - `task lighthouse` fails below 0.95 for accessibility, 0.9 for SEO and best practices, or 0.8 for performance (the median of 3 runs; CI runners are noisy), or above 0.1 layout shift. `/resume/` is left out: it's the print source for the PDF, noindexed, with small contact links.
+- `task test:live` requests the home page and one of its `/_astro/` files from the live site and fails unless both answer 200 and arrive in full. CI runs it after every production deploy, because a deploy can pass while the host serves nothing. Set `SITE_URL` to check another host, such as a preview.
 - `task lint:links` checks the external links with lychee (`.config/linters/lychee.toml`). CI runs it nightly, after the deploy, so another site's outage doesn't block a push.
 
 Prettier skips `.astro` and `.mdx` files: whitespace between inline elements renders in Astro templates, and Prettier's MDX support is MDX 1.
@@ -319,10 +320,10 @@ every job passes, the deploy uploads `website/dist/` to Azure Static Web Apps:
 
 | Trigger            | Result                                         |
 | ------------------ | ---------------------------------------------- |
-| Push to `main`     | Production deploy                              |
+| Push to `main`     | Production deploy, then the live site check    |
 | Pull request       | Preview environment, closed when the PR closes |
-| Nightly, 11:00 UTC | Rebuild so `/reading/` picks up Goodreads, then check external links |
-| Manual dispatch    | Rebuild on demand                              |
+| Nightly, 11:00 UTC | Rebuild so `/reading/` picks up Goodreads, then check the live site and external links |
+| Manual dispatch    | Rebuild on demand, with the same two checks    |
 
 If Goodreads can't be read, the build uses the books saved in
 `website/src/content/books.json` and logs a warning. The Reading list workflow

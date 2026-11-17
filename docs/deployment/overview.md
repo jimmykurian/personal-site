@@ -17,6 +17,7 @@ flowchart LR
     repository & website & infrastructure --> deploy{"Website built and<br/>every check passed?"}
     deploy -- yes --> swa["Upload dist/ to<br/>Azure Static Web Apps"]
     deploy -- no --> keep["No deploy;<br/>the last one stays live"]
+    swa --> live["Live site<br/>(production only)"]
     swa --> links["External links<br/>(nightly and manual only)"]
 ```
 
@@ -29,6 +30,7 @@ flowchart LR
 | Deploy | When Repository and Website pass, and Infrastructure passes or is skipped | Downloads the built `dist/` artifact and uploads it |
 | Check table | Pull requests, pass or fail | Posts one comment with every check's result, the coverage and test counts |
 | Badges | `main`, pass or fail | Writes the README status badges to the `badges` branch |
+| Live site | After a production deploy (`main`, nightly and manual) | Requests the home page and one of its `/_astro/` files from the live site (`task test:live`) and fails unless both answer 200 and arrive in full |
 | External links | Nightly and manual | Checks the external links in the build with lychee |
 | Close PR preview | A PR closes | Removes that PR's preview environment |
 
@@ -40,14 +42,14 @@ The build is never repeated for the deploy: the Website job uploads `website/dis
 | --- | --- |
 | Pull request to `main` that changes `website/` | A preview environment with its own URL, commented on the PR and removed when the PR closes |
 | Push to `main` (a merged PR) | Production at <https://www.jimmykurian.me>, whatever changed |
-| Nightly, 11:00 UTC | A rebuild, so `/reading/` picks up Goodreads changes, then the external link check |
-| Manual (`workflow_dispatch`) | A rebuild on demand, plus the link check |
+| Nightly, 11:00 UTC | A rebuild, so `/reading/` picks up Goodreads changes, then the live site check and the external link check |
+| Manual (`workflow_dispatch`) | A rebuild on demand, plus the live site check and the link check |
 
 `main` takes changes only through squash-merged pull requests, and the ruleset requires the Title, Template, Repository, Website, Infrastructure and CodeQL checks. A job skipped because its files didn't change counts as passed. See [CONTRIBUTING.md, Workflow](../../CONTRIBUTING.md#workflow).
 
 ## Hosting
 
-- **Azure Static Web Apps, Free plan,** in a personal Azure subscription. The app serves only static files: no functions, no server code.
+- **Azure Static Web Apps, Free plan,** in a personal pay-as-you-go Azure subscription ("Jimmy Personal Site"). The app serves only static files: no functions, no server code, so it costs nothing. A $5 monthly budget on the subscription emails Jimmy if anything starts to cost money.
 - **`website/public/staticwebapp.config.json`** ships with the build and sets the security headers, the 404 page and year-long caching for the fingerprinted files in `/_astro/`.
 - **DNS stays at Namecheap:** `www` is a CNAME to the app, and the apex is an ALIAS. `www` is the default domain, so the apex redirects to it.
 - **Certificates** are managed by Azure for both hostnames.
@@ -74,6 +76,7 @@ Daily at 11:30 UTC, the Reading list workflow reads the Goodreads shelves (`task
 - **Goodreads is down:** the loader retries each feed page twice, then builds `/reading/` from the books saved in `website/src/content/books.json`, with a warning in the build log, so deploys carry on and the list is never empty. The Reading list workflow fails while it lasts; check that the profile and shelves are still public.
 - **A bad change is live:** revert its squash commit in a PR (`git revert <sha>`). Merging the revert deploys the previous state. The Free plan has no deployment slots to swap.
 - **A preview is left behind:** close and reopen the PR, or delete the environment in the Azure portal. The Free plan allows three preview environments.
+- **Every page answers 404, and deploys still pass:** the Azure subscription is probably inactive. Azure then serves only the site's 404 page, while the app still reports `Ready` and uploads still succeed, so a redeploy changes nothing. The Live site job fails when this happens, and the Sentry [uptime monitor](../observability.md#uptime) opens an issue within minutes. Check the subscription's status in the Azure portal (Subscriptions) and upgrade or reactivate it there; the site comes back within a minute, with no redeploy. This happened on 2026-11-17, when the subscription's 30-day free trial ended. Jimmy does this step.
 - **The deploy token expires or leaks:** reset it in the Azure portal (Static Web App, Manage deployment token) and update the Actions secret. Jimmy does this step.
 
 ## Infrastructure as code
@@ -86,4 +89,4 @@ Daily at 11:30 UTC, the Reading list workflow reads the Goodreads shelves (`task
 - [Security overview](../security/overview.md)
 - [Testing strategy](../testing/testing-strategy.md)
 
-Last reviewed: 2026-10-23
+Last reviewed: 2026-11-17

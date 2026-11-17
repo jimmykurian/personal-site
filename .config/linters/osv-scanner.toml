@@ -27,3 +27,13 @@ version = "5.1.9"
 ecosystem = "npm"
 vulnerability.ignore = true
 reason = "GHSA-g3hv-75wg-m249: no fix callable by glob 8 (unified-engine 10, via alex); patterns are our own"
+
+# GHSA-fc5q-39xc-vjpf (picomatch ReDoS from crafted extglob patterns such as +(*)) affects every
+# release through 4.0.7, the newest, so there's no version to move to. An attacker has to supply
+# the glob. Here picomatch only matches patterns this repo and its tools write: Astro's build
+# (2.3.2 via unstorage > anymatch, 4.0.7 via astro and tinyglobby) and the lint tools (stylelint,
+# markdownlint-cli2, cspell, secretlint, typescript-eslint). The live site is static files and
+# runs none of it. Also ignored for pnpm audit, in website/pnpm-workspace.yaml.
+[[IgnoredVulns]]
+id = "GHSA-fc5q-39xc-vjpf"
+reason = "No fixed picomatch release yet; it only matches glob patterns this repo and its build and lint tools write"
